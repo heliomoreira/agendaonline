@@ -71,18 +71,18 @@ window.templateName = document.documentElement.getAttribute('data-template');
 
 if (typeof TemplateCustomizer !== 'undefined') {
   window.templateCustomizer = new TemplateCustomizer({
-    displayCustomizer: true,
+    displayCustomizer: false,
     lang: localStorage.getItem('templateCustomizer-' + templateName + '--Lang') || 'en', // Set default language here
-    // defaultPrimaryColor: '#D11BB4',
+     defaultPrimaryColor: '#2f87eb',
     // defaultSkin: 1,
     // defaultTheme: 'system',
-    // defaultSemiDark: true,
-    // defaultContentLayout: 'wide',
+     defaultSemiDark: true,
+     defaultContentLayout: 'wide',
     // defaultHeaderType: 'static',
     // defaultMenuCollapsed: true,
     // defaultNavbarType: 'static',
     // defaultTextDir: 'rtl',
-    // defaultFooterFixed: false,
+     defaultFooterFixed: true,
     // defaultShowDropdownOnHover: false,
     controls: [
       'color',
