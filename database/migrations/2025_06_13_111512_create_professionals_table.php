@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('phone_2')->nullable();
             $table->string('email')->nullable();
             $table->text('notes')->nullable();
-            $table->string('status')->default('active'); // ou enum
+            $table->integer('order')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

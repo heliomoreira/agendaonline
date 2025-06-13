@@ -30,7 +30,7 @@ class ServicesController extends Controller
                 'service' => $service
             ]);
         } catch (\Exception $e) {
-            Log::error('Erro ao carregar formulário de servicee: ' . $e->getMessage());
+            Log::error('Erro ao carregar formulário de service: ' . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao carregar o formulário.'));
         }
     }
@@ -43,8 +43,8 @@ class ServicesController extends Controller
                 'service' => $service
             ]);
         } catch (\Exception $e) {
-            Log::error("Erro ao editar servicee com ID {$id}: " . $e->getMessage());
-            return redirect()->route('services.index')->withErrors(__('servicee não encontrado ou ocorreu um erro.'));
+            Log::error("Erro ao editar service com ID {$id}: " . $e->getMessage());
+            return redirect()->route('services.index')->withErrors(__('service não encontrado ou ocorreu um erro.'));
         }
     }
 
@@ -55,13 +55,13 @@ class ServicesController extends Controller
             $service->fill($request->validated());
             $service->save();
 
-            Log::info("servicee criado com ID {$service->id}");
+            Log::info("service criado com ID {$service->id}");
 
             return redirect()->route('services.edit', ['id' => $service->id])
                 ->with('success', __('modules.service_created'));
         } catch (\Exception $e) {
-            Log::error('Erro ao criar servicee: ' . $e->getMessage());
-            return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o servicee.'));
+            Log::error('Erro ao criar service: ' . $e->getMessage());
+            return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o service.'));
         }
     }
 
@@ -72,13 +72,13 @@ class ServicesController extends Controller
             $service->fill($request->validated());
             $service->save();
 
-            Log::info("servicee atualizado com ID {$service->id}");
+            Log::info("service atualizado com ID {$service->id}");
 
             return redirect()->route('services.edit', ['id' => $service->id])
                 ->with('success', __('modules.service_updated'));
         } catch (\Exception $e) {
-            Log::error("Erro ao atualizar servicee com ID {$id}: " . $e->getMessage());
-            return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o servicee.'));
+            Log::error("Erro ao atualizar service com ID {$id}: " . $e->getMessage());
+            return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o service.'));
         }
     }
 
@@ -88,12 +88,12 @@ class ServicesController extends Controller
             $service = Service::findOrFail($id);
             $service->delete();
 
-            Log::info("servicee removido com ID {$id}");
+            Log::info("service removido com ID {$id}");
 
             return redirect()->route('services.index')->with('success', __('modules.service_deleted'));
         } catch (\Exception $e) {
-            Log::error("Erro ao eliminar servicee com ID {$id}: " . $e->getMessage());
-            return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o servicee.'));
+            Log::error("Erro ao eliminar service com ID {$id}: " . $e->getMessage());
+            return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o service.'));
         }
     }
 }

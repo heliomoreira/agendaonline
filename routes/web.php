@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,15 @@ Route::prefix('services')->group(function () {
 
     Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
     Route::put('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
+});
+
+Route::prefix('professionals')->group(function () {
+    Route::get('/', [ProfessionalsController::class, 'index'])->name('services.index');
+    Route::get('/form', [ProfessionalsController::class, 'form'])->name('services.form');
+    Route::get('/edit/{id}', [ProfessionalsController::class, 'edit'])->name('services.edit');
+
+    Route::post('/store', [ProfessionalsController::class, 'store'])->name('services.store');
+    Route::put('/update/{id}', [ProfessionalsController::class, 'update'])->name('services.update');
 });
 
 require __DIR__ . '/auth.php';
