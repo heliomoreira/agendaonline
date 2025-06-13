@@ -129,7 +129,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="app-kanban.html" class="menu-link">
+                    <a href="{{route('professionals.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-user"></i>
                         <div data-i18n="Profissionais">Profissionais</div>
                     </a>
