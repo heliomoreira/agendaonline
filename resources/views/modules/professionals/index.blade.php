@@ -22,7 +22,7 @@
                                     <th>Nome</th>
                                     <th>Contacto</th>
                                     <th>Email</th>
-                                    <th>Localidade</th>
+                                    <th>Status</th>
                                 </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
@@ -41,7 +41,11 @@
                                             <a href="{{route('professionals.edit',['id'=>$professional->id])}}">{{$professional->email}}</a>
                                         </td>
                                         <td>
-                                            <a href="{{route('professionals.edit',['id'=>$professional->id])}}">{{$professional->city}}</a>
+                                            <a href="{{ route('services.edit', ['id' => $professional->id]) }}">
+                                                <span class="badge bg-label-{{ $professional->statusClass() }} me-1">
+                                                    {{ $professional->statusLabel() }}
+                                                </span>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
