@@ -117,7 +117,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="app-calendar.html" class="menu-link">
+                    <a href="{{route('products.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-list"></i>
                         <div data-i18n="Produtos">Produtos</div>
                     </a>

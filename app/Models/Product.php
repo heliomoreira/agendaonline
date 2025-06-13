@@ -9,6 +9,15 @@ class Product extends Model
 {
     use softDeletes;
 
-    protected $fillable = ['name', 'description', 'price_1', 'price_2', 'stock_movement', 'image', 'notes'];
+    protected $fillable = ['product_code','name', 'description', 'price_1', 'price_2', 'stock_movement', 'image', 'notes'];
 
+    public function statusLabel(): string
+    {
+        return $this->status ? 'Activo' : 'Inactivo';
+    }
+
+    public function statusClass(): string
+    {
+        return $this->status ? 'success' : 'danger';
+    }
 }

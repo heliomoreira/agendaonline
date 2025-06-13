@@ -50,27 +50,42 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-6">
+                        <div class="col-md-2">
+                            <label class="form-label" for="name">Código Produto</label>
+                            {{html()->text('product_code')->id('product_code')->class('form-control')->placeholder('')}}
+                        </div>
                         <div class="col-md-4">
                             <label class="form-label" for="name">Nome</label>
                             {{html()->text('name')->id('name')->class('form-control')->placeholder('')}}
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="phone_1">Contacto</label>
-                            {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
+                        <div class="col-md-1">
+                            <label class="form-label" for="price_1">Preço</label>
+                            {{html()->text('price_1')->id('price_1')->class('form-control')->placeholder('')}}
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="phone_2">Contacto 2</label>
-                            {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
-                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-md-4">
-                            <label class="form-label" for="email">Email</label>
-                            {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
+                            <label class="form-label" for="description">Descrição</label>
+                            {{html()->textarea('description')->id('description')->class('form-control')->placeholder('')}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <input type="hidden" name="stock_movement" value="0">
+                            <label class="form-label" for="name">Movimenta Stock</label><br>
+                            <label class="switch">
+                                <input type="checkbox" class="switch-input">
+                                <span class="switch-toggle-slider">
+                                <span class="switch-on"></span>
+                                <span class="switch-off"></span>
+                              </span>
+                            </label>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-2">
-                            <label class="form-label" for="status">Ordem</label>
-                            {{html()->text('order')->id('order')->class('form-control')}}
+                            <label class="form-label" for="image">Imagem</label>
+                            {{html()->file('image')->id('image')->class('form-control')}}
                         </div>
                         <div class="col-md-2">
                             <label class="form-label" for="status">Estado</label>

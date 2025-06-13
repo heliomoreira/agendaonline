@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
@@ -47,6 +48,15 @@ Route::prefix('professionals')->group(function () {
 
     Route::post('/store', [ProfessionalsController::class, 'store'])->name('professionals.store');
     Route::put('/update/{id}', [ProfessionalsController::class, 'update'])->name('professionals.update');
+});
+
+Route::prefix('products')->group(function () {
+    Route::get('/', [ProductsController::class, 'index'])->name('products.index');
+    Route::get('/form', [ProductsController::class, 'form'])->name('products.form');
+    Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('products.edit');
+
+    Route::post('/store', [ProductsController::class, 'store'])->name('products.store');
+    Route::put('/update/{id}', [ProductsController::class, 'update'])->name('products.update');
 });
 
 require __DIR__ . '/auth.php';

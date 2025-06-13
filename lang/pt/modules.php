@@ -41,4 +41,10 @@ return [
     'professional_created' => 'Profissional criado com sucesso.',
     'professional_updated' => 'Profissional atualizado com sucesso.',
     'professional_deleted' => 'Profissional removido com sucesso.',
+
+    /* ---- Products ---- */
+
+    'product_created' => 'Produto criado com sucesso.',
+    'product_updated' => 'Produto atualizado com sucesso.',
+    'product_deleted' => 'Produto removido com sucesso.',
 ];
