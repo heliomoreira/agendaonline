@@ -14,37 +14,42 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Contacto</th>
-                                <th>Email</th>
-                                <th>Localidade</th>
-                            </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                            @foreach($clients as $client)
+                        @if(count($clients)>0)
+                            <table class="table table-hover">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                        <span class="fw-medium">
-                                        <a href="#">{{$client->name}}</a>
-                                    </span>
-                                    </td>
-                                    <td>
-                                        <a href="#">{{$client->phone_1}}</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">{{$client->email}}</a>
-                                    </td>
-                                    <td>
-                                        <a href="#">{{$client->city}}</a>
-                                    </td>
+                                    <th>Nome</th>
+                                    <th>Contacto</th>
+                                    <th>Email</th>
+                                    <th>Localidade</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                @foreach($clients as $client)
+                                    <tr>
+                                        <td>
+                                            <i class="icon-base ti tabler-user icon-md me-4"></i>
+                                            <span class="fw-medium">
+                                        <a href="{{route('clients.edit',['id'=>$client->id])}}">{{$client->name}}</a>
+                                    </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('clients.edit',['id'=>$client->id])}}">{{$client->phone_1}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('clients.edit',['id'=>$client->id])}}">{{$client->email}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('clients.edit',['id'=>$client->id])}}">{{$client->city}}</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                        @else
+                            Sem clientes.
+                        @endif
                     </div>
 
                 </div>

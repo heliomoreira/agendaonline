@@ -68,7 +68,8 @@
     <div class="layout-container">
 
 
-        <aside id="layout-menu" class="layout-menu menu-vertical menu" data-bs-theme="dark" style="background-color: #000031">
+        <aside id="layout-menu" class="layout-menu menu-vertical menu" data-bs-theme="dark"
+               style="background-color: #000031">
 
             <div class="app-brand demo ">
                 <a href="/" class="app-brand-link">
@@ -104,7 +105,7 @@
                     <span class="menu-header-text" data-i18n="Apps & Pages">Apps &amp; Pages</span>
                 </li>
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{route('clients.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-users"></i>
                         <div data-i18n="Clientes">Clientes</div>
                     </a>

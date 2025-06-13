@@ -1,16 +1,16 @@
 @extends('layouts.app')
 @section('content')
     @if (session('success'))
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-solid-success d-flex align-items-center" role="alert">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-solid-success d-flex align-items-center" role="alert">
             <span class="alert-icon rounded">
               <i class="icon-base ti tabler-check icon-md"></i>
             </span>
-                {{ session('success') }}
+                    {{ session('success') }}
+                </div>
             </div>
         </div>
-    </div>
     @endif
     @if ($errors->any())
         <div class="row">
@@ -55,31 +55,35 @@
                         </div>
                         <div class="col-md-2">
                             <label class="form-label" for="phone_2">Contacto 2</label>
-                            <input type="text" id="phone_2" class="form-control" placeholder="">
+                            {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
                         </div>
                         <div class="col-md-4">
                             <label class="form-label" for="email">Email</label>
-                            <input type="text" id="email" class="form-control" placeholder="">
+                            {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-4">
-                            <label class="form-label" for="name">Morada</label>
-                            <input type="text" id="name" class="form-control" placeholder="">
+                            <label class="form-label" for="address">Morada</label>
+                            {{html()->text('address')->id('address')->class('form-control')->placeholder('')}}
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label" for="phone_1">Nº / Porta</label>
-                            <input type="text" id="phone_1" class="form-control" placeholder="">
+                            <label class="form-label" for="number_port">Nº / Porta</label>
+                            {{html()->text('number_port')->id('number_port')->class('form-control')->placeholder('')}}
                         </div>
                         <div class="col-md-2">
+                            <label class="form-label" for="zip_code">Cód. Postal</label>
+                            {{html()->text('zip_code')->id('zip_code')->class('form-control')->placeholder('')}}
+                        </div>
+                        <div class="col-md-4">
                             <label class="form-label" for="phone_2">Localidade</label>
-                            <input type="text" id="phone_2" class="form-control" placeholder="">
+                            {{html()->text('city')->id('city')->class('form-control')->placeholder('')}}
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-2">
                             <label class="form-label" for="birthdate">Data Aniversário</label>
-                            <input type="date" id="birthdate" class="form-control" placeholder="">
+                            {{html()->date('birthdate')->id('birthdate')->class('form-control')->placeholder('')}}
                         </div>
                     </div>
                     <div class="row mt-3">

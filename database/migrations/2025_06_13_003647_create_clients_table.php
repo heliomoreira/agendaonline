@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('county_id')->nullable();
             $table->boolean('marketing_allowed')->default(false);
+            $table->date('birthdate')->nullable();
             $table->string('type')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
