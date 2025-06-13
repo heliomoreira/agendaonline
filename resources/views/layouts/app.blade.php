@@ -125,29 +125,25 @@
 
                 <!-- Misc -->
                 <li class="menu-header small">
-                    <span class="menu-header-text" data-i18n="Misc">Admin</span>
+                    <span class="menu-header-text" data-i18n="Admin">Admin</span>
                 </li>
-
-                <!-- Multi Level Menu -->
                 <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <i class="menu-icon icon-base ti tabler-layout-board"></i>
-                        <div data-i18n="Multi Level">Multi Level</div>
+                    <a href="#" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-settings"></i>
+                        <div data-i18n="Configurações">Configurações</div>
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                                <div data-i18n="Level 2">Level 2</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="javascript:void(0)" class="menu-link">
-                                        <div data-i18n="Level 3">Level 3</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-briefcase"></i>
+                        <div data-i18n="Dados de Conta">Dados de Conta</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-lifebuoy"></i>
+                        <div data-i18n="Suporte">Suporte</div>
+                    </a>
                 </li>
             </ul>
         </aside>
