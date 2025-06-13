@@ -48,7 +48,7 @@ class ClientsController extends Controller
         }
     }
 
-    public function store(CustomerRequest $request)
+    public function store(CustomerRequest $request): \Illuminate\Http\RedirectResponse
     {
         try {
             $client = new Client();
