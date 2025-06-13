@@ -92,4 +92,51 @@
             {{html()->closeModelForm()}}
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header header-elements">
+                    <h5 class="mb-0 me-2">Serviços prestados</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-6">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    &nbsp;
+                                </th>
+                                <th>
+                                    Serviço
+                                </th>
+                            </tr>
+                            @if(isset($services))
+                                @foreach($services as $service)
+                                    <tr>
+                                        <td style="width:50px">
+                                            <input type="checkbox" name="services[]" value="{{ $service->id }}"
+                                                   id="service_{{ $service->id }}"/>
+                                        </td>
+                                        <td>
+                                            <label class=""
+                                                   for="service_{{ $service->id }}">{{$service->name}}</label>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                        </button>
+                        <a href="{{ route('professionals.index') }}" class="btn btn-secondary waves-effect waves-light">
+                            <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

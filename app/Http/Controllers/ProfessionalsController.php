@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfessionalRequest;
 use App\Models\Professional;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -40,8 +41,12 @@ class ProfessionalsController extends Controller
     {
         try {
             $professional = Professional::findOrFail($id);
+
+            $services = Service::all();
+
             return view('modules.professionals.form', [
-                'professional' => $professional
+                'professional' => $professional,
+                'services' => $services
             ]);
         } catch (\Exception $e) {
             Log::error("Erro ao editar professional com ID {$id}: " . $e->getMessage());
