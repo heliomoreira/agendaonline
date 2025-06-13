@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
 Route::prefix('clients')->group(function () {
     Route::get('/', [ClientsController::class, 'index'])->name('clients.index');
     Route::get('/form', [ClientsController::class, 'form'])->name('clients.form');
+    Route::get('/edit/{id}', [ClientsController::class, 'edit'])->name('clients.edit');
+
+    Route::post('/store', [ClientsController::class, 'store'])->name('clients.store');
+    Route::put('/update/{id}', [ClientsController::class, 'update'])->name('clients.update');
 });
 
 require __DIR__.'/auth.php';

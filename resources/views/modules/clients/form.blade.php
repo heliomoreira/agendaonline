@@ -12,6 +12,12 @@
     </div>
     <div class="row g-6">
         <div class="col-md-12">
+            @if(!$client->id)
+                {{ html()->modelForm($client, 'POST', route('clients.store'))->open() }}
+            @else
+                {{ html()->modelForm($client, 'PUT', route('clients.update', $client->id))->open() }}
+            @endif
+            {{ html()->token() }}
             <div class="card">
                 <div class="card-header header-elements">
                     <h5 class="mb-0 me-2">Detalhe de Cliente</h5>
@@ -50,6 +56,12 @@
                         </div>
                     </div>
                     <div class="row mt-3">
+                        <div class="col-md-2">
+                            <label class="form-label" for="birthdate">Data Aniversário</label>
+                            <input type="date" id="birthdate" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
                         <div class="col-md-4">
                             <label class="form-label" for="name">Marketing</label><br>
                             <label class="switch">
@@ -63,9 +75,12 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary waves-effect waves-light"><i class="icon-base ti tabler-device-floppy"></i>&nbsp;&nbsp;Gravar</a>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">
+                        <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                    </button>
                 </div>
             </div>
+            {{html()->closeModelForm()}}
         </div>
     </div>
 @endsection
