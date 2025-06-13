@@ -38,9 +38,9 @@
     <div class="row g-6">
         <div class="col-md-12">
             @if(!$service->id)
-                {{ html()->modelForm($service, 'POST', route('services.store'))->open() }}
+                {{ html()->modelForm($service, 'POST', route('services.store'))->attribute('enctype', 'multipart/form-data')->open() }}
             @else
-                {{ html()->modelForm($service, 'PUT', route('services.update', $service->id))->open() }}
+                {{ html()->modelForm($service, 'PUT', route('services.update', $service->id))->attribute('enctype', 'multipart/form-data')->open() }}
             @endif
             {{ html()->token() }}
             <div class="card">
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="form-label" for="image">Imagem</label>
-                            {{html()->text('image')->id('image')->class('form-control')->placeholder('')}}
+                            {{html()->file('image')->id('image')->class('form-control')}}
                         </div>
                     </div>
                     <div class="row mt-3">

@@ -39,7 +39,7 @@
                                             <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->duration}}</a>
                                         </td>
                                         <td>
-                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->price}}</a>
+                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->price}} &euro;</a>
                                         </td>
                                         <td>
                                             <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->order}}</a>
