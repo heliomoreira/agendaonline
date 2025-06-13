@@ -35,6 +35,16 @@
             </div>
         </div>
     @endif
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="d-flex align-items-center gap-2 m-0">
+                <i class="icon-base ti tabler-user"></i>
+                {{ $professional->id ? 'Editar Profissional' : 'Novo Profissional' }}
+            </h5>
+            <hr class="my-2"/>
+        </div>
+    </div>
+
     <div class="row g-6">
         <div class="col-md-6">
             @if(!$professional->id)
