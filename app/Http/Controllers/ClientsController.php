@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ClientRequest;
+use App\Http\Requests\CustomerRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -32,7 +32,7 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
         $client = new Client();
         $client->fill($request->all());
@@ -42,7 +42,7 @@ class ClientsController extends Controller
             ->with('success', __('modules.client_created'));
     }
 
-    public function update(ClientRequest $request, $id)
+    public function update(CustomerRequest $request, $id)
     {
         $client = Client::find($id);
         $client->fill($request->all());
