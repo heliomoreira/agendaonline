@@ -7,9 +7,10 @@
                     <h5 class="mb-0 me-2">Listagem de Clientes</h5>
 
                     <div class="card-header-elements ms-auto">
-                        <button type="button" class="btn btn-primary waves-effect waves-light"><span
-                                class="icon-base ti tabler-plus icon-xs me-1"></span>Novo Cliente
-                        </button>
+                        <a href="{{route('clients.form')}}"
+                           class="btn btn-primary waves-effect waves-light">
+                            <span class="icon-base ti tabler-plus icon-xs me-1"></span>Novo Cliente
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
