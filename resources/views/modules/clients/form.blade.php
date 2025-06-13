@@ -3,11 +3,15 @@
     @if (session('success'))
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-solid-success d-flex align-items-center" role="alert">
-            <span class="alert-icon rounded">
-              <i class="icon-base ti tabler-check icon-md"></i>
+                <div class="alert alert-solid-success alert-dismissible fade show d-flex align-items-center"
+                     role="alert">
+            <span class="alert-icon rounded me-2">
+                <i class="icon-base ti tabler-check icon-md"></i>
             </span>
-                    {{ session('success') }}
+                    <div class="flex-grow-1">
+                        {{ session('success') }}
+                    </div>
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
             </div>
         </div>
@@ -100,9 +104,14 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">
-                        <i class="icon-base ti tabler-device-floppy"></i> Gravar
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                        </button>
+                        <a href="{{ route('clients.index') }}" class="btn btn-secondary waves-effect waves-light">
+                            <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                        </a>
+                    </div>
                 </div>
             </div>
             {{html()->closeModelForm()}}
