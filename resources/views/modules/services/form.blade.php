@@ -35,6 +35,15 @@
             </div>
         </div>
     @endif
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="d-flex align-items-center gap-2 m-0">
+                <i class="icon-base ti tabler-layout-list"></i>
+                {{ $service->id ? 'Editar Serviço' : 'Novo Serviço' }}
+            </h5>
+            <hr class="my-2"/>
+        </div>
+    </div>
     <div class="row g-6">
         <div class="col-md-12">
             @if(!$service->id)
@@ -45,8 +54,7 @@
             {{ html()->token() }}
             <div class="card">
                 <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">Detalhe de
-                        Serviço {!!  $service->name ? '| <span style="color:#2A7AD4">' . $service->name . '</span>': ''  !!}</h5>
+                    <h5 class="mb-0 me-2">Detalhe {!!  $service->name ? '| <span style="color:#2A7AD4">' . $service->name . '</span>': ''  !!}</h5>
                 </div>
                 <div class="card-body">
                     <div class="row g-6">

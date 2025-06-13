@@ -35,6 +35,15 @@
             </div>
         </div>
     @endif
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="d-flex align-items-center gap-2 m-0">
+                <i class="icon-base ti tabler-users"></i>
+                {{ $client->id ? 'Editar Cliente' : 'Novo Cliente' }}
+            </h5>
+            <hr class="my-2"/>
+        </div>
+    </div>
     <div class="row g-6">
         <div class="col-md-12">
             @if(!$client->id)
