@@ -53,12 +53,13 @@
     <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}"/>
 
     <!-- Page CSS -->
-
+    @stack('css')
 
     <!-- Helpers -->
     <script src="{{asset('theme/assets/vendor/js/helpers.js')}}"></script>
     <script src="{{asset('theme/assets/vendor/js/template-customizer.js')}}"></script>
     <script src="{{asset('theme/assets/js/config.js')}}"></script>
+
 </head>
 <body>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
@@ -60,6 +61,16 @@ Route::prefix('products')->group(function () {
 
     Route::post('/store', [ProductsController::class, 'store'])->name('products.store');
     Route::put('/update/{id}', [ProductsController::class, 'update'])->name('products.update');
+});
+
+
+Route::prefix('agenda')->group(function () {
+    Route::get('/', [AgendaController::class, 'index'])->name('agenda.index');
+    Route::get('/form', [AgendaController::class, 'form'])->name('agenda.form');
+    Route::get('/edit/{id}', [AgendaController::class, 'edit'])->name('agenda.edit');
+
+    Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
+    Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
 });
 
 require __DIR__ . '/auth.php';
