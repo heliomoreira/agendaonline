@@ -32,9 +32,8 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
-        dd("jhello");
         $client = new Client();
         $client->fill($request->all());
         $client->save();

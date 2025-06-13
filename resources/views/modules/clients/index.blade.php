@@ -24,74 +24,25 @@
                             </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td>
-                                    <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                    <span class="fw-medium">
-                                        <a href="#">John Doe</a>
+                            @foreach($clients as $client)
+                                <tr>
+                                    <td>
+                                        <i class="icon-base ti tabler-user icon-md me-4"></i>
+                                        <span class="fw-medium">
+                                        <a href="#">{{$client->name}}</a>
                                     </span>
-                                </td>
-                                <td>
-                                    <a href="#">910000000</a>
-                                </td>
-                                <td>
-                                    <a href="#">email@email.pt</a>
-                                </td>
-                                <td>
-                                    <a href="#">Porto</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                    <span class="fw-medium">
-                                        <a href="#">John Doe</a>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="#">910000000</a>
-                                </td>
-                                <td>
-                                    <a href="#">email@email.pt</a>
-                                </td>
-                                <td>
-                                    <a href="#">Porto</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                    <span class="fw-medium">
-                                        <a href="#">John Doe</a>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="#">910000000</a>
-                                </td>
-                                <td>
-                                    <a href="#">email@email.pt</a>
-                                </td>
-                                <td>
-                                    <a href="#">Porto</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                    <span class="fw-medium">
-                                        <a href="#">John Doe</a>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="#">910000000</a>
-                                </td>
-                                <td>
-                                    <a href="#">email@email.pt</a>
-                                </td>
-                                <td>
-                                    <a href="#">Porto</a>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <a href="#">{{$client->phone_1}}</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">{{$client->email}}</a>
+                                    </td>
+                                    <td>
+                                        <a href="#">{{$client->city}}</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

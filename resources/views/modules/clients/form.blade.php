@@ -26,11 +26,11 @@
                     <div class="row g-6">
                         <div class="col-md-4">
                             <label class="form-label" for="name">Nome</label>
-                            <input type="text" id="name" class="form-control" placeholder="">
+                            {{html()->text('name')->id('name')->class('form-control')->placeholder('')}}
                         </div>
                         <div class="col-md-2">
                             <label class="form-label" for="phone_1">Contacto</label>
-                            <input type="text" id="phone_1" class="form-control" placeholder="">
+                            {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
                         </div>
                         <div class="col-md-2">
                             <label class="form-label" for="phone_2">Contacto 2</label>
