@@ -11,6 +11,10 @@ class Professional extends Model
 
     protected $fillable = ['name', 'phone_1', 'phone_2', 'email', 'notes', 'order', 'status'];
 
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
     public function statusLabel(): string
     {
         return $this->status ? 'Activo' : 'Inactivo';

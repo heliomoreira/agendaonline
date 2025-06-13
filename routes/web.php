@@ -48,6 +48,9 @@ Route::prefix('professionals')->group(function () {
 
     Route::post('/store', [ProfessionalsController::class, 'store'])->name('professionals.store');
     Route::put('/update/{id}', [ProfessionalsController::class, 'update'])->name('professionals.update');
+
+    Route::put('/{id}/services', [ProfessionalsController::class, 'updateServices'])->name('professionals.update.services');
+
 });
 
 Route::prefix('products')->group(function () {

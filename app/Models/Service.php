@@ -11,6 +11,10 @@ class Service extends Model
 
     protected $fillable = ['name', 'duration', 'price', 'image', 'order', 'status', 'notes'];
 
+    public function professionals()
+    {
+        return $this->belongsToMany(Professional::class);
+    }
     public function statusLabel(): string
     {
         return $this->status ? 'Activo' : 'Inactivo';

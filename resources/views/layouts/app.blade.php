@@ -89,7 +89,7 @@
             <ul class="menu-inner py-1" style="background-color: #000031">
 
                 <li class="menu-header small">
-                    <span class="menu-header-text" data-i18n="Apps & Pages">Apps &amp; Pages</span>
+                    <span class="menu-header-text" data-i18n="Módulos">Módulos</span>
                 </li>
                 <li class="menu-item">
                     <a href="{{route('clients.index')}}" class="menu-link">
@@ -125,7 +125,7 @@
 
                 <!-- Misc -->
                 <li class="menu-header small">
-                    <span class="menu-header-text" data-i18n="Misc">Misc</span>
+                    <span class="menu-header-text" data-i18n="Misc">Admin</span>
                 </li>
 
                 <!-- Multi Level Menu -->

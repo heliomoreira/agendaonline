@@ -40,7 +40,7 @@ class ProfessionalsController extends Controller
     public function edit($id)
     {
         try {
-            $professional = Professional::findOrFail($id);
+            $professional = Professional::with('services')->findOrFail($id);
 
             $services = Service::all();
 
@@ -85,6 +85,23 @@ class ProfessionalsController extends Controller
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar professional com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o professional.'));
+        }
+    }
+
+    public function updateServices(Request $request, $id)
+    {
+        try {
+            $professional = Professional::findOrFail($id);
+
+            $professional->services()->sync($request->input('services', []));
+
+            Log::info("Serviços atualizados para o profissional ID {$professional->id}");
+
+            return redirect()->route('professionals.edit', $professional->id)
+                ->with('success', 'Serviços atualizados com sucesso.');
+        } catch (\Exception $e) {
+            Log::error("Erro ao atualizar serviços do profissional ID {$id}: " . $e->getMessage());
+            return redirect()->back()->withInput()->withErrors('Erro ao atualizar os serviços.');
         }
     }
 
