@@ -32,10 +32,7 @@
                                             <a href="{{route('products.edit',['id'=>$product->id])}}">{{$product->product_code}}</a>
                                         </td>
                                         <td>
-                                            <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                            <span class="fw-medium">
-                                        <a href="{{route('products.edit',['id'=>$product->id])}}">{{$product->name}}</a>
-                                    </span>
+                                            <a href="{{route('products.edit',['id'=>$product->id])}}">{{$product->name}}</a>
                                         </td>
                                         <td>
                                             <a href="{{route('products.edit',['id'=>$product->id])}}">{{$product->price_1}} &euro;</a>

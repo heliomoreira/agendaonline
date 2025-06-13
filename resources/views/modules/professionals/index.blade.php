@@ -30,9 +30,7 @@
                                     <tr>
                                         <td>
                                             <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                            <span class="fw-medium">
                                         <a href="{{route('professionals.edit',['id'=>$professional->id])}}">{{$professional->name}}</a>
-                                    </span>
                                         </td>
                                         <td>
                                             <a href="{{route('professionals.edit',['id'=>$professional->id])}}">{{$professional->phone_1}}</a>

@@ -30,13 +30,10 @@
                                 @foreach($services as $service)
                                     <tr>
                                         <td>
-                                            <i class="icon-base ti tabler-user icon-md me-4"></i>
-                                            <span class="fw-medium">
-                                        <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->name}}</a>
-                                    </span>
+                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->name}}</a>
                                         </td>
                                         <td>
-                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->duration}}</a>
+                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->duration}} (minutos)</a>
                                         </td>
                                         <td>
                                             <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->price}} &euro;</a>
