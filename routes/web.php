@@ -2,17 +2,15 @@
 
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');*/
 
-Route::get('/dashboard', function () {
+Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
@@ -32,4 +30,13 @@ Route::prefix('clients')->group(function () {
     Route::put('/update/{id}', [ClientsController::class, 'update'])->name('clients.update');
 });
 
-require __DIR__.'/auth.php';
+Route::prefix('services')->group(function () {
+    Route::get('/', [ServicesController::class, 'index'])->name('services.index');
+    Route::get('/form', [ServicesController::class, 'form'])->name('services.form');
+    Route::get('/edit/{id}', [ServicesController::class, 'edit'])->name('services.edit');
+
+    Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
+    Route::put('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
+});
+
+require __DIR__ . '/auth.php';

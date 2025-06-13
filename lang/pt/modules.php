@@ -29,4 +29,10 @@ return[
     'client_updated' => 'Cliente atualizado com sucesso.',
     'client_deleted' => 'Cliente removido com sucesso.',
 
+
+    /* ---- Services ---- */
+
+    'service_created' => 'Serviço criado com sucesso.',
+    'service_updated' => 'Serviço atualizado com sucesso.',
+    'service_deleted' => 'Serviço removido com sucesso.',
 ];

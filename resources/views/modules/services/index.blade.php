@@ -1,0 +1,68 @@
+@extends('layouts.app')
+@section('content')
+    <div class="row g-6">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header header-elements">
+                    <h5 class="mb-0 me-2">Listagem de Serviços</h5>
+
+                    <div class="card-header-elements ms-auto">
+                        <a href="{{route('services.form')}}"
+                           class="btn btn-primary waves-effect waves-light">
+                            <span class="icon-base ti tabler-plus icon-xs me-1"></span>Novo Serviços
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-nowrap">
+                        @if(count($services)>0)
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Duração</th>
+                                    <th>Preço</th>
+                                    <th>Ordem</th>
+                                    <th>Estado</th>
+                                </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                @foreach($services as $service)
+                                    <tr>
+                                        <td>
+                                            <i class="icon-base ti tabler-user icon-md me-4"></i>
+                                            <span class="fw-medium">
+                                        <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->name}}</a>
+                                    </span>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->duration}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->price}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('services.edit',['id'=>$service->id])}}">{{$service->order}}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('services.edit', ['id' => $service->id]) }}">
+                                                <span class="badge bg-label-{{ $service->statusClass() }} me-1">
+                                                    {{ $service->statusLabel() }}
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                        @else
+                            Sem Serviços.
+                        @endif
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

@@ -111,7 +111,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="/" class="menu-link">
+                    <a href="#" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-calendar"></i>
                         <div data-i18n="Marcações">Marcações</div>
                     </a>
@@ -123,7 +123,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="app-kanban.html" class="menu-link">
+                    <a href="{{route('services.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-layout-list"></i>
                         <div data-i18n="Serviços">Serviços</div>
                     </a>
