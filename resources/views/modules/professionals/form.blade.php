@@ -45,8 +45,7 @@
             {{ html()->token() }}
             <div class="card">
                 <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">Detalhe de
-                        Profissional {!!  $professional->name ? '| <span style="color:#2A7AD4">' . $professional->name . '</span>': ''  !!}</h5>
+                    <h5 class="mb-0 me-2">Detalhe {!!  $professional->name ? '| <span style="color:#2A7AD4">' . $professional->name . '</span>': ''  !!}</h5>
                 </div>
                 <div class="card-body">
                     <div class="row g-6">
