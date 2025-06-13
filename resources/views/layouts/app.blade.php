@@ -720,5 +720,8 @@
 <script src="{{asset('theme/assets/js/main.js')}}"></script>
 <!-- Page JS -->
 <script src="{{asset('theme/assets/js/app-ecommerce-dashboard.js')}}"></script>
+
+
+@stack('scripts')
 </body>
 </html>

@@ -36,7 +36,7 @@
         </div>
     @endif
     <div class="row g-6">
-        <div class="col-md-12">
+        <div class="col-md-6">
             @if(!$professional->id)
                 {{ html()->modelForm($professional, 'POST', route('professionals.store'))->open() }}
             @else
@@ -50,29 +50,31 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-6">
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <label class="form-label" for="name">Nome</label>
                             {{html()->text('name')->id('name')->class('form-control')->placeholder('')}}
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <label class="form-label" for="phone_1">Contacto</label>
                             {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="phone_2">Contacto 2</label>
-                            {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
-                        </div>
-                        <div class="col-md-4">
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-8">
                             <label class="form-label" for="email">Email</label>
                             {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
                         </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="phone_2">Contacto 2</label>
+                            {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
+                        </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="form-label" for="status">Ordem</label>
                             {{html()->text('order')->id('order')->class('form-control')}}
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="form-label" for="status">Estado</label>
                             {{html()->select('status')->id('status')->options([true => 'Activo', false => 'Inactivo'])->class('form-select')->placeholder('-- Seleccionar --')}}
                         </div>
@@ -91,8 +93,6 @@
             </div>
             {{html()->closeModelForm()}}
         </div>
-    </div>
-    <div class="row mt-3">
         <div class="col-md-6">
             <form method="POST" action="{{ route('professionals.update.services', $professional->id) }}">
                 @csrf
@@ -104,19 +104,20 @@
                     <div class="card-body">
                         <div class="row g-6">
                             <table class="table">
+                                <thead>
                                 <tr>
-                                    <th>
-                                        &nbsp;
+                                    <th style="width:50px">
+                                        <input type="checkbox" id="select_all_services" />
                                     </th>
-                                    <th>
-                                        Serviço
-                                    </th>
+                                    <th>Serviço</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 @if(isset($services))
                                     @foreach($services as $service)
                                         <tr>
                                             <td style="width:50px">
-                                                <input type="checkbox" name="services[]" value="{{ $service->id }}"
+                                                <input type="checkbox" class="service-checkbox" name="services[]" value="{{ $service->id }}"
                                                        id="service_{{ $service->id }}"
                                                     {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
                                             </td>
@@ -126,6 +127,7 @@
                                         </tr>
                                     @endforeach
                                 @endif
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -144,4 +146,13 @@
             </form>
         </div>
     </div>
+
 @endsection
+@push('scripts')
+    <script>
+        document.getElementById('select_all_services').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('.service-checkbox');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+    </script>
+@endpush
