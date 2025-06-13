@@ -1,6 +1,6 @@
 <?php
 
-return[
+return [
 
     /* ---- Clients ---- */
 
@@ -35,4 +35,10 @@ return[
     'service_created' => 'Serviço criado com sucesso.',
     'service_updated' => 'Serviço atualizado com sucesso.',
     'service_deleted' => 'Serviço removido com sucesso.',
+
+    /* ---- Professionals ---- */
+
+    'professional_created' => 'Profissional criado com sucesso.',
+    'professional_updated' => 'Profissional atualizado com sucesso.',
+    'professional_deleted' => 'Profissional removido com sucesso.',
 ];

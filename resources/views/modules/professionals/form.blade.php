@@ -68,39 +68,13 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-4">
-                            <label class="form-label" for="address">Morada</label>
-                            {{html()->text('address')->id('address')->class('form-control')->placeholder('')}}
+                        <div class="col-md-2">
+                            <label class="form-label" for="status">Ordem</label>
+                            {{html()->text('order')->id('order')->class('form-control')}}
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label" for="number_port">Nº / Porta</label>
-                            {{html()->text('number_port')->id('number_port')->class('form-control')->placeholder('')}}
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="zip_code">Cód. Postal</label>
-                            {{html()->text('zip_code')->id('zip_code')->class('form-control')->placeholder('')}}
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label" for="phone_2">Localidade</label>
-                            {{html()->text('city')->id('city')->class('form-control')->placeholder('')}}
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2">
-                            <label class="form-label" for="birthdate">Data Aniversário</label>
-                            {{html()->date('birthdate')->id('birthdate')->class('form-control')->placeholder('')}}
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-4">
-                            <label class="form-label" for="name">Marketing</label><br>
-                            <label class="switch">
-                                <input type="checkbox" class="switch-input">
-                                <span class="switch-toggle-slider">
-                                <span class="switch-on"></span>
-                                <span class="switch-off"></span>
-                              </span>
-                            </label>
+                            <label class="form-label" for="status">Estado</label>
+                            {{html()->select('status')->id('status')->options([true => 'Activo', false => 'Inactivo'])->class('form-select')->placeholder('-- Seleccionar --')}}
                         </div>
                     </div>
                 </div>

@@ -41,12 +41,12 @@ Route::prefix('services')->group(function () {
 });
 
 Route::prefix('professionals')->group(function () {
-    Route::get('/', [ProfessionalsController::class, 'index'])->name('services.index');
-    Route::get('/form', [ProfessionalsController::class, 'form'])->name('services.form');
-    Route::get('/edit/{id}', [ProfessionalsController::class, 'edit'])->name('services.edit');
+    Route::get('/', [ProfessionalsController::class, 'index'])->name('professionals.index');
+    Route::get('/form', [ProfessionalsController::class, 'form'])->name('professionals.form');
+    Route::get('/edit/{id}', [ProfessionalsController::class, 'edit'])->name('professionals.edit');
 
-    Route::post('/store', [ProfessionalsController::class, 'store'])->name('services.store');
-    Route::put('/update/{id}', [ProfessionalsController::class, 'update'])->name('services.update');
+    Route::post('/store', [ProfessionalsController::class, 'store'])->name('professionals.store');
+    Route::put('/update/{id}', [ProfessionalsController::class, 'update'])->name('professionals.update');
 });
 
 require __DIR__ . '/auth.php';
