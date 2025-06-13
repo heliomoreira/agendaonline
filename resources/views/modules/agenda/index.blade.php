@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="row">
+        <div class="col-3">
+            <div class="mb-3">
+                <select id="categoryFilter" class="form-select">
+                    <option value="">Todas as Categorias</option>
+                    <option value="cat1">Consultas</option>
+                    <option value="cat2">Manutenção</option>
+                    <option value="cat3">Urgência</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="row g-6">
         <div class="col-md-12">
             <div class="card">
@@ -31,8 +43,40 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+            let calendarEl = document.getElementById('calendar');
+
+            const allEvents = [
+                {
+                    id: 1,
+                    title: 'Corte de Cabelo Homem',
+                    start: '2025-06-15T10:00:00',
+                    end: '2025-06-15T12:00:00',
+                    category: 'cat1',
+                    color: '#3498db',
+                    extendedProps: {
+                        cliente: 'João Silva',
+                        tecnico: 'Ana Costa',
+                        local: 'Loja 1',
+                        notas: 'Verificar disco rígido'
+                    }
+                },
+                {
+                    id: 2,
+                    title: 'Coloração de cabelo',
+                    start: '2025-06-16T10:00:00',
+                    end: '2025-06-16T12:00:00',
+                    category: 'cat2',
+                    color: '#2ecc71',
+                    extendedProps: {
+                        cliente: 'Maria Fonseca',
+                        tecnico: 'Carlos Dias',
+                        local: 'Loja 2',
+                        notas: 'Atualização de software'
+                    }
+                }
+            ];
+
+            let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
                 locale: 'pt',
                 height: 'auto',
@@ -42,6 +86,7 @@
                 titleFormat: {year: 'numeric', month: 'long'},
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
+                events: allEvents,
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -54,27 +99,18 @@
                     day: 'Dia',
                     list: 'Agenda'
                 },
-                events: [
-                    {
-                        title: 'Reparação - PC João',
-                        start: '2025-06-17T09:00:00',
-                        end: '2025-06-17T12:00:00',
-                        color: '#3498db'
-                    },
-                    {
-                        title: 'Instalação - Impressora Ana',
-                        start: '2025-06-17T11:30:00',
-                        end: '2025-06-17T12:30:00',
-                        color: '#3498db'
-                    },
-                    {
-                        title: 'Formatação - Laptop Pedro',
-                        start: '2025-06-18T14:00:00',
-                        end: '2025-06-18T15:00:00',
-                        color: '#e74c3c'
-                    }
-                ],
-                eventClick: function(info) {
+                eventContent: function(arg) {
+                    const cliente = arg.event.extendedProps.cliente || '';
+                    const tecnico = arg.event.extendedProps.tecnico || '';
+
+                    return {
+                        html:
+                            '<div style="font-weight: bold">' + arg.event.title + '</div>' +
+                            '<div style="font-size: 12px;">Cliente: ' + cliente + '</div>' +
+                            '<div style="font-size: 12px;">Técnico: ' + tecnico + '</div>'
+                    };
+                },
+                eventClick: function (info) {
                     document.getElementById('eventModalTitle').innerText = info.event.title;
                     document.getElementById('eventStart').innerText = info.event.start.toLocaleString();
                     document.getElementById('eventEnd').innerText = info.event.end?.toLocaleString() ?? '—';
@@ -84,6 +120,19 @@
                 }
             });
             calendar.render();
+
+            const filterSelect = document.getElementById('categoryFilter');
+            filterSelect.addEventListener('change', function () {
+                const selected = this.value;
+
+                const filteredEvents = selected
+                    ? allEvents.filter(e => e.category === selected)
+                    : allEvents;
+
+                calendar.removeAllEvents();
+                calendar.addEventSource(filteredEvents);
+            });
+
         });
     </script>
 @endpush
