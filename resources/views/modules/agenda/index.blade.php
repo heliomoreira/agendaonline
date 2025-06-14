@@ -11,9 +11,9 @@
             </select>
         </div>
         <div class="col-md-9 text-end">
-            <a href="#" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
                 <i class="ti tabler-plus me-2"></i> Novo Agendamento
-            </a>
+            </button>
         </div>
     </div>
     <div class="row g-6">
@@ -39,6 +39,67 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="newEventModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" method="POST" action="">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="service_id" class="form-label">Serviço</label>
+                        {{ html()->select('service_id')
+                            ->options($services)
+                            ->class('form-select')
+                            ->id('service_id')
+                            ->placeholder('-- Selecionar --') }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="professional_id" class="form-label">Profissional</label>
+                        {{ html()->select('professional_id')
+                            ->options([])
+                            ->class('form-select')
+                            ->id('professional_id')
+                            ->placeholder('-- Selecionar um serviço primeiro --')
+                            ->disabled() }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="client_id" class="form-label">Cliente</label>
+                        {{html()->select('client_id')->options($clients)->class('form-select')->placeholder('-- Seleccionar --')}}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="day" class="form-label">Data</label>
+                        <input type="date" id="day" name="day" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="start_hour" class="form-label">Hora de Início</label>
+                        <input type="time" id="start_hour" name="start_hour" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="end_hour" class="form-label">Hora de Fim</label>
+                        <input type="time" id="end_hour" name="end_hour" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notas</label>
+                        <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar Agendamento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 @endsection
 @push('scripts')
     <script src="{{ asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
@@ -102,7 +163,7 @@
                     day: 'Dia',
                     list: 'Agenda'
                 },
-                eventContent: function(arg) {
+                eventContent: function (arg) {
                     const cliente = arg.event.extendedProps.cliente || '';
                     const tecnico = arg.event.extendedProps.tecnico || '';
 
@@ -136,6 +197,36 @@
                 calendar.addEventSource(filteredEvents);
             });
 
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const serviceSelect = document.getElementById('service_id');
+            const professionalSelect = document.getElementById('professional_id');
+
+            serviceSelect.addEventListener('change', function () {
+                const serviceId = this.value;
+                professionalSelect.innerHTML = '<option value="">A carregar...</option>';
+                professionalSelect.disabled = true;
+
+                if (!serviceId) {
+                    professionalSelect.innerHTML = '<option value="">Selecione um serviço primeiro</option>';
+                    return;
+                }
+
+                fetch(`/services/${serviceId}/professionals`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let options = '<option value="">Selecione</option>';
+                        data.forEach(pro => {
+                            options += `<option value="${pro.id}">${pro.name}</option>`;
+                        });
+                        professionalSelect.innerHTML = options;
+                        professionalSelect.disabled = false;
+                    })
+                    .catch(() => {
+                        professionalSelect.innerHTML = '<option value="">Erro ao carregar profissionais</option>';
+                    });
+            });
         });
     </script>
 @endpush

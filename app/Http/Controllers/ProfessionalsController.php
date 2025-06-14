@@ -119,4 +119,13 @@ class ProfessionalsController extends Controller
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o professional.'));
         }
     }
+
+    public function getProfessionalsByService($id)
+    {
+        $professionals = Professional::whereHas('services', function ($query) use ($id) {
+            $query->where('services.id', $id);
+        })->get();
+
+        return response()->json($professionals);
+    }
 }

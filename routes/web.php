@@ -40,6 +40,8 @@ Route::prefix('services')->group(function () {
 
     Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
     Route::put('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
+
+    Route::get('/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
 });
 
 Route::prefix('professionals')->group(function () {
@@ -71,6 +73,7 @@ Route::prefix('agenda')->group(function () {
 
     Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
     Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
+
 });
 
 require __DIR__ . '/auth.php';
