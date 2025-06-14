@@ -57,18 +57,12 @@
                     </div>
                 </div>
             @else
-                <div class="card border-0 shadow-sm">
-                    <div
-                            class="card-body d-flex flex-column align-items-center justify-content-center text-center py-10">
-                        <img src="{{ asset('assets/images/empty.png') }}" alt="Sem dados"
-                             style="max-width: 180px; height: auto;" class="mb-4 opacity-75">
-                        <h4 class="fw-semibold text-muted mb-1">Nenhum Serviço encontrado</h4>
-                        <p class="text-secondary mb-4">Ainda não foram adicionados registos à lista de serviços.</p>
-                        <a href="{{ route('services.form') }}" class="btn btn-primary">
-                            <i class="ti tabler-plus me-2"></i> Novo Serviço
-                        </a>
-                    </div>
-                </div>
+                <x-empty-state
+                    title="Nenhum Serviço encontrado"
+                    message="Ainda não foram adicionados registos à lista de serviços-"
+                    button="Novo Serviço"
+                    link="{{ route('services.form') }}"
+                />
             @endif
         </div>
     </div>
