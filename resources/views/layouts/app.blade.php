@@ -62,33 +62,24 @@
 
 </head>
 <body>
-
-
-<!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar  ">
     <div class="layout-container">
-
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu" data-bs-theme="dark"
                style="background-color: #000031">
-
             <div class="app-brand demo ">
                 <a href="/" class="app-brand-link">
                     <span class="app-brand-logo demo">
-<img src="{{asset('logo.png')}}" alt="Agenda Online" height="35"/>
+                        <img src="{{asset('logo.png')}}" alt="Agenda Online" height="35"/>
                     </span>
                     <span class="app-brand-text demo menu-text" style="margin-inline-start:0.50rem">Agenda Online</span>
                 </a>
-
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
                     <i class="icon-base ti menu-toggle-icon d-none d-xl-block"></i>
                     <i class="icon-base ti tabler-x d-block d-xl-none"></i>
                 </a>
             </div>
-
             <div class="menu-inner-shadow"></div>
             <ul class="menu-inner py-1" style="background-color: #000031">
-
                 <li class="menu-header small">
                     <span class="menu-header-text" data-i18n="Módulos">Módulos</span>
                 </li>
@@ -99,7 +90,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="{{route('agenda.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-calendar"></i>
                         <div data-i18n="Marcações">Marcações</div>
                     </a>

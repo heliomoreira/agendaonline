@@ -1,16 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <div class="col-3">
-            <div class="mb-3">
-                <select id="categoryFilter" class="form-select">
-                    <option value="">Todas as Categorias</option>
-                    <option value="cat1">Consultas</option>
-                    <option value="cat2">Manutenção</option>
-                    <option value="cat3">Urgência</option>
-                </select>
-            </div>
+    <div class="row align-items-end mb-3">
+        <div class="col-md-3">
+            <select id="categoryFilter" class="form-select">
+                <option value="">Todas as Categorias</option>
+                <option value="cat1">Consultas</option>
+                <option value="cat2">Manutenção</option>
+                <option value="cat3">Urgência</option>
+            </select>
+        </div>
+        <div class="col-md-9 text-end">
+            <a href="#" class="btn btn-primary">
+                <i class="ti tabler-plus me-2"></i> Novo Agendamento
+            </a>
         </div>
     </div>
     <div class="row g-6">
