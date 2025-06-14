@@ -114,6 +114,7 @@
                 titleFormat: {year: 'numeric', month: 'long'},
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
+                hiddenDays: [0, 6],
                 events: '/agenda/get-events',
                 headerToolbar: {
                     left: 'prev,next today',
