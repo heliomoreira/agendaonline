@@ -12,7 +12,6 @@ class Notification extends Model
         'destinatary',
         'type',
         'text',
-        'service_name',
         'service_day',
         'service_start_hour',
         'service_end_hour',

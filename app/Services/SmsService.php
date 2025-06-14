@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
-    public static function send($receiver, $message, $sender, $company_id)
+    public static function send($sender, $destinatary, $text)
     {
 
         try {
@@ -17,11 +17,11 @@ class SmsService
             $response = $client->request('POST', $url . '/sendSMS.php', [
                 'query' => [
                     'licensekey' => env('EZ4U_SMS_API'),
-                    'phoneNumber' => $receiver,
-                    'messageText' => $message,
+                    'phoneNumber' => $destinatary,
+                    'messageText' => $text,
                     'account' => env('EZ4U_SMS_ACCOUNT'),
                     'alfaSender' => $sender,
-                    'CC' => $company_id,
+                    'CC' => 1,
                 ]
             ]);
 

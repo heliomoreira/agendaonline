@@ -35,6 +35,9 @@ class AgendaController extends Controller
             '919781176',
             'sms',
             'Olá, Marcação de... . Obrigado!',
+            $request->day,
+            $request->start_hour,
+            $request->end_hour
         );
 
 

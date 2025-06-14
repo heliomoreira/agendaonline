@@ -17,6 +17,9 @@ return new class extends Migration {
             $table->string('destinatary');
             $table->enum('type', ['sms', 'email']);
             $table->text('text');
+            $table->date('service_day');
+            $table->string('service_start_hour');
+            $table->string('service_end_hour');
             $table->string('status')->default('scheduled');
             $table->timestamps();
         });
