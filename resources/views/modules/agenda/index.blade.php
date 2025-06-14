@@ -3,12 +3,7 @@
 @section('content')
     <div class="row align-items-end mb-3">
         <div class="col-md-3">
-            <select id="categoryFilter" class="form-select">
-                <option value="">Todas as Categorias</option>
-                <option value="cat1">Consultas</option>
-                <option value="cat2">Manutenção</option>
-                <option value="cat3">Urgência</option>
-            </select>
+            {{html()->select('categoryFilter')->options($professionals)->class('form-select')->placeholder('Todas as Categorias')}}
         </div>
         <div class="col-md-9 text-end">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
@@ -107,6 +102,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             let calendarEl = document.getElementById('calendar');
+            let allEvents = [];
 
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
@@ -139,7 +135,7 @@
                         html:
                             '<div style="font-weight: bold">' + arg.event.title + '</div>' +
                             '<div style="font-size: 12px;">Cliente: ' + client + '</div>'
-                          /*  '<div style="font-size: 12px;">Técnico: ' + professional + '</div>'*/
+                        /*  '<div style="font-size: 12px;">Técnico: ' + professional + '</div>'*/
                     };
                 },
                 eventClick: function (info) {

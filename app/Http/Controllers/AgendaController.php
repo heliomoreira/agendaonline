@@ -44,7 +44,7 @@ class AgendaController extends Controller
                     'title' => $item->service->name ?? 'Serviço',
                     'start' => $start,
                     'end' => $end,
-                    'category' => 'default',
+                    'category' => $item->professional->id,
                     'color' => $item->professional->agenda_color ?? '#2F87EB',
                     'extendedProps' => [
                         'client' => $item->client->name ?? '',
