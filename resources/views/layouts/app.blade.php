@@ -80,6 +80,12 @@
             </div>
             <div class="menu-inner-shadow"></div>
             <ul class="menu-inner py-1" style="background-color: #000031">
+                <li class="menu-item">
+                    <a href="/" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-dashboard"></i>
+                        <div data-i18n="Dashboard">Dashboard</div>
+                    </a>
+                </li>
                 <li class="menu-header small">
                     <span class="menu-header-text" data-i18n="Módulos">Módulos</span>
                 </li>
