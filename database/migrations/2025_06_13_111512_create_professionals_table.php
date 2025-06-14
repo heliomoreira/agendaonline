@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('phone_1')->nullable();
             $table->string('phone_2')->nullable();
             $table->string('email')->nullable();
+            $table->string('agenda_color')->default('#2F87EB');
             $table->text('notes')->nullable();
             $table->integer('order')->nullable();
             $table->boolean('status')->default(true);

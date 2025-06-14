@@ -81,6 +81,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-3">
+                            <label class="form-label" for="agenda_color">Cor na Agenda</label>
+                            <input type="color" id="agenda_color" name="agenda_color" value="{{old('agenda_color', $professional->agenda_color)}}" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
                             <label class="form-label" for="status">Ordem</label>
                             {{html()->text('order')->id('order')->class('form-control')}}
                         </div>

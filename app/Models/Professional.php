@@ -9,7 +9,7 @@ class Professional extends Model
 {
     use softDeletes;
 
-    protected $fillable = ['name', 'phone_1', 'phone_2', 'email', 'notes', 'order', 'status'];
+    protected $fillable = ['name', 'phone_1', 'phone_2', 'email','agenda_color', 'notes', 'order', 'status'];
 
     public function services()
     {

@@ -74,6 +74,8 @@ Route::prefix('agenda')->group(function () {
     Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
     Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
 
+    Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
+
 });
 
 require __DIR__ . '/auth.php';

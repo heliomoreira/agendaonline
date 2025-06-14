@@ -41,65 +41,74 @@
     </div>
     <div class="modal fade" id="newEventModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="modal-content" method="POST" action="">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title">Novo Agendamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="service_id" class="form-label">Serviço</label>
-                        {{ html()->select('service_id')
-                            ->options($services)
-                            ->class('form-select')
-                            ->id('service_id')
-                            ->placeholder('-- Selecionar --') }}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="professional_id" class="form-label">Profissional</label>
-                        {{ html()->select('professional_id')
-                            ->options([])
-                            ->class('form-select')
-                            ->id('professional_id')
-                            ->placeholder('-- Selecionar um serviço primeiro --')
-                            ->disabled() }}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="client_id" class="form-label">Cliente</label>
-                        {{html()->select('client_id')->options($clients)->class('form-select')->placeholder('-- Seleccionar --')}}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="day" class="form-label">Data</label>
-                        <input type="date" id="day" name="day" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="start_hour" class="form-label">Hora de Início</label>
-                        <input type="time" id="start_hour" name="start_hour" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="end_hour" class="form-label">Hora de Fim</label>
-                        <input type="time" id="end_hour" name="end_hour" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="notes" class="form-label">Notas</label>
-                        <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
-                    </div>
+            {{ html()->form('POST', route('agenda.store'))->class('modal-content')->open() }}
+            {{ html()->token() }}
+            <div class="modal-header">
+                <h5 class="modal-title">Novo Agendamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="service_id" class="form-label">Serviço</label>
+                    {{ html()->select('service_id')
+                        ->options($services)
+                        ->class('form-select')
+                        ->id('service_id')
+                        ->placeholder('-- Selecionar --') }}
                 </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Guardar Agendamento</button>
+                <div class="mb-3">
+                    <label for="professional_id" class="form-label">Profissional</label>
+                    {{ html()->select('professional_id')
+                        ->options([])
+                        ->class('form-select')
+                        ->id('professional_id')
+                        ->placeholder('-- Selecionar um serviço primeiro --')
+                        ->disabled() }}
                 </div>
+
+                <div class="mb-3">
+                    <label for="client_id" class="form-label">Cliente</label>
+                    {{html()->select('client_id')->options($clients)->class('form-select')->placeholder('-- Seleccionar --')}}
+                </div>
+
+                <div class="mb-3">
+                    <label for="day" class="form-label">Data</label>
+                    <input type="date" id="day" name="day" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="start_hour" class="form-label">Hora de Início</label>
+                    <input type="time" id="start_hour" name="start_hour" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="end_hour" class="form-label">Hora de Fim</label>
+                    <input type="time" id="end_hour" name="end_hour" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notas</label>
+                    <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar Agendamento</button>
+            </div>
             </form>
         </div>
     </div>
-
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Cor do profissional atualizada com sucesso!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script src="{{ asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
@@ -108,37 +117,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             let calendarEl = document.getElementById('calendar');
-
-            const allEvents = [
-                {
-                    id: 1,
-                    title: 'Corte de Cabelo Homem',
-                    start: '2025-06-15T10:00:00',
-                    end: '2025-06-15T12:00:00',
-                    category: 'cat1',
-                    color: '#3498db',
-                    extendedProps: {
-                        cliente: 'João Silva',
-                        tecnico: 'Ana Costa',
-                        local: 'Loja 1',
-                        notas: 'Verificar disco rígido'
-                    }
-                },
-                {
-                    id: 2,
-                    title: 'Coloração de cabelo',
-                    start: '2025-06-16T10:00:00',
-                    end: '2025-06-16T12:00:00',
-                    category: 'cat2',
-                    color: '#2ecc71',
-                    extendedProps: {
-                        cliente: 'Maria Fonseca',
-                        tecnico: 'Carlos Dias',
-                        local: 'Loja 2',
-                        notas: 'Atualização de software'
-                    }
-                }
-            ];
 
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
@@ -150,7 +128,7 @@
                 titleFormat: {year: 'numeric', month: 'long'},
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
-                events: allEvents,
+                events: '/agenda/get-events',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -164,14 +142,14 @@
                     list: 'Agenda'
                 },
                 eventContent: function (arg) {
-                    const cliente = arg.event.extendedProps.cliente || '';
-                    const tecnico = arg.event.extendedProps.tecnico || '';
+                    const client = arg.event.extendedProps.client || '';
+                    const professional = arg.event.extendedProps.professional || '';
 
                     return {
                         html:
                             '<div style="font-weight: bold">' + arg.event.title + '</div>' +
-                            '<div style="font-size: 12px;">Cliente: ' + cliente + '</div>' +
-                            '<div style="font-size: 12px;">Técnico: ' + tecnico + '</div>'
+                            '<div style="font-size: 12px;">Cliente: ' + client + '</div>'
+                          /*  '<div style="font-size: 12px;">Técnico: ' + professional + '</div>'*/
                     };
                 },
                 eventClick: function (info) {
@@ -197,6 +175,11 @@
                 calendar.addEventSource(filteredEvents);
             });
 
+            @if(session('success'))
+            const toastEl = document.getElementById('successToast');
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+            @endif
         });
 
         document.addEventListener('DOMContentLoaded', function () {
