@@ -21,10 +21,10 @@ class NotificationService
         ]);
     }
 
-    public static function markAsSent($notificationId)
+    public static function markAsSent($notificationId): bool
     {
         $notification = Notification::find($notificationId);
-        
+
         if ($notification) {
             $notification->status = 'sent';
             $notification->save();
