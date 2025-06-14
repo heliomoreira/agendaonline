@@ -96,17 +96,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Guardar Agendamento</button>
             </div>
-            </form>
-        </div>
-    </div>
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Cor do profissional atualizada com sucesso!
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-            </div>
+            {{html()->form()->close()}}
         </div>
     </div>
 @endsection
