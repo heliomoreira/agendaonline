@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <div class="row g-6">
-        <!-- View sales -->
         <div class="col-xl-4">
             <div class="card">
                 <div class="d-flex align-items-end row">
@@ -20,6 +19,177 @@
                                  alt="view sales"/>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="card-title mb-0">Statistics</h5>
+                    <small class="text-body-secondary">Updated 1 month ago</small>
+                </div>
+                <div class="card-body d-flex align-items-end">
+                    <div class="w-100">
+                        <div class="row gy-3">
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="badge rounded bg-label-primary me-4 p-2"><i
+                                            class="icon-base ti tabler-chart-pie-2 icon-lg"></i></div>
+                                    <div class="card-info">
+                                        <h5 class="mb-0">230k</h5>
+                                        <small>Sales</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="badge rounded bg-label-info me-4 p-2"><i
+                                            class="icon-base ti tabler-users icon-lg"></i></div>
+                                    <div class="card-info">
+                                        <h5 class="mb-0">8.549k</h5>
+                                        <small>Customers</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="badge rounded bg-label-danger me-4 p-2"><i
+                                            class="icon-base ti tabler-shopping-cart icon-lg"></i></div>
+                                    <div class="card-info">
+                                        <h5 class="mb-0">1.423k</h5>
+                                        <small>Products</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="badge rounded bg-label-success me-4 p-2"><i
+                                            class="icon-base ti tabler-currency-dollar icon-lg"></i></div>
+                                    <div class="card-info">
+                                        <h5 class="mb-0">$9745</h5>
+                                        <small>Revenue</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 order-3 mt-3">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title m-0 me-2">Próximos Serviços</h5>
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1 waves-effect"
+                            type="button" id="teamMemberList" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-borderless border-top">
+                        <thead class="border-bottom">
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Data</th>
+                            <th>Hora de Início</th>
+                            <th>Hora de Fim</th>
+                            <th>Profissional</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="pt-5">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="pt-5">
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0 text-heading">18/06/2025</p>
+                                </div>
+                            </td>
+                            <td class="pt-5">10:00h</td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">11:00h</p>
+                            </td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">Professional</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-5">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="pt-5">
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0 text-heading">18/06/2025</p>
+                                </div>
+                            </td>
+                            <td class="pt-5">10:00h</td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">11:00h</p>
+                            </td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">Professional</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-5">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="pt-5">
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0 text-heading">18/06/2025</p>
+                                </div>
+                            </td>
+                            <td class="pt-5">10:00h</td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">11:00h</p>
+                            </td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">Professional</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-5">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="d-flex flex-column">
+                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="pt-5">
+                                <div class="d-flex flex-column">
+                                    <p class="mb-0 text-heading">18/06/2025</p>
+                                </div>
+                            </td>
+                            <td class="pt-5">10:00h</td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">11:00h</p>
+                            </td>
+                            <td class="pt-5">
+                                <p class="mb-0 text-heading">Professional</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
