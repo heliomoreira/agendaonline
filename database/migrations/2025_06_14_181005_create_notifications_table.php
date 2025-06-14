@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('tenant_id');
             $table->string('sender');
             $table->string('destinatary');
             $table->enum('type', ['sms', 'email']);

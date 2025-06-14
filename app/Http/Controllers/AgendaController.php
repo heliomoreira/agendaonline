@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use App\Models\Client;
+use App\Models\Notification;
 use App\Models\Professional;
 use App\Models\Service;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -27,6 +29,14 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         Agenda::create($request->all());
+
+        NotificationService::saveNotification(
+            'Nome do Espaço',
+            '919781176',
+            'sms',
+            'Olá, Marcação de... . Obrigado!',
+        );
+
 
         return redirect()->route('agenda.index')->with('success', 'Appointment created successfully.');
     }
