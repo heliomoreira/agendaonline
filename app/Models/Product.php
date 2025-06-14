@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Product extends Model
 {
-    use softDeletes;
+    use HasFactory, Notifiable, softDeletes;
 
     protected $fillable = ['product_code','name', 'description', 'price_1', 'price_2', 'stock_movement', 'image', 'notes'];
 

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Professional extends Model
 {
-    use softDeletes;
+    use HasFactory, Notifiable, softDeletes;
 
     protected $fillable = ['name', 'phone_1', 'phone_2', 'email','agenda_color', 'notes', 'order', 'status'];
 
