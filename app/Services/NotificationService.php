@@ -20,4 +20,16 @@ class NotificationService
             'status' => 'scheduled',
         ]);
     }
+
+    public static function markAsSent($notificationId)
+    {
+        $notification = Notification::find($notificationId);
+        
+        if ($notification) {
+            $notification->status = 'sent';
+            $notification->save();
+            return true;
+        }
+        return false;
+    }
 }

@@ -36,7 +36,7 @@ class AgendaController extends Controller
         $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
 
         NotificationService::saveNotification(
-            'AGENDAONLINE',
+            'AGENDA',
             '919781176',
             'sms',
             $text,

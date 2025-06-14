@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Notification;
+use App\Services\NotificationService;
 use App\Services\SmsService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -35,11 +36,13 @@ class SendNotification extends Command
                 ->get();
 
             foreach ($notifications as $notification) {
-                /*SmsService::send(
+                SmsService::send(
                     $notification->sender,
                     $notification->destinatary,
                     $notification->text,
-                );*/
+                );
+
+                NotificationService::markAsSent($notification->id);
             }
 
             return true;
