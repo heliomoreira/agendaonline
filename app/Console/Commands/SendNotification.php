@@ -35,11 +35,11 @@ class SendNotification extends Command
                 ->get();
 
             foreach ($notifications as $notification) {
-                SmsService::send(
+                /*SmsService::send(
                     $notification->sender,
                     $notification->destinatary,
                     $notification->text,
-                );
+                );*/
             }
 
             return true;
