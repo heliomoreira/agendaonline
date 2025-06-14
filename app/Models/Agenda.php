@@ -32,4 +32,20 @@ class Agenda extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
+    public function scopeUpcoming($query, $limit = 5)
+    {
+        $now = now();
+
+        return $query->where(function ($query) use ($now) {
+            $query->where('day', '>', $now->toDateString())
+                ->orWhere(function ($q) use ($now) {
+                    $q->where('day', $now->toDateString())
+                        ->where('start_hour', '>=', $now->toTimeString());
+                });
+        })
+            ->orderBy('day')
+            ->orderBy('start_hour')
+            ->take($limit);
+    }
 }

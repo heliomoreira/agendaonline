@@ -80,118 +80,60 @@
     </div>
     <div class="row">
         <div class="col-6 order-3 mt-3">
-            <div class="card h-100">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title m-0 me-2">Próximos Serviços</h5>
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-2 me-n1 waves-effect"
-                            type="button" id="teamMemberList" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="icon-base ti tabler-dots-vertical icon-md text-body-secondary"></i>
-                        </button>
+                    <h5 class="card-title"><i class="ti tabler-calendar"></i> Próximos Serviços</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table border-top">
+                            <thead class="border-bottom">
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Data</th>
+                                <th>Hora de Início</th>
+                                <th>Hora de Fim</th>
+                                <th>Profissional</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($nextEvents as $event)
+                                <tr>
+                                    <td class="pt-5">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <div class="d-flex flex-column">
+                                                <p class="mb-0 text-heading">{{ $event->service->name }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $event->day }}</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $event->start_hour }}h</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $event->end_hour }}h</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $event->professional->name }}</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-borderless border-top">
-                        <thead class="border-bottom">
-                        <tr>
-                            <th>Serviço</th>
-                            <th>Data</th>
-                            <th>Hora de Início</th>
-                            <th>Hora de Fim</th>
-                            <th>Profissional</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="pt-5">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="d-flex flex-column">
-                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="pt-5">
-                                <div class="d-flex flex-column">
-                                    <p class="mb-0 text-heading">18/06/2025</p>
-                                </div>
-                            </td>
-                            <td class="pt-5">10:00h</td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">11:00h</p>
-                            </td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">Professional</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="pt-5">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="d-flex flex-column">
-                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="pt-5">
-                                <div class="d-flex flex-column">
-                                    <p class="mb-0 text-heading">18/06/2025</p>
-                                </div>
-                            </td>
-                            <td class="pt-5">10:00h</td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">11:00h</p>
-                            </td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">Professional</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="pt-5">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="d-flex flex-column">
-                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="pt-5">
-                                <div class="d-flex flex-column">
-                                    <p class="mb-0 text-heading">18/06/2025</p>
-                                </div>
-                            </td>
-                            <td class="pt-5">10:00h</td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">11:00h</p>
-                            </td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">Professional</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="pt-5">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div class="d-flex flex-column">
-                                        <p class="mb-0 text-heading">Corte de Cabelo</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="pt-5">
-                                <div class="d-flex flex-column">
-                                    <p class="mb-0 text-heading">18/06/2025</p>
-                                </div>
-                            </td>
-                            <td class="pt-5">10:00h</td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">11:00h</p>
-                            </td>
-                            <td class="pt-5">
-                                <p class="mb-0 text-heading">Professional</p>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-12 text-end">
+                            <a href="{{ route('agenda.index') }}">Ver Agenda</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
