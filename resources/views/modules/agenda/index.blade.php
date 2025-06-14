@@ -162,11 +162,11 @@
                 calendar.addEventSource(filteredEvents);
             });
 
-            @if(session('success'))
+            {{--@if(session('success'))
             const toastEl = document.getElementById('successToast');
             const toast = new bootstrap.Toast(toastEl);
             toast.show();
-            @endif
+            @endif--}}
         });
 
         document.addEventListener('DOMContentLoaded', function () {

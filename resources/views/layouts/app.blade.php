@@ -81,11 +81,11 @@
             <div class="menu-inner-shadow"></div>
             <ul class="menu-inner py-1" style="background-color: #000031">
                 <li class="menu-item text-center">
-                <span class="badge bg-label-primary">
+                <span class="badge bg-label-warning">
                     Versão BETA
                 </span>
                 </li>
-                <li class="menu-item mt-2">
+                <li class="menu-item mt-4">
                     <a href="/" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-dashboard"></i>
                         <div data-i18n="Dashboard">Dashboard</div>
