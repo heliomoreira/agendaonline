@@ -95,7 +95,7 @@ class ProfessionalsController extends Controller
 
             $professional->services()->sync($request->input('services', []));
 
-            Log::info("Serviços atualizados para o profissional ID {$professional->id}");
+            //Log::info("Serviços atualizados para o profissional ID {$professional->id}");
 
             return redirect()->route('professionals.edit', $professional->id)
                 ->with('success', 'Serviços atualizados com sucesso.');

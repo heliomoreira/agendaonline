@@ -30,11 +30,13 @@ class AgendaController extends Controller
     {
         Agenda::create($request->all());
 
+        $text = "Olá, lembramos que tem um serviço agendado para amanhã às " . $request->start_hour . ". Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+
         NotificationService::saveNotification(
-            'Nome do Espaço',
+            'AGENDAONLINE',
             '919781176',
             'sms',
-            'Olá, Marcação de... . Obrigado!',
+            $text,
             $request->day,
             $request->start_hour,
             $request->end_hour
