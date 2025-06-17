@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         Client::factory()->create([
             'name' => 'John Doe',
             'phone_1' => '910000000',
-            'email' => 'email' . now() . '@email.pt']);
+            'email' => 'email' . now()->timestamp . '@email.pt']);
 
         Professional::factory()->create([
             'name' => 'Test Professional',
