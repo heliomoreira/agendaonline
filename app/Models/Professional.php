@@ -17,6 +17,16 @@ class Professional extends Model
     {
         return $this->belongsToMany(Service::class);
     }
+
+    public function workingHours()
+    {
+        return $this->hasMany(WorkingHour::class);
+    }
+
+    public function unavailabilities()
+    {
+        return $this->hasMany(ProfessionalUnavailability::class);
+    }
     public function statusLabel(): string
     {
         return $this->status ? 'Activo' : 'Inactivo';

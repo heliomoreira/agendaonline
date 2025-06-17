@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\AvailabilityController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController;
@@ -76,5 +78,11 @@ Route::prefix('agenda')->group(function () {
     Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
 
 });
+
+Route::get('/booking', [BookingController::class, 'index']);
+Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');
+
+Route::get('/available-slots', [AvailabilityController::class, 'getAvailableSlots']);
+
 
 require __DIR__ . '/auth.php';
