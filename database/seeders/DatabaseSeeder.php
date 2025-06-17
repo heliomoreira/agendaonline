@@ -21,6 +21,14 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create();
 
+        $this->call([
+            ProfessionalsTableSeeder::class,
+            ServicesTableSeeder::class,
+            WorkingHoursTableSeeder::class,
+            LocationClosuresTableSeeder::class,
+            ProfessionalUnavailabilitiesTableSeeder::class,
+        ]);
+/*
         Client::factory()->create([
             'name' => 'John Doe',
             'phone_1' => '910000000',
@@ -37,6 +45,6 @@ class DatabaseSeeder extends Seeder
             'duration' => 30,
             'price' => 17.50,
             'status' => 1
-        ]);
+        ]);*/
     }
 }
