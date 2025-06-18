@@ -4,9 +4,9 @@
     <div class="container">
         <form id="slotForm" class="row g-3">
             <div class="col-md-6">
-                <label for="service_id" class="form-label">Service</label>
+                <label for="service_id" class="form-label">Serviço</label>
                 <select id="service_id" name="service_id" class="form-select" required>
-                    <option value="">Choose...</option>
+                    <option value="">Selecionar...</option>
                     @foreach($services as $service)
                         <option value="{{ $service->id }}">{{ $service->name }}</option>
                     @endforeach
@@ -14,9 +14,9 @@
             </div>
 
             <div class="col-md-6">
-                <label for="professional_id" class="form-label">Professional (optional)</label>
+                <label for="professional_id" class="form-label">Professional (opcional)</label>
                 <select id="professional_id" name="professional_id" class="form-select" disabled>
-                    <option value="">Any</option>
+                    <option value="">Todos</option>
                     @foreach($professionals as $pro)
                         <option value="{{ $pro->id }}">{{ $pro->name }}</option>
                     @endforeach
@@ -24,20 +24,20 @@
             </div>
 
             <div class="col-md-6">
-                <label for="day" class="form-label">Day</label>
+                <label for="day" class="form-label">Dia</label>
                 <input type="date" id="day" name="day" class="form-control" disabled required>
             </div>
 
             <div class="col-md-6">
-                <label for="time_select" class="form-label">Available Time Slots</label>
+                <label for="time_select" class="form-label">Horários Disponíveis</label>
                 <select id="time_select" name="start_hour" class="form-select" disabled required>
-                    <option value="">Select a time...</option>
+                    <option value="">Selecionar horário...</option>
                 </select>
             </div>
 
             <div class="col-12 text-end">
                 <button type="submit" id="submitBtn" class="btn btn-primary mt-3" disabled>
-                    Confirm Booking
+                    Confirmar Marcação
                 </button>
             </div>
         </form>
@@ -108,13 +108,13 @@
                 dayInput.disabled = !hasService;
 
                 timeSelect.disabled = true;
-                timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
                 updateSubmitButtonState();
             });
 
             professionalSelect.addEventListener('change', function () {
                 timeSelect.disabled = true;
-                timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
 
                 const hasService = serviceSelect.value !== '';
                 const hasDay = dayInput.value !== '';
@@ -134,7 +134,7 @@
                     loadAvailableSlots();
                 } else {
                     timeSelect.disabled = true;
-                    timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                    timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
                 }
 
                 updateSubmitButtonState();
@@ -150,7 +150,7 @@
                 if (!serviceId || !day) return;
 
                 timeSelect.disabled = true;
-                timeSelect.innerHTML = '<option>Loading...</option>';
+                timeSelect.innerHTML = '<option>A carregar...</option>';
 
                 const params = new URLSearchParams({
                     service_id: serviceId,
@@ -162,7 +162,7 @@
                 fetch(`/available-slots?${params.toString()}`)
                     .then(res => res.json())
                     .then(data => {
-                        timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                        timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
                         const seen = new Set();
 
                         data.forEach(entry => {
