@@ -6,10 +6,10 @@ use App\Models\Agenda;
 use App\Models\Client;
 use App\Models\Professional;
 use App\Models\Service;
+use App\Notifications\BookingConfirmation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 
 class BookingController extends Controller
 {
@@ -23,31 +23,37 @@ class BookingController extends Controller
 
     public function bookSlot(Request $request)
     {
+        // Validar inputs antes de qualquer ação
         $validator = Validator::make($request->all(), [
             'service_id' => 'required|exists:services,id',
             'professional_id' => 'required|exists:professionals,id',
             'day' => 'required|date',
             'start_hour' => 'required|date_format:H:i',
-        ]);
-
-        $client = Client::create([
-            'name' => $request->client_name,
-            'email' => $request->client_email,
-            'phone_1' => $request->client_phone_1,
+            'client_name' => 'required|string|max:255',
+            'client_email' => 'required|email|max:255',
+            'client_phone_1' => 'required|string|max:20',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // Criar cliente
+        $client = Client::create([
+            'name' => $request->client_name,
+            'email' => $request->client_email,
+            'phone_1' => $request->client_phone_1,
+        ]);
+
+        // Obter dados do serviço
         $service = Service::findOrFail($request->service_id);
-        $start = Carbon::parse($request->day . ' ' . $request->start_hour);
+        $start = Carbon::parse("{$request->day} {$request->start_hour}");
         $end = $start->copy()->addMinutes($service->duration);
 
-        // Check for overlapping
+        // Verificar conflitos
         $conflict = Agenda::where('professional_id', $request->professional_id)
             ->where('day', $request->day)
-            ->where(function ($q) use ($request, $start, $end) {
+            ->where(function ($q) use ($start, $end) {
                 $q->whereBetween('start_hour', [$start->format('H:i'), $end->format('H:i')])
                     ->orWhereBetween('end_hour', [$start->format('H:i'), $end->format('H:i')])
                     ->orWhere(function ($q2) use ($start, $end) {
@@ -60,7 +66,8 @@ class BookingController extends Controller
             return response()->json(['error' => 'This slot is already taken.'], 409);
         }
 
-        $agenda = Agenda::create([
+        // Criar marcação
+        $booking = Agenda::create([
             'service_id' => $request->service_id,
             'professional_id' => $request->professional_id,
             'client_id' => $client->id,
@@ -70,6 +77,14 @@ class BookingController extends Controller
             'notes' => $request->notes,
         ]);
 
-        return response()->json(['message' => 'Booking confirmed!', 'agenda' => $agenda]);
+        $booking->load(['client', 'service', 'professional']);
+        
+        // Enviar email de confirmação para o cliente (via modelo)
+        $client->notify(new BookingConfirmation($booking));
+
+        return response()->json([
+            'message' => 'Booking confirmed!',
+            'agenda' => $booking
+        ]);
     }
 }
