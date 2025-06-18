@@ -1,92 +1,86 @@
 @extends('layouts.front')
 
 @section('content')
-    <div class="container">
-        <form id="slotForm" class="row g-3">
-            <div class="col-md-6">
-                <label for="service_id" class="form-label">Serviço</label>
-                <select id="service_id" name="service_id" class="form-select" required>
-                    <option value="">Selecionar...</option>
-                    @foreach($services as $service)
-                        <option value="{{ $service->id }}">{{ $service->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <form id="slotForm" action="{{ route('book.slot') }}" method="POST" class="row g-2">
+        @csrf
 
-            <div class="col-md-6">
-                <label for="professional_id" class="form-label">Professional (opcional)</label>
-                <select id="professional_id" name="professional_id" class="form-select" disabled>
-                    <option value="">Todos</option>
-                    @foreach($professionals as $pro)
-                        <option value="{{ $pro->id }}">{{ $pro->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+        {{-- Secção: Marcação --}}
+        <div class="col-12">
+            <h5 class="mb-2 border-bottom pb-1">
+                <i class="bi bi-calendar-check me-2 text-primary"></i>
+                Informações da Marcação
+            </h5>
+        </div>
 
-            <div class="col-md-6">
-                <label for="day" class="form-label">Dia</label>
-                <input type="date" id="day" name="day" class="form-control" disabled required>
-            </div>
+        <div class="col-md-6">
+            <label for="service_id" class="form-label">Serviço</label>
+            <select id="service_id" name="service_id" class="form-select" required>
+                <option value="">Selecionar...</option>
+                @foreach($services as $service)
+                    <option value="{{ $service->id }}">{{ $service->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="col-md-6">
-                <label for="time_select" class="form-label">Horários Disponíveis</label>
-                <select id="time_select" name="start_hour" class="form-select" disabled required>
-                    <option value="">Selecionar horário...</option>
-                </select>
-            </div>
+        <div class="col-md-6">
+            <label for="professional_id" class="form-label">Profissional (opcional)</label>
+            <select id="professional_id" name="professional_id" class="form-select" disabled>
+                <option value="">Todos</option>
+                @foreach($professionals as $pro)
+                    <option value="{{ $pro->id }}">{{ $pro->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="col-12 text-end">
-                <button type="submit" id="submitBtn" class="btn btn-primary mt-3" disabled>
-                    Confirmar Marcação
-                </button>
-            </div>
-        </form>
+        <div class="col-md-6">
+            <label for="day" class="form-label">Dia</label>
+            <input type="date" id="day" name="day" class="form-control" disabled required>
+        </div>
 
-        {{--<form id="slotForm" class="row g-3">
-            <div class="col-md-4">
-                <label for="service_id" class="form-label">Service</label>
-                <select id="service_id" name="service_id" class="form-select" required>
-                    <option value="">Choose...</option>
-                    @foreach($services as $service)
-                        <option value="{{ $service->id }}">{{ $service->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="col-md-6">
+            <label for="time_select" class="form-label">Horários Disponíveis</label>
+            <select id="time_select" name="start_hour" class="form-select" disabled required>
+                <option value="">Selecionar horário...</option>
+            </select>
+        </div>
 
-            <div class="col-md-4">
-                <label for="professional_id" class="form-label">Professional (optional)</label>
-                <select id="professional_id" name="professional_id" class="form-select">
-                    <option value="">Any</option>
+        {{-- Secção: Cliente --}}
+        <div class="col-12 pt-4">
+            <h5 class="mb-2 border-bottom pb-1">
+                <i class="bi bi-person-circle me-2 text-success"></i>
+                Dados do Cliente
+            </h5>
+        </div>
 
-                    @foreach($professionals as $pro)
-                        <option value="{{ $pro->id }}">{{ $pro->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="col-md-4">
+            <label for="client_name" class="form-label">Nome</label>
+            <input type="text" id="client_name" name="client_name" class="form-control" required>
+        </div>
 
-            <div class="col-md-2">
-                <label for="start_date" class="form-label">Start Date</label>
-                <input type="date" name="start_date" id="start_date" class="form-control" required>
-            </div>
+        <div class="col-md-4">
+            <label for="client_email" class="form-label">Email</label>
+            <input type="email" id="client_email" name="client_email" class="form-control" required>
+        </div>
 
-            <div class="col-md-2">
-                <label for="end_date" class="form-label">End Date</label>
-                <input type="date" name="end_date" id="end_date" class="form-control" required>
-            </div>
+        <div class="col-md-4">
+            <label for="client_phone_1" class="form-label">Telemóvel</label>
+            <input type="text" id="client_phone_1" name="client_phone_1" class="form-control" required>
+        </div>
 
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Search Slots</button>
-            </div>
-        </form>
-
-        <hr>
-
-        <div id="slots-container">
-            <h4>Available Slots</h4>
-            <div id="slots-result" class="row"></div>
-        </div>--}}
-    </div>
+        <div class="col-12">
+            <label for="notes" class="form-label">Notas (opcional)</label>
+            <textarea id="notes" name="notes" class="form-control" rows="2"></textarea>
+        </div>
+        {{-- Submeter --}}
+        <div class="col-12 text-end">
+            <button type="submit" id="submitBtn" class="btn btn-primary mt-4" disabled>
+                <i class="bi bi-check-circle me-1"></i>
+                Confirmar Marcação
+            </button>
+        </div>
+    </form>
 @endsection
+
 
 @push('scripts')
     <script>

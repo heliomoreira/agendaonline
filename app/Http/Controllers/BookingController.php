@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agenda;
+use App\Models\Client;
 use App\Models\Professional;
 use App\Models\Service;
 use Carbon\Carbon;
@@ -25,9 +26,14 @@ class BookingController extends Controller
         $validator = Validator::make($request->all(), [
             'service_id' => 'required|exists:services,id',
             'professional_id' => 'required|exists:professionals,id',
-            'client_id' => 'required|exists:clients,id',
             'day' => 'required|date',
             'start_hour' => 'required|date_format:H:i',
+        ]);
+
+        $client = Client::create([
+            'name' => $request->client_name,
+            'email' => $request->client_email,
+            'phone_1' => $request->client_phone_1,
         ]);
 
         if ($validator->fails()) {
@@ -57,7 +63,7 @@ class BookingController extends Controller
         $agenda = Agenda::create([
             'service_id' => $request->service_id,
             'professional_id' => $request->professional_id,
-            'client_id' => $request->client_id,
+            'client_id' => $client->id,
             'day' => $request->day,
             'start_hour' => $start->format('H:i'),
             'end_hour' => $end->format('H:i'),
