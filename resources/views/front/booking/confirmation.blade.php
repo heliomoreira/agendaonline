@@ -19,7 +19,7 @@
                     <li class="list-group-item"><strong>Serviço:</strong> {{ $booking->service->name }}</li>
                     <li class="list-group-item"><strong>Profissional:</strong> {{ $booking->professional->name ?? 'N/A' }}</li>
                     <li class="list-group-item"><strong>Data:</strong> {{ \Carbon\Carbon::parse($booking->day)->format('d/m/Y') }}</li>
-                    <li class="list-group-item"><strong>Hora:</strong> {{ $booking->start_hour }}</li>
+                    <li class="list-group-item"><strong>Hora:</strong> {{ $booking->start_hour }}h</li>
                     @if($booking->notes)
                         <li class="list-group-item"><strong>Notas:</strong> {{ $booking->notes }}</li>
                     @endif

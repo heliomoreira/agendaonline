@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Notifications\BookingConfirmation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
@@ -79,8 +80,8 @@ class BookingController extends Controller
 
         $booking->load(['client', 'service', 'professional']);
 
-        // Enviar email de confirmação para o cliente (via modelo)
-        $client->notify(new BookingConfirmation($booking));
+        Notification::route('mail', $request->client_email)
+            ->notify(new BookingConfirmation($booking));
 
         return view('front.booking.confirmation', compact('booking'));
 

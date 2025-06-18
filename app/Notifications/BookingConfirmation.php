@@ -27,17 +27,24 @@ class BookingConfirmation extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        $booking = $this->booking;
+        $booking = $this->booking->loadMissing('client', 'service', 'professional');
 
-        $date = \Carbon\Carbon::parse($booking->day)->format('d/m/Y');
+        $clientName = $booking->client->name ?? 'Cliente';
+        $date = Carbon::parse($booking->day)->format('d/m/Y');
         $time = $booking->start_hour;
         $service = $booking->service->name;
         $professional = optional($booking->professional)->name ?? 'N/A';
 
         return (new \Illuminate\Notifications\Messages\MailMessage)
             ->subject('Confirmação da Sua Marcação')
-            ->greeting("Olá {$booking->client->name},")
-            ->markdown('emails.booking.confirmation', compact('booking', 'date', 'time', 'service', 'professional'))
+            ->view('emails.booking.confirmation', [
+                'booking' => $booking,
+                'date' => Carbon::parse($booking->day)->format('d/m/Y'),
+                'time' => $booking->start_hour,
+                'service' => $booking->service->name,
+                'professional' => optional($booking->professional)->name ?? 'N/A',
+                'clientName' => $clientName,
+            ])
             ->bcc('heliojsmoreira@gmail.com');
     }
 }
