@@ -20,7 +20,7 @@ class Professional extends Model
 
     public function workingHours()
     {
-        return $this->hasMany(WorkingHour::class);
+        return $this->hasMany(ProfessionalWorkingHour::class);
     }
 
     public function unavailabilities()
