@@ -15,7 +15,7 @@
 
             <div class="col-md-6">
                 <label for="professional_id" class="form-label">Professional (optional)</label>
-                <select id="professional_id" name="professional_id" class="form-select">
+                <select id="professional_id" name="professional_id" class="form-select" disabled>
                     <option value="">Any</option>
                     @foreach($professionals as $pro)
                         <option value="{{ $pro->id }}">{{ $pro->name }}</option>
@@ -25,20 +25,23 @@
 
             <div class="col-md-6">
                 <label for="day" class="form-label">Day</label>
-                <input type="date" id="day" name="day" class="form-control" required>
+                <input type="date" id="day" name="day" class="form-control" disabled required>
             </div>
 
             <div class="col-md-6">
                 <label for="time_select" class="form-label">Available Time Slots</label>
-                <select id="time_select" name="start_hour" class="form-select" required>
+                <select id="time_select" name="start_hour" class="form-select" disabled required>
                     <option value="">Select a time...</option>
                 </select>
             </div>
 
             <div class="col-12 text-end">
-                <button type="submit" class="btn btn-primary mt-3">Confirm Booking</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary mt-3" disabled>
+                    Confirm Booking
+                </button>
             </div>
         </form>
+
         {{--<form id="slotForm" class="row g-3">
             <div class="col-md-4">
                 <label for="service_id" class="form-label">Service</label>
@@ -87,97 +90,154 @@
 
 @push('scripts')
     <script>
-        document.getElementById('slotForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        document.addEventListener('DOMContentLoaded', function () {
+            const serviceSelect = document.getElementById('service_id');
+            const professionalSelect = document.getElementById('professional_id');
+            const dayInput = document.getElementById('day');
+            const timeSelect = document.getElementById('time_select');
+            const submitBtn = document.getElementById('submitBtn');
 
-            const serviceId = document.getElementById('service_id').value;
-            const professionalId = document.getElementById('professional_id').value;
-            const startDate = document.getElementById('start_date').value;
-            const endDate = document.getElementById('end_date').value;
+            professionalSelect.disabled = true;
+            dayInput.disabled = true;
+            timeSelect.disabled = true;
+            submitBtn.disabled = true;
 
-            if (!serviceId || !startDate || !endDate) {
-                alert('Please fill in all required fields.');
-                return;
+            serviceSelect.addEventListener('change', () => {
+                const hasService = serviceSelect.value !== '';
+                professionalSelect.disabled = !hasService;
+                dayInput.disabled = !hasService;
+
+                timeSelect.disabled = true;
+                timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                updateSubmitButtonState();
+            });
+
+            professionalSelect.addEventListener('change', function () {
+                timeSelect.disabled = true;
+                timeSelect.innerHTML = '<option value="">Select a time...</option>';
+
+                const hasService = serviceSelect.value !== '';
+                const hasDay = dayInput.value !== '';
+
+                if (hasService && hasDay) {
+                    loadAvailableSlots();
+                }
+
+                updateSubmitButtonState();
+            });
+
+            dayInput.addEventListener('change', function () {
+                const hasService = serviceSelect.value !== '';
+                const hasDay = dayInput.value !== '';
+
+                if (hasService && hasDay) {
+                    loadAvailableSlots();
+                } else {
+                    timeSelect.disabled = true;
+                    timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                }
+
+                updateSubmitButtonState();
+            });
+
+            timeSelect.addEventListener('change', updateSubmitButtonState);
+
+            function loadAvailableSlots() {
+                const serviceId = serviceSelect.value;
+                const professionalId = professionalSelect.value;
+                const day = dayInput.value;
+
+                if (!serviceId || !day) return;
+
+                timeSelect.disabled = true;
+                timeSelect.innerHTML = '<option>Loading...</option>';
+
+                const params = new URLSearchParams({
+                    service_id: serviceId,
+                    start_date: day,
+                    end_date: day
+                });
+                if (professionalId) params.append('professional_id', professionalId);
+
+                fetch(`/available-slots?${params.toString()}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        timeSelect.innerHTML = '<option value="">Select a time...</option>';
+                        const seen = new Set();
+
+                        data.forEach(entry => {
+                            entry.available_slots.forEach(time => {
+                                if (!seen.has(time)) {
+                                    seen.add(time);
+
+                                    let label = time;
+                                    if (!professionalId && entry.professional_name) {
+                                        label += ` (${entry.professional_name})`;
+                                    }
+
+                                    const option = document.createElement('option');
+                                    option.value = time;
+                                    option.text = label;
+                                    option.setAttribute('data-professional-id', entry.professional_id);
+                                    timeSelect.appendChild(option);
+                                }
+                            });
+                        });
+
+                        timeSelect.disabled = seen.size === 0;
+                        updateSubmitButtonState();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        timeSelect.innerHTML = '<option>Error loading slots</option>';
+                        timeSelect.disabled = true;
+                        updateSubmitButtonState();
+                    });
             }
 
-            const params = new URLSearchParams({
-                service_id: serviceId,
-                start_date: startDate,
-                end_date: endDate
-            });
-            if (professionalId) params.append('professional_id', professionalId);
+            function updateSubmitButtonState() {
+                const serviceValid = serviceSelect.value !== '';
+                const dayValid = dayInput.value !== '';
+                const timeValid = timeSelect.value !== '' && !timeSelect.disabled;
 
-            fetch(`/available-slots?${params.toString()}`)
-                .then(response => response.json())
-                .then(data => {
-                    const container = document.getElementById('slots-result');
-                    container.innerHTML = '';
-
-                    if (data.length === 0) {
-                        container.innerHTML = '<p>No available slots found for the selected criteria.</p>';
-                        return;
-                    }
-
-                    data.forEach(slot => {
-                        const slotCard = document.createElement('div');
-                        slotCard.classList.add('col-md-4', 'mb-3');
-                        slotCard.innerHTML = `
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">${slot.professional_name}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${slot.day}</h6>
-                            <p class="card-text">
-                                ${slot.available_slots.map(time => `
-                                    <button class="btn btn-outline-success btn-sm book-btn mt-1"
-                                            data-day="${slot.day}"
-                                            data-time="${time}"
-                                            data-professional="${slot.professional_id}">
-                                        ${time}
-                                    </button>
-                                `).join('')}
-                            </p>
-                        </div>
-                    </div>`;
-                        container.appendChild(slotCard);
-                    });
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('Something went wrong while fetching available slots.');
-                });
+                submitBtn.disabled = !(serviceValid && dayValid && timeValid);
+            }
         });
     </script>
 
-    <!-- Booking Modal -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="bookingForm" class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">Confirm Booking</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="service_id">
-                    <input type="hidden" name="professional_id">
-                    <input type="hidden" name="day">
-                    <input type="hidden" name="start_hour">
-                    <input type="hidden" name="client_id" value="1"> <!-- mock client -->
 
-                    <p><strong>Service:</strong> <span id="modalService"></span></p>
-                    <p><strong>Professional:</strong> <span id="modalProfessional"></span></p>
-                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                    <p><strong>Time:</strong> <span id="modalTime"></span></p>
+    {{--
 
-                    <div class="mb-3">
-                        <label for="notes" class="form-label">Notes (optional)</label>
-                        <textarea name="notes" class="form-control"></textarea>
+        <!-- Booking Modal -->
+        <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form id="bookingForm" class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="bookingModalLabel">Confirm Booking</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Book</button>
-                </div>
-            </form>
-        </div>
-    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="service_id">
+                        <input type="hidden" name="professional_id">
+                        <input type="hidden" name="day">
+                        <input type="hidden" name="start_hour">
+                        <input type="hidden" name="client_id" value="1"> <!-- mock client -->
+
+                        <p><strong>Service:</strong> <span id="modalService"></span></p>
+                        <p><strong>Professional:</strong> <span id="modalProfessional"></span></p>
+                        <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                        <p><strong>Time:</strong> <span id="modalTime"></span></p>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes (optional)</label>
+                            <textarea name="notes" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>--}}
 
 @endpush
