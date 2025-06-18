@@ -78,13 +78,16 @@ class BookingController extends Controller
         ]);
 
         $booking->load(['client', 'service', 'professional']);
-        
+
         // Enviar email de confirmação para o cliente (via modelo)
         $client->notify(new BookingConfirmation($booking));
 
+        return view('front.booking.confirmation', compact('booking'));
+
+        /*
         return response()->json([
             'message' => 'Booking confirmed!',
             'agenda' => $booking
-        ]);
+        ]);*/
     }
 }

@@ -79,8 +79,9 @@ Route::prefix('agenda')->group(function () {
 
 });
 
-Route::get('/booking', [BookingController::class, 'index']);
+Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
 Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');
+//Route::get('/book-confirmation', [BookingController::class, 'bookConfirmation'])->name('book.confirmation');
 
 Route::get('/available-slots', [AvailabilityController::class, 'getAvailableSlots']);
 
