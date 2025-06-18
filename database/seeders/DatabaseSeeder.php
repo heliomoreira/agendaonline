@@ -27,7 +27,9 @@ class DatabaseSeeder extends Seeder
             WorkingHoursTableSeeder::class,
             LocationClosuresTableSeeder::class,
             ProfessionalUnavailabilitiesTableSeeder::class,
-            LocationBlockTableSeeder::class
+            LocationBlockTableSeeder::class,
+            ProfessionalServiceTableSeeder::class,
+
         ]);
 /*
         Client::factory()->create([
