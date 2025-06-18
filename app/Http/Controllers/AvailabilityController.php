@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agenda;
+use App\Models\LocationBlock;
 use App\Models\LocationClosure;
 use App\Models\Professional;
 use App\Models\ProfessionalUnavailability;
@@ -26,60 +27,93 @@ class AvailabilityController extends Controller
         $service = Service::findOrFail($request->service_id);
         $duration = $service->duration;
 
-        $professionals = Professional::where('status', true)
-            ->when($request->professional_id, fn($q) => $q->where('id', $request->professional_id))
-            ->get();
+        $startDate = Carbon::parse($request->start_date);
+        $endDate = Carbon::parse($request->end_date);
+        $daysRange = $endDate->diffInDays($startDate) + 1;
 
-        $slots = [];
+        $results = [];
 
-        $period = CarbonPeriod::create($request->start_date, $request->end_date);
+        // Obtem profissionais ativos (filtrado ou todos)
+        $professionals = $request->professional_id
+            ? Professional::where('id', $request->professional_id)->where('status', true)->get()
+            : Professional::where('status', true)->get();
 
-        foreach ($period as $date) {
-            if (LocationClosure::where('day', $date->toDateString())->exists()) {
-                continue;
-            }
+        // Blocos globais (ex: almoço)
+        $globalBlocks = LocationBlock::all();
+
+        for ($i = 0; $i < $daysRange; $i++) {
+            $currentDate = $startDate->copy()->addDays($i)->format('Y-m-d');
+            $dayName = Carbon::parse($currentDate)->format('l');
 
             foreach ($professionals as $professional) {
-                if (ProfessionalUnavailability::where('professional_id', $professional->id)->where('day', $date->toDateString())->exists()) {
-                    continue;
+                $startHour = Carbon::createFromTime(9, 0, 0);
+                $endHour = Carbon::createFromTime(18, 0, 0);
+
+                $slots = [];
+
+                while ($startHour->copy()->addMinutes($duration)->lte($endHour)) {
+                    $slotStart = $startHour->copy();
+                    $slotEnd = $startHour->copy()->addMinutes($duration);
+
+                    // Verifica marcações existentes
+                    $exists = Agenda::where('professional_id', $professional->id)
+                        ->where('day', $currentDate)
+                        ->where(function ($q) use ($slotStart, $slotEnd) {
+                            $q->whereBetween('start_hour', [$slotStart->format('H:i'), $slotEnd->format('H:i')])
+                                ->orWhereBetween('end_hour', [$slotStart->format('H:i'), $slotEnd->format('H:i')])
+                                ->orWhere(function ($q2) use ($slotStart, $slotEnd) {
+                                    $q2->where('start_hour', '<=', $slotStart->format('H:i'))
+                                        ->where('end_hour', '>=', $slotEnd->format('H:i'));
+                                });
+                        })->exists();
+
+                    if ($exists) {
+                        $startHour->addMinutes(15);
+                        continue;
+                    }
+
+                    // Verifica bloqueios globais (almoço, etc)
+                    $blocked = false;
+                    foreach ($globalBlocks as $block) {
+                        if (!in_array($dayName, $block->days_of_week)) {
+                            continue;
+                        }
+
+                        $blockStart = Carbon::parse($block->start_hour);
+                        $blockEnd = Carbon::parse($block->end_hour);
+
+                        if (
+                            $slotStart->between($blockStart, $blockEnd) ||
+                            $slotEnd->between($blockStart, $blockEnd) ||
+                            ($slotStart->lt($blockStart) && $slotEnd->gt($blockEnd))
+                        ) {
+                            $blocked = true;
+                            break;
+                        }
+                    }
+
+                    if ($blocked) {
+                        $startHour->addMinutes(15);
+                        continue;
+                    }
+
+                    // Adiciona slot
+                    $slots[] = $slotStart->format('H:i');
+                    $startHour->addMinutes(15);
                 }
 
-                $weekday = $date->dayOfWeek;
-                $workingHours = WorkingHour::where('professional_id', $professional->id)
-                    ->where('weekday', $weekday)
-                    ->get();
-
-                foreach ($workingHours as $wh) {
-                    $start = Carbon::parse($date->toDateString() . ' ' . $wh->start_hour);
-                    $end = Carbon::parse($date->toDateString() . ' ' . $wh->end_hour);
-
-                    $availableSlots = $this->generateTimeSlots($start, $end, $duration);
-
-                    // Filter occupied slots
-                    $appointments = Agenda::where('professional_id', $professional->id)
-                        ->where('day', $date->toDateString())
-                        ->get(['start_hour', 'end_hour']);
-
-                    foreach ($appointments as $appt) {
-                        $occupiedRange = Carbon::parse($appt->start_hour)->floatDiffInMinutes(Carbon::parse($appt->end_hour));
-                        $startTime = Carbon::parse($date->toDateString() . ' ' . $appt->start_hour);
-                        $conflicting = $this->generateTimeSlots($startTime, $startTime->copy()->addMinutes($occupiedRange), $duration);
-                        $availableSlots = array_diff($availableSlots, $conflicting);
-                    }
-
-                    if (!empty($availableSlots)) {
-                        $slots[] = [
-                            'professional_id' => $professional->id,
-                            'professional_name' => $professional->name,
-                            'day' => $date->toDateString(),
-                            'available_slots' => array_values($availableSlots),
-                        ];
-                    }
+                if (!empty($slots)) {
+                    $results[] = [
+                        'day' => $currentDate,
+                        'professional_id' => $professional->id,
+                        'professional_name' => $professional->name,
+                        'available_slots' => $slots,
+                    ];
                 }
             }
         }
 
-        return response()->json($slots);
+        return response()->json($results);
     }
 
     private function generateTimeSlots(Carbon $start, Carbon $end, int $duration): array
