@@ -1,10 +1,45 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">Check Available Time Slots</h2>
-
         <form id="slotForm" class="row g-3">
+            <div class="col-md-6">
+                <label for="service_id" class="form-label">Service</label>
+                <select id="service_id" name="service_id" class="form-select" required>
+                    <option value="">Choose...</option>
+                    @foreach($services as $service)
+                        <option value="{{ $service->id }}">{{ $service->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="professional_id" class="form-label">Professional (optional)</label>
+                <select id="professional_id" name="professional_id" class="form-select">
+                    <option value="">Any</option>
+                    @foreach($professionals as $pro)
+                        <option value="{{ $pro->id }}">{{ $pro->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="day" class="form-label">Day</label>
+                <input type="date" id="day" name="day" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="time_select" class="form-label">Available Time Slots</label>
+                <select id="time_select" name="start_hour" class="form-select" required>
+                    <option value="">Select a time...</option>
+                </select>
+            </div>
+
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary mt-3">Confirm Booking</button>
+            </div>
+        </form>
+        {{--<form id="slotForm" class="row g-3">
             <div class="col-md-4">
                 <label for="service_id" class="form-label">Service</label>
                 <select id="service_id" name="service_id" class="form-select" required>
@@ -19,6 +54,7 @@
                 <label for="professional_id" class="form-label">Professional (optional)</label>
                 <select id="professional_id" name="professional_id" class="form-select">
                     <option value="">Any</option>
+
                     @foreach($professionals as $pro)
                         <option value="{{ $pro->id }}">{{ $pro->name }}</option>
                     @endforeach
@@ -45,7 +81,7 @@
         <div id="slots-container">
             <h4>Available Slots</h4>
             <div id="slots-result" class="row"></div>
-        </div>
+        </div>--}}
     </div>
 @endsection
 
