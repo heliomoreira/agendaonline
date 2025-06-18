@@ -96,45 +96,70 @@
             timeSelect.disabled = true;
             submitBtn.disabled = true;
 
+            // Quando muda o serviço
             serviceSelect.addEventListener('change', () => {
-                const hasService = serviceSelect.value !== '';
-                professionalSelect.disabled = !hasService;
-                dayInput.disabled = !hasService;
+                const serviceId = serviceSelect.value;
+                const hasService = serviceId !== '';
 
-                timeSelect.disabled = true;
+                // Reset campos seguintes
+                professionalSelect.innerHTML = '<option value="">Todos</option>';
                 timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
-                updateSubmitButtonState();
-            });
-
-            professionalSelect.addEventListener('change', function () {
                 timeSelect.disabled = true;
-                timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
 
-                const hasService = serviceSelect.value !== '';
-                const hasDay = dayInput.value !== '';
+                if (hasService) {
+                    // Carregar profissionais para o serviço
+                    fetch(`/services/${serviceId}/professionals`)
+                        .then(res => res.json())
+                        .then(data => {
+                            data.forEach(pro => {
+                                const option = document.createElement('option');
+                                option.value = pro.id;
+                                option.text = pro.name;
+                                professionalSelect.appendChild(option);
+                            });
 
-                if (hasService && hasDay) {
-                    loadAvailableSlots();
-                }
-
-                updateSubmitButtonState();
-            });
-
-            dayInput.addEventListener('change', function () {
-                const hasService = serviceSelect.value !== '';
-                const hasDay = dayInput.value !== '';
-
-                if (hasService && hasDay) {
-                    loadAvailableSlots();
+                            professionalSelect.disabled = false;
+                            dayInput.disabled = false;
+                        })
+                        .catch(err => {
+                            console.error('Erro ao carregar profissionais:', err);
+                            professionalSelect.disabled = true;
+                            dayInput.disabled = true;
+                        });
                 } else {
-                    timeSelect.disabled = true;
-                    timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
+                    professionalSelect.disabled = true;
+                    dayInput.disabled = true;
                 }
 
                 updateSubmitButtonState();
             });
 
+            // Quando muda o profissional
+            professionalSelect.addEventListener('change', () => {
+                clearAndLoadSlotsIfPossible();
+            });
+
+            // Quando muda o dia
+            dayInput.addEventListener('change', () => {
+                clearAndLoadSlotsIfPossible();
+            });
+
+            // Quando muda o horário
             timeSelect.addEventListener('change', updateSubmitButtonState);
+
+            function clearAndLoadSlotsIfPossible() {
+                timeSelect.disabled = true;
+                timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
+
+                const hasService = serviceSelect.value !== '';
+                const hasDay = dayInput.value !== '';
+
+                if (hasService && hasDay) {
+                    loadAvailableSlots();
+                }
+
+                updateSubmitButtonState();
+            }
 
             function loadAvailableSlots() {
                 const serviceId = serviceSelect.value;
@@ -182,8 +207,8 @@
                         updateSubmitButtonState();
                     })
                     .catch(err => {
-                        console.error(err);
-                        timeSelect.innerHTML = '<option>Error loading slots</option>';
+                        console.error('Erro ao carregar horários:', err);
+                        timeSelect.innerHTML = '<option>Erro a carregar horários</option>';
                         timeSelect.disabled = true;
                         updateSubmitButtonState();
                     });
@@ -198,6 +223,7 @@
             }
         });
     </script>
+
 
 
     {{--

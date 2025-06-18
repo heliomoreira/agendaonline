@@ -126,6 +126,7 @@ class ProfessionalsController extends Controller
             $query->where('services.id', $id);
         })->get();
 
+
         return response()->json($professionals);
     }
 }
