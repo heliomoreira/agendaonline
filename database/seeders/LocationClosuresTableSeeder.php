@@ -18,7 +18,7 @@ class LocationClosuresTableSeeder extends Seeder
         for ($i = 0; $i <= 30; $i += 10) {
             LocationClosure::create([
                 'day' => $startDate->copy()->addDays($i)->toDateString(),
-                'reason' => 'National Holiday'
+                'reason' => 'Feriado Nacional'
             ]);
         }
     }

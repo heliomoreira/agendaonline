@@ -16,7 +16,7 @@ class ServicesTableSeeder extends Seeder
         Service::updateOrCreate([
             'id' => 1
         ], [
-            'name' => 'Haircut',
+            'name' => 'Corte de cabelo',
             'duration' => 30,
             'price' => 20.00,
             'status' => true
