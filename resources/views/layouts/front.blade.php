@@ -37,7 +37,7 @@
 
 <div class="container py-5">
     <div class="text-center">
-        <img src="{{asset('logo.png')}}" alt="Logo" class="logo">
+        <img src="{{global_asset('logo.png')}}" alt="Logo" class="logo">
     </div>
 
     <div class="booking-container">

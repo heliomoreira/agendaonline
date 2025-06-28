@@ -590,7 +590,7 @@
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="mb-0">John Doe</h6>
+                                                <h6 class="mb-0">{{Auth()->user()->name}}</h6>
                                                 <small class="text-body-secondary">Admin</small>
                                             </div>
                                         </div>
@@ -633,11 +633,15 @@
                                 </li>
                                 <li>
                                     <div class="d-grid px-2 pt-2 pb-1">
-                                        <a class="btn btn-sm btn-danger d-flex" href="auth-login-cover.html"
-                                           target="_blank">
+                                        <a class="btn btn-sm btn-danger d-flex" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <small class="align-middle">Logout</small>
                                             <i class="icon-base ti tabler-logout ms-2 icon-14px"></i>
                                         </a>
+
+                                        <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display:none;">
+                                            @csrf
+                                        </form>
                                     </div>
                                 </li>
                             </ul>

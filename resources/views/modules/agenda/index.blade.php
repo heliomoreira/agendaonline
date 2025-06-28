@@ -96,7 +96,7 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
+    <script src="{{ global_asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.min.js"></script>
 
     <script>
