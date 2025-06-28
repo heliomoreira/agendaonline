@@ -86,7 +86,7 @@
                 </span>
                 </li>
                 <li class="menu-item mt-4">
-                    <a href="/" class="menu-link">
+                    <a href="/admin" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-dashboard"></i>
                         <div data-i18n="Dashboard">Dashboard</div>
                     </a>
