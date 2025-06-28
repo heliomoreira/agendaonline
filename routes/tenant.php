@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
