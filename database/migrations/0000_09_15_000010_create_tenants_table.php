@@ -18,8 +18,30 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->string('id')->primary();
 
-            // your custom columns may go here
-
+            $table->string('name', 255);
+            $table->string('vat', 20)->nullable();
+            $table->string('address', 150)->nullable();
+            $table->string('number_port', 20)->nullable();
+            $table->string('zip_code', 20)->nullable();
+            $table->string('county', 100)->nullable();
+            $table->string('city', 100)->nullable();
+            $table->string('country', 100)->nullable();
+            $table->string('phone_1', 20)->nullable();
+            $table->string('phone_2', 20)->nullable();
+            $table->string('email', 255)->nullable();
+            $table->boolean('sms_status')->default(false);
+            $table->string('sms_sender', 11)->nullable();
+            $table->unsignedInteger('sms_credits')->default(0);
+            $table->string('logo', 255)->nullable();
+            $table->string('main_color', 20)->nullable();
+            $table->string('secondary_color', 20)->nullable();
+            $table->boolean('is_beta')->default(false);
+            $table->string('storage_token', 100)->nullable();
+            $table->unsignedInteger('storage_quota')->default(0);
+            $table->foreignId('plan_id')->nullable()->constrained('plans')->nullOnDelete();
+            $table->date('plan_end_date')->nullable();
+            $table->boolean('booking_available')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
             $table->json('data')->nullable();
         });
