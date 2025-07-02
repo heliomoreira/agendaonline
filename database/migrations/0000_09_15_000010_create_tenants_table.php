@@ -43,7 +43,6 @@ class CreateTenantsTable extends Migration
             $table->boolean('booking_available')->default(true);
             $table->boolean('status')->default(true);
             $table->timestamps();
-            $table->json('data')->nullable();
         });
     }
 

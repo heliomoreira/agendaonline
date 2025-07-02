@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,9 +18,11 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/', function () {
             return 'welcome';
         });
+        Route::get('/signup', [TenantController::class, 'signup']);
+        Route::post('/signup/create-tenant', [TenantController::class, 'createTenant']);
+
     });
 }
-
 
 
 Route::get('/booking', [BookingController::class, 'index'])->name('book.index');

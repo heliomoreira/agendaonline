@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Services;
+
+use App\Helpers\Helper;
+use App\Models\Tenant;
+
+class TenantService
+{
+
+    public function createTenant($request)
+    {
+
+        $tenantId = Helper::normalizeString($request['name']);
+
+        $tenant = Tenant::create([
+            'id' => $tenantId,
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'username' => $tenantId,
+            'plan_id' => 1,
+        ]);
+
+        $tenant->domains()->create(['domain' => $tenantId . '.agendaonline.local']);
+
+        return $tenantId;
+    }
+
+}
