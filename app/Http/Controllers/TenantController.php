@@ -18,13 +18,14 @@ class TenantController extends Controller
     {
 
         $tenant = new TenantService();
-        $tenant->createTenant($request->all());
+        $response = $tenant->createTenant($request->all());
 
-/*        $user = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
-            'tenant_id' => $tenant]);*/
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'tenant_id' => $response->getData()->data->id]);
 
 
         return response()->json(['message' => 'Tenant created successfully!'], 201);

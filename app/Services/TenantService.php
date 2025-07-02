@@ -23,7 +23,7 @@ class TenantService
 
         $tenant->domains()->create(['domain' => $tenantId . '.agendaonline.local']);
 
-        return $tenantId;
+        return response()->json(['message' => 'success', 'data' => $tenant], 200);
     }
 
 }
