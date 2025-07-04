@@ -58,6 +58,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     public static function getCustomColumns(): array
     {
         return array_merge(parent::getCustomColumns(), [
+            'id',
             'name',
             'username',
             'vat',
