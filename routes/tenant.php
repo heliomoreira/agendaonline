@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ClientsController;
@@ -30,9 +31,9 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-  /*  Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-    });*/
+    /*  Route::get('/', function () {
+          return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+      });*/
     Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard.abcd');
 
     Route::prefix('admin')->group(function () {
@@ -102,18 +103,15 @@ Route::middleware([
                 Route::get('/', [AgendaController::class, 'index'])->name('agenda.index');
                 Route::get('/form', [AgendaController::class, 'form'])->name('agenda.form');
                 Route::get('/edit/{id}', [AgendaController::class, 'edit'])->name('agenda.edit');
-
                 Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
                 Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
-
                 Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
-
             });
 
+            Route::prefix('account-settings')->group(function () {
+                Route::get('/', [AccountSettingsController::class, 'index'])->name('account-settings.index');
+
+            });
         });
-
-
     });
-
-
 });
