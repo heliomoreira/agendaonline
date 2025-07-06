@@ -110,6 +110,7 @@ Route::middleware([
 
             Route::prefix('account-settings')->group(function () {
                 Route::get('/', [AccountSettingsController::class, 'index'])->name('account-settings.index');
+                Route::put('/update', [AccountSettingsController::class, 'updateAccount'])->name('account-settings.updateAccount');
 
             });
         });

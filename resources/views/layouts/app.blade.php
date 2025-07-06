@@ -137,7 +137,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="/admin/account-settings" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-briefcase"></i>
                         <div data-i18n="Dados de Conta">Dados de Conta</div>
                     </a>
