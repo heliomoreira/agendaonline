@@ -41,7 +41,7 @@
     </div>
 
     <div class="booking-container">
-        <h2 class="form-title text-center">Marcação Online</h2>
+        <h2 class="form-title text-center">Marcação Online - {{$tenant->name}}</h2>
 
         @yield('content')
     </div>

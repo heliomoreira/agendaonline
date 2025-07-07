@@ -108,7 +108,7 @@
 
                 if (hasService) {
                     // Carregar profissionais para o serviço
-                    fetch(`/services/${serviceId}/professionals`)
+                    fetch(`services/${serviceId}/professionals`)
                         .then(res => res.json())
                         .then(data => {
                             data.forEach(pro => {

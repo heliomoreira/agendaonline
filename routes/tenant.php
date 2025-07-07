@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -31,10 +32,8 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    /*  Route::get('/', function () {
-          return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-      });*/
-    Route::get('/', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard.abcd');
+
+   Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
 
     Route::prefix('admin')->group(function () {
         /*
@@ -54,7 +53,7 @@ Route::middleware([
         * Admin Application routes
         */
         Route::middleware(['auth'])->group(function () {
-            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+           // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
             /* Clients */
             Route::prefix('/clients')->group(function () {
