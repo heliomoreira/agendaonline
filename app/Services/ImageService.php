@@ -27,11 +27,15 @@ class ImageService
 
             $image = $this->imageManager->read($file->getPathname())->cover(300, 300);
 
+            tenancy()->end();
+
             if (!Storage::disk('public')->exists($folder)) {
                 Storage::disk('public')->makeDirectory($folder, 0755, true);
             }
 
             Storage::disk('public')->put($path, (string)$image->encode());
+
+            tenancy()->initialize(auth()->user()->tenant);
 
             return $path;
         } catch (Exception $e) {
