@@ -73,8 +73,8 @@
         <div class="row cnt-block">
             <div class="col-md-12">
                 <div class="left">
-                    <h1>Agenda Online</h1>
-                    <p>Menos caos! Mais organização!</p>
+                    <h1>A sua agenda digital</h1>
+                    <p>Organize marcações, reduza faltas e aumente a produtividade — tudo num só lugar.</p>
                     <a href="/signup" class="get-started" style="max-width:275px !important" target="_blank">Crie a sua
                         conta grátis</a></div>
             </div>
@@ -103,34 +103,31 @@
                                                         class="rounded-circle img-fluid" alt=""></div>
                             <div class="cnt-block">
                                 <h3>Multi-dispositivo</h3>
-                                <p>No computador, portátil, tablet ou no smartphone, aceda ao software sem dificuldades
-                                    e onde quer que esteja.</p>
+                                <p>No computador, portátil, tablet ou smartphone, aceda ao software com facilidade onde quer que esteja.</p>
                             </div>
                         </li>
                         <li class="col-md-6 equal-hight">
                             <div class="ico-block"><img src="{{global_asset('website/media/img/simples.png')}}"
                                                         class="rounded-circle img-fluid" alt=""></div>
                             <div class="cnt-block">
-                                <h3>Simples e Prático</h3>
-                                <p>Com as funcionalidades que realmente precisa e que utilizará no seu dia a dia.</p>
+                                <h3>Agenda inteligente</h3>
+                                <p>Visualização diária/semanal/mensal com gestão de sobreposições</p>
                             </div>
                         </li>
                         <li class="col-md-6 equal-hight">
                             <div class="ico-block"><img src="{{global_asset('website/media/img/multiuser.png')}}"
                                                         class="rounded-circle img-fluid" alt=""></div>
                             <div class="cnt-block">
-                                <h3>Multi-utilizador</h3>
-                                <p>Quer seja uma empresa de uma só pessoa ou uma multinacional, crie os utilizadores que
-                                    necessite.</p>
+                                <h3>Gestão de funcionários</h3>
+                                <p>Atribua horários, turnos e serviços por colaborador.</p>
                             </div>
                         </li>
                         <li class="col-md-6 equal-hight">
                             <div class="ico-block"><img src="{{global_asset('website/media/img/improve.png')}}"
                                                         class="rounded-circle img-fluid" alt=""></div>
                             <div class="cnt-block">
-                                <h3>Evolução constante</h3>
-                                <p>Com actualizações frequentes, o software vai evoluindo também com o feedback dos
-                                    clientes.</p>
+                                <h3>Marcações online</h3>
+                                <p>Os seus clientes podem marcar diretamente através do telemóvel</p>
                             </div>
                         </li>
                     </ul>
