@@ -56,8 +56,8 @@
                     </li>
                 </ul>
                 <ul class="navbar-right d-flex">
-                    <li><a href="https://app.assistgest.com/create-account" target="_blank">Registar</a></li>
-                    <li><a href="https://app.assistgest.com/login" target="_blank">Login</a></li>
+                    <li><a href="/signup" target="_blank">Registar</a></li>
+                    <li><a href="#" target="_blank">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -75,7 +75,8 @@
                 <div class="left">
                     <h1>Agenda Online</h1>
                     <p>Menos caos! Mais organização!</p>
-                    <a href="#" class="get-started" style="max-width:275px !important" target="_blank">Crie a sua conta grátis</a></div>
+                    <a href="/signup" class="get-started" style="max-width:275px !important" target="_blank">Crie a sua
+                        conta grátis</a></div>
             </div>
         </div>
         <div class="row">
@@ -137,7 +138,8 @@
             </div>
         </div>
         <div class="right-sided-full-image">
-            <figure><img src="{{global_asset('website/media/img/vantagens_assistgest.png')}}" alt="Assistgest - Vantagens"
+            <figure><img src="{{global_asset('website/media/img/vantagens_assistgest.png')}}"
+                         alt="Assistgest - Vantagens"
                          title="Assistgest - Vantagens"></figure>
         </div>
     </div>
@@ -207,11 +209,13 @@
             </div>
         </div>
         <div class="keyboard">
-            <figure><img src="{{global_asset('website/media/img/key-board-mouse.png')}}" class="img-fluid" alt="Assistgest"
+            <figure><img src="{{global_asset('website/media/img/key-board-mouse.png')}}" class="img-fluid"
+                         alt="Assistgest"
                          title="Assistgest"></figure>
         </div>
         <div class="frame">
-            <figure><img src="{{global_asset('website/theme/images/slider-frame.png')}}" class="img-fluid" alt=""></figure>
+            <figure><img src="{{global_asset('website/theme/images/slider-frame.png')}}" class="img-fluid" alt="">
+            </figure>
         </div>
     </div>
 </section>
@@ -263,7 +267,8 @@
             </div>
         </div>
         <div class="right-sided-full-image">
-            <figure><img src="{{global_asset('website/media/img/calendario_assistgest.png')}}" alt="Assistgest - Calendário"
+            <figure><img src="{{global_asset('website/media/img/calendario_assistgest.png')}}"
+                         alt="Assistgest - Calendário"
                          title="Assistgest - Calendário"></figure>
         </div>
     </div>
