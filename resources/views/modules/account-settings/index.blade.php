@@ -38,7 +38,7 @@
     <div class="row g-6">
         <div class="col-md-12">
             <div class="card">
-                {{ html()->form('POST', route('account-settings.updateAccount'))->class('modal-content')->open() }}
+                {{ html()->form('POST', route('account-settings.updateAccount'))->acceptsFiles()->class('modal-content')->open() }}
                 @method('PUT')
                 @csrf
                 <div class="card-header header-elements">
