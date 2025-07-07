@@ -35,6 +35,8 @@ Route::middleware([
 
    Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
 
+    Route::get('/admin', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
     Route::prefix('admin')->group(function () {
         /*
         * Admin Auth routes
