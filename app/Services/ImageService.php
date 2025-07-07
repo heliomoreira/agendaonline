@@ -19,13 +19,13 @@ class ImageService
         $this->imageManager = new ImageManager(new GdDriver());
     }
 
-    public function uploadImage(UploadedFile $file, string $folder = 'images')
+    public function uploadImage(UploadedFile $file, string $folder = 'images', $width = 150, $height = 150)
     {
         try {
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
             $path = "$folder/$filename";
 
-            $image = $this->imageManager->read($file->getPathname())->cover(300, 300);
+            $image = $this->imageManager->read($file->getPathname())->cover($width, $height);
 
             tenancy()->end();
 
