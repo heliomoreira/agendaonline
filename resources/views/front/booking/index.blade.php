@@ -181,8 +181,8 @@
                 fetch(`/available-slots?${params.toString()}`)
                     .then(res => res.json())
                     .then(data => {
-                        timeSelect.innerHTML = '<option value="">Selecionar horário...</option>';
                         const seen = new Set();
+                        timeSelect.innerHTML = '';
 
                         data.forEach(entry => {
                             entry.available_slots.forEach(time => {
@@ -203,7 +203,22 @@
                             });
                         });
 
-                        timeSelect.disabled = seen.size === 0;
+                        if (seen.size === 0) {
+                            const option = document.createElement('option');
+                            option.value = 'none';
+                            option.text = 'Sem horários disponíveis';
+                            timeSelect.appendChild(option);
+                            timeSelect.disabled = true;
+                        } else {
+                            const defaultOption = document.createElement('option');
+                            defaultOption.value = '';
+                            defaultOption.text = 'Selecionar horário...';
+                            defaultOption.selected = true;
+                            defaultOption.disabled = true;
+                            timeSelect.insertBefore(defaultOption, timeSelect.firstChild);
+                            timeSelect.disabled = false;
+                        }
+
                         updateSubmitButtonState();
                     })
                     .catch(err => {
@@ -223,41 +238,4 @@
             }
         });
     </script>
-
-
-
-    {{--
-
-        <!-- Booking Modal -->
-        <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <form id="bookingForm" class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="bookingModalLabel">Confirm Booking</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="service_id">
-                        <input type="hidden" name="professional_id">
-                        <input type="hidden" name="day">
-                        <input type="hidden" name="start_hour">
-                        <input type="hidden" name="client_id" value="1"> <!-- mock client -->
-
-                        <p><strong>Service:</strong> <span id="modalService"></span></p>
-                        <p><strong>Professional:</strong> <span id="modalProfessional"></span></p>
-                        <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                        <p><strong>Time:</strong> <span id="modalTime"></span></p>
-
-                        <div class="mb-3">
-                            <label for="notes" class="form-label">Notes (optional)</label>
-                            <textarea name="notes" class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Book</button>
-                    </div>
-                </form>
-            </div>
-        </div>--}}
-
 @endpush
