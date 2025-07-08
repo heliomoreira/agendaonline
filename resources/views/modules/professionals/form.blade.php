@@ -82,7 +82,8 @@
                     <div class="row mt-3">
                         <div class="col-md-3">
                             <label class="form-label" for="agenda_color">Cor na Agenda</label>
-                            <input type="color" id="agenda_color" name="agenda_color" value="{{old('agenda_color', $professional->agenda_color)}}" class="form-control" />
+                            <input type="color" id="agenda_color" name="agenda_color"
+                                   value="{{old('agenda_color', $professional->agenda_color)}}" class="form-control"/>
                         </div>
                         <div class="col-md-3">
                             <label class="form-label" for="status">Ordem</label>
@@ -160,6 +161,52 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        @endif
+        @if(isset($professional->id))
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header header-elements">
+                        <h5 class="mb-0 me-2">Horário de Trabalho</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Dia da Semana</th>
+                                    <th>Manhã</th>
+                                    <th>Tarde</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if(isset($services))
+                                    @foreach($services as $service)
+                                        <tr>
+                                            <td>Segunda-feira</td>
+                                            <td>9:00h-12:00h</td>
+                                            <td>14:00h-17:00h</td>
+                                            <td><a href="">Editar</a></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                            </button>
+                            <a href="{{ route('professionals.index') }}"
+                               class="btn btn-secondary waves-effect waves-light">
+                                <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
     </div>
