@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController;
@@ -33,7 +34,7 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
 
-   Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
+    Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
 
     Route::get('/admin', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
@@ -55,7 +56,7 @@ Route::middleware([
         * Admin Application routes
         */
         Route::middleware(['auth'])->group(function () {
-           // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
             /* Clients */
             Route::prefix('/clients')->group(function () {
@@ -75,7 +76,7 @@ Route::middleware([
                 Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
                 Route::put('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
 
-                Route::get('/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
+                //Route::get('/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
             });
 
             Route::prefix('professionals')->group(function () {
@@ -116,4 +117,11 @@ Route::middleware([
             });
         });
     });
+
+    /*
+     * Public routes
+     */
+    Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
+    Route::get('/available-slots', [AvailabilityController::class, 'getAvailableSlots']);
+
 });
