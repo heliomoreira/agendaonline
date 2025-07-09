@@ -198,7 +198,7 @@
                                                         <td><input type="time"
                                                                    name="working_hours[{{ $num }}][start_hour]"
                                                                    class="form-control"
-                                                                   value="{{ old("working_hours.$num.start_hour") }}">
+                                                                   value="{{ old("workingHours.$num.start_hour", isset($workingHours[$num]) ? $workingHours[$num]->start_hour->format('H:i') : '') }}">
                                                         </td>
                                                         <td><input type="time"
                                                                    name="working_hours[{{ $num }}][lunch_start]"
