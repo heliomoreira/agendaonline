@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfessionalRequest;
 use App\Models\Professional;
+use App\Models\ProfessionalWorkingHour;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -40,7 +41,7 @@ class ProfessionalsController extends Controller
     public function edit($id)
     {
         try {
-            $professional = Professional::with('services')->findOrFail($id);
+            $professional = Professional::with(['services', 'workingHours'])->findOrFail($id);
 
             $services = Service::all();
 
@@ -128,5 +129,32 @@ class ProfessionalsController extends Controller
 
 
         return response()->json($professionals);
+    }
+
+    public function saveWorkingHours(Request $request, $id): void
+    {
+        $workingHours = $request->input('working_hours', []);
+
+        foreach ($workingHours as $weekday => $data) {
+            if (!empty($data['start_hour']) && !empty($data['end_hour'])) {
+                ProfessionalWorkingHour::updateOrCreate(
+                    [
+                        'professional_id' => $id,
+                        'weekday' => $data['weekday'],
+                    ],
+                    [
+                        'start_hour' => $data['start_hour'],
+                        'end_hour' => $data['end_hour'],
+                        'lunch_start' => $data['lunch_start'] ?? null,
+                        'lunch_end' => $data['lunch_end'] ?? null,
+                    ]
+                );
+            } else {
+                ProfessionalWorkingHour::where([
+                    'professional_id' => $id,
+                    'weekday' => $weekday
+                ])->delete();
+            }
+        }
     }
 }

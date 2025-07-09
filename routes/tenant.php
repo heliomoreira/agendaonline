@@ -88,6 +88,7 @@ Route::middleware([
                 Route::put('/update/{id}', [ProfessionalsController::class, 'update'])->name('professionals.update');
 
                 Route::put('/{id}/services', [ProfessionalsController::class, 'updateServices'])->name('professionals.update.services');
+                Route::put('/{id}/working-hours', [ProfessionalsController::class, 'saveWorkingHours'])->name('professionals.save.working-hours');
 
             });
 
