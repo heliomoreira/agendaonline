@@ -6,6 +6,7 @@ use App\Models\Agenda;
 use App\Models\Client;
 use App\Models\Professional;
 use App\Models\Service;
+use App\Models\Tenant;
 use App\Notifications\BookingConfirmation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,6 +39,8 @@ class BookingController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+        $tenant = Tenant::find(tenant('id'));
 
         // Criar cliente
         $client = Client::create([
@@ -83,7 +86,7 @@ class BookingController extends Controller
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));
 
-        return view('front.booking.confirmation', compact('booking'));
+        return view('front.booking.confirmation', compact('booking','tenant'));
 
         /*
         return response()->json([

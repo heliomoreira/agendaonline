@@ -24,17 +24,4 @@ foreach (config('tenancy.central_domains') as $domain) {
     });
 }
 
-Route::middleware(['web', 'tenant'])->group(function () {
-    Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
-    Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');
-});
-
-/*Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
-Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');*/
-//Route::get('/book-confirmation', [BookingController::class, 'bookConfirmation'])->name('book.confirmation');
-
-
-
-
-
 require __DIR__ . '/auth.php';
