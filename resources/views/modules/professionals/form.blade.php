@@ -106,10 +106,9 @@
                             data-bs-target="#navs-justified-messages"
                             aria-controls="navs-justified-messages"
                             aria-selected="false">
-                          <span class="d-none d-sm-inline-flex align-items-center"
-                          ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Disponibilidade</span
-                          >
-                            <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
+                          <span class="d-none d-sm-inline-flex align-items-center">
+                              <i class="icon-base ti tabler-cancel icon-sm me-1_5"></i>Ausências
+                          </span>
                         </button>
                     </li>
 
@@ -172,7 +171,8 @@
                     <div class="tab-pane fade" id="navs-services" role="tabpanel">
                         @if(isset($professional->id))
                             <div class="col-md-6">
-                                <form method="POST" action="{{ route('professionals.update.services', $professional->id) }}">
+                                <form method="POST"
+                                      action="{{ route('professionals.update.services', $professional->id) }}">
                                     @csrf
                                     @method('PUT')
                                     <div class="card">
@@ -195,13 +195,15 @@
                                                         @foreach($services as $service)
                                                             <tr>
                                                                 <td style="width:50px">
-                                                                    <input type="checkbox" class="service-checkbox" name="services[]"
+                                                                    <input type="checkbox" class="service-checkbox"
+                                                                           name="services[]"
                                                                            value="{{ $service->id }}"
                                                                            id="service_{{ $service->id }}"
                                                                         {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
                                                                 </td>
                                                                 <td>
-                                                                    <label for="service_{{ $service->id }}">{{ $service->name }}</label>
+                                                                    <label
+                                                                        for="service_{{ $service->id }}">{{ $service->name }}</label>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
