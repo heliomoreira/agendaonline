@@ -42,12 +42,13 @@ class ProfessionalsController extends Controller
     {
         try {
             $professional = Professional::with(['services', 'workingHours'])->findOrFail($id);
-
+            $workingHours = $professional->workingHours->keyBy('weekday');
             $services = Service::all();
 
             return view('modules.professionals.form', [
                 'professional' => $professional,
-                'services' => $services
+                'services' => $services,
+                'workingHours' => $workingHours,
             ]);
         } catch (\Exception $e) {
             Log::error("Erro ao editar professional com ID {$id}: " . $e->getMessage());
@@ -131,12 +132,14 @@ class ProfessionalsController extends Controller
         return response()->json($professionals);
     }
 
-    public function saveWorkingHours(Request $request, $id): void
+    public function saveWorkingHours(Request $request, $id)
     {
         $workingHours = $request->input('working_hours', []);
 
         foreach ($workingHours as $weekday => $data) {
+
             if (!empty($data['start_hour']) && !empty($data['end_hour'])) {
+
                 ProfessionalWorkingHour::updateOrCreate(
                     [
                         'professional_id' => $id,
@@ -145,8 +148,8 @@ class ProfessionalsController extends Controller
                     [
                         'start_hour' => $data['start_hour'],
                         'end_hour' => $data['end_hour'],
-                        'lunch_start' => $data['lunch_start'] ?? null,
-                        'lunch_end' => $data['lunch_end'] ?? null,
+                        'lunch_start' => $data['lunch_start'],
+                        'lunch_end' => $data['lunch_end'],
                     ]
                 );
             } else {
@@ -156,5 +159,8 @@ class ProfessionalsController extends Controller
                 ])->delete();
             }
         }
+
+        return redirect()->route('professionals.edit', $id)
+            ->with('success', 'Horário de Trabalho atualizado com sucesso.');
     }
 }

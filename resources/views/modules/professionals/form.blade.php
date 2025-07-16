@@ -92,7 +92,7 @@
                             aria-controls="navs-justified-messages"
                             aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center"
-                          ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Disponbilidade</span
+                          ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Disponibilidade</span
                           >
                             <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
                         </button>
@@ -170,7 +170,8 @@
                                         0 => 'Domingo',
                                     ];
                                 @endphp
-                                <form action="{{route('professionals.save.working-hours', $professional->id)}}" method="POST">
+                                <form action="{{route('professionals.save.working-hours', $professional->id)}}"
+                                      method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="card-body">
@@ -186,7 +187,6 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-
                                                 @foreach($dias as $num => $nome)
                                                     <tr>
                                                         <td>
@@ -198,22 +198,24 @@
                                                         <td><input type="time"
                                                                    name="working_hours[{{ $num }}][start_hour]"
                                                                    class="form-control"
-                                                                   value="{{ old("workingHours.$num.start_hour", isset($workingHours[$num]) ? $workingHours[$num]->start_hour->format('H:i') : '') }}">
+                                                                   value="{{ old("working_hours.$num.start_hour", isset($workingHours[$num]) && $workingHours[$num]->start_hour ? \Carbon\Carbon::parse($workingHours[$num]->start_hour)->format('H:i') : '') }}">
+
                                                         </td>
                                                         <td><input type="time"
                                                                    name="working_hours[{{ $num }}][lunch_start]"
                                                                    class="form-control"
-                                                                   value="{{ old("working_hours.$num.lunch_start") }}">
+                                                                   value="{{ old("working_hours.$num.lunch_start", isset($workingHours[$num]) && $workingHours[$num]->lunch_start ? \Carbon\Carbon::parse($workingHours[$num]->lunch_start)->format('H:i') : '') }}">
                                                         </td>
                                                         <td><input type="time"
                                                                    name="working_hours[{{ $num }}][lunch_end]"
                                                                    class="form-control"
-                                                                   value="{{ old("working_hours.$num.lunch_end") }}">
+                                                                   value="{{ old("working_hours.$num.lunch_end", isset($workingHours[$num]) && $workingHours[$num]->lunch_end ? \Carbon\Carbon::parse($workingHours[$num]->lunch_end)->format('H:i') : '') }}">
+
                                                         </td>
                                                         <td><input type="time"
                                                                    name="working_hours[{{ $num }}][end_hour]"
                                                                    class="form-control"
-                                                                   value="{{ old("working_hours.$num.end_hour") }}">
+                                                                   value="{{ old("working_hours.$num.end_hour", isset($workingHours[$num]) && $workingHours[$num]->end_hour ? \Carbon\Carbon::parse($workingHours[$num]->end_hour)->format('H:i') : '') }}">
                                                         </td>
                                                     </tr>
                                                 @endforeach
