@@ -25,7 +25,7 @@ class AvailabilityController extends Controller
 
         $service = Service::findOrFail($serviceId);
         $duration = $service->duration;
-        $slotInterval = config('app.slot_interval', 30); // Default: 15 minutes
+        $slotInterval = config('app.slot_interval', 30);
 
         $results = [];
 
