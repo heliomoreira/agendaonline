@@ -73,6 +73,21 @@
                             class="nav-link"
                             role="tab"
                             data-bs-toggle="tab"
+                            data-bs-target="#navs-services"
+                            aria-controls="navs-services"
+                            aria-selected="false">
+                          <span class="d-none d-sm-inline-flex align-items-center"
+                          ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Serviços</span
+                          >
+                            <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button
+                            type="button"
+                            class="nav-link"
+                            role="tab"
+                            data-bs-toggle="tab"
                             data-bs-target="#navs-justified-profile"
                             aria-controls="navs-justified-profile"
                             aria-selected="false">
@@ -97,6 +112,7 @@
                             <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
                         </button>
                     </li>
+
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
