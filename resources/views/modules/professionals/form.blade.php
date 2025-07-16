@@ -170,7 +170,7 @@
                     </div>
                     <div class="tab-pane fade" id="navs-services" role="tabpanel">
                         @if(isset($professional->id))
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <form method="POST"
                                       action="{{ route('professionals.update.services', $professional->id) }}">
                                     @csrf

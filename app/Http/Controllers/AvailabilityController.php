@@ -85,6 +85,24 @@ class AvailabilityController extends Controller
                     ];
                 }
 
+                $unavailabilities = ProfessionalUnavailability::where('professional_id', $pro->id)
+                    ->where('day', $dateString)
+                    ->get();
+
+                foreach ($unavailabilities as $ua) {
+                    if ($ua->start_hour && $ua->end_hour) {
+                        // Parcial Absence
+                        $blockedIntervals[] = [
+                            'start' => Carbon::parse("{$dateString} {$ua->start_hour}"),
+                            'end' => Carbon::parse("{$dateString} {$ua->end_hour}")
+                        ];
+                    } else {
+                        // Full-Day Absence
+                        $slots = [];
+                        break;
+                    }
+                }
+
                 // Generate slots
                 $current = $start->copy();
                 $slots = [];
