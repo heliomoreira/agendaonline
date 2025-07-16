@@ -7,6 +7,7 @@ use App\Http\Requests\ProfessionalRequest;
 use App\Models\Professional;
 use App\Models\ProfessionalWorkingHour;
 use App\Models\Service;
+use App\Services\ProfessionalService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -14,8 +15,10 @@ class ProfessionalsController extends Controller
 {
     public function index()
     {
+
         try {
-            $professionals = Professional::all();
+            $professionals = ProfessionalService::list();
+
             return view('modules.professionals.index', [
                 'professionals' => $professionals
             ]);
