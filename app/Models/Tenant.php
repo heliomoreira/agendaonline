@@ -37,6 +37,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         'plan_end_date',
         'booking_available',
         'status',
+        'data',
     ];
 
     protected $casts = [
@@ -84,6 +85,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'plan_end_date',
             'booking_available',
             'status',
+            'data',
         ]);
     }
 }

@@ -67,51 +67,52 @@
                             <i class="icon-base ti tabler-home icon-sm d-sm-none"></i>
                         </button>
                     </li>
-                    <li class="nav-item">
-                        <button
-                            type="button"
-                            class="nav-link"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-services"
-                            aria-controls="navs-services"
-                            aria-selected="false">
+                    @if(isset($professional->id))
+                        <li class="nav-item">
+                            <button
+                                type="button"
+                                class="nav-link"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#navs-services"
+                                aria-controls="navs-services"
+                                aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center"
                           ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Serviços</span
                           >
-                            <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button
-                            type="button"
-                            class="nav-link"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-justified-profile"
-                            aria-controls="navs-justified-profile"
-                            aria-selected="false">
+                                <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button
+                                type="button"
+                                class="nav-link"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#navs-justified-profile"
+                                aria-controls="navs-justified-profile"
+                                aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center"
                           ><i class="icon-base ti tabler-user icon-sm me-1_5"></i>Horário de Trabalho</span
                           >
-                            <i class="icon-base ti tabler-user icon-sm d-sm-none"></i>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button
-                            type="button"
-                            class="nav-link"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-justified-messages"
-                            aria-controls="navs-justified-messages"
-                            aria-selected="false">
+                                <i class="icon-base ti tabler-user icon-sm d-sm-none"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button
+                                type="button"
+                                class="nav-link"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#navs-justified-messages"
+                                aria-controls="navs-justified-messages"
+                                aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center">
                               <i class="icon-base ti tabler-cancel icon-sm me-1_5"></i>Ausências
                           </span>
-                        </button>
-                    </li>
-
+                            </button>
+                        </li>
+                    @endif
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
@@ -168,46 +169,135 @@
                         </div>
                         {{html()->closeModelForm()}}
                     </div>
-                    <div class="tab-pane fade" id="navs-services" role="tabpanel">
-                        @if(isset($professional->id))
-                            <div class="col-md-12">
-                                <form method="POST"
-                                      action="{{ route('professionals.update.services', $professional->id) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="card">
-                                        <div class="card-header header-elements">
-                                            <h5 class="mb-0 me-2">Serviços prestados</h5>
+                    @if(isset($professional->id))
+                        <div class="tab-pane fade" id="navs-services" role="tabpanel">
+                            @if(isset($professional->id))
+                                <div class="col-md-12">
+                                    <form method="POST"
+                                          action="{{ route('professionals.update.services', $professional->id) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="card">
+                                            <div class="card-header header-elements">
+                                                <h5 class="mb-0 me-2">Serviços prestados</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row g-6">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:50px">
+                                                                <input type="checkbox" id="select_all_services"/>
+                                                            </th>
+                                                            <th>Serviço</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if(isset($services))
+                                                            @foreach($services as $service)
+                                                                <tr>
+                                                                    <td style="width:50px">
+                                                                        <input type="checkbox" class="service-checkbox"
+                                                                               name="services[]"
+                                                                               value="{{ $service->id }}"
+                                                                               id="service_{{ $service->id }}"
+                                                                            {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label
+                                                                            for="service_{{ $service->id }}">{{ $service->name }}</label>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="d-flex gap-2">
+                                                    <button type="submit"
+                                                            class="btn btn-primary waves-effect waves-light">
+                                                        <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                                                    </button>
+                                                    <a href="{{ route('professionals.index') }}"
+                                                       class="btn btn-secondary waves-effect waves-light">
+                                                        <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header header-elements">
+                                        <h5 class="mb-0 me-2">Horário de Trabalho</h5>
+                                    </div>
+                                    @php
+                                        $dias = [
+                                            1 => 'Segunda-feira',
+                                            2 => 'Terça-feira',
+                                            3 => 'Quarta-feira',
+                                            4 => 'Quinta-feira',
+                                            5 => 'Sexta-feira',
+                                            6 => 'Sábado',
+                                            0 => 'Domingo',
+                                        ];
+                                    @endphp
+                                    <form action="{{route('professionals.save.working-hours', $professional->id)}}"
+                                          method="POST">
+                                        @csrf
+                                        @method('PUT')
                                         <div class="card-body">
                                             <div class="row g-6">
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th style="width:50px">
-                                                            <input type="checkbox" id="select_all_services"/>
-                                                        </th>
-                                                        <th>Serviço</th>
+                                                        <th>Dia da Semana</th>
+                                                        <th>Manhã (Início)</th>
+                                                        <th>Manhã (Fim)</th>
+                                                        <th>Tarde (Início)</th>
+                                                        <th>Tarde (Fim)</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @if(isset($services))
-                                                        @foreach($services as $service)
-                                                            <tr>
-                                                                <td style="width:50px">
-                                                                    <input type="checkbox" class="service-checkbox"
-                                                                           name="services[]"
-                                                                           value="{{ $service->id }}"
-                                                                           id="service_{{ $service->id }}"
-                                                                        {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
-                                                                </td>
-                                                                <td>
-                                                                    <label
-                                                                        for="service_{{ $service->id }}">{{ $service->name }}</label>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
+                                                    @foreach($dias as $num => $nome)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $nome }}
+                                                                <input type="hidden"
+                                                                       name="working_hours[{{ $num }}][weekday]"
+                                                                       value="{{ $num }}">
+                                                            </td>
+                                                            <td><input type="time"
+                                                                       name="working_hours[{{ $num }}][start_hour]"
+                                                                       class="form-control"
+                                                                       value="{{ old("working_hours.$num.start_hour", isset($workingHours[$num]) && $workingHours[$num]->start_hour ? \Carbon\Carbon::parse($workingHours[$num]->start_hour)->format('H:i') : '') }}">
+
+                                                            </td>
+                                                            <td><input type="time"
+                                                                       name="working_hours[{{ $num }}][lunch_start]"
+                                                                       class="form-control"
+                                                                       value="{{ old("working_hours.$num.lunch_start", isset($workingHours[$num]) && $workingHours[$num]->lunch_start ? \Carbon\Carbon::parse($workingHours[$num]->lunch_start)->format('H:i') : '') }}">
+                                                            </td>
+                                                            <td><input type="time"
+                                                                       name="working_hours[{{ $num }}][lunch_end]"
+                                                                       class="form-control"
+                                                                       value="{{ old("working_hours.$num.lunch_end", isset($workingHours[$num]) && $workingHours[$num]->lunch_end ? \Carbon\Carbon::parse($workingHours[$num]->lunch_end)->format('H:i') : '') }}">
+
+                                                            </td>
+                                                            <td><input type="time"
+                                                                       name="working_hours[{{ $num }}][end_hour]"
+                                                                       class="form-control"
+                                                                       value="{{ old("working_hours.$num.end_hour", isset($workingHours[$num]) && $workingHours[$num]->end_hour ? \Carbon\Carbon::parse($workingHours[$num]->end_hour)->format('H:i') : '') }}">
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -223,100 +313,14 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header header-elements">
-                                    <h5 class="mb-0 me-2">Horário de Trabalho</h5>
+                                    </form>
                                 </div>
-                                @php
-                                    $dias = [
-                                        1 => 'Segunda-feira',
-                                        2 => 'Terça-feira',
-                                        3 => 'Quarta-feira',
-                                        4 => 'Quinta-feira',
-                                        5 => 'Sexta-feira',
-                                        6 => 'Sábado',
-                                        0 => 'Domingo',
-                                    ];
-                                @endphp
-                                <form action="{{route('professionals.save.working-hours', $professional->id)}}"
-                                      method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="card-body">
-                                        <div class="row g-6">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Dia da Semana</th>
-                                                    <th>Manhã (Início)</th>
-                                                    <th>Manhã (Fim)</th>
-                                                    <th>Tarde (Início)</th>
-                                                    <th>Tarde (Fim)</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($dias as $num => $nome)
-                                                    <tr>
-                                                        <td>
-                                                            {{ $nome }}
-                                                            <input type="hidden"
-                                                                   name="working_hours[{{ $num }}][weekday]"
-                                                                   value="{{ $num }}">
-                                                        </td>
-                                                        <td><input type="time"
-                                                                   name="working_hours[{{ $num }}][start_hour]"
-                                                                   class="form-control"
-                                                                   value="{{ old("working_hours.$num.start_hour", isset($workingHours[$num]) && $workingHours[$num]->start_hour ? \Carbon\Carbon::parse($workingHours[$num]->start_hour)->format('H:i') : '') }}">
-
-                                                        </td>
-                                                        <td><input type="time"
-                                                                   name="working_hours[{{ $num }}][lunch_start]"
-                                                                   class="form-control"
-                                                                   value="{{ old("working_hours.$num.lunch_start", isset($workingHours[$num]) && $workingHours[$num]->lunch_start ? \Carbon\Carbon::parse($workingHours[$num]->lunch_start)->format('H:i') : '') }}">
-                                                        </td>
-                                                        <td><input type="time"
-                                                                   name="working_hours[{{ $num }}][lunch_end]"
-                                                                   class="form-control"
-                                                                   value="{{ old("working_hours.$num.lunch_end", isset($workingHours[$num]) && $workingHours[$num]->lunch_end ? \Carbon\Carbon::parse($workingHours[$num]->lunch_end)->format('H:i') : '') }}">
-
-                                                        </td>
-                                                        <td><input type="time"
-                                                                   name="working_hours[{{ $num }}][end_hour]"
-                                                                   class="form-control"
-                                                                   value="{{ old("working_hours.$num.end_hour", isset($workingHours[$num]) && $workingHours[$num]->end_hour ? \Carbon\Carbon::parse($workingHours[$num]->end_hour)->format('H:i') : '') }}">
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="d-flex gap-2">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                <i class="icon-base ti tabler-device-floppy"></i> Gravar
-                                            </button>
-                                            <a href="{{ route('professionals.index') }}"
-                                               class="btn btn-secondary waves-effect waves-light">
-                                                <i class="icon-base ti tabler-arrow-left"></i> Voltar
-                                            </a>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
-                        @include('modules.professionals.partials.unavailabilities')
-                    </div>
+                        <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
+                            @include('modules.professionals.partials.unavailabilities')
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

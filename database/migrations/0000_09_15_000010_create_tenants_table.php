@@ -41,6 +41,7 @@ class CreateTenantsTable extends Migration
             $table->date('plan_end_date')->nullable();
             $table->boolean('booking_available')->default(true);
             $table->boolean('status')->default(true);
+            $table->text('data')->nullable();
             $table->timestamps();
         });
     }
