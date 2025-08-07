@@ -25,7 +25,7 @@ class AvailabilityController extends Controller
 
         $service = Service::findOrFail($serviceId);
         $duration = $service->duration;
-        $slotInterval = config('app.slot_interval', 30); // Default: 15 minutes
+        $slotInterval = config('app.slot_interval', 30);
 
         $results = [];
 
@@ -83,6 +83,24 @@ class AvailabilityController extends Controller
                         'start' => Carbon::parse("{$dateString} {$block->start_hour}"),
                         'end' => Carbon::parse("{$dateString} {$block->end_hour}")
                     ];
+                }
+
+                $unavailabilities = ProfessionalUnavailability::where('professional_id', $pro->id)
+                    ->where('day', $dateString)
+                    ->get();
+
+                foreach ($unavailabilities as $ua) {
+                    if ($ua->start_hour && $ua->end_hour) {
+                        // Parcial Absence
+                        $blockedIntervals[] = [
+                            'start' => Carbon::parse("{$dateString} {$ua->start_hour}"),
+                            'end' => Carbon::parse("{$dateString} {$ua->end_hour}")
+                        ];
+                    } else {
+                        // Full-Day Absence
+                        $slots = [];
+                        break;
+                    }
                 }
 
                 // Generate slots

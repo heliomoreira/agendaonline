@@ -17,7 +17,7 @@
     <meta name="keywords" content=""/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset('theme/assets/img/favicon/favicon.ico')}}"/>
+    <link rel="icon" type="image/x-icon" href="{{global_asset('theme/assets/img/favicon/favicon.ico')}}"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -26,39 +26,39 @@
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
         rel="stylesheet"/>
 
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/fonts/iconify-icons.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/fonts/iconify-icons.css')}}"/>
 
     <!-- Core CSS -->
     <!-- build:css assets/vendor/css/theme.css  -->
 
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/node-waves/node-waves.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/node-waves/node-waves.css')}}"/>
 
 
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/pickr/pickr-themes.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/pickr/pickr-themes.css')}}"/>
 
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/css/core.css')}}"/>
-    <link rel="stylesheet" href="{{asset('theme/assets/css/demo.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/css/core.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/css/demo.css')}}"/>
 
 
     <!-- Vendors CSS -->
 
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}"/>
 
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/apex-charts/apex-charts.css')}}"/>
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/apex-charts/apex-charts.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}"/>
     <link rel="stylesheet"
-          href="{{asset('theme/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}"/>
-    <link rel="stylesheet" href="{{asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}"/>
+          href="{{global_asset('theme/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}"/>
+    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}"/>
 
     <!-- Page CSS -->
     @stack('css')
 
     <!-- Helpers -->
-    <script src="{{asset('theme/assets/vendor/js/helpers.js')}}"></script>
-    <script src="{{asset('theme/assets/vendor/js/template-customizer.js')}}"></script>
-    <script src="{{asset('theme/assets/js/config.js')}}"></script>
+    <script src="{{global_asset('theme/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{global_asset('theme/assets/vendor/js/template-customizer.js')}}"></script>
+    <script src="{{global_asset('theme/assets/js/config.js')}}"></script>
 
 </head>
 <body>
@@ -69,7 +69,7 @@
             <div class="app-brand demo ">
                 <a href="/" class="app-brand-link">
                     <span class="app-brand-logo demo">
-                        <img src="{{asset('logo.png')}}" alt="Agenda Online" height="35"/>
+                        <img src="{{global_asset('logo.png')}}" alt="Agenda Online" height="35"/>
                     </span>
                     <span class="app-brand-text demo menu-text" style="margin-inline-start:0.50rem">Agenda Online</span>
                 </a>
@@ -86,7 +86,7 @@
                 </span>
                 </li>
                 <li class="menu-item mt-4">
-                    <a href="/" class="menu-link">
+                    <a href="/admin" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-dashboard"></i>
                         <div data-i18n="Dashboard">Dashboard</div>
                     </a>
@@ -137,7 +137,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="#" class="menu-link">
+                    <a href="/admin/account-settings" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-briefcase"></i>
                         <div data-i18n="Dados de Conta">Dados de Conta</div>
                     </a>
@@ -355,7 +355,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{asset('theme/assets/img/avatars/1.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -401,7 +401,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{asset('theme/assets/img/avatars/2.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/2.png')}}" alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -447,7 +447,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{asset('theme/assets/img/avatars/9.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/9.png')}}" alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -493,7 +493,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{asset('theme/assets/img/avatars/5.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/5.png')}}" alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -516,7 +516,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{asset('theme/assets/img/avatars/6.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/6.png')}}" alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -576,7 +576,7 @@
                             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
                                data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{asset('theme/assets/img/avatars/1.png')}}" alt class="rounded-circle"/>
+                                    <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt class="rounded-circle"/>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -585,12 +585,12 @@
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0 me-2">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{asset('theme/assets/img/avatars/1.png')}}" alt
+                                                    <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt
                                                          class="rounded-circle"/>
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="mb-0">John Doe</h6>
+                                                <h6 class="mb-0">{{Auth()->user()->name}}</h6>
                                                 <small class="text-body-secondary">Admin</small>
                                             </div>
                                         </div>
@@ -633,11 +633,15 @@
                                 </li>
                                 <li>
                                     <div class="d-grid px-2 pt-2 pb-1">
-                                        <a class="btn btn-sm btn-danger d-flex" href="auth-login-cover.html"
-                                           target="_blank">
+                                        <a class="btn btn-sm btn-danger d-flex" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <small class="align-middle">Logout</small>
                                             <i class="icon-base ti tabler-logout ms-2 icon-14px"></i>
                                         </a>
+
+                                        <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display:none;">
+                                            @csrf
+                                        </form>
                                     </div>
                                 </li>
                             </ul>
@@ -700,25 +704,25 @@
 <!-- build:js assets/vendor/js/theme.js  -->
 
 
-<script src="{{asset('theme/assets/vendor/libs/jquery/jquery.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/popper/popper.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/js/bootstrap.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/node-waves/node-waves.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/@algolia/autocomplete-js.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/pickr/pickr.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/hammer/hammer.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/i18n/i18n.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/jquery/jquery.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/popper/popper.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/js/bootstrap.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/node-waves/node-waves.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/@algolia/autocomplete-js.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/pickr/pickr.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/hammer/hammer.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/i18n/i18n.js')}}"></script>
 
-<script src="{{asset('theme/assets/vendor/js/menu.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/js/menu.js')}}"></script>
 <!-- endbuild -->
 <!-- Vendors JS -->
-<script src="{{asset('theme/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
-<script src="{{asset('theme/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+<script src="{{global_asset('theme/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
 <!-- Main JS -->
-<script src="{{asset('theme/assets/js/main.js')}}"></script>
+<script src="{{global_asset('theme/assets/js/main.js')}}"></script>
 <!-- Page JS -->
-<script src="{{asset('theme/assets/js/app-ecommerce-dashboard.js')}}"></script>
+<script src="{{global_asset('theme/assets/js/app-ecommerce-dashboard.js')}}"></script>
 
 
 @stack('scripts')

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfessionalRequest;
 use App\Models\Professional;
+use App\Models\ProfessionalWorkingHour;
 use App\Models\Service;
+use App\Services\ProfessionalService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -13,8 +15,10 @@ class ProfessionalsController extends Controller
 {
     public function index()
     {
+
         try {
-            $professionals = Professional::all();
+            $professionals = ProfessionalService::list();
+
             return view('modules.professionals.index', [
                 'professionals' => $professionals
             ]);
@@ -40,13 +44,14 @@ class ProfessionalsController extends Controller
     public function edit($id)
     {
         try {
-            $professional = Professional::with('services')->findOrFail($id);
-
+            $professional = Professional::with(['services', 'workingHours'])->findOrFail($id);
+            $workingHours = $professional->workingHours->keyBy('weekday');
             $services = Service::all();
 
             return view('modules.professionals.form', [
                 'professional' => $professional,
-                'services' => $services
+                'services' => $services,
+                'workingHours' => $workingHours,
             ]);
         } catch (\Exception $e) {
             Log::error("Erro ao editar professional com ID {$id}: " . $e->getMessage());
@@ -128,5 +133,37 @@ class ProfessionalsController extends Controller
 
 
         return response()->json($professionals);
+    }
+
+    public function saveWorkingHours(Request $request, $id)
+    {
+        $workingHours = $request->input('working_hours', []);
+
+        foreach ($workingHours as $weekday => $data) {
+
+            if (!empty($data['start_hour']) && !empty($data['end_hour'])) {
+
+                ProfessionalWorkingHour::updateOrCreate(
+                    [
+                        'professional_id' => $id,
+                        'weekday' => $data['weekday'],
+                    ],
+                    [
+                        'start_hour' => $data['start_hour'],
+                        'end_hour' => $data['end_hour'],
+                        'lunch_start' => $data['lunch_start'],
+                        'lunch_end' => $data['lunch_end'],
+                    ]
+                );
+            } else {
+                ProfessionalWorkingHour::where([
+                    'professional_id' => $id,
+                    'weekday' => $weekday
+                ])->delete();
+            }
+        }
+
+        return redirect()->route('professionals.edit', $id)
+            ->with('success', 'Horário de Trabalho atualizado com sucesso.');
     }
 }

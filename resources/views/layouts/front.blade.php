@@ -37,11 +37,11 @@
 
 <div class="container py-5">
     <div class="text-center">
-        <img src="{{asset('logo.png')}}" alt="Logo" class="logo">
+        <img src="{{global_asset('storage/'.$tenant->logo)}}" alt="Logo" class=logo" width="150" height="150">
     </div>
 
-    <div class="booking-container">
-        <h2 class="form-title text-center">Marcação Online</h2>
+    <div class="booking-container mt-3">
+        <h2 class="form-title text-center">Marcação Online - {{$tenant->name}}</h2>
 
         @yield('content')
     </div>

@@ -9,8 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $now = now();
-        $nextEvents = Agenda::with(['service','professional'])->upcoming()->get();
+        $nextEvents = Agenda::with(['service', 'professional'])->upcoming()->get();
 
         return view('dashboard', [
             'nextEvents' => $nextEvents
