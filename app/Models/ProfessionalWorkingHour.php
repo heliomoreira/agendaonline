@@ -13,16 +13,12 @@ class ProfessionalWorkingHour extends Model
         'professional_id',
         'weekday',
         'start_hour',
-        'end_hour',
-        'lunch_start',
-        'lunch_end',
+        'end_hour'
     ];
 
     protected $casts = [
         'start_hour' => 'datetime:H:i',
         'end_hour' => 'datetime:H:i',
-        'lunch_start' => 'datetime:H:i',
-        'lunch_end' => 'datetime:H:i',
     ];
 
     public function professional()

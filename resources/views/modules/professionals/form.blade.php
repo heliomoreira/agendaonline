@@ -231,12 +231,13 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
+                        <div class="tab-pane fade show active" id="navs-justified-profile" role="tabpanel">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header header-elements">
                                         <h5 class="mb-0 me-2">Horário de Trabalho</h5>
                                     </div>
+
                                     @php
                                         $dias = [
                                             1 => 'Segunda-feira',
@@ -248,60 +249,47 @@
                                             0 => 'Domingo',
                                         ];
                                     @endphp
-                                    <form action="{{route('professionals.save.working-hours', $professional->id)}}"
+
+                                    <form action="{{ route('professionals.save.working-hours', $professional->id) }}"
                                           method="POST">
                                         @csrf
                                         @method('PUT')
+
                                         <div class="card-body">
-                                            <div class="row g-6">
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Dia da Semana</th>
-                                                        <th>Manhã (Início)</th>
-                                                        <th>Manhã (Fim)</th>
-                                                        <th>Tarde (Início)</th>
-                                                        <th>Tarde (Fim)</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($dias as $num => $nome)
-                                                        <tr>
-                                                            <td>
-                                                                {{ $nome }}
-                                                                <input type="hidden"
-                                                                       name="working_hours[{{ $num }}][weekday]"
-                                                                       value="{{ $num }}">
-                                                            </td>
-                                                            <td><input type="time"
-                                                                       name="working_hours[{{ $num }}][start_hour]"
-                                                                       class="form-control"
-                                                                       value="{{ old("working_hours.$num.start_hour", isset($workingHours[$num]) && $workingHours[$num]->start_hour ? \Carbon\Carbon::parse($workingHours[$num]->start_hour)->format('H:i') : '') }}">
+                                            <div class="row g-3 align-items-center mb-3">
+                                                <div class="col-md-4">
+                                                    <label for="weekday" class="form-label">Dia da Semana</label>
+                                                    <select class="form-select" id="weekday-select">
+                                                        @foreach($dias as $num => $nome)
+                                                            <option value="{{ $num }}">{{ $nome }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                                                            </td>
-                                                            <td><input type="time"
-                                                                       name="working_hours[{{ $num }}][lunch_start]"
-                                                                       class="form-control"
-                                                                       value="{{ old("working_hours.$num.lunch_start", isset($workingHours[$num]) && $workingHours[$num]->lunch_start ? \Carbon\Carbon::parse($workingHours[$num]->lunch_start)->format('H:i') : '') }}">
-                                                            </td>
-                                                            <td><input type="time"
-                                                                       name="working_hours[{{ $num }}][lunch_end]"
-                                                                       class="form-control"
-                                                                       value="{{ old("working_hours.$num.lunch_end", isset($workingHours[$num]) && $workingHours[$num]->lunch_end ? \Carbon\Carbon::parse($workingHours[$num]->lunch_end)->format('H:i') : '') }}">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Hora Início</label>
+                                                    <input type="time" class="form-control" id="start-hour"
+                                                           name="start_hour">
+                                                </div>
 
-                                                            </td>
-                                                            <td><input type="time"
-                                                                       name="working_hours[{{ $num }}][end_hour]"
-                                                                       class="form-control"
-                                                                       value="{{ old("working_hours.$num.end_hour", isset($workingHours[$num]) && $workingHours[$num]->end_hour ? \Carbon\Carbon::parse($workingHours[$num]->end_hour)->format('H:i') : '') }}">
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Hora Fim</label>
+                                                    <input type="time" class="form-control" id="end-hour"
+                                                           name="end_hour">
+                                                </div>
 
-                                                    </tbody>
-                                                </table>
+                                                <div class="col-md-2 mt-4">
+                                                    <button type="button" class="btn btn-success w-100"
+                                                            id="add-hour-block">Adicionar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div id="working-hours-container">
+                                                {{-- Os blocos adicionados vão aparecer aqui --}}
                                             </div>
                                         </div>
+
                                         <div class="card-footer">
                                             <div class="d-flex gap-2">
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
@@ -317,6 +305,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
                             @include('modules.professionals.partials.unavailabilities')
                         </div>
@@ -325,127 +314,68 @@
             </div>
         </div>
     </div>
-    {{--
-        <div class="row g-6">
-            <div class="col-md-6">
-                @if(!$professional->id)
-                    {{ html()->modelForm($professional, 'POST', route('professionals.store'))->open() }}
-                @else
-                    {{ html()->modelForm($professional, 'PUT', route('professionals.update', $professional->id))->open() }}
-                @endif
-                {{ html()->token() }}
-                <div class="card">
-                    <div class="card-header header-elements">
-                        <h5 class="mb-0 me-2">
-                            Detalhe {!!  $professional->name ? '| <span style="color:#2A7AD4">' . $professional->name . '</span>': ''  !!}</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-6">
-                            <div class="col-md-8">
-                                <label class="form-label" for="name">Nome</label>
-                                {{html()->text('name')->id('name')->class('form-control')->placeholder('')}}
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="phone_1">Contacto</label>
-                                {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-8">
-                                <label class="form-label" for="email">Email</label>
-                                {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="phone_2">Contacto 2</label>
-                                {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-3">
-                                <label class="form-label" for="agenda_color">Cor na Agenda</label>
-                                <input type="color" id="agenda_color" name="agenda_color" value="{{old('agenda_color', $professional->agenda_color)}}" class="form-control" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label" for="status">Ordem</label>
-                                {{html()->text('order')->id('order')->class('form-control')}}
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label" for="status">Estado</label>
-                                {{html()->select('status')->id('status')->options([true => 'Activo', false => 'Inactivo'])->class('form-select')->placeholder('-- Seleccionar --')}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                <i class="icon-base ti tabler-device-floppy"></i> Gravar
-                            </button>
-                            <a href="{{ route('professionals.index') }}" class="btn btn-secondary waves-effect waves-light">
-                                <i class="icon-base ti tabler-arrow-left"></i> Voltar
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {{html()->closeModelForm()}}
-            </div>
-            @if(isset($professional->id))
-                <div class="col-md-6">
-                    <form method="POST" action="{{ route('professionals.update.services', $professional->id) }}">
-                        @csrf
-                        @method('PUT')
-                        <div class="card">
-                            <div class="card-header header-elements">
-                                <h5 class="mb-0 me-2">Serviços prestados</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-6">
-                                    <table class="table">
-                                        <thead>
-                                        <tr>
-                                            <th style="width:50px">
-                                                <input type="checkbox" id="select_all_services"/>
-                                            </th>
-                                            <th>Serviço</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @if(isset($services))
-                                            @foreach($services as $service)
-                                                <tr>
-                                                    <td style="width:50px">
-                                                        <input type="checkbox" class="service-checkbox" name="services[]"
-                                                               value="{{ $service->id }}"
-                                                               id="service_{{ $service->id }}"
-                                                            {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
-                                                    </td>
-                                                    <td>
-                                                        <label for="service_{{ $service->id }}">{{ $service->name }}</label>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                        <i class="icon-base ti tabler-device-floppy"></i> Gravar
-                                    </button>
-                                    <a href="{{ route('professionals.index') }}"
-                                       class="btn btn-secondary waves-effect waves-light">
-                                        <i class="icon-base ti tabler-arrow-left"></i> Voltar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            @endif
-        </div>--}}
+
 @endsection
 @push('scripts')
+    <script>
+        let whIndex = {{ isset($workingHours) ? $workingHours->count() : 0 }};
+
+        document.getElementById('add-hour-block').addEventListener('click', function () {
+            const weekday = document.getElementById('weekday-select').value;
+            const weekdayName = {
+                1:'Segunda-feira',2:'Terça-feira',3:'Quarta-feira',4:'Quinta-feira',5:'Sexta-feira',6:'Sábado',0:'Domingo'
+            }[weekday];
+            const startHour = document.getElementById('start-hour').value;
+            const endHour = document.getElementById('end-hour').value;
+
+            if (!startHour || !endHour) { alert('Preenche ambas as horas.'); return; }
+
+            const dayGroupId = `day-group-${weekday}`;
+            let dayGroup = document.getElementById(dayGroupId);
+            if (!dayGroup) {
+                dayGroup = document.createElement('div');
+                dayGroup.id = dayGroupId;
+                dayGroup.className = 'mb-4';
+                dayGroup.innerHTML = `<h6 class="mb-3">${weekdayName}</h6><div class="day-group-rows"></div><hr>`;
+                document.getElementById('working-hours-container').appendChild(dayGroup);
+            }
+
+            const idx = whIndex++;
+            const row = document.createElement('div');
+            row.className = 'row g-3 align-items-center mb-2';
+            row.innerHTML = `
+            <div class="col-md-3">
+                <input type="text" class="form-control-plaintext" value="${weekdayName}" readonly>
+                <input type="hidden" name="working_hours[${idx}][weekday]" value="${weekday}">
+            </div>
+            <div class="col-md-3">
+                <input type="time" name="working_hours[${idx}][start_hour]" class="form-control" value="${startHour}" readonly>
+            </div>
+            <div class="col-md-3">
+                <input type="time" name="working_hours[${idx}][end_hour]" class="form-control" value="${endHour}" readonly>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-sm btn-danger remove-block">Remover</button>
+            </div>
+        `;
+            dayGroup.querySelector('.day-group-rows').appendChild(row);
+
+            document.getElementById('start-hour').value = '';
+            document.getElementById('end-hour').value = '';
+        });
+
+        document.getElementById('working-hours-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-block')) {
+                const row = e.target.closest('.row');
+                const group = row.closest('.mb-4');
+                row.remove();
+                if (group.querySelector('.day-group-rows').children.length === 0) group.remove();
+            }
+        });
+    </script>
+
+
+
     <script>
         document.getElementById('select_all_services').addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('.service-checkbox');

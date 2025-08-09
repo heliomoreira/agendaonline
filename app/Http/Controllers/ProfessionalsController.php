@@ -135,35 +135,31 @@ class ProfessionalsController extends Controller
         return response()->json($professionals);
     }
 
-    public function saveWorkingHours(Request $request, $id)
+    public function saveWorkingHours(Request $request, $professionalId)
     {
-        $workingHours = $request->input('working_hours', []);
 
-        foreach ($workingHours as $weekday => $data) {
+      /*  $request->validate([
+            'working_hours' => 'required|array',
+            'working_hours.*.weekday' => 'required|integer|between:0,6',
+            'working_hours.*.start_hour' => 'required|date_format:H:i',
+            'working_hours.*.end_hour' => 'required|date_format:H:i|after:working_hours.*.start_hour',
+        ]);*/
 
-            if (!empty($data['start_hour']) && !empty($data['end_hour'])) {
+        ProfessionalWorkingHour::where('professional_id', $professionalId)->delete();
 
-                ProfessionalWorkingHour::updateOrCreate(
-                    [
-                        'professional_id' => $id,
-                        'weekday' => $data['weekday'],
-                    ],
-                    [
-                        'start_hour' => $data['start_hour'],
-                        'end_hour' => $data['end_hour'],
-                        'lunch_start' => $data['lunch_start'],
-                        'lunch_end' => $data['lunch_end'],
-                    ]
-                );
-            } else {
-                ProfessionalWorkingHour::where([
-                    'professional_id' => $id,
-                    'weekday' => $weekday
-                ])->delete();
+        foreach ($request->working_hours as $k => $block) {
+            if (empty($block['weekday']) || empty($block['start_hour']) || empty($block['end_hour'])) {
+                continue;
             }
+
+            ProfessionalWorkingHour::create([
+                'professional_id' => $professionalId,
+                'start_hour' => $block['start_hour'],
+                'end_hour' => $block['end_hour'],
+                'weekday' => $block['weekday'],
+            ]);
         }
 
-        return redirect()->route('professionals.edit', $id)
-            ->with('success', 'Horário de Trabalho atualizado com sucesso.');
+        return redirect()->back()->with('success', 'Horários de trabalho atualizados com sucesso.');
     }
 }

@@ -17,8 +17,6 @@ return new class extends Migration
             $table->tinyInteger('weekday'); // 0=Sunday to 6=Saturday
             $table->time('start_hour');
             $table->time('end_hour');
-            $table->time('lunch_start')->nullable();
-            $table->time('lunch_end')->nullable();
             $table->timestamps();
         });
     }
