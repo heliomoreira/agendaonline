@@ -286,7 +286,45 @@
                                             </div>
 
                                             <div id="working-hours-container">
-                                                {{-- Os blocos adicionados vão aparecer aqui --}}
+                                                @php
+                                                    $grouped = $workingHours->groupBy('weekday');
+                                                @endphp
+
+                                                @php
+                                                    $grouped = $workingHours->groupBy('weekday');
+                                                    $i = 0;
+                                                @endphp
+
+                                                @foreach ($grouped as $weekday => $blocks)
+                                                    <div id="day-group-{{ $weekday }}" class="mb-4">
+                                                        <h6 class="mb-3">{{ $dias[$weekday] }}</h6>
+                                                        <div class="day-group-rows">
+                                                            @foreach ($blocks as $block)
+                                                                <div class="row g-3 align-items-center mb-2">
+                                                                    <div class="col-md-3" style="display: none">
+                                                                        <input type="text" class="form-control-plaintext" value="{{ $dias[$weekday] }}" readonly>
+                                                                        <input type="hidden" name="working_hours[{{ $i }}][weekday]" value="{{ $weekday }}">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="working_hours[{{ $i }}][start_hour]" class="form-control"
+                                                                               value="{{ \Carbon\Carbon::parse($block->start_hour)->format('H:i') }}" readonly>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <input type="time" name="working_hours[{{ $i }}][end_hour]" class="form-control"
+                                                                               value="{{ \Carbon\Carbon::parse($block->end_hour)->format('H:i') }}" readonly>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <button type="button" class="btn btn-sm btn-danger remove-block">Remover</button>
+                                                                    </div>
+                                                                </div>
+                                                                @php $i++; @endphp
+                                                            @endforeach
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                @endforeach
+
+                                                <input type="hidden" id="wh-next-index" value="{{ $i }}">
                                             </div>
                                         </div>
 
@@ -344,7 +382,7 @@
             const row = document.createElement('div');
             row.className = 'row g-3 align-items-center mb-2';
             row.innerHTML = `
-            <div class="col-md-3">
+            <div class="col-md-3" style="display: none;">
                 <input type="text" class="form-control-plaintext" value="${weekdayName}" readonly>
                 <input type="hidden" name="working_hours[${idx}][weekday]" value="${weekday}">
             </div>

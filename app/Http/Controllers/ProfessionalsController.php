@@ -45,7 +45,10 @@ class ProfessionalsController extends Controller
     {
         try {
             $professional = Professional::with(['services', 'workingHours'])->findOrFail($id);
-            $workingHours = $professional->workingHours->keyBy('weekday');
+            $workingHours = ProfessionalWorkingHour::where('professional_id', $id)
+                ->orderBy('weekday')
+                ->orderBy('start_hour')
+                ->get();
             $services = Service::all();
 
             return view('modules.professionals.form', [
@@ -138,28 +141,28 @@ class ProfessionalsController extends Controller
     public function saveWorkingHours(Request $request, $professionalId)
     {
 
-      /*  $request->validate([
-            'working_hours' => 'required|array',
-            'working_hours.*.weekday' => 'required|integer|between:0,6',
-            'working_hours.*.start_hour' => 'required|date_format:H:i',
-            'working_hours.*.end_hour' => 'required|date_format:H:i|after:working_hours.*.start_hour',
-        ]);*/
+        /*  $request->validate([
+              'working_hours' => 'required|array',
+              'working_hours.*.weekday' => 'required|integer|between:0,6',
+              'working_hours.*.start_hour' => 'required|date_format:H:i',
+              'working_hours.*.end_hour' => 'required|date_format:H:i|after:working_hours.*.start_hour',
+          ]);*/
 
         ProfessionalWorkingHour::where('professional_id', $professionalId)->delete();
 
-        foreach ($request->working_hours as $k => $block) {
-            if (empty($block['weekday']) || empty($block['start_hour']) || empty($block['end_hour'])) {
-                continue;
+        if ($request->filled('working_hours')) {
+            foreach ($request->working_hours as $block) {
+                if (empty($block['weekday']) || empty($block['start_hour']) || empty($block['end_hour'])) {
+                    continue;
+                }
+                ProfessionalWorkingHour::create([
+                    'professional_id' => $professionalId,
+                    'weekday' => (int) $block['weekday'],
+                    'start_hour' => $block['start_hour'],
+                    'end_hour' => $block['end_hour'],
+                ]);
             }
-
-            ProfessionalWorkingHour::create([
-                'professional_id' => $professionalId,
-                'start_hour' => $block['start_hour'],
-                'end_hour' => $block['end_hour'],
-                'weekday' => $block['weekday'],
-            ]);
         }
-
         return redirect()->back()->with('success', 'Horários de trabalho atualizados com sucesso.');
     }
 }
