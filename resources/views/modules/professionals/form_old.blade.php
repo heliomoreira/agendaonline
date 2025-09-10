@@ -171,8 +171,7 @@
                     </div>
                     @if(isset($professional->id))
                         <div class="tab-pane fade" id="navs-services" role="tabpanel">
-                            @if(isset($professional->id))
-                                <div class="col-md-12">
+                                   <div class="col-md-12">
                                     <form method="POST"
                                           action="{{ route('professionals.update.services', $professional->id) }}">
                                         @csrf
@@ -229,7 +228,6 @@
                                         </div>
                                     </form>
                                 </div>
-                            @endif
                         </div>
                         <div class="tab-pane fade show active" id="navs-justified-profile" role="tabpanel">
                             <div class="col-md-12">

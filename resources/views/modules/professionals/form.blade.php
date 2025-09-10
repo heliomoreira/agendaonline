@@ -116,16 +116,22 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
-                        .
+                        @include('modules.professionals.partials.info')
                     </div>
                     <div class="tab-pane fade" id="navs-justified-services" role="tabpanel">
-                        ..
+                        @if(isset($professional->id))
+                            @include('modules.professionals.partials.services')
+                        @endif
                     </div>
                     <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
-                        ...
+                        @if(isset($professional->id))
+                            @include('modules.professionals.partials.working_hours')
+                        @endif
                     </div>
                     <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
-                        @include('modules.professionals.partials.unavailabilities')
+                        @if(isset($professional->id))
+                            @include('modules.professionals.partials.unavailabilities')
+                        @endif
                     </div>
                 </div>
             </div>
