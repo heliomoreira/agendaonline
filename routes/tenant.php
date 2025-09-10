@@ -9,6 +9,7 @@ use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ServicesController;
@@ -119,6 +120,10 @@ Route::middleware([
                 Route::get('/', [AccountSettingsController::class, 'index'])->name('account-settings.index');
                 Route::put('/update', [AccountSettingsController::class, 'updateAccount'])->name('account-settings.updateAccount');
 
+            });
+
+            Route::prefix('portal')->group(function () {
+                Route::get('/', [PortalController::class, 'index'])->name('portal.index');
             });
         });
     });

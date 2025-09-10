@@ -47,10 +47,12 @@
     <!-- endbuild -->
 
     <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/apex-charts/apex-charts.css')}}"/>
-    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}"/>
+    <link rel="stylesheet"
+          href="{{global_asset('theme/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}"/>
     <link rel="stylesheet"
           href="{{global_asset('theme/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}"/>
-    <link rel="stylesheet" href="{{global_asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}"/>
+    <link rel="stylesheet"
+          href="{{global_asset('theme/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')}}"/>
 
     <!-- Page CSS -->
     @stack('css')
@@ -140,6 +142,12 @@
                     <a href="/admin/account-settings" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-briefcase"></i>
                         <div data-i18n="Dados de Conta">Dados de Conta</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="/admin/portal" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-world-www"></i>
+                        <div data-i18n="Portal">Portal</div>
                     </a>
                 </li>
                 <li class="menu-item">
@@ -355,7 +363,8 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/1.png')}}"
+                                                             alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -401,7 +410,8 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{global_asset('theme/assets/img/avatars/2.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/2.png')}}"
+                                                             alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -447,7 +457,8 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{global_asset('theme/assets/img/avatars/9.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/9.png')}}"
+                                                             alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -493,7 +504,8 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{global_asset('theme/assets/img/avatars/5.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/5.png')}}"
+                                                             alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -516,7 +528,8 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar">
-                                                        <img src="{{global_asset('theme/assets/img/avatars/6.png')}}" alt
+                                                        <img src="{{global_asset('theme/assets/img/avatars/6.png')}}"
+                                                             alt
                                                              class="rounded-circle"/>
                                                     </div>
                                                 </div>
@@ -576,7 +589,8 @@
                             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
                                data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt class="rounded-circle"/>
+                                    <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt
+                                         class="rounded-circle"/>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -639,7 +653,8 @@
                                             <i class="icon-base ti tabler-logout ms-2 icon-14px"></i>
                                         </a>
 
-                                        <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display:none;">
+                                        <form id="logout-form" method="POST" action="{{ route('logout') }}"
+                                              style="display:none;">
                                             @csrf
                                         </form>
                                     </div>
