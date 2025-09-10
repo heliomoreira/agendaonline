@@ -16,7 +16,7 @@
             <input type="time" name="end_hour" class="form-control">
         </div>
         <div class="col-md-2 d-flex align-items-center">
-            <button class="btn btn-primary">Gravar</button>
+            <button class="btn btn-primary"><i class="icon-base ti tabler-device-floppy"></i> Gravar</button>
         </div>
     </form>
 </div>
