@@ -3,10 +3,8 @@
           action="{{ route('professionals.update.services', $professional->id) }}">
         @csrf
         @method('PUT')
+        <h5>Serviços prestados</h5>
         <div class="card">
-            <div class="card-header header-elements">
-                <h5 class="mb-0 me-2">Serviços prestados</h5>
-            </div>
             <div class="card-body">
                 <div class="row g-6">
                     <table class="table">
