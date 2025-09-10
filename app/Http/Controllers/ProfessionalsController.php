@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfessionalRequest;
 use App\Models\Professional;
+use App\Models\ProfessionalUnavailability;
 use App\Models\ProfessionalWorkingHour;
 use App\Models\Service;
 use App\Services\ProfessionalService;
@@ -55,6 +56,7 @@ class ProfessionalsController extends Controller
                 'professional' => $professional,
                 'services' => $services,
                 'workingHours' => $workingHours,
+                'listUnavailabilities' => self::getUnavailabilityByProfessionalId($id),
             ]);
         } catch (\Exception $e) {
             Log::error("Erro ao editar professional com ID {$id}: " . $e->getMessage());
@@ -157,12 +159,39 @@ class ProfessionalsController extends Controller
                 }
                 ProfessionalWorkingHour::create([
                     'professional_id' => $professionalId,
-                    'weekday' => (int) $block['weekday'],
+                    'weekday' => (int)$block['weekday'],
                     'start_hour' => $block['start_hour'],
                     'end_hour' => $block['end_hour'],
                 ]);
             }
         }
         return redirect()->back()->with('success', 'Horários de trabalho atualizados com sucesso.');
+    }
+
+
+    /*
+    /*
+    Unavailability
+    *
+    */
+    public function getUnavailabilityByProfessionalId($professionalId)
+    {
+        return ProfessionalUnavailability::where('professional_id', $professionalId)->get();
+    }
+
+    public function saveUnavailability(Request $request, $professionalId)
+    {
+        $unavailability = new ProfessionalUnavailability();
+        $unavailability->fill($request->all());
+        $unavailability->save();
+
+        return redirect()->back()->with('success', 'Ausência registada com sucesso.');
+    }
+
+    public function removeUnavailability(Request $request, $unavailabilityId)
+    {
+        $unavailability = ProfessionalUnavailability::where('id', $unavailabilityId)->delete();
+
+        return response()->json(['success' => true]);
     }
 }

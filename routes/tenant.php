@@ -91,6 +91,9 @@ Route::middleware([
                 Route::put('/{id}/services', [ProfessionalsController::class, 'updateServices'])->name('professionals.update.services');
                 Route::put('/{id}/working-hours', [ProfessionalsController::class, 'saveWorkingHours'])->name('professionals.save.working-hours');
 
+                Route::post('/{id}/save-unavailability', [ProfessionalsController::class, 'saveUnavailability'])->name('professionals.unavailability.store');
+                Route::delete('/{id}/remove-unavailability', [ProfessionalsController::class, 'removeUnavailability'])->name('professionals.unavailability.remove');
+
             });
 
             Route::prefix('products')->group(function () {
