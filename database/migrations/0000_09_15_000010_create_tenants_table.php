@@ -31,9 +31,6 @@ class CreateTenantsTable extends Migration
             $table->boolean('sms_status')->default(false);
             $table->string('sms_sender', 11)->nullable();
             $table->unsignedInteger('sms_credits')->default(0);
-            $table->string('logo', 255)->nullable();
-            $table->string('main_color', 20)->nullable();
-            $table->string('secondary_color', 20)->nullable();
             $table->boolean('is_beta')->default(false);
             $table->string('storage_token', 100)->nullable();
             $table->unsignedInteger('storage_quota')->default(0);
