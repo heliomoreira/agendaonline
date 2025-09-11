@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Portal;
 use App\Models\Professional;
 use App\Models\Service;
 use App\Models\Tenant;
@@ -17,9 +18,9 @@ class TenantController extends Controller
         $tenant = Tenant::find(tenant('id'));
         $services = Service::all();
         $professionals = Professional::all();
+        $portal = Portal::first();
 
-
-        return view('front.booking.index', compact('tenant','services','professionals'));
+        return view('front.booking.index', compact('tenant','services','professionals','portal'));
     }
 
     public function signup()
