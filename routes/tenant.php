@@ -124,7 +124,7 @@ Route::middleware([
 
             Route::prefix('portal')->group(function () {
                 Route::get('/', [PortalController::class, 'index'])->name('portal.index');
-                Route::get('/update', [PortalController::class, 'update'])->name('portal.update');
+                Route::put('/update/{id}', [PortalController::class, 'update'])->name('portal.update');
             });
         });
     });
