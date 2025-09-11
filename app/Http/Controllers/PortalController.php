@@ -12,7 +12,7 @@ class PortalController extends Controller
         return view ('modules.portal.form', compact('portal'));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
 
     }
