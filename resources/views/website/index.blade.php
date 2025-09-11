@@ -161,7 +161,7 @@
                                 <p>Gestão de Clientes</p>
                             </li>
                             <li class="col-md-6">
-                                <p>Gestão de Assistências</p>
+                                <p>Gestão de Serviços</p>
                             </li>
                             <li class="col-md-6">
                                 <p>Gestão de Orçamentos</p>

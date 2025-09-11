@@ -41,6 +41,6 @@ class TenantController extends Controller
             'tenant_id' => $response->getData()->data->id]);
 
 
-        return response()->json(['message' => 'Tenant created successfully!'], 201);
+        return view('website.account_created', compact('user'));;
     }
 }
