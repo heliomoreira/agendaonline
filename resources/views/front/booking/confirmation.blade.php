@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <a href="{{ route('book.index') }}" class="btn btn-outline-primary mt-4">
+        <a href="/" class="btn btn-outline-primary mt-4">
             <i class="bi bi-arrow-left-circle me-1"></i>
             Fazer nova marcação
         </a>
