@@ -67,10 +67,10 @@
                                    class="form-control" style="height: 39px"/>
                         </div>
                         <div class="col-md-2">
-                            <label for="image" class="form-label">Logotipo</label>
-                            <input type="file" class="form-control" id="image" name="image">
-                            @if($portal->image)
-                                <img src="{{ asset('storage/' . $portal->image) }}" alt="Portal Image"
+                            <label for="logo" class="form-label">Logotipo</label>
+                            <input type="file" class="form-control" id="logo" name="logo">
+                            @if($portal->logo)
+                                <img src="{{ asset('storage/' . $portal->logo) }}" alt="Portal Image"
                                      class="img-thumbnail mt-2" style="max-width: 200px;">
                             @endif
                         </div>
