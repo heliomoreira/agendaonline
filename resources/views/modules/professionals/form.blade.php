@@ -138,3 +138,70 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        let whIndex = {{ isset($workingHours) ? $workingHours->count() : 0 }};
+
+        document.getElementById('add-hour-block').addEventListener('click', function () {
+            const weekday = document.getElementById('weekday-select').value;
+            const weekdayName = {
+                1:'Segunda-feira',2:'Terça-feira',3:'Quarta-feira',4:'Quinta-feira',5:'Sexta-feira',6:'Sábado',0:'Domingo'
+            }[weekday];
+            const startHour = document.getElementById('start-hour').value;
+            const endHour = document.getElementById('end-hour').value;
+
+            if (!startHour || !endHour) { alert('Preenche ambas as horas.'); return; }
+
+            const dayGroupId = `day-group-${weekday}`;
+            let dayGroup = document.getElementById(dayGroupId);
+            if (!dayGroup) {
+                dayGroup = document.createElement('div');
+                dayGroup.id = dayGroupId;
+                dayGroup.className = 'mb-4';
+                dayGroup.innerHTML = `<h6 class="mb-3">${weekdayName}</h6><div class="day-group-rows"></div><hr>`;
+                document.getElementById('working-hours-container').appendChild(dayGroup);
+            }
+
+            const idx = whIndex++;
+            const row = document.createElement('div');
+            row.className = 'row g-3 align-items-center mb-2';
+            row.innerHTML = `
+            <div class="col-md-3" style="display: none;">
+                <input type="text" class="form-control-plaintext" value="${weekdayName}" readonly>
+                <input type="hidden" name="working_hours[${idx}][weekday]" value="${weekday}">
+            </div>
+            <div class="col-md-3">
+                <input type="time" name="working_hours[${idx}][start_hour]" class="form-control" value="${startHour}" readonly>
+            </div>
+            <div class="col-md-3">
+                <input type="time" name="working_hours[${idx}][end_hour]" class="form-control" value="${endHour}" readonly>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-sm btn-danger remove-block">Remover</button>
+            </div>
+        `;
+            dayGroup.querySelector('.day-group-rows').appendChild(row);
+
+            document.getElementById('start-hour').value = '';
+            document.getElementById('end-hour').value = '';
+        });
+
+        document.getElementById('working-hours-container').addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-block')) {
+                const row = e.target.closest('.row');
+                const group = row.closest('.mb-4');
+                row.remove();
+                if (group.querySelector('.day-group-rows').children.length === 0) group.remove();
+            }
+        });
+    </script>
+
+
+
+    <script>
+        document.getElementById('select_all_services').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('.service-checkbox');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+    </script>
+@endpush

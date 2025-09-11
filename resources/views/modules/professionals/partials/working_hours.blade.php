@@ -22,7 +22,7 @@
             @method('PUT')
 
             <div class="card-body">
-                <div class="row g-3 align-items-center mb-3">
+                <div class="row g-3 mb-3 row align-items-end">
                     <div class="col-md-4">
                         <label for="weekday" class="form-label">Dia da Semana</label>
                         <select class="form-select" id="weekday-select">
@@ -32,13 +32,13 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label class="form-label">Hora Início</label>
                         <input type="time" class="form-control" id="start-hour"
                                name="start_hour">
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label class="form-label">Hora Fim</label>
                         <input type="time" class="form-control" id="end-hour"
                                name="end_hour">
