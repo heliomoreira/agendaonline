@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
-    public function index()
+/*    public function index()
     {
         $services = Service::where('status', true)->get();
         $professionals = Professional::where('status', true)->get();
 
         return view('front.booking.index', compact('services', 'professionals'));
-    }
+    }*/
 
     public function bookSlot(Request $request)
     {
@@ -86,9 +86,9 @@ class BookingController extends Controller
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));
 
-        return view('front.booking.confirmation', compact('booking','tenant'));
+        return view('front.portal.confirmation', compact('booking','tenant'));
 
-        /*
+   /*
         return response()->json([
             'message' => 'Booking confirmed!',
             'agenda' => $booking
