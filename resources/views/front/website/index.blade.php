@@ -33,12 +33,12 @@
     <!-- Start Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container"><a class="navbar-brand" href="/"><img
-                    src="{{global_asset('website/media/img/assistgest_black.png')}}" class="img-fluid logo1"
-                    alt="Assistgest"><img src="{{global_asset('website/media/img/assistgest_light.png')}}"
-                                          class="img-fluid logo2" alt="Assistgest"></a>
+                        src="{{global_asset('website/media/img/assistgest_black.png')}}" class="img-fluid logo1"
+                        alt="Assistgest"><img src="{{global_asset('website/media/img/assistgest_light.png')}}"
+                                              class="img-fluid logo2" alt="Assistgest"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"><span
-                    class="navbar-toggler-icon"></span></button>
+                        class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -103,7 +103,8 @@
                                                         class="rounded-circle img-fluid" alt=""></div>
                             <div class="cnt-block">
                                 <h3>Multi-dispositivo</h3>
-                                <p>No computador, portátil, tablet ou smartphone, aceda ao software com facilidade onde quer que esteja.</p>
+                                <p>No computador, portátil, tablet ou smartphone, aceda ao software com facilidade onde
+                                    quer que esteja.</p>
                             </div>
                         </li>
                         <li class="col-md-6 equal-hight">
@@ -229,31 +230,31 @@
                         <h2>Algumas das nossas funcionalidades!</h2>
                         <ul class="row features-listing">
                             <li class="col-md-6"><span class="icon"><img
-                                        src="{{global_asset('website/media/img/assistgest-historico.png')}}"
-                                        alt="Assistgest Histórico" title="Assistgest Histórico"></span>
+                                            src="{{global_asset('website/media/img/assistgest-historico.png')}}"
+                                            alt="Assistgest Histórico" title="Assistgest Histórico"></span>
                                 <h3>Histórico</h3>
                                 <p>Conseguirá rapidamente ter acesso ao histórico do cliente e do equipamento e, dessa
                                     forma, prestar um atendimento ao cliente de excelência!</p>
                             </li>
                             <li class="col-md-6"><span class="icon"><img
-                                        src="{{global_asset('website/media/img/assistgest-clientes.png')}}"
-                                        alt="Assistgest Clientes" title="Assistgest Clientes"></span>
+                                            src="{{global_asset('website/media/img/assistgest-clientes.png')}}"
+                                            alt="Assistgest Clientes" title="Assistgest Clientes"></span>
                                 <h3>Gestão de Clientes</h3>
                                 <p>Efectue a gestão dos seus clientes de forma informada. Obtenha de forma rápida e
                                     simples todas as assistências que determinado cliente teve como também as
                                     informações relevantes sobre o mesmo.</p>
                             </li>
                             <li class="col-md-6"><span class="icon"><img
-                                        src="{{global_asset('website/media/img/assistgest-estatisticas.png')}}"
-                                        alt="Assistgest Estatísticas" title="Assistgest Estatísticas"></span>
+                                            src="{{global_asset('website/media/img/assistgest-estatisticas.png')}}"
+                                            alt="Assistgest Estatísticas" title="Assistgest Estatísticas"></span>
                                 <h3>Estatísticas</h3>
                                 <p>Verifique em tempo real a progressão que tem nas assistências, melhores clientes e
                                     produtos / serviços mais vendidos. Tome decisões baseadas em números e não em
                                     percepções.</p>
                             </li>
                             <li class="col-md-6"><span class="icon"><img
-                                        src="{{global_asset('website/media/img/assistgest-calendario.png')}}"
-                                        alt="Assisgest Calendário" title="Assisgest Calendário"></span>
+                                            src="{{global_asset('website/media/img/assistgest-calendario.png')}}"
+                                            alt="Assisgest Calendário" title="Assisgest Calendário"></span>
                                 <h3>Calendário</h3>
                                 <p>Com o módulo calendário será possível agendar eventos ou assistências que podem (ou
                                     não) estar associadas a um técnico.</p>
@@ -414,6 +415,6 @@
 </section>
 --}}
 
-@include('website.includes.footer')
+@include('front.website.includes.footer')
 </body>
 </html>

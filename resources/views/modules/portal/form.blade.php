@@ -42,7 +42,7 @@
                     <h5 class="mb-0 me-2">Gestão do Portal</h5>
                 </div>
                 <div class="card-body">
-                    @if(!$portal->id)
+                    @if(!isset($portal->id))
                         {{ html()->modelForm($portal, 'POST', route('portal.index'))->open() }}
                     @else
                         {{ html()->modelForm($portal, 'PUT', route('portal.update', $portal->id))->open() }}
@@ -54,22 +54,18 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <label class="form-label" for="main_color">Cor Principal</label>
-                            <input type="color" id="main_color" name="main_color"
-                                   value="{{old('main_color', $portal->main_color)}}"
-                                   class="form-control" style="height: 39px"/>
+                            {{ html()->input('color', 'main_color')->class('form-control')->style('height: 39px') }}
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <label class="form-label" for="secondary_color">Cor Secundária</label>
-                            <input type="color" id="secondary_color" name="secondary_color"
-                                   value="{{old('secondary_color', $portal->secondary_color)}}"
-                                   class="form-control" style="height: 39px"/>
+                            {{ html()->input('color', 'secondary_color')->class('form-control')->style('height: 39px') }}
                         </div>
                         <div class="col-md-2">
                             <label for="logo" class="form-label">Logotipo</label>
                             <input type="file" class="form-control" id="logo" name="logo">
-                            @if($portal->logo)
+                            @if(isset($portal->logo))
                                 <img src="{{ asset('storage/' . $portal->logo) }}" alt="Portal Image"
                                      class="img-thumbnail mt-2" style="max-width: 200px;">
                             @endif

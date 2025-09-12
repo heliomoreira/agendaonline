@@ -69,7 +69,7 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu" data-bs-theme="dark"
                style="background-color: #000031">
             <div class="app-brand demo ">
-                <a href="/" class="app-brand-link">
+                <a href="/admin" class="app-brand-link">
                     <span class="app-brand-logo demo">
                         <img src="{{global_asset('logo.png')}}" alt="Agenda Online" height="35"/>
                     </span>
