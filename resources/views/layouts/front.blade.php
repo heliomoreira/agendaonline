@@ -37,11 +37,13 @@
 
 <div class="container py-5">
     <div class="text-center">
-        <img src="{{global_asset('storage/'.$portal->logo)}}" alt="Logo" class=logo" width="150" height="150">
+        @if(isset($portal))
+            <img src="{{global_asset('storage/'.$portal->logo)}}" alt="Logo" class=logo" width="150" height="150">
+        @endif
     </div>
 
     <div class="booking-container mt-3">
-        <h2 class="form-title text-center">{{$portal->title}}</h2>
+        <h2 class="form-title text-center">{{$portal->title ?? "Agenda Online"}}</h2>
 
         @yield('content')
     </div>

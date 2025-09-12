@@ -30,7 +30,6 @@ class TenantController extends Controller
 
     public function createTenant(Request $request)
     {
-
         $tenant = new TenantService();
         $response = $tenant->createTenant($request->all());
 
@@ -42,6 +41,6 @@ class TenantController extends Controller
             'tenant_id' => $response->getData()->data->id]);
 
 
-        return view('website.account_created', compact('user'));;
+        return view('website.account_created', compact('user'));
     }
 }
