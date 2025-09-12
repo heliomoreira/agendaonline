@@ -49,9 +49,13 @@ class AgendaController extends Controller
         return redirect()->route('agenda.index')->with('success', 'Appointment created successfully.');
     }
 
-    public function getEvents()
+    public function getEvents(Request $request)
     {
+        $start = Carbon::parse($request->get('start'))->format('Y-m-d'); // 2025-09-07
+        $end = Carbon::parse($request->get('end'))->format('Y-m-d');     // 2025-09-14
+
         $events = Agenda::with(['client', 'professional', 'service'])
+            ->whereBetween('day', [$start, $end])
             ->get()
             ->map(function ($item) {
                 $start = Carbon::parse("{$item->day} {$item->start_hour}")->toIso8601String();
@@ -66,12 +70,12 @@ class AgendaController extends Controller
                     'color' => $item->professional->agenda_color ?? '#2F87EB',
                     'extendedProps' => [
                         'client' => $item->client->name ?? '',
+                        'service' => $item->service->name ?? '',
                         'professional' => $item->professional->name ?? '',
                         'notes' => $item->notes ?? ''
                     ]
                 ];
             });
-
 
         return response()->json($events);
     }

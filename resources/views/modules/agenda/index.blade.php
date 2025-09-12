@@ -30,6 +30,9 @@
                 <div class="modal-body">
                     <p><strong>Início:</strong> <span id="eventStart"></span></p>
                     <p><strong>Fim:</strong> <span id="eventEnd"></span></p>
+                    <p><strong>Profissional:</strong> <span id="eventProfessional"></span></p>
+                    <p><strong>Cliente:</strong> <span id="eventCustomer"></span></p>
+                    <p><strong>Serviço:</strong> <span id="eventService"></span></p>
                 </div>
             </div>
         </div>
@@ -115,7 +118,7 @@
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
 
-                events: '/agenda/get-events',
+                events: '/admin/agenda/get-events',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -143,6 +146,10 @@
                     document.getElementById('eventModalTitle').innerText = info.event.title;
                     document.getElementById('eventStart').innerText = info.event.start.toLocaleString();
                     document.getElementById('eventEnd').innerText = info.event.end?.toLocaleString() ?? '—';
+                    document.getElementById('eventProfessional').innerText = info.event.extendedProps.professional || 'Não definido';
+                    document.getElementById('eventCustomer').innerText = info.event.extendedProps.client || 'Não definido';
+                    document.getElementById('eventService').innerText = info.event.extendedProps.service || 'Não definido';
+
 
                     var modal = new bootstrap.Modal(document.getElementById('eventModal'));
                     modal.show();
