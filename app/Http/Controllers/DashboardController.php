@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $nextEvents = Agenda::with(['service', 'professional'])->upcoming()->get();
 
-        return view('dashboard', [
+        return view('admin.dashboard.index', [
             'nextEvents' => $nextEvents
         ]);
     }
