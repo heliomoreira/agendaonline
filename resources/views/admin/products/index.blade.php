@@ -54,7 +54,7 @@
             @else
                 <x-empty-state
                     title="Nenhum Produto encontrado"
-                    message="Ainda não foram adicionados registos à lista de produtos-"
+                    message="Ainda não foram adicionados registos à lista de produtos."
                     button="Novo Produto"
                     link="{{ route('products.form') }}"
                 />
