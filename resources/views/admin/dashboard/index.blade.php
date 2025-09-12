@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="row g-6">
+    {{--<div class="row g-6">
         <div class="col-xl-4">
             <div class="card">
                 <div class="d-flex align-items-end row">
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
     <div class="row">
         <div class="col-6 order-3 mt-3">
             <div class="card">

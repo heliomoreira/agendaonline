@@ -188,38 +188,6 @@
                         </div>
                     </div>
                     <ul class="navbar-nav flex-row align-items-center ms-md-auto">
-                        <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
-                               data-bs-toggle="dropdown">
-                                <i class="icon-base ti tabler-language icon-22px text-heading"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-language="en"
-                                       data-text-direction="ltr">
-                                        <span>English</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-language="fr"
-                                       data-text-direction="ltr">
-                                        <span>French</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-language="ar"
-                                       data-text-direction="rtl">
-                                        <span>Arabic</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="javascript:void(0);" data-language="de"
-                                       data-text-direction="ltr">
-                                        <span>German</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
                                id="nav-theme" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -249,7 +217,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown">
+                        {{--<li class="nav-item dropdown-shortcuts navbar-dropdown dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
                                href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                aria-expanded="false">
@@ -333,8 +301,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                        <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                        </li>--}}
+                        {{--<li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
                             <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
                                href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                aria-expanded="false">
@@ -581,7 +549,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </li>
+                        </li>--}}
                         <!--/ Notification -->
 
                         <!-- User -->
