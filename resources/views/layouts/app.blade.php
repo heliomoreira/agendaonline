@@ -179,14 +179,14 @@
                     </a>
                 </div>
                 <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-                    <div class="navbar-nav align-items-center">
+                    {{--<div class="navbar-nav align-items-center">
                         <div class="nav-item navbar-search-wrapper px-md-0 px-2 mb-0">
                             <a class="nav-item nav-link search-toggler d-flex align-items-center px-0"
                                href="javascript:void(0);">
                                 <span class="d-inline-block text-body-secondary fw-normal" id="autocomplete"></span>
                             </a>
                         </div>
-                    </div>
+                    </div>--}}
                     <ul class="navbar-nav flex-row align-items-center ms-md-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
