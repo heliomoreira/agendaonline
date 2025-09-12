@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AgendaController;
-use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
@@ -133,8 +132,8 @@ Route::middleware([
      * Public routes
      */
     Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
-    Route::get('/available-slots', [AvailabilityController::class, 'getAvailableSlots']);
-    Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
+    Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
+    //Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
     Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');
 
 
