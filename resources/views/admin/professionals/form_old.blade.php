@@ -171,63 +171,63 @@
                     </div>
                     @if(isset($professional->id))
                         <div class="tab-pane fade" id="navs-services" role="tabpanel">
-                                   <div class="col-md-12">
-                                    <form method="POST"
-                                          action="{{ route('professionals.update.services', $professional->id) }}">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="card">
-                                            <div class="card-header header-elements">
-                                                <h5 class="mb-0 me-2">Serviços prestados</h5>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row g-6">
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="width:50px">
-                                                                <input type="checkbox" id="select_all_services"/>
-                                                            </th>
-                                                            <th>Serviço</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if(isset($services))
-                                                            @foreach($services as $service)
-                                                                <tr>
-                                                                    <td style="width:50px">
-                                                                        <input type="checkbox" class="service-checkbox"
-                                                                               name="services[]"
-                                                                               value="{{ $service->id }}"
-                                                                               id="service_{{ $service->id }}"
-                                                                            {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
-                                                                    </td>
-                                                                    <td>
-                                                                        <label
-                                                                            for="service_{{ $service->id }}">{{ $service->name }}</label>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="d-flex gap-2">
-                                                    <button type="submit"
-                                                            class="btn btn-primary waves-effect waves-light">
-                                                        <i class="icon-base ti tabler-device-floppy"></i> Gravar
-                                                    </button>
-                                                    <a href="{{ route('professionals.index') }}"
-                                                       class="btn btn-secondary waves-effect waves-light">
-                                                        <i class="icon-base ti tabler-arrow-left"></i> Voltar
-                                                    </a>
-                                                </div>
+                            <div class="col-md-12">
+                                <form method="POST"
+                                      action="{{ route('professionals.update.services', $professional->id) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="card">
+                                        <div class="card-header header-elements">
+                                            <h5 class="mb-0 me-2">Serviços prestados</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row g-6">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width:50px">
+                                                            <input type="checkbox" id="select_all_services"/>
+                                                        </th>
+                                                        <th>Serviço</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if(isset($services))
+                                                        @foreach($services as $service)
+                                                            <tr>
+                                                                <td style="width:50px">
+                                                                    <input type="checkbox" class="service-checkbox"
+                                                                           name="services[]"
+                                                                           value="{{ $service->id }}"
+                                                                           id="service_{{ $service->id }}"
+                                                                        {{ $professional->services->contains($service->id) ? 'checked' : '' }}/>
+                                                                </td>
+                                                                <td>
+                                                                    <label
+                                                                        for="service_{{ $service->id }}">{{ $service->name }}</label>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex gap-2">
+                                                <button type="submit"
+                                                        class="btn btn-primary waves-effect waves-light">
+                                                    <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                                                </button>
+                                                <a href="{{ route('professionals.index') }}"
+                                                   class="btn btn-secondary waves-effect waves-light">
+                                                    <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                         <div class="tab-pane fade show active" id="navs-justified-profile" role="tabpanel">
                             <div class="col-md-12">
@@ -300,19 +300,32 @@
                                                             @foreach ($blocks as $block)
                                                                 <div class="row g-3 align-items-center mb-2">
                                                                     <div class="col-md-3" style="display: none">
-                                                                        <input type="text" class="form-control-plaintext" value="{{ $dias[$weekday] }}" readonly>
-                                                                        <input type="hidden" name="working_hours[{{ $i }}][weekday]" value="{{ $weekday }}">
+                                                                        <input type="text"
+                                                                               class="form-control-plaintext"
+                                                                               value="{{ $dias[$weekday] }}" readonly>
+                                                                        <input type="hidden"
+                                                                               name="working_hours[{{ $i }}][weekday]"
+                                                                               value="{{ $weekday }}">
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <input type="time" name="working_hours[{{ $i }}][start_hour]" class="form-control"
-                                                                               value="{{ \Carbon\Carbon::parse($block->start_hour)->format('H:i') }}" readonly>
+                                                                        <input type="time"
+                                                                               name="working_hours[{{ $i }}][start_hour]"
+                                                                               class="form-control"
+                                                                               value="{{ \Carbon\Carbon::parse($block->start_hour)->format('H:i') }}"
+                                                                               readonly>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <input type="time" name="working_hours[{{ $i }}][end_hour]" class="form-control"
-                                                                               value="{{ \Carbon\Carbon::parse($block->end_hour)->format('H:i') }}" readonly>
+                                                                        <input type="time"
+                                                                               name="working_hours[{{ $i }}][end_hour]"
+                                                                               class="form-control"
+                                                                               value="{{ \Carbon\Carbon::parse($block->end_hour)->format('H:i') }}"
+                                                                               readonly>
                                                                     </div>
                                                                     <div class="col-md-2">
-                                                                        <button type="button" class="btn btn-sm btn-danger remove-block">Remover</button>
+                                                                        <button type="button"
+                                                                                class="btn btn-sm btn-danger remove-block">
+                                                                            Remover
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                                 @php $i++; @endphp
@@ -343,7 +356,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
-                            @include('modules.professionals.partials.unavailabilities')
+                            @include('admin.professionals.partials.unavailabilities')
                         </div>
                     @endif
                 </div>
@@ -359,12 +372,21 @@
         document.getElementById('add-hour-block').addEventListener('click', function () {
             const weekday = document.getElementById('weekday-select').value;
             const weekdayName = {
-                1:'Segunda-feira',2:'Terça-feira',3:'Quarta-feira',4:'Quinta-feira',5:'Sexta-feira',6:'Sábado',0:'Domingo'
+                1: 'Segunda-feira',
+                2: 'Terça-feira',
+                3: 'Quarta-feira',
+                4: 'Quinta-feira',
+                5: 'Sexta-feira',
+                6: 'Sábado',
+                0: 'Domingo'
             }[weekday];
             const startHour = document.getElementById('start-hour').value;
             const endHour = document.getElementById('end-hour').value;
 
-            if (!startHour || !endHour) { alert('Preenche ambas as horas.'); return; }
+            if (!startHour || !endHour) {
+                alert('Preenche ambas as horas.');
+                return;
+            }
 
             const dayGroupId = `day-group-${weekday}`;
             let dayGroup = document.getElementById(dayGroupId);

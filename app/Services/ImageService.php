@@ -19,7 +19,7 @@ class ImageService
         $this->imageManager = new ImageManager(new GdDriver());
     }
 
-    public function uploadImage(UploadedFile $file, string $folder = 'images', $width = 150, $height = 150)
+    public function uploadImage(UploadedFile $file, string $folder = 'images', $width = 300, $height = 150)
     {
         try {
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();

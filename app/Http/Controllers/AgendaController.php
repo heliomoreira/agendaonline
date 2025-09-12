@@ -18,7 +18,7 @@ class AgendaController extends Controller
         $services = Service::pluck('name', 'id');
         $professionals = Professional::pluck('name', 'id');
         $clients = Client::pluck('name', 'id');
-        return view('modules.agenda.index',
+        return view('admin.agenda.index',
             [
                 'services' => $services,
                 'professionals' => $professionals,

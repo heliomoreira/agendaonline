@@ -20,12 +20,12 @@ class TenantController extends Controller
         $professionals = Professional::all();
         $portal = Portal::first();
 
-        return view('front.booking.index', compact('tenant','services','professionals','portal'));
+        return view('front.portal.index', compact('tenant', 'services', 'professionals', 'portal'));
     }
 
     public function signup()
     {
-        return view('website.signup');
+        return view('front.website.signup');
     }
 
     public function createTenant(Request $request)
@@ -41,6 +41,6 @@ class TenantController extends Controller
             'tenant_id' => $response->getData()->data->id]);
 
 
-        return view('website.account_created', compact('user'));
+        return view('front.website.account_created', compact('user'));
     }
 }

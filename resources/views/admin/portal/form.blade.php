@@ -42,11 +42,9 @@
                     <h5 class="mb-0 me-2">Gestão do Portal</h5>
                 </div>
                 <div class="card-body">
-                    @if(!isset($portal->id))
-                        {{ html()->modelForm($portal, 'POST', route('portal.index'))->open() }}
-                    @else
-                        {{ html()->modelForm($portal, 'PUT', route('portal.update', $portal->id))->open() }}
-                    @endif
+
+                    {{ html()->modelForm($portal, 'PUT', route('portal.update', $portal->id ?? 1))->acceptsFiles()->open() }}
+
                     <div class="row g-6">
                         <div class="col-md-4">
                             <label class="form-label" for="name">Título</label>
@@ -66,7 +64,7 @@
                             <label for="logo" class="form-label">Logotipo</label>
                             <input type="file" class="form-control" id="logo" name="logo">
                             @if(isset($portal->logo))
-                                <img src="{{ asset('storage/' . $portal->logo) }}" alt="Portal Image"
+                                <img src="{{ url('/storage/'.$portal->logo) }}" alt="Portal Image"
                                      class="img-thumbnail mt-2" style="max-width: 200px;">
                             @endif
                         </div>

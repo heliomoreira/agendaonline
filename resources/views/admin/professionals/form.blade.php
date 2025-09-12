@@ -51,13 +51,13 @@
                 <ul class="nav nav-tabs nav-fill" role="tablist">
                     <li class="nav-item">
                         <button
-                            type="button"
-                            class="nav-link active"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-justified-home"
-                            aria-controls="navs-justified-home"
-                            aria-selected="true">
+                                type="button"
+                                class="nav-link active"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#navs-justified-home"
+                                aria-controls="navs-justified-home"
+                                aria-selected="true">
                           <span class="d-none d-sm-inline-flex align-items-center">
                             <i class="icon-base ti tabler-home icon-sm me-1_5"></i>Info
                             <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger ms-1_5"
@@ -70,13 +70,13 @@
                     @if(isset($professional->id))
                         <li class="nav-item">
                             <button
-                                type="button"
-                                class="nav-link"
-                                role="tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#navs-justified-services"
-                                aria-controls="navs-justified-services"
-                                aria-selected="false">
+                                    type="button"
+                                    class="nav-link"
+                                    role="tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#navs-justified-services"
+                                    aria-controls="navs-justified-services"
+                                    aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center"
                           ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Serviços</span
                           >
@@ -85,13 +85,13 @@
                         </li>
                         <li class="nav-item">
                             <button
-                                type="button"
-                                class="nav-link"
-                                role="tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#navs-justified-profile"
-                                aria-controls="navs-justified-profile"
-                                aria-selected="false">
+                                    type="button"
+                                    class="nav-link"
+                                    role="tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#navs-justified-profile"
+                                    aria-controls="navs-justified-profile"
+                                    aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center"
                           ><i class="icon-base ti tabler-user icon-sm me-1_5"></i>Horário de Trabalho</span
                           >
@@ -100,13 +100,13 @@
                         </li>
                         <li class="nav-item">
                             <button
-                                type="button"
-                                class="nav-link"
-                                role="tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#navs-justified-messages"
-                                aria-controls="navs-justified-messages"
-                                aria-selected="false">
+                                    type="button"
+                                    class="nav-link"
+                                    role="tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#navs-justified-messages"
+                                    aria-controls="navs-justified-messages"
+                                    aria-selected="false">
                           <span class="d-none d-sm-inline-flex align-items-center">
                               <i class="icon-base ti tabler-cancel icon-sm me-1_5"></i>Ausências
                           </span>
@@ -116,21 +116,21 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
-                        @include('modules.professionals.partials.info')
+                        @include('admin.professionals.partials.info')
                     </div>
                     <div class="tab-pane fade" id="navs-justified-services" role="tabpanel">
                         @if(isset($professional->id))
-                            @include('modules.professionals.partials.services')
+                            @include('admin.professionals.partials.services')
                         @endif
                     </div>
                     <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
                         @if(isset($professional->id))
-                            @include('modules.professionals.partials.working_hours')
+                            @include('admin.professionals.partials.working_hours')
                         @endif
                     </div>
                     <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
                         @if(isset($professional->id))
-                            @include('modules.professionals.partials.unavailabilities')
+                            @include('admin.professionals.partials.unavailabilities')
                         @endif
                     </div>
                 </div>
@@ -145,12 +145,21 @@
         document.getElementById('add-hour-block').addEventListener('click', function () {
             const weekday = document.getElementById('weekday-select').value;
             const weekdayName = {
-                1:'Segunda-feira',2:'Terça-feira',3:'Quarta-feira',4:'Quinta-feira',5:'Sexta-feira',6:'Sábado',0:'Domingo'
+                1: 'Segunda-feira',
+                2: 'Terça-feira',
+                3: 'Quarta-feira',
+                4: 'Quinta-feira',
+                5: 'Sexta-feira',
+                6: 'Sábado',
+                0: 'Domingo'
             }[weekday];
             const startHour = document.getElementById('start-hour').value;
             const endHour = document.getElementById('end-hour').value;
 
-            if (!startHour || !endHour) { alert('Preenche ambas as horas.'); return; }
+            if (!startHour || !endHour) {
+                alert('Preenche ambas as horas.');
+                return;
+            }
 
             const dayGroupId = `day-group-${weekday}`;
             let dayGroup = document.getElementById(dayGroupId);

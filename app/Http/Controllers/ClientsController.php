@@ -13,7 +13,7 @@ class ClientsController extends Controller
     {
         try {
             $clients = Client::all();
-            return view('modules.clients.index', [
+            return view('admin.clients.index', [
                 'clients' => $clients
             ]);
         } catch (\Exception $e) {
@@ -26,7 +26,7 @@ class ClientsController extends Controller
     {
         try {
             $client = new Client();
-            return view('modules.clients.form', [
+            return view('admin.clients.form', [
                 'client' => $client
             ]);
         } catch (\Exception $e) {
@@ -39,7 +39,7 @@ class ClientsController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
-            return view('modules.clients.form', [
+            return view('admin.clients.form', [
                 'client' => $client
             ]);
         } catch (\Exception $e) {
@@ -58,7 +58,7 @@ class ClientsController extends Controller
             Log::info("Cliente criado com ID {$client->id}");
 
             return redirect()->route('clients.edit', ['id' => $client->id])
-                ->with('success', __('modules.client_created'));
+                ->with('success', __('admin.client_created'));
         } catch (\Exception $e) {
             Log::error('Erro ao criar cliente: ' . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o cliente.'));
@@ -75,7 +75,7 @@ class ClientsController extends Controller
             Log::info("Cliente atualizado com ID {$client->id}");
 
             return redirect()->route('clients.edit', ['id' => $client->id])
-                ->with('success', __('modules.client_updated'));
+                ->with('success', __('admin.client_updated'));
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar cliente com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o cliente.'));
@@ -90,7 +90,7 @@ class ClientsController extends Controller
 
             Log::info("Cliente removido com ID {$id}");
 
-            return redirect()->route('clients.index')->with('success', __('modules.client_deleted'));
+            return redirect()->route('clients.index')->with('success', __('admin.client_deleted'));
         } catch (\Exception $e) {
             Log::error("Erro ao eliminar cliente com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o cliente.'));

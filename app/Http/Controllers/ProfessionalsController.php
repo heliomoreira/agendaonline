@@ -20,7 +20,7 @@ class ProfessionalsController extends Controller
         try {
             $professionals = ProfessionalService::list();
 
-            return view('modules.professionals.index', [
+            return view('admin.professionals.index', [
                 'professionals' => $professionals
             ]);
         } catch (\Exception $e) {
@@ -33,7 +33,7 @@ class ProfessionalsController extends Controller
     {
         try {
             $professional = new Professional();
-            return view('modules.professionals.form', [
+            return view('admin.professionals.form', [
                 'professional' => $professional
             ]);
         } catch (\Exception $e) {
@@ -52,7 +52,7 @@ class ProfessionalsController extends Controller
                 ->get();
             $services = Service::all();
 
-            return view('modules.professionals.form', [
+            return view('admin.professionals.form', [
                 'professional' => $professional,
                 'services' => $services,
                 'workingHours' => $workingHours,
@@ -74,7 +74,7 @@ class ProfessionalsController extends Controller
             Log::info("professional criado com ID {$professional->id}");
 
             return redirect()->route('professionals.edit', ['id' => $professional->id])
-                ->with('success', __('modules.professional_created'));
+                ->with('success', __('admin.professional_created'));
         } catch (\Exception $e) {
             Log::error('Erro ao criar professional: ' . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o professional.'));
@@ -91,7 +91,7 @@ class ProfessionalsController extends Controller
             Log::info("Professional atualizado com ID {$professional->id}");
 
             return redirect()->route('professionals.edit', ['id' => $professional->id])
-                ->with('success', __('modules.professional_updated'));
+                ->with('success', __('admin.professional_updated'));
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar professional com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o professional.'));
@@ -123,7 +123,7 @@ class ProfessionalsController extends Controller
 
             Log::info("professional removido com ID {$id}");
 
-            return redirect()->route('professionals.index')->with('success', __('modules.professional_deleted'));
+            return redirect()->route('professionals.index')->with('success', __('admin.professional_deleted'));
         } catch (\Exception $e) {
             Log::error("Erro ao eliminar professional com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o professional.'));

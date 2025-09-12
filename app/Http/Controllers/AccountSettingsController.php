@@ -10,7 +10,7 @@ class AccountSettingsController extends Controller
 {
     public function index()
     {
-        return view('modules.account-settings.index', [
+        return view('admin.account-settings.index', [
             'user' => auth()->user(),
             'tenant' => auth()->user()->tenant,
         ]);

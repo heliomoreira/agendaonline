@@ -11,7 +11,7 @@ class PortalController extends Controller
     public function index()
     {
         $portal = Portal::first();
-        return view('modules.portal.form', compact('portal'));
+        return view('admin.portal.form', compact('portal'));
     }
 
     public function update(Request $request, $id, ImageService $imageService)
@@ -22,6 +22,10 @@ class PortalController extends Controller
 
 
         $updatePortal = Portal::find($id);
+
+        if( $updatePortal == null){
+            return redirect()->route('dashboard');
+        }
         $updatePortal->fill($request->except('logo'));
 
         if ($request->hasFile('logo')) {
