@@ -132,12 +132,12 @@
                 <li class="menu-header small">
                     <span class="menu-header-text" data-i18n="Admin">Admin</span>
                 </li>
-                <li class="menu-item">
+                {{--<li class="menu-item">
                     <a href="#" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-settings"></i>
                         <div data-i18n="Configurações">Configurações</div>
                     </a>
-                </li>
+                </li>--}}
                 <li class="menu-item">
                     <a href="/admin/account-settings" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-briefcase"></i>
@@ -150,12 +150,12 @@
                         <div data-i18n="Portal">Portal</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                {{--<li class="menu-item">
                     <a href="#" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-lifebuoy"></i>
                         <div data-i18n="Suporte">Suporte</div>
                     </a>
-                </li>
+                </li>--}}
             </ul>
         </aside>
 
