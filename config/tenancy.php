@@ -22,7 +22,9 @@ return [
         'agendaonline.local',
         '*.agendaonline.local',
         'bitsislab.xyz',
-        '*.bitsislab.xyz'
+        '*.bitsislab.xyz',
+        'agendaonline.pt',
+        '*.agendaonline.pt',
     ],
 
     /**
