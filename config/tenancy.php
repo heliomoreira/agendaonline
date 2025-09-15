@@ -205,4 +205,6 @@ return [
     'excluded_connections' => [
         'central'
     ],
+
+    'tenant_domain' => env('TENANT_DOMAIN','agendaonline.local')
 ];

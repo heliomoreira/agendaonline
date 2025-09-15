@@ -21,7 +21,7 @@ class TenantService
             'plan_id' => 1,
         ]);
 
-        $tenant->domains()->create(['domain' => $tenantId . '.agendaonline.local']);
+        $tenant->domains()->create(['domain' => $tenantId . '.' . config('tenancy.tenant_domain')]);
 
         return response()->json(['message' => 'success', 'data' => $tenant], 200);
     }
