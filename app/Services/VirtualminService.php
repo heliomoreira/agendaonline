@@ -29,8 +29,10 @@ class VirtualminService
                 'query' => [
                     'program' => 'create-domain',
                     'domain'  => $subdomain,
-                    'target'   => config('tenancy.tenant_domain'),
+                    'alias'   => config('tenancy.tenant_domain'),
                     'desc'    => "Alias para " . config('tenancy.tenant_domain'),
+                    'default-features' => true,
+
                 ],
                 'verify' => false,
                 'timeout' => 30,
