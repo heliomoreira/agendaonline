@@ -31,6 +31,7 @@ class VirtualminService
                     'domain'  => $subdomain,
                     'alias'   => config('tenancy.tenant_domain'),
                     'desc'    => "Alias para " . config('tenancy.tenant_domain'),
+                    'default-features' => 'yes',
                 ]
             ]);
 
