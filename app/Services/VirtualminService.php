@@ -10,15 +10,8 @@ class VirtualminService
 {
     public function createSimpleAlias($subdomain)
     {
-        Log::info("URL: ".config('virtualmin.url'));
-        Log::info("USER: ".config('virtualmin.user'));
-        Log::info("PASS: ".config('virtualmin.pass'));
-        Log::info("SUBDOMAIN: ".$subdomain);
-
         try {
             $url = config('virtualmin.url');
-
-            Log::info($url);
 
             $client = new Client();
             $res = $client->request('POST', $url, [
@@ -31,14 +24,12 @@ class VirtualminService
                     'domain'  => $subdomain,
                     'alias-with-dns'   => config('tenancy.tenant_domain'),
                     'desc'    => "Alias para " . config('tenancy.tenant_domain'),
-                    'web'     => '',     // Feature web
-                    'dns'     => '',     // Feature DNS
+                    'dns'     => '',
                 ],
                 'verify' => false,
                 'timeout' => 30,
             ]);
 
-            Log::info($res->getBody()->getContents());
 
         } catch (\Exception $ex) {
             Log::alert($ex);
