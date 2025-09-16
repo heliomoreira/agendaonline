@@ -10,10 +10,10 @@ class VirtualminService
 {
     public function createSimpleAlias($subdomain)
     {
-
         Log::info(config('virtualmin.url'));
         Log::info(config('virtualmin.user'));
         Log::info(config('virtualmin.pass'));
+        Log::info($subdomain);
 
         try {
             $url = config('virtualmin.url');
@@ -28,9 +28,9 @@ class VirtualminService
                 ],
                 'query' => [
                     'program' => 'create-domain',
-                    'pass' => Hash::make($subdomain),
-                    'domain' => $subdomain,
-                    'alias' => config('tenancy.tenant_domain')
+                    'domain'  => $subdomain,
+                    'alias'   => config('tenancy.tenant_domain'),
+                    'desc'    => "Alias para " . config('tenancy.tenant_domain'),
                 ]
             ]);
 
