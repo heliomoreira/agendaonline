@@ -12,7 +12,7 @@ class VirtualminService
     {
 
         try {
-            $url = config('virtualmin.url');
+            $url = "https://167.86.74.56:10000/virtual-server/remote.cgi";
 
             Log::info($url);
 
