@@ -12,7 +12,7 @@ class VirtualminService
     {
 
         try {
-            $url = "https://bitsislab.xyz:10000/virtual-server/remote.cgi";
+            $url = "config('virtualmin.url')";
 
             Log::info($url);
 
