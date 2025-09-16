@@ -25,9 +25,7 @@ class VirtualminService
                     'alias-with-dns' => config('tenancy.tenant_domain'),
                     'desc' => "Alias para " . config('tenancy.tenant_domain'),
                     'dns' => '',
-                ],
-                'verify' => false,
-                'timeout' => 30,
+                ]
             ]);
 
 
