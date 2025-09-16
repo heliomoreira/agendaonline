@@ -11,7 +11,7 @@ class TenantService
     public function createTenant($request)
     {
 
-        $tenantId = Helper::normalizeString($request['name']);
+        $tenantId = Helper::normalizeString($request['username']);
 
         $tenant = Tenant::create([
             'id' => $tenantId,
