@@ -23,9 +23,9 @@ class VirtualminService
                     'program' => 'create-domain',
                     'domain' => $subdomain . '.' . config('tenancy.tenant_domain'),
                     'alias-with-dns' => config('tenancy.tenant_domain'),
-                    'desc' => "Alias para " . config('tenancy.tenant_domain'),
-                    'dns' => '',
-                    'web' =>''
+                    'default-features' => ''
+                    //'dns' => '',
+                    //'web' =>''
                 ]
             ]);
 
