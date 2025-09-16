@@ -14,6 +14,8 @@ class VirtualminService
         try {
             $url = config('virtualmin.url');
 
+            Log::info($url);
+
             $client = new Client();
             $res = $client->request('POST', $url, [
                 'auth' => [
