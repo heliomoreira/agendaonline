@@ -10,9 +10,9 @@ class VirtualminService
 {
     public function createSimpleAlias($subdomain)
     {
-        Log::info(config('virtualmin.url'));
-        Log::info(config('virtualmin.user'));
-        Log::info(config('virtualmin.pass'));
+        Log::info("URL: ".config('virtualmin.url'));
+        Log::info("USER: ".config('virtualmin.user'));
+        Log::info("PASS: ".config('virtualmin.pass'));
         Log::info($subdomain);
 
         try {
