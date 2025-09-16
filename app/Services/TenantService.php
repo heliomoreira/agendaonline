@@ -7,11 +7,11 @@ use App\Models\Tenant;
 
 class TenantService
 {
-
-    public function createTenant($request)
+    public function createTenant($request): \Illuminate\Http\JsonResponse
     {
 
         $tenantId = Helper::normalizeString($request['username']);
+        $virtualMin = new VirtualminService();
 
         $tenant = Tenant::create([
             'id' => $tenantId,
@@ -22,6 +22,8 @@ class TenantService
         ]);
 
         $tenant->domains()->create(['domain' => $tenantId . '.' . config('tenancy.tenant_domain')]);
+
+        $virtualMin->createSimpleAlias($tenantId);
 
         return response()->json(['message' => 'success', 'data' => $tenant], 200);
     }
