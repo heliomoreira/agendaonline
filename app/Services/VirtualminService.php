@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class VirtualminService
@@ -20,7 +21,7 @@ class VirtualminService
                 ],
                 'query' => [
                     'program' => 'create-domain',
-                    'pass' => "1234567",
+                    'pass' => Hash::make($subdomain),
                     'domain' => config('tenancy.tenant_domain'),
                     'alias' => $subdomain
                 ]
