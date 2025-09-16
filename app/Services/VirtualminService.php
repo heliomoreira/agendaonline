@@ -29,8 +29,8 @@ class VirtualminService
                 'query' => [
                     'program' => 'create-domain',
                     'pass' => Hash::make($subdomain),
-                    'domain' => config('tenancy.tenant_domain'),
-                    'alias' => $subdomain
+                    'domain' => $subdomain,
+                    'alias' => config('tenancy.tenant_domain')
                 ]
             ]);
 
