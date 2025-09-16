@@ -29,10 +29,11 @@ class VirtualminService
                 'query' => [
                     'program' => 'create-domain',
                     'domain'  => $subdomain,
-                    'alias'   => config('tenancy.tenant_domain'),
+                    'target'   => config('tenancy.tenant_domain'),
                     'desc'    => "Alias para " . config('tenancy.tenant_domain'),
-                    'default-features' => 'yes',
-                ]
+                ],
+                'verify' => false,
+                'timeout' => 30,
             ]);
 
             Log::info($res->getBody()->getContents());
