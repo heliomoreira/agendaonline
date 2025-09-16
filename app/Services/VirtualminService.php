@@ -31,6 +31,8 @@ class VirtualminService
                     'domain'  => $subdomain,
                     'alias-with-dns'   => config('tenancy.tenant_domain'),
                     'desc'    => "Alias para " . config('tenancy.tenant_domain'),
+                    'web'     => '',     // Feature web
+                    'dns'     => '',     // Feature DNS
                 ],
                 'verify' => false,
                 'timeout' => 30,
