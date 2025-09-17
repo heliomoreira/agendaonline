@@ -26,7 +26,13 @@ class PortalController extends Controller
             $portal = new Portal();
         }
 
-        dd($request->all());
+        dump($request->all());
+
+        dump($request->has('logo'));
+
+        dump($request->hasFile('logo'));
+
+        dd("hello");
 
         $portal->fill($request->all());
 
