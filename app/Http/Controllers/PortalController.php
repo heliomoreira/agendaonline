@@ -26,6 +26,8 @@ class PortalController extends Controller
             $portal = new Portal();
         }
 
+        dd($request->all());
+
         $portal->fill($request->all());
 
         if ($request->has('logo')) {
