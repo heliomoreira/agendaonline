@@ -17,34 +17,25 @@ class PortalController extends Controller
     public function update(Request $request, $id, ImageService $imageService)
     {
         $request->validate([
-            'logo' => ['nullable', 'image', 'max:2048'],
+            'logo' => ['nullable', 'image', 'max:2048'], // Ou 'profile_image' ou o que usares
         ]);
 
-        $portal = Portal::find($id);
-
-        if ($portal == null) {
-            $portal = new Portal();
+        $updatePortal = Portal::find($id);
+        if ($updatePortal == null) {
+            $updatePortal = new Portal();
         }
 
-        dump($request->all());
+        if( $updatePortal == null){
+            return redirect()->route('dashboard');
+        }
+        $updatePortal->fill($request->except('logo'));
 
-        dump($request->has('logo'));
-
-        dump($request->hasFile('logo'));
-
-
-        $portal->fill($request->all());
-
-        if ($request->has('logo')) {
+        if ($request->hasFile('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos');
-            $portal->logo = $path;
-
-            dd("hello". $path);
-
+            $updatePortal->logo = $path;
         }
 
-        $portal->save();
-
-        return redirect()->back()->with('success', 'Portal ' . ($id ? 'atualizado' : 'criado') . ' com sucesso.');
+        $updatePortal->save();
+        return redirect()->back()->with('success', 'Portal atualizado com sucesso.');
     }
 }
