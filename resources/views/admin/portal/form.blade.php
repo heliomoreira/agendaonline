@@ -64,7 +64,7 @@
                             <label for="logo" class="form-label">Logotipo</label>
                             <input type="file" class="form-control" id="logo" name="logo">
                             @if(isset($portal->logo))
-                                <img src="{{ url($portal->logo) }}" alt="Portal Image"
+                                <img src="{{ asset($portal->logo) }}" alt="Portal Image"
                                      class="img-thumbnail mt-2" style="max-width: 200px;">
                             @endif
                         </div>
