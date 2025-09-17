@@ -37,7 +37,7 @@ class ImageService
 
             $a = tenancy()->initialize(auth()->user()->tenant);
 
-            dd($a);
+            //dd($a);
 
             return $path;
         } catch (Exception $e) {
