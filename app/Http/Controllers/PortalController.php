@@ -28,12 +28,10 @@ class PortalController extends Controller
 
         $portal->fill($request->except('logo'));
 
-    /*
-
         if ($request->hasFile('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos');
             $portal->logo = $path;
-        }*/
+        }
 
         $portal->save();
 
