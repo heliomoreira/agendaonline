@@ -33,7 +33,6 @@ class PortalController extends Controller
             $portal->logo = $path;
         }
 
-        $portal->logo = '2';
         $portal->save();
 
         return redirect()->back()->with('success', 'Portal ' . ($id ? 'atualizado' : 'criado') . ' com sucesso.');

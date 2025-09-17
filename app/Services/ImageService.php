@@ -27,7 +27,7 @@ class ImageService
 
             $image = $this->imageManager->read($file->getPathname())->cover($width, $height);
 
-            tenancy()->end();
+            //tenancy()->end();
 
             if (!Storage::disk('public')->exists($folder)) {
                 Storage::disk('public')->makeDirectory($folder, 0755, true);
@@ -35,9 +35,7 @@ class ImageService
 
             Storage::disk('public')->put($path, (string)$image->encode());
 
-            $a = tenancy()->initialize(auth()->user()->tenant);
-
-            //dd($a);
+            //tenancy()->initialize(auth()->user()->tenant);
 
             return $path;
         } catch (Exception $e) {
