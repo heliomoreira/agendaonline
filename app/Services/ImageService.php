@@ -36,7 +36,8 @@ class ImageService
                 Storage::disk('public')->makeDirectory($folder, 0755, true);
             }*/
 
-            Storage::disk('public')->put($path, (string)$image->encode());
+            $log = Storage::disk('public')->put($path, (string)$image->encode());
+            Log::info("Log: ".$log);
 
             tenancy()->initialize(auth()->user()->tenant);
 
