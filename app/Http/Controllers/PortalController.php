@@ -32,13 +32,15 @@ class PortalController extends Controller
 
         dump($request->hasFile('logo'));
 
-        dd("hello");
 
         $portal->fill($request->all());
 
         if ($request->has('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos');
             $portal->logo = $path;
+
+            dd("hello". $path);
+
         }
 
         $portal->save();
