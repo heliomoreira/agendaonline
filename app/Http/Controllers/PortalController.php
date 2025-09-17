@@ -28,7 +28,7 @@ class PortalController extends Controller
 
         $portal->fill($request->all());
 
-        if ($request->hasFile('logo')) {
+        if ($request->has('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos');
             $portal->logo = $path;
         }
