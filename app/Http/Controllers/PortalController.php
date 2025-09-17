@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Portal;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PortalController extends Controller
 {
@@ -33,6 +34,7 @@ class PortalController extends Controller
 
             if ($request->hasFile('logo')) {
                 $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos');
+                Log::info($path);
                 $updatePortal->logo = $path;
             }
 
