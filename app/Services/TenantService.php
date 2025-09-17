@@ -23,7 +23,7 @@ class TenantService
 
         $tenant->domains()->create(['domain' => $tenantId . '.' . config('tenancy.tenant_domain')]);
 
-        $virtualMin->createSimpleAlias($tenantId);
+        //$virtualMin->createSimpleAlias($tenantId);
 
         return response()->json(['message' => 'success', 'data' => $tenant], 200);
     }
