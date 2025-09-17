@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
@@ -28,23 +27,19 @@ class ImageService
 
             $image = $this->imageManager->read($file->getPathname())->cover($width, $height);
 
-            Log::info("filename: " . $filename);
-
             tenancy()->end();
 
-          /*  if (!Storage::disk('public')->exists($folder)) {
+            if (!Storage::disk('public')->exists($folder)) {
                 Storage::disk('public')->makeDirectory($folder, 0755, true);
-            }*/
+            }
 
-            $log = Storage::disk('public')->put($path, (string)$image->encode());
-            Log::info("Log: ".$log);
+            Storage::disk('public')->put($path, (string)$image->encode());
 
             tenancy()->initialize(auth()->user()->tenant);
 
             return $path;
         } catch (Exception $e) {
-            Log::error($e->getMessage());
-            //logger()->error("Erro ao fazer upload da imagem: " . $e->getMessage());
+            logger()->error("Erro ao fazer upload da imagem: " . $e->getMessage());
             return null;
         }
     }
