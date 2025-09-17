@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('portal', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('logo');
-            $table->string('main_color');
-            $table->string('secondary_color');
+            $table->string('logo')->nullable();
+            $table->string('main_color')->nullable();
+            $table->string('secondary_color')->nullable();
             $table->timestamps();
         });
     }
