@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
@@ -39,7 +40,8 @@ class ImageService
 
             return $path;
         } catch (Exception $e) {
-            logger()->error("Erro ao fazer upload da imagem: " . $e->getMessage());
+            Log::error($e->getMessage());
+            //logger()->error("Erro ao fazer upload da imagem: " . $e->getMessage());
             return null;
         }
     }
