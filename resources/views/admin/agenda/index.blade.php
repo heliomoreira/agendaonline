@@ -67,7 +67,9 @@
                 titleFormat: { year: 'numeric', month: 'long' },
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
-
+                eventDidMount: function(info) {
+                    info.el.style.cursor = 'pointer';
+                },
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
