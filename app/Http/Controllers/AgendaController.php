@@ -7,12 +7,19 @@ use App\Models\Client;
 use App\Models\Notification;
 use App\Models\Professional;
 use App\Models\Service;
+use App\Services\BookingService;
 use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
+    public function __construct(
+        //private BookingService $bookingService,
+    )
+    {
+    }
+
     public function index()
     {
         $services = Service::pluck('name', 'id');
