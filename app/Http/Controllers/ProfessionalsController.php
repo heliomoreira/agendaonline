@@ -91,7 +91,7 @@ class ProfessionalsController extends Controller
             Log::info("Professional atualizado com ID {$professional->id}");
 
             return redirect()->route('professionals.edit', ['id' => $professional->id])
-                ->with('success', __('admin.professional_updated'));
+                ->with('success', __('modules.professional_updated'));
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar professional com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o professional.'));

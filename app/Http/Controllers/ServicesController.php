@@ -75,7 +75,7 @@ class ServicesController extends Controller
             Log::info("service atualizado com ID {$service->id}");
 
             return redirect()->route('services.edit', ['id' => $service->id])
-                ->with('success', __('admin.service_updated'));
+                ->with('success', __('modules.service_updated'));
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar service com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o service.'));

@@ -166,7 +166,7 @@
                     ? allEvents.filter(e => e.category === selected)
                     : allEvents;
 
-                calendar.removeAllEvents();
+               // calendar.removeAllEvents();
                 calendar.addEventSource(filteredEvents);
             });
 
