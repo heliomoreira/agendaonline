@@ -3,24 +3,30 @@
 @section('content')
     <div class="row align-items-end mb-3">
         <div class="col-md-3">
-            {{html()->select('categoryFilter')->options($professionals)->class('form-select')->placeholder('Todas os Profissionais')}}
+            {{ html()->select('categoryFilter')
+                ->options($professionals)   {{-- [id => name] --}}
+            ->class('form-select')
+            ->id('categoryFilter')
+            ->placeholder('Todos os Profissionais') }}
         </div>
         <div class="col-md-9 text-end">
-            <a href="{{route('agenda.form')}}" class="btn btn-primary"><i class="ti tabler-plus me-2"></i> Novo Agendamento</a>
-            {{--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
+            <a href="{{ route('agenda.form') }}" class="btn btn-primary">
                 <i class="ti tabler-plus me-2"></i> Novo Agendamento
-            </button>--}}
+            </a>
         </div>
     </div>
+
     <div class="row g-6">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <div id='calendar'></div>
+                    <div id="calendar"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- Event details modal --}}
     <div class="modal fade" id="eventModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -38,88 +44,30 @@
             </div>
         </div>
     </div>
-    {{--<div class="modal fade" id="newEventModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            {{ html()->form('POST', route('agenda.store'))->class('modal-content')->open() }}
-            {{ html()->token() }}
-            <div class="modal-header">
-                <h5 class="modal-title">Novo Agendamento</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="service_id" class="form-label">Serviço</label>
-                    {{ html()->select('service_id')
-                        ->options($services)
-                        ->class('form-select')
-                        ->id('service_id')
-                        ->placeholder('-- Selecionar --') }}
-                </div>
-
-                <div class="mb-3">
-                    <label for="professional_id" class="form-label">Profissional</label>
-                    {{ html()->select('professional_id')
-                        ->options([])
-                        ->class('form-select')
-                        ->id('professional_id')
-                        ->placeholder('-- Selecionar um serviço primeiro --')
-                        ->disabled() }}
-                </div>
-
-                <div class="mb-3">
-                    <label for="client_id" class="form-label">Cliente</label>
-                    {{html()->select('client_id')->options($clients)->class('form-select')->placeholder('-- Seleccionar --')}}
-                </div>
-
-                <div class="mb-3">
-                    <label for="day" class="form-label">Data</label>
-                    <input type="date" id="day" name="day" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="start_hour" class="form-label">Hora de Início</label>
-                    <input type="time" id="start_hour" name="start_hour" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="end_hour" class="form-label">Hora de Fim</label>
-                    <input type="time" id="end_hour" name="end_hour" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="notes" class="form-label">Notas</label>
-                    <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Guardar Agendamento</button>
-            </div>
-            {{html()->form()->close()}}
-        </div>
-    </div>--}}
 @endsection
+
 @push('scripts')
     <script src="{{ global_asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let calendarEl = document.getElementById('calendar');
-            let allEvents = [];
+            const calendarEl = document.getElementById('calendar');
 
-            let calendar = new FullCalendar.Calendar(calendarEl, {
+            // holds the currently selected professional id ('' = all)
+            let activeProfessional = '';
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
                 locale: 'pt',
                 height: 'auto',
                 slotMinTime: '08:00:00',
                 slotMaxTime: '20:00:00',
                 allDaySlot: false,
-                titleFormat: {year: 'numeric', month: 'long'},
+                titleFormat: { year: 'numeric', month: 'long' },
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
 
-                events: '/admin/agenda/get-events',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
@@ -132,78 +80,55 @@
                     day: 'Dia',
                     list: 'Agenda'
                 },
+
+                // IMPORTANT: send start/end (and optional professional) to the backend
+                events: function (fetchInfo, successCallback, failureCallback) {
+                    const params = new URLSearchParams({
+                        start: fetchInfo.startStr,   // e.g. 2025-09-01T00:00:00Z
+                        end: fetchInfo.endStr        // e.g. 2025-09-08T00:00:00Z
+                    });
+                    if (activeProfessional) {
+                        params.append('professional_id', activeProfessional);
+                    }
+
+                    fetch(`/admin/agenda/get-events?${params.toString()}`)
+                        .then(res => {
+                            if (!res.ok) throw new Error('Failed to load events');
+                            return res.json();
+                        })
+                        .then(data => successCallback(data))
+                        .catch(err => failureCallback(err));
+                },
+
                 eventContent: function (arg) {
                     const client = arg.event.extendedProps.client || '';
-                    const professional = arg.event.extendedProps.professional || '';
-
                     return {
                         html:
                             '<div style="font-weight: bold">' + arg.event.title + '</div>' +
                             '<div style="font-size: 12px;">Cliente: ' + client + '</div>'
-                        /*  '<div style="font-size: 12px;">Técnico: ' + professional + '</div>'*/
                     };
                 },
+
                 eventClick: function (info) {
                     document.getElementById('eventModalTitle').innerText = info.event.title;
-                    document.getElementById('eventStart').innerText = info.event.start.toLocaleString();
+                    document.getElementById('eventStart').innerText = info.event.start?.toLocaleString() ?? '—';
                     document.getElementById('eventEnd').innerText = info.event.end?.toLocaleString() ?? '—';
                     document.getElementById('eventProfessional').innerText = info.event.extendedProps.professional || 'Não definido';
                     document.getElementById('eventCustomer').innerText = info.event.extendedProps.client || 'Não definido';
                     document.getElementById('eventService').innerText = info.event.extendedProps.service || 'Não definido';
 
-
-                    var modal = new bootstrap.Modal(document.getElementById('eventModal'));
+                    const modal = new bootstrap.Modal(document.getElementById('eventModal'));
                     modal.show();
                 }
             });
+
             calendar.render();
 
+            // professional filter
             const filterSelect = document.getElementById('categoryFilter');
             filterSelect.addEventListener('change', function () {
-                const selected = this.value;
-
-                const filteredEvents = selected
-                    ? allEvents.filter(e => e.category === selected)
-                    : allEvents;
-
-               // calendar.removeAllEvents();
-                calendar.addEventSource(filteredEvents);
-            });
-
-            {{--@if(session('success'))
-            const toastEl = document.getElementById('successToast');
-            const toast = new bootstrap.Toast(toastEl);
-            toast.show();
-            @endif--}}
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const serviceSelect = document.getElementById('service_id');
-            const professionalSelect = document.getElementById('professional_id');
-
-            serviceSelect.addEventListener('change', function () {
-                const serviceId = this.value;
-                professionalSelect.innerHTML = '<option value="">A carregar...</option>';
-                professionalSelect.disabled = true;
-
-                if (!serviceId) {
-                    professionalSelect.innerHTML = '<option value="">Selecione um serviço primeiro</option>';
-                    return;
-                }
-
-                fetch(`/services/${serviceId}/professionals`)
-                    .then(response => response.json())
-                    .then(data => {
-                        let options = '<option value="">Selecione</option>';
-                        data.forEach(pro => {
-                            options += `<option value="${pro.id}">${pro.name}</option>`;
-                        });
-                        professionalSelect.innerHTML = options;
-                        professionalSelect.disabled = false;
-                    })
-                    .catch(() => {
-                        professionalSelect.innerHTML = '<option value="">Erro ao carregar profissionais</option>';
-                    });
+                activeProfessional = this.value || '';
+                calendar.refetchEvents(); // ask server again for current range + filter
             });
         });
     </script>

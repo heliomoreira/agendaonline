@@ -72,32 +72,42 @@ class AgendaController extends Controller
 
     public function getEvents(Request $request)
     {
-        $start = Carbon::parse($request->get('start'))->format('Y-m-d'); // 2025-09-07
-        $end = Carbon::parse($request->get('end'))->format('Y-m-d');     // 2025-09-14
+        $startParam = $request->query('start'); // ISO string
+        $endParam   = $request->query('end');   // ISO string
 
-        $events = Agenda::with(['client', 'professional', 'service'])
-            ->whereBetween('day', [$start, $end])
-            ->get()
-            ->map(function ($item) {
-                $start = Carbon::parse("{$item->day} {$item->start_hour}")->toIso8601String();
-                $end = Carbon::parse("{$item->day} {$item->end_hour}")->toIso8601String();
+        // Fallbacks just in case (but the view sends both)
+        $start = $startParam ? Carbon::parse($startParam)->format('Y-m-d') : now()->startOfWeek()->format('Y-m-d');
+        $end   = $endParam   ? Carbon::parse($endParam)->format('Y-m-d')   : now()->endOfWeek()->format('Y-m-d');
 
-                return [
-                    'id' => $item->id,
-                    'title' => $item->service->name ?? 'Serviço',
-                    'start' => $start,
-                    'end' => $end,
-                    'category' => $item->professional->id,
-                    'color' => $item->professional->agenda_color ?? '#2F87EB',
-                    'extendedProps' => [
-                        'client' => $item->client->name ?? '',
-                        'service' => $item->service->name ?? '',
-                        'professional' => $item->professional->name ?? '',
-                        'notes' => $item->notes ?? ''
-                    ]
-                ];
-            });
+        $query = Agenda::with(['client', 'professional', 'service'])
+            ->whereBetween('day', [$start, $end]);
 
-        return response()->json($events);
+        // Optional server-side filter by professional
+        if ($request->filled('professional_id')) {
+            $query->where('professional_id', $request->query('professional_id'));
+        }
+
+        $events = $query->get()->map(function ($item) {
+            $start = Carbon::parse("{$item->day} {$item->start_hour}")->toIso8601String();
+            $end   = Carbon::parse("{$item->day} {$item->end_hour}")->toIso8601String();
+
+            return [
+                'id' => $item->id,
+                'title' => $item->service->name ?? 'Serviço',
+                'start' => $start,
+                'end' => $end,
+                // keep this if you still want to filter client-side by professional id
+                'category' => optional($item->professional)->id,
+                'color' => optional($item->professional)->agenda_color ?? '#2F87EB',
+                'extendedProps' => [
+                    'client' => optional($item->client)->name ?? '',
+                    'service' => optional($item->service)->name ?? '',
+                    'professional' => optional($item->professional)->name ?? '',
+                    'notes' => $item->notes ?? '',
+                ],
+            ];
+        });
+
+        return response()->json($events->values());
     }
 }
