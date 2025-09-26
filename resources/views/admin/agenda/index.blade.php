@@ -3,7 +3,7 @@
 @section('content')
     <div class="row align-items-end mb-3">
         <div class="col-md-3">
-            {{html()->select('categoryFilter')->options($professionals)->class('form-select')->placeholder('Todas as Categorias')}}
+            {{html()->select('categoryFilter')->options($professionals)->class('form-select')->placeholder('Todas os Profissionais')}}
         </div>
         <div class="col-md-9 text-end">
             <a href="{{route('agenda.form')}}" class="btn btn-primary"><i class="ti tabler-plus me-2"></i> Novo Agendamento</a>
