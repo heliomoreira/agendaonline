@@ -6,9 +6,10 @@
             {{html()->select('categoryFilter')->options($professionals)->class('form-select')->placeholder('Todas as Categorias')}}
         </div>
         <div class="col-md-9 text-end">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
+            <a href="{{route('agenda.form')}}" class="btn btn-primary"><i class="ti tabler-plus me-2"></i> Novo Agendamento</a>
+            {{--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newEventModal">
                 <i class="ti tabler-plus me-2"></i> Novo Agendamento
-            </button>
+            </button>--}}
         </div>
     </div>
     <div class="row g-6">
@@ -37,7 +38,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="newEventModal" tabindex="-1" aria-hidden="true">
+    {{--<div class="modal fade" id="newEventModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             {{ html()->form('POST', route('agenda.store'))->class('modal-content')->open() }}
             {{ html()->token() }}
@@ -96,7 +97,7 @@
             </div>
             {{html()->form()->close()}}
         </div>
-    </div>
+    </div>--}}
 @endsection
 @push('scripts')
     <script src="{{ global_asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>

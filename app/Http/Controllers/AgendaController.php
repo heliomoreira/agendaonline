@@ -49,6 +49,20 @@ class AgendaController extends Controller
         return redirect()->route('agenda.index')->with('success', 'Appointment created successfully.');
     }
 
+
+    public function form()
+    {
+        $agenda = new Agenda();
+        $services = Service::all();
+        $professionals = Professional::all();
+
+        return view('admin.agenda.form', [
+            'agenda' => $agenda,
+            'services' => $services,
+            'professionals' => $professionals,
+        ]);
+    }
+
     public function getEvents(Request $request)
     {
         $start = Carbon::parse($request->get('start'))->format('Y-m-d'); // 2025-09-07
