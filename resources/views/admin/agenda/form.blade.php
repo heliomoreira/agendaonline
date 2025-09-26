@@ -54,7 +54,7 @@
             {{ html()->token() }}
             <div class="card">
                 <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">Detalhe</h5>
+                    <h5 class="mb-0 me-2">Detalhe da Marcação</h5>
                 </div>
                 <div class="card-body">
                     <div class="row g-6">
