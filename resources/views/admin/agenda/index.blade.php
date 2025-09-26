@@ -64,10 +64,10 @@
                 slotMinTime: '07:00:00',
                 slotMaxTime: '23:59:59',
                 allDaySlot: false,
-                titleFormat: { year: 'numeric', month: 'long' },
+                titleFormat: {year: 'numeric', month: 'long'},
                 allDayText: 'Dia inteiro',
                 noEventsContent: 'Sem eventos a mostrar',
-                eventDidMount: function(info) {
+                eventDidMount: function (info) {
                     info.el.style.cursor = 'pointer';
                 },
                 headerToolbar: {
@@ -112,7 +112,7 @@
                 },
 
                 eventClick: function (info) {
-                    document.getElementById('eventModalTitle').innerText = info.event.title;
+                    document.getElementById('eventModalTitle').innerHTML = info.event.title + " | " + "<span style='color:#000031'>" + info.event.extendedProps.client + "</span>";
                     document.getElementById('eventStart').innerText = info.event.start?.toLocaleString() ?? '—';
                     document.getElementById('eventEnd').innerText = info.event.end?.toLocaleString() ?? '—';
                     document.getElementById('eventProfessional').innerText = info.event.extendedProps.professional || 'Não definido';
