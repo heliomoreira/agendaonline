@@ -79,7 +79,12 @@
         </div>
     </div>--}}
     <div class="row">
-        <div class="col-6 order-3 mt-3">
+        <div class="col-12">
+            <h4 class="my-4">Dashboard</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 order-3 mt-3">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="card-title"><i class="ti tabler-calendar"></i> Próximos Serviços</h5>
