@@ -74,7 +74,7 @@ class ProfessionalsController extends Controller
             Log::info("professional criado com ID {$professional->id}");
 
             return redirect()->route('professionals.edit', ['id' => $professional->id])
-                ->with('success', __('admin.professional_created'));
+                ->with('success', __('modules.professional_created'));
         } catch (\Exception $e) {
             Log::error('Erro ao criar professional: ' . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o professional.'));
@@ -123,7 +123,7 @@ class ProfessionalsController extends Controller
 
             Log::info("professional removido com ID {$id}");
 
-            return redirect()->route('professionals.index')->with('success', __('admin.professional_deleted'));
+            return redirect()->route('professionals.index')->with('success', __('modules.professional_deleted'));
         } catch (\Exception $e) {
             Log::error("Erro ao eliminar professional com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o professional.'));

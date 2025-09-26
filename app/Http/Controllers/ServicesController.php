@@ -58,7 +58,7 @@ class ServicesController extends Controller
             Log::info("service criado com ID {$service->id}");
 
             return redirect()->route('services.edit', ['id' => $service->id])
-                ->with('success', __('admin.service_created'));
+                ->with('success', __('modules.service_created'));
         } catch (\Exception $e) {
             Log::error('Erro ao criar service: ' . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o service.'));
@@ -90,7 +90,7 @@ class ServicesController extends Controller
 
             Log::info("service removido com ID {$id}");
 
-            return redirect()->route('services.index')->with('success', __('admin.service_deleted'));
+            return redirect()->route('services.index')->with('success', __('modules.service_deleted'));
         } catch (\Exception $e) {
             Log::error("Erro ao eliminar service com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o service.'));

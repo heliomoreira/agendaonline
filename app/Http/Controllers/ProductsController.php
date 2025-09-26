@@ -58,7 +58,7 @@ class ProductsController extends Controller
             Log::info("producto criado com ID {$product->id}");
 
             return redirect()->route('products.edit', ['id' => $product->id])
-                ->with('success', __('admin.product_created'));
+                ->with('success', __('modules.product_created'));
         } catch (\Exception $e) {
             Log::error('Erro ao criar product: ' . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao criar o product.'));
@@ -75,7 +75,7 @@ class ProductsController extends Controller
             Log::info("Producto atualizado com ID {$product->id}");
 
             return redirect()->route('products.edit', ['id' => $product->id])
-                ->with('success', __('admin.product_updated'));
+                ->with('success', __('modules.product_updated'));
         } catch (\Exception $e) {
             Log::error("Erro ao atualizar product com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withInput()->withErrors(__('Ocorreu um erro ao atualizar o producto.'));
@@ -90,7 +90,7 @@ class ProductsController extends Controller
 
             Log::info("product removido com ID {$id}");
 
-            return redirect()->route('products.index')->with('success', __('admin.product_deleted'));
+            return redirect()->route('products.index')->with('success', __('modules.product_deleted'));
         } catch (\Exception $e) {
             Log::error("Erro ao eliminar product com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o product.'));
