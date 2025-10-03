@@ -39,50 +39,78 @@
         <div class="col-md-12">
             <h5 class="d-flex align-items-center gap-2 m-0">
                 <i class="icon-base ti tabler-list"></i>
-                {{ $location->id ? 'Editar Localização' : 'Nova Localização' }}
+                {!! $location->id ? 'Editar Localização' . ' | <span style="color:#2A7AD4">' . $location->name . '</span>' : 'Nova Localização' !!}
             </h5>
             <hr class="my-2"/>
         </div>
     </div>
     <div class="row g-6">
         <div class="col-md-12">
-            @if(!$location->id)
-                {{ html()->modelForm($location, 'POST', route('locations.store'))->open() }}
-            @else
-                {{ html()->modelForm($location, 'PUT', route('locations.update', $location->id))->open() }}
-            @endif
-            {{ html()->token() }}
-            <div class="card">
-                <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">
-                        Detalhe {!!  $location->name ? '| <span style="color:#2A7AD4">' . $location->name . '</span>': ''  !!}</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row g-6">
-                        <div class="col-md-4">
-                            <label class="form-label" for="name">Nome</label>
-                            {{html()->text('name')->id('name')->class('form-control')->placeholder('')}}
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2">
-                            <label class="form-label" for="status">Estado</label>
-                            {{html()->select('status')->id('status')->options([true => 'Activo', false => 'Inactivo'])->class('form-select')->placeholder('-- Seleccionar --')}}
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">
-                            <i class="icon-base ti tabler-device-floppy"></i> Gravar
+            <div class="nav-align-top nav-tabs-shadow">
+                <ul class="nav nav-tabs nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <button
+                            type="button"
+                            class="nav-link active"
+                            role="tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#navs-justified-home"
+                            aria-controls="navs-justified-home"
+                            aria-selected="true">
+                          <span class="d-none d-sm-inline-flex align-items-center">
+                            <i class="icon-base ti tabler-home icon-sm me-1_5"></i>Info
+                          </span>
+                            <i class="icon-base ti tabler-home icon-sm d-sm-none"></i>
                         </button>
-                        <a href="{{ route('locations.index') }}" class="btn btn-secondary waves-effect waves-light">
-                            <i class="icon-base ti tabler-arrow-left"></i> Voltar
-                        </a>
+                    </li>
+                    @if(isset($location->id))
+                        <li class="nav-item">
+                            <button
+                                type="button"
+                                class="nav-link"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#navs-justified-services"
+                                aria-controls="navs-justified-services"
+                                aria-selected="false">
+                          <span class="d-none d-sm-inline-flex align-items-center"
+                          ><i class="icon-base ti tabler-message-dots icon-sm me-1_5"></i>Horário</span
+                          >
+                                <i class="icon-base ti tabler-message-dots icon-sm d-sm-none"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button
+                                type="button"
+                                class="nav-link"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                data-bs-target="#navs-justified-messages"
+                                aria-controls="navs-justified-messages"
+                                aria-selected="false">
+                          <span class="d-none d-sm-inline-flex align-items-center">
+                              <i class="icon-base ti tabler-cancel icon-sm me-1_5"></i>Ausências
+                          </span>
+                            </button>
+                        </li>
+                    @endif
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
+                       @include('admin.locations.partials.info')
+                    </div>
+                    <div class="tab-pane fade" id="navs-justified-services" role="tabpanel">
+                        {{--@if(isset($location->id))
+                            @include('admin.professionals.partials.services')
+                        @endif--}}
+                    </div>
+                    <div class="tab-pane fade" id="navs-justified-messages" role="tabpanel">
+                       {{-- @if(isset($location->id))
+                            @include('admin.professionals.partials.unavailabilities')
+                        @endif--}}
                     </div>
                 </div>
             </div>
-            {{html()->closeModelForm()}}
         </div>
     </div>
 @endsection
