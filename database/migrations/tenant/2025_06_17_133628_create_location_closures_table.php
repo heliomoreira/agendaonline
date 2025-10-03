@@ -12,7 +12,10 @@ return new class extends Migration {
     {
         Schema::create('location_closures', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->date('day');
+            $table->time('start_hour');
+            $table->time('end_hour');
             $table->string('reason')->nullable();
             $table->timestamps();
         });

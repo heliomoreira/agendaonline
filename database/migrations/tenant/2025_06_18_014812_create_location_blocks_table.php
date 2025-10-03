@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('location_blocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->time('start_hour');
             $table->time('end_hour');
-            $table->string('days_of_week'); // JSON array: ["Monday", "Tuesday", ...]
+            $table->string('day_of_week');
             $table->timestamps();
         });
     }

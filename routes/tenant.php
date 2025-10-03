@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
@@ -124,6 +125,14 @@ Route::middleware([
             Route::prefix('portal')->group(function () {
                 Route::get('/', [PortalController::class, 'index'])->name('portal.index');
                 Route::put('/update/{id}', [PortalController::class, 'update'])->name('portal.update');
+            });
+
+            Route::prefix('locations')->group(function () {
+                Route::get('/', [LocationController::class, 'index'])->name('locations.index');
+                Route::get('/form', [LocationController::class, 'form'])->name('locations.form');
+                Route::POST('/store', [LocationController::class, 'store'])->name('locations.store');
+                Route::PUT('/update/{id}', [LocationController::class, 'update'])->name('locations.update');
+                Route::get('/edit/{id}', [LocationController::class, 'edit'])->name('locations.edit');
             });
         });
     });

@@ -47,4 +47,10 @@ return [
     'product_created' => 'Produto criado com sucesso.',
     'product_updated' => 'Produto atualizado com sucesso.',
     'product_deleted' => 'Produto removido com sucesso.',
+
+    /* ---- Locations ---- */
+
+    'location_created' => 'Localização criada com sucesso.',
+    'location_updated' => 'Localização atualizada com sucesso.',
+    'location_deleted' => 'Localização removida com sucesso.',
 ];
