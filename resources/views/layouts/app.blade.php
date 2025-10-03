@@ -67,7 +67,7 @@
 <div class="layout-wrapper layout-content-navbar  ">
     <div class="layout-container">
         <aside id="layout-menu" class="layout-menu menu-vertical menu" data-bs-theme="dark"
-               style="background-color: #000031">
+               style="background-color: #0b0f23">
             <div class="app-brand demo ">
                 <a href="/admin" class="app-brand-link">
                     <span class="app-brand-logo demo">
@@ -81,7 +81,7 @@
                 </a>
             </div>
             <div class="menu-inner-shadow"></div>
-            <ul class="menu-inner py-1" style="background-color: #000031">
+            <ul class="menu-inner py-1" style="background-color: #0b0f23">
                 <li class="menu-item text-center">
                 <span class="badge bg-label-warning">
                     Versão BETA

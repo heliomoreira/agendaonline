@@ -38,7 +38,7 @@
     <div class="row mb-2">
         <div class="col-md-12">
             <h5 class="d-flex align-items-center gap-2 m-0">
-                <i class="icon-base ti tabler-list"></i>
+                <i class="icon-base ti tabler-home"></i>
                 {!! $location->id ? 'Editar Localização' . ' | <span style="color:#2A7AD4">' . $location->name . '</span>' : 'Nova Localização' !!}
             </h5>
             <hr class="my-2"/>
