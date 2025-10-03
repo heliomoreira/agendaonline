@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Location;
+use App\Services\LocationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class LocationController extends Controller
 {
-    public function index()
+    public function __construct(private LocationService $locationService)
     {
 
-        $locations = Location::all();
+    }
+
+    public function index()
+    {
+        $locations = $this->locationService->listLocations();
 
         return view('admin.locations.index', [
             'locations' => $locations
@@ -40,7 +45,8 @@ class LocationController extends Controller
         return redirect()->route('locations.edit', ['id' => $location->id])->with('success', __('modules.location_created'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         try {
             $location = Location::findOrFail($id);
             $location->fill($request->all());
@@ -62,4 +68,6 @@ class LocationController extends Controller
             'location' => $location
         ]);
     }
+
+
 }

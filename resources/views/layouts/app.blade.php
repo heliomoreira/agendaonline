@@ -150,6 +150,12 @@
                         <div data-i18n="Portal">Portal</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="/admin/locations" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-home"></i>
+                        <div data-i18n="Localizações">Localizações</div>
+                    </a>
+                </li>
                 {{--<li class="menu-item">
                     <a href="#" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-lifebuoy"></i>
