@@ -28,6 +28,9 @@ class SmsService
             $res = json_decode($response->getBody()->getContents(), true);
 
             if ($res['Result'] == "OK") {
+
+                self::removeCredit(1);
+
                 return response()->json('ok', 200);
             } else {
                 return response()->json('error', $response->getStatusCode());
@@ -37,6 +40,21 @@ class SmsService
             Log::error($ex);
             $response = $ex->getResponse();
             return response()->json('error', $response->getStatusCode());
+        }
+    }
+
+    public function removeCredit($totalSms)
+    {
+        $total = $totalSms * config('sms.sms_value');
+
+        $result = tenant()->update([
+            'sms_credits' => tenant()->sms_credits - $total,
+        ]);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

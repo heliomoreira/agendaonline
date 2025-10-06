@@ -39,7 +39,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     protected $casts = [
         'sms_status' => 'boolean',
-        'sms_credits' => 'integer',
+        'sms_credits' => 'decimal:2',
         'is_beta' => 'boolean',
         'storage_quota' => 'integer',
         'plan_id' => 'integer',
