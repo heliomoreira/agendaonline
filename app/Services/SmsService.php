@@ -29,7 +29,7 @@ class SmsService
 
             if ($res['Result'] == "OK") {
 
-                self::removeCredit(1);
+                self::removeCredits(1);
 
                 return response()->json('ok', 200);
             } else {
@@ -43,12 +43,26 @@ class SmsService
         }
     }
 
-    public function removeCredit($totalSms)
+    public function removeCredits($totalSms)
     {
         $total = $totalSms * config('sms.sms_value');
 
         $result = tenant()->update([
             'sms_credits' => tenant()->sms_credits - $total,
+        ]);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addCredits($totalValue)
+    {
+
+        $result = tenant()->update([
+            'sms_credits' => tenant()->sms_credits + $totalValue,
         ]);
 
         if ($result) {
