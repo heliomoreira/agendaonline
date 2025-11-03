@@ -37,14 +37,32 @@
                 <div class="modal-body">
                     <input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
                     <p style="display: none"><strong>ID:</strong> <span id="eventId"></span></p>
-                    <p><strong>Início:</strong> <span id="eventStart"></span></p>
-                    <p><strong>Fim:</strong> <span id="eventEnd"></span></p>
-                    <p><strong>Profissional:</strong> <span id="eventProfessional"></span></p>
-                    <p><strong>Cliente:</strong> <span id="eventCustomer"></span></p>
-                    <p><strong>Serviço:</strong> <span id="eventService"></span></p>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 100px">Início</th>
+                            <td><span id="eventStart"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Fim</th>
+                            <td><span id="eventEnd"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Profissional</th>
+                            <td><span id="eventProfessional"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Cliente</th>
+                            <td><span id="eventCustomer"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Serviço</th>
+                            <td><span id="eventService"></span></td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-danger" onclick="cancelEvent();">Cancelar Marcação</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
@@ -140,7 +158,7 @@
             });
         });
 
-        function cancelEvent(){
+        function cancelEvent() {
             const eventId = document.getElementById('eventId').textContent;
             const csrfToken = document.getElementById('csrf-token').value;
 
