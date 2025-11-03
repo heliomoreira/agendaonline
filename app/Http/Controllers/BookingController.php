@@ -12,6 +12,7 @@ use App\Models\ProfessionalWorkingHour;
 use App\Models\Service;
 use App\Models\Tenant;
 use App\Notifications\BookingConfirmation;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -51,7 +52,6 @@ class BookingController extends Controller
             'phone_1' => $request->client_phone_1,
         ]);
 
-        // Obter dados do serviço
         $service = Service::findOrFail($request->service_id);
         $start = Carbon::parse("{$request->day} {$request->start_hour}");
         $end = $start->copy()->addMinutes($service->duration);
@@ -90,6 +90,23 @@ class BookingController extends Controller
         ]);
 
         $booking->load(['client', 'service', 'professional']);
+
+        $service = Service::find($request->service_id);
+        $serviceName = $service ? $service->name : 'o seu serviço';
+
+        $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+
+        NotificationService::saveNotification(
+            $tenant->id,
+            $tenant->sms_sender,
+            $request->client_phone_1,
+            'sms',
+            $text,
+            $request->day,
+            $start->format('H:i'),
+            $end->format('H:i')
+        );
+
 
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));

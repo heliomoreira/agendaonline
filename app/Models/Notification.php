@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
+    protected $connection = 'central';
+
     protected $fillable = [
         'tenant_id',
         'sender',

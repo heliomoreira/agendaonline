@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('tenant_id');
+            $table->string('tenant_id')->index();
             $table->string('sender');
             $table->string('destinatary');
             $table->enum('type', ['sms', 'email']);
@@ -22,6 +22,11 @@ return new class extends Migration {
             $table->string('service_end_hour');
             $table->string('status')->default('scheduled');
             $table->timestamps();
+
+            $table->foreign('tenant_id')
+                ->references('id')
+                ->on('tenants')
+                ->onDelete('cascade');
         });
     }
 

@@ -33,29 +33,6 @@ class AgendaController extends Controller
             ]);
     }
 
-    public function store(Request $request)
-    {
-        Agenda::create($request->all());
-
-        $service = Service::find($request->service_id);
-        $serviceName = $service ? $service->name : 'o seu serviço';
-
-        $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
-
-        NotificationService::saveNotification(
-            'AGENDA',
-            '919781176',
-            'sms',
-            $text,
-            $request->day,
-            $request->start_hour,
-            $request->end_hour
-        );
-
-
-        return redirect()->route('agenda.index')->with('success', 'Appointment created successfully.');
-    }
-
 
     public function form()
     {
