@@ -43,7 +43,7 @@ class SmsService
         }
     }
 
-    public function removeCredits($totalSms)
+    public static function removeCredits($totalSms)
     {
         $total = $totalSms * config('sms.sms_value');
 
@@ -60,7 +60,6 @@ class SmsService
 
     public function addCredits($totalValue)
     {
-
         $result = tenant()->update([
             'sms_credits' => tenant()->sms_credits + $totalValue,
         ]);
