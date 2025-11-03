@@ -114,6 +114,8 @@ Route::middleware([
                 Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
                 Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
                 Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
+
+                Route::delete('/cancel-event/{id}',[AgendaController::class, 'cancelEvent'])->name('agenda.cancel-event');
             });
 
             Route::prefix('account-settings')->group(function () {

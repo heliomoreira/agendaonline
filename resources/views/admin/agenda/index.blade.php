@@ -4,7 +4,7 @@
     <div class="row align-items-end mb-3">
         <div class="col-md-3">
             {{ html()->select('categoryFilter')
-                ->options($professionals)   {{-- [id => name] --}}
+                ->options($professionals)
             ->class('form-select')
             ->id('categoryFilter')
             ->placeholder('Todos os Profissionais') }}
@@ -35,11 +35,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="csrf-token" value="{{ csrf_token() }}">
+                    <p style="display: none"><strong>ID:</strong> <span id="eventId"></span></p>
                     <p><strong>Início:</strong> <span id="eventStart"></span></p>
                     <p><strong>Fim:</strong> <span id="eventEnd"></span></p>
                     <p><strong>Profissional:</strong> <span id="eventProfessional"></span></p>
                     <p><strong>Cliente:</strong> <span id="eventCustomer"></span></p>
                     <p><strong>Serviço:</strong> <span id="eventService"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="cancelEvent();">Cancelar Marcação</button>
                 </div>
             </div>
         </div>
@@ -113,6 +118,7 @@
 
                 eventClick: function (info) {
                     document.getElementById('eventModalTitle').innerHTML = info.event.title + " | " + "<span style='color:#000031'>" + info.event.extendedProps.client + "</span>";
+                    document.getElementById('eventId').innerText = info.event.id ?? '—';
                     document.getElementById('eventStart').innerText = info.event.start?.toLocaleString() ?? '—';
                     document.getElementById('eventEnd').innerText = info.event.end?.toLocaleString() ?? '—';
                     document.getElementById('eventProfessional').innerText = info.event.extendedProps.professional || 'Não definido';
@@ -133,5 +139,38 @@
                 calendar.refetchEvents(); // ask server again for current range + filter
             });
         });
+
+        function cancelEvent(){
+            const eventId = document.getElementById('eventId').textContent;
+            const csrfToken = document.getElementById('csrf-token').value;
+
+            if (!confirm('Tem a certeza que quer cancelar esta marcação?')) {
+                return;
+            }
+
+            fetch(`/admin/agenda/cancel-event/${eventId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao cancelar o evento');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Evento cancelado com sucesso:', data);
+                    alert('Marcação cancelada com sucesso!');
+                    // Redirecionar ou atualizar a página
+                    window.location.reload(); // ou window.location.href = '/admin/agenda';
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    //alert('Erro ao cancelar a marcação. Tente novamente.');
+                });
+        }
     </script>
 @endpush

@@ -110,4 +110,11 @@ class AgendaController extends Controller
 
         return response()->json($events->values());
     }
+
+    public function cancelEvent($eventId)
+    {
+        $cancel = Agenda::find($eventId);
+        $cancel->delete();
+        return response()->json(['success' => true],200);
+    }
 }
