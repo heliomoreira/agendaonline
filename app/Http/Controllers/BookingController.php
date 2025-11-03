@@ -61,11 +61,17 @@ class BookingController extends Controller
         $conflict = Agenda::where('professional_id', $request->professional_id)
             ->where('day', $request->day)
             ->where(function ($q) use ($start, $end) {
-                $q->whereBetween('start_hour', [$start->format('H:i'), $end->format('H:i')])
-                    ->orWhereBetween('end_hour', [$start->format('H:i'), $end->format('H:i')])
+                $q->where(function ($q2) use ($start, $end) {
+                    $q2->where('start_hour', '<', $start->format('H:i'))
+                        ->where('end_hour', '>', $start->format('H:i'));
+                })
                     ->orWhere(function ($q2) use ($start, $end) {
-                        $q2->where('start_hour', '<=', $start->format('H:i'))
-                            ->where('end_hour', '>=', $end->format('H:i'));
+                        $q2->where('start_hour', '<', $end->format('H:i'))
+                            ->where('end_hour', '>', $end->format('H:i'));
+                    })
+                    ->orWhere(function ($q2) use ($start, $end) {
+                        $q2->where('start_hour', '>=', $start->format('H:i'))
+                            ->where('end_hour', '<=', $end->format('H:i'));
                     });
             })->exists();
 
@@ -89,13 +95,13 @@ class BookingController extends Controller
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));
 
-        return view('front.portal.confirmation', compact('booking','tenant'));
+        return view('front.portal.confirmation', compact('booking', 'tenant'));
 
-   /*
-        return response()->json([
-            'message' => 'Booking confirmed!',
-            'agenda' => $booking
-        ]);*/
+        /*
+             return response()->json([
+                 'message' => 'Booking confirmed!',
+                 'agenda' => $booking
+             ]);*/
     }
 
 
@@ -149,11 +155,12 @@ class BookingController extends Controller
     }
 
     private function calculateAvailableSlots(
-        string $startDate,
-        string $endDate,
-        Service $service,
+        string     $startDate,
+        string     $endDate,
+        Service    $service,
         Collection $professionals
-    ): array {
+    ): array
+    {
         $results = [];
         $startDate = Carbon::parse($startDate);
         $endDate = Carbon::parse($endDate);
@@ -203,11 +210,12 @@ class BookingController extends Controller
     }
 
     private function getProfessionalAvailableSlots(
-        Carbon $date,
+        Carbon       $date,
         Professional $professional,
-        Service $service,
-        Collection $locationBlocks
-    ): array {
+        Service      $service,
+        Collection   $locationBlocks
+    ): array
+    {
         $workingBlocks = $this->getProfessionalWorkingHours($professional->id, $date->dayOfWeek);
 
         if ($workingBlocks->isEmpty()) {
@@ -298,11 +306,12 @@ class BookingController extends Controller
 
     private function generateAvailableSlots(
         Collection $workingBlocks,
-        Carbon $date,
-        int $serviceDuration,
-        array $bookedSlots,
-        array $blockedIntervals
-    ): array {
+        Carbon     $date,
+        int        $serviceDuration,
+        array      $bookedSlots,
+        array      $blockedIntervals
+    ): array
+    {
         $allSlots = [];
         $dateString = $date->toDateString();
         $slotInterval = config('app.slot_interval', self::SLOT_INTERVAL);
@@ -330,7 +339,8 @@ class BookingController extends Controller
         int $slotInterval,
         array $bookedSlots,
         array $blockedIntervals
-    ): array {
+    ): array
+    {
         $slots = [];
 
         $startHour = $this->formatTime($workingBlock->start_hour);
@@ -357,7 +367,7 @@ class BookingController extends Controller
 
     private function formatTime($time): string
     {
-        return is_object($time) ? $time->format('H:i') : (string) $time;
+        return is_object($time) ? $time->format('H:i') : (string)$time;
     }
 
     private function getLunchPeriod($workingBlock, string $dateString): ?array
@@ -375,10 +385,11 @@ class BookingController extends Controller
     private function isSlotAvailable(
         Carbon $slotStart,
         Carbon $slotEnd,
-        array $bookedSlots,
-        array $blockedIntervals,
+        array  $bookedSlots,
+        array  $blockedIntervals,
         ?array $lunchPeriod
-    ): bool {
+    ): bool
+    {
         // Check conflicts with bookings
         foreach ($bookedSlots as $booking) {
             if ($this->periodsOverlap($slotStart, $slotEnd, $booking['start'], $booking['end'])) {
