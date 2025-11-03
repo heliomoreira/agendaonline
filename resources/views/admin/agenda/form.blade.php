@@ -116,7 +116,7 @@
                         <button type="submit" class="btn btn-primary waves-effect waves-light" id="submitBtn">
                             <i class="icon-base ti tabler-device-floppy"></i> Gravar
                         </button>
-                        <a href="{{ route('products.index') }}" class="btn btn-secondary waves-effect waves-light">
+                        <a href="{{ route('agenda.index') }}" class="btn btn-secondary waves-effect waves-light">
                             <i class="icon-base ti tabler-arrow-left"></i> Voltar
                         </a>
                     </div>
