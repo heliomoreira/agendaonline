@@ -102,7 +102,7 @@
 
                         <div class="col-md-4">
                             <label for="client_email" class="form-label">Email</label>
-                            <input type="email" id="client_email" name="client_email" class="form-control" required>
+                            <input type="email" id="client_email" name="client_email" class="form-control">
                         </div>
 
                         <div class="col-md-3">
