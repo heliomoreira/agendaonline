@@ -147,5 +147,4 @@ Route::middleware([
     //Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
     Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');
 
-
 });
