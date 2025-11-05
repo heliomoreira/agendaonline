@@ -37,6 +37,7 @@ class BookingController extends Controller
             'start_hour' => 'required|date_format:H:i',
             'client_name' => 'required|string|max:255',
             'client_phone_1' => 'required|string|max:20',
+            'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
         ]);
 
         if ($validator->fails()) {

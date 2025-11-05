@@ -3,7 +3,7 @@
 @section('content')
     <form id="slotForm" action="{{ route('book.slot') }}" method="POST" class="row g-2">
         @csrf
-
+        {!! RecaptchaV3::field('register') !!}
         {{-- Secção: Marcação --}}
         <div class="col-12">
             <h5 class="mb-2 border-bottom pb-1">

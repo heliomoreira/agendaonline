@@ -58,6 +58,7 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 
     <script src="{{global_asset('theme/assets/js/config.js')}}"></script>
+    {!! RecaptchaV3::initJs() !!}
 </head>
 
 <body>
@@ -125,6 +126,7 @@
 
                 <form id="formAuthentication" class="mb-6" action="/signup/create-tenant" method="post">
                     @csrf
+                    {!! RecaptchaV3::field('register') !!}
                     <div class="mb-6 form-control-validation">
                         <label for="name" class="form-label">Nome</label>
                         <input

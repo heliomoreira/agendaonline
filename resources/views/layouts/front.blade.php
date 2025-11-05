@@ -32,6 +32,7 @@
             margin-bottom: 25px;
         }
     </style>
+    {!! RecaptchaV3::initJs() !!}
 </head>
 <body>
 

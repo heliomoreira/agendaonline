@@ -9,6 +9,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use App\Services\TenantService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TenantController extends Controller
 {
@@ -30,6 +31,10 @@ class TenantController extends Controller
 
     public function createTenant(Request $request)
     {
+        $validate = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
+        ]);
+
         $tenant = new TenantService();
         $response = $tenant->createTenant($request->all());
 
