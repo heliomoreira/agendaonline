@@ -22,7 +22,7 @@ class PortalController extends Controller
 
         $updatePortal = Portal::find($id);
 
-        if ($updatePortal == null) {
+        if (!$updatePortal) {
             $updatePortal = new Portal();
         }
 

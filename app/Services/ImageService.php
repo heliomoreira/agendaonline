@@ -25,21 +25,26 @@ class ImageService
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
             $path = "$folder/$filename";
 
+
             $image = $this->imageManager->read($file->getPathname())->cover($width, $height);
 
-            tenancy()->end();
+            $encoded = (string) $image->encode();
 
-            if (!Storage::disk('public')->exists($folder)) {
-                Storage::disk('public')->makeDirectory($folder, 0755, true);
+            //Storage::disk('central_public')->makeDirectory($folder);
+
+            $result = Storage::disk('central_public')->put($path, $encoded);
+
+
+            if (!$result) {
+                throw new Exception("Storage::put returned false");
             }
-
-            Storage::disk('public')->put($path, (string)$image->encode());
-
-            tenancy()->initialize(auth()->user()->tenant);
 
             return $path;
         } catch (Exception $e) {
-            logger()->error("Erro ao fazer upload da imagem: " . $e->getMessage());
+            logger()->error("Error uploading image: " . $e->getMessage());
+            if (app()->isLocal()) {
+                throw $e;
+            }
             return null;
         }
     }
