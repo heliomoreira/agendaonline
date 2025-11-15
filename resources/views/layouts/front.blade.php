@@ -39,7 +39,7 @@
 <div class="container py-5">
     <div class="text-center">
         @if(isset($portal))
-            <img src="{{ config('app.url') }}/storage/{{ $portal->logo }}" alt="Logo" class="logo" width="300" height="150">
+            <img src="{{global_asset('storage/'.$portal->logo)}}" alt="Logo" class=logo" width="300" height="150">
         @endif
     </div>
 
