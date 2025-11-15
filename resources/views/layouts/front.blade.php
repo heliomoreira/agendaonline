@@ -35,7 +35,6 @@
     {!! RecaptchaV3::initJs() !!}
 </head>
 <body>
-
 <div class="container py-5">
     <div class="text-center">
         @if(isset($portal))
