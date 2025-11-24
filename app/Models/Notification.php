@@ -10,6 +10,7 @@ class Notification extends Model
 
     protected $fillable = [
         'tenant_id',
+        'appointment_id',
         'sender',
         'destinatary',
         'type',

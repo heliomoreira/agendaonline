@@ -15,10 +15,9 @@ use Illuminate\Http\Request;
 class AgendaController extends Controller
 {
     public function __construct(
-        //private BookingService $bookingService,
+        private NotificationService $notificationService,
     )
-    {
-    }
+    {}
 
     public function index()
     {
@@ -50,11 +49,11 @@ class AgendaController extends Controller
     public function getEvents(Request $request)
     {
         $startParam = $request->query('start'); // ISO string
-        $endParam   = $request->query('end');   // ISO string
+        $endParam = $request->query('end');   // ISO string
 
         // Fallbacks just in case (but the view sends both)
         $start = $startParam ? Carbon::parse($startParam)->format('Y-m-d') : now()->startOfWeek()->format('Y-m-d');
-        $end   = $endParam   ? Carbon::parse($endParam)->format('Y-m-d')   : now()->endOfWeek()->format('Y-m-d');
+        $end = $endParam ? Carbon::parse($endParam)->format('Y-m-d') : now()->endOfWeek()->format('Y-m-d');
 
         $query = Agenda::with(['client', 'professional', 'service'])
             ->whereBetween('day', [$start, $end]);
@@ -66,7 +65,7 @@ class AgendaController extends Controller
 
         $events = $query->get()->map(function ($item) {
             $start = Carbon::parse("{$item->day} {$item->start_hour}")->toIso8601String();
-            $end   = Carbon::parse("{$item->day} {$item->end_hour}")->toIso8601String();
+            $end = Carbon::parse("{$item->day} {$item->end_hour}")->toIso8601String();
 
             return [
                 'id' => $item->id,
@@ -92,6 +91,9 @@ class AgendaController extends Controller
     {
         $cancel = Agenda::find($eventId);
         $cancel->delete();
-        return response()->json(['success' => true],200);
+
+        $deleteNotification = $this->notificationService->deleteNotification(tenant('id'), $eventId);
+
+        return response()->json(['success' => true], 200);
     }
 }

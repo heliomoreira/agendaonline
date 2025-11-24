@@ -99,6 +99,7 @@ class BookingController extends Controller
 
         NotificationService::saveNotification(
             $tenant->id,
+            $booking->id,
             $tenant->sms_sender,
             $request->client_phone_1,
             'sms',

@@ -6,10 +6,11 @@ use App\Models\Notification;
 
 class NotificationService
 {
-    public static function saveNotification($tenant_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour)
+    public static function saveNotification($tenant_id,$appointment_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour)
     {
         return Notification::create([
             'tenant_id' => $tenant_id,
+            'appointment_id' => $appointment_id,
             'sender' => $sender,
             'destinatary' => $destinatary,
             'type' => $type,
@@ -31,5 +32,12 @@ class NotificationService
             return true;
         }
         return false;
+    }
+
+    public function deleteNotification($tenant_id, $appointment_id)
+    {
+        return Notification::where('tenant_id', $tenant_id)
+            ->where('appointment_id', $appointment_id)
+            ->delete();
     }
 }
