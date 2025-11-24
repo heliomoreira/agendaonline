@@ -32,11 +32,14 @@ class SendNotification extends Command
     {
         try {
 
-            $currentHour = Carbon::now()->format('H:00:00');
+            $currentTime = Carbon::now();
+            $timeFormatted = $currentTime->format('H:i:00');
 
-            $notifications = Notification::where('status', '=', 'scheduled')
+            $notifications = Notification::where('status', 'scheduled')
                 ->where('service_day', Carbon::tomorrow()->format('Y-m-d'))
-                ->where('send_hour', '=', $currentHour)
+                ->where(function($query) use ($timeFormatted) {
+                    $query->where('send_hour', '=', $timeFormatted);
+                })
                 ->get();
 
             foreach ($notifications as $notification) {
