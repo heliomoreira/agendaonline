@@ -37,6 +37,7 @@ class SendNotification extends Command
 
             foreach ($notifications as $notification) {
                 SmsService::send(
+                    $notification->tenant_id,
                     $notification->sender,
                     $notification->destinatary,
                     $notification->text,

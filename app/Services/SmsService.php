@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Tenant;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
-    public static function send($sender, $destinatary, $text)
+    public static function send($tenant_id, $sender, $destinatary, $text)
     {
 
         try {
@@ -29,7 +30,7 @@ class SmsService
 
             if ($res['Result'] == "OK") {
 
-                self::removeCredits(1);
+                self::removeCredits($tenant_id, 1);
 
                 return response()->json('ok', 200);
             } else {
@@ -43,13 +44,11 @@ class SmsService
         }
     }
 
-    public static function removeCredits($totalSms)
+    public static function removeCredits($tenant_id, $totalSms)
     {
         $total = $totalSms * config('sms.sms_value');
 
-        $result = tenant()->update([
-            'sms_credits' => tenant()->sms_credits - $total,
-        ]);
+        $result = Tenant::where('id', $tenant_id)->decrement('sms_credits', $total);
 
         if ($result) {
             return true;
