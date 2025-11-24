@@ -31,7 +31,7 @@ class SendNotification extends Command
     public function handle()
     {
         try {
-            $notifications = Notification::where('status', 'scheduled')
+            $notifications = Notification::where('status', '=', 'scheduled')
                 ->where('service_day', Carbon::tomorrow()->format('Y-m-d'))
                 ->get();
 
