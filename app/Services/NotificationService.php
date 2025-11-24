@@ -6,7 +6,7 @@ use App\Models\Notification;
 
 class NotificationService
 {
-    public static function saveNotification($tenant_id,$appointment_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour)
+    public static function saveNotification($tenant_id, $appointment_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour)
     {
         return Notification::create([
             'tenant_id' => $tenant_id,
@@ -18,6 +18,7 @@ class NotificationService
             'service_day' => $service_day,
             'service_start_hour' => $service_start_hour,
             'service_end_hour' => $service_end_hour,
+            'send_hour' => tenant()->sms_send_hour,
             'status' => 'scheduled',
         ]);
     }
