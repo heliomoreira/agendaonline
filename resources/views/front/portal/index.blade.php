@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('content')
-    <form id="slotForm" action="{{ route('book.slot') }}" method="POST" class="row g-2">
+    <form id="slotForm" action="{{ route('book.slot',['admin'=>false]) }}" method="POST" class="row g-2">
         @csrf
         {!! RecaptchaV3::field('register') !!}
         {{-- Secção: Marcação --}}

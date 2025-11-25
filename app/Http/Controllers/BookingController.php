@@ -35,7 +35,7 @@ class BookingController extends Controller
             'day' => 'required|date',
             'start_hour' => 'required|date_format:H:i',
             'client_name' => 'required|string|max:255',
-            'client_phone_1' => $admin ? 'integer' : 'numeric|max:20', // regra condicional
+            'client_phone_1' => 'required|integer',
         ];
 
         $validator = Validator::make($request->all(), $rules);
