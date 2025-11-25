@@ -47,7 +47,7 @@
     <div class="row g-6">
         <div class="col-md-12">
             @if(!$agenda->id)
-                {{ html()->modelForm($agenda, 'POST', route('book.slot'))->open() }}
+                {{ html()->modelForm($agenda, 'POST', route('book.slot',['admin'=>true]))->open() }}
             @else
                 {{ html()->modelForm($agenda, 'PUT', route('agenda.update', $agenda->id))->open() }}
             @endif

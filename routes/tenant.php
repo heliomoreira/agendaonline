@@ -145,6 +145,6 @@ Route::middleware([
     Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
     Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
     //Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
-    Route::post('/book-slot', [BookingController::class, 'bookSlot'])->name('book.slot');
+    Route::post('/book-slot/{admin?}', [BookingController::class, 'bookSlot'])->name('book.slot');
 
 });

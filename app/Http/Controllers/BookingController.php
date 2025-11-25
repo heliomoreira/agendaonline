@@ -27,21 +27,27 @@ class BookingController extends Controller
     private const SUNDAY = 0;
     private const SATURDAY = 6;
 
-    public function bookSlot(Request $request)
+    public function bookSlot(Request $request, $admin = false)
     {
-        // Validar inputs antes de qualquer ação
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'service_id' => 'required|exists:services,id',
             'professional_id' => 'required|exists:professionals,id',
             'day' => 'required|date',
             'start_hour' => 'required|date_format:H:i',
             'client_name' => 'required|string|max:255',
-            'client_phone_1' => 'required|numeric|max:20',
-            'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
-        ]);
+            'client_phone_1' => $admin ? 'integer' : 'numeric|max:20', // regra condicional
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if (!$admin) {
+            $validator->sometimes('g-recaptcha-response', 'required|recaptchav3:register,0.5', function () {
+                return true;
+            });
+        }
 
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->withErrors(['Por favor, corrija os erros no formulário de agendamento.']);
+            return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
         $tenant = Tenant::find(tenant('id'));
@@ -113,13 +119,13 @@ class BookingController extends Controller
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));
 
-        return view('front.portal.confirmation', compact('booking', 'tenant'));
 
-        /*
-             return response()->json([
-                 'message' => 'Booking confirmed!',
-                 'agenda' => $booking
-             ]);*/
+        if ($admin) {
+            return redirect()->back()->with('success', 'Agendamento reservado com sucesso!');
+        } else {
+            return view('front.portal.confirmation', compact('booking', 'tenant'));
+        }
+
     }
 
 
