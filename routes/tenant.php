@@ -9,6 +9,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
@@ -135,6 +136,10 @@ Route::middleware([
                 Route::POST('/store', [LocationController::class, 'store'])->name('locations.store');
                 Route::PUT('/update/{id}', [LocationController::class, 'update'])->name('locations.update');
                 Route::get('/edit/{id}', [LocationController::class, 'edit'])->name('locations.edit');
+            });
+
+            Route::prefix('notifications')->group(function () {
+                Route::get('/', [NotificationsController::class, 'index'])->name('notifications.index');
             });
         });
     });

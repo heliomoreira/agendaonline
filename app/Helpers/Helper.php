@@ -3,7 +3,8 @@
 namespace App\Helpers;
 
 
-class Helper{
+class Helper
+{
 
     public static function normalizeString($string)
     {
@@ -13,6 +14,16 @@ class Helper{
         $string = preg_replace('/\s+/', '-', $string);
         $string = trim($string, '-');
         return $string;
+    }
+
+    public static function smsStatus($status)
+    {
+        $map = [
+            'scheduled' => 'Agendado',
+            'sent'      => '<span style="color:green">Enviado</span>',
+        ];
+
+        return $map[$status] ?? 'Desconhecido';
     }
 
 }

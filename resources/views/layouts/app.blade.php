@@ -132,6 +132,12 @@
                 <li class="menu-header small">
                     <span class="menu-header-text" data-i18n="Admin">Admin</span>
                 </li>
+                <li class="menu-item">
+                    <a href="{{route('notifications.index')}}" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-bell"></i>
+                        <div data-i18n="Notificações">Notificações</div>
+                    </a>
+                </li>
                 {{--<li class="menu-item">
                     <a href="#" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-settings"></i>
