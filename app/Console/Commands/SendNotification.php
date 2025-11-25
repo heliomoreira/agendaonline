@@ -23,7 +23,7 @@ class SendNotification extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send SMS notifications scheduled for the next day';
 
     /**
      * Execute the console command.
@@ -52,8 +52,6 @@ class SendNotification extends Command
 
                 NotificationService::markAsSent($notification->id);
             }
-
-            Log::info('Notifications sent: ' . count($notifications));
 
             return true;
 
