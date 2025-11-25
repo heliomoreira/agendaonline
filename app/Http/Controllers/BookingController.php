@@ -36,12 +36,13 @@ class BookingController extends Controller
             'day' => 'required|date',
             'start_hour' => 'required|date_format:H:i',
             'client_name' => 'required|string|max:255',
-            'client_phone_1' => 'required|string|max:20',
+            'client_phone_1' => 'required|numeric|max:20',
             'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            return redirect()->back()->withInput()->withErrors(['Por favor, corrija os erros no formulário de agendamento.']);
+            //return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $tenant = Tenant::find(tenant('id'));
@@ -76,7 +77,9 @@ class BookingController extends Controller
             })->exists();
 
         if ($conflict) {
-            return response()->json(['error' => 'This slot is already taken.'], 409);
+            return redirect()->back()->withInput()->withErrors(['Este horário já está reservado. Por favor, escolha outro.']);
+
+            //return response()->json(['error' => 'This slot is already taken.'], 409);
         }
 
         // Criar marcação
