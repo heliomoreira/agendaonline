@@ -134,7 +134,7 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{route('notifications.index')}}" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-bell"></i>
+                        <i class="menu-icon icon-base ti tabler-bell-ringing"></i>
                         <div data-i18n="Notificações">Notificações</div>
                     </a>
                 </li>
