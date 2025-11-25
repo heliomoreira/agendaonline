@@ -42,7 +42,6 @@ class BookingController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors(['Por favor, corrija os erros no formulário de agendamento.']);
-            //return response()->json(['errors' => $validator->errors()], 422);
         }
 
         $tenant = Tenant::find(tenant('id'));
@@ -78,8 +77,6 @@ class BookingController extends Controller
 
         if ($conflict) {
             return redirect()->back()->withInput()->withErrors(['Este horário já está reservado. Por favor, escolha outro.']);
-
-            //return response()->json(['error' => 'This slot is already taken.'], 409);
         }
 
         // Criar marcação
