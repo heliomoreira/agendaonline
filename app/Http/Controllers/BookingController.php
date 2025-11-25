@@ -6,6 +6,7 @@ use App\Models\Agenda;
 use App\Models\Client;
 use App\Models\LocationBlock;
 use App\Models\LocationClosure;
+use App\Models\Portal;
 use App\Models\Professional;
 use App\Models\ProfessionalUnavailability;
 use App\Models\ProfessionalWorkingHour;
@@ -51,6 +52,7 @@ class BookingController extends Controller
         }
 
         $tenant = Tenant::find(tenant('id'));
+        $portal = Portal::all()->first();
 
         // Criar cliente
         $client = Client::create([
@@ -123,7 +125,7 @@ class BookingController extends Controller
         if ($admin) {
             return redirect()->back()->with('success', 'Agendamento reservado com sucesso!');
         } else {
-            return view('front.portal.confirmation', compact('booking', 'tenant'));
+            return view('front.portal.confirmation', compact('portal','booking', 'tenant'));
         }
 
     }

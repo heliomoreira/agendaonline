@@ -44,7 +44,6 @@
 
     <div class="booking-container mt-3">
         <h2 class="form-title text-center">{{$portal->title ?? "Agenda Online"}}</h2>
-
         @yield('content')
     </div>
 </div>

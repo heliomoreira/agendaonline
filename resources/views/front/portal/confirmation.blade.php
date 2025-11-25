@@ -1,11 +1,9 @@
 @extends('layouts.front')
-
 @section('content')
-    <div class="text-center py-5">
+    <div class="text-center">
         <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
         <h2 class="mt-3 text-success">Marcação Confirmada com Sucesso!</h2>
-        <p class="lead mt-3">Recebeu um email com todos os detalhes da sua marcação.</p>
-
+        {{--<p class="lead mt-3">Recebeu um email com todos os detalhes da sua marcação.</p>--}}
         <div class="card mx-auto mt-4 shadow rounded-4 border-0" style="max-width: 600px;">
             <div class="card-body">
                 <h5 class="mb-3 border-bottom pb-2">
