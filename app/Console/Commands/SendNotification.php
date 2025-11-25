@@ -53,6 +53,8 @@ class SendNotification extends Command
                 NotificationService::markAsSent($notification->id);
             }
 
+            Log::info('Notifications sent: ' . count($notifications));
+
             return true;
 
         } catch (\Exception $e) {
