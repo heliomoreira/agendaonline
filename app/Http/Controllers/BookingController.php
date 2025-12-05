@@ -54,12 +54,16 @@ class BookingController extends Controller
         $tenant = Tenant::find(tenant('id'));
         $portal = Portal::all()->first();
 
-        // Criar cliente
-        $client = Client::create([
-            'name' => $request->client_name,
-            'email' => $request->client_email,
-            'phone_1' => $request->client_phone_1,
-        ]);
+
+        $client = Client::updateOrCreate(
+            [
+                'phone_1' => $request->client_phone_1
+            ],
+            [
+                'name' => $request->client_name,
+                'email' => $request->client_email,
+            ]
+        );
 
         $service = Service::findOrFail($request->service_id);
         $start = Carbon::parse("{$request->day} {$request->start_hour}");
@@ -125,7 +129,7 @@ class BookingController extends Controller
         if ($admin) {
             return redirect()->back()->with('success', 'Agendamento reservado com sucesso!');
         } else {
-            return view('front.portal.confirmation', compact('portal','booking', 'tenant'));
+            return view('front.portal.confirmation', compact('portal', 'booking', 'tenant'));
         }
 
     }
