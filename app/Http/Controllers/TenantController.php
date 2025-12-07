@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Validator;
 class TenantController extends Controller
 {
 
+    /*
+     * Display form to schedule service
+     *
+     */
     public function index()
     {
         $tenant = Tenant::find(tenant('id'));
-        $services = Service::all();
+        $services = Service::active()->orderBy('order', 'asc')->get();
         $professionals = Professional::all();
         $portal = Portal::first();
 

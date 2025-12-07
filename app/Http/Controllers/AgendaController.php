@@ -36,7 +36,7 @@ class AgendaController extends Controller
     public function form()
     {
         $agenda = new Agenda();
-        $services = Service::all();
+        $services = [];//Service::all();
         $professionals = Professional::all();
 
         return view('admin.agenda.form', [

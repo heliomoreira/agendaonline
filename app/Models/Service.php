@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
 class Service extends Model
 {
@@ -17,6 +19,7 @@ class Service extends Model
     {
         return $this->belongsToMany(Professional::class);
     }
+
     public function statusLabel(): string
     {
         return $this->status ? 'Activo' : 'Inactivo';
@@ -26,4 +29,11 @@ class Service extends Model
     {
         return $this->status ? 'success' : 'danger';
     }
+
+    #[Scope]
+    protected function active(Builder $query): Builder
+    {
+        return $query->where('status', true);
+    }
+
 }
