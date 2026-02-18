@@ -28,6 +28,16 @@ class BookingController extends Controller
     private const SUNDAY = 0;
     private const SATURDAY = 6;
 
+    public function index()
+    {
+        $services = Service::all();
+        $professionals = Professional::all();
+        return view('front.portal.booking',[
+            'services' => $services,
+            'professionals' => $professionals
+        ]);
+    }
+
     public function bookSlot(Request $request, $admin = false)
     {
         $rules = [
