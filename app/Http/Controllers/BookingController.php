@@ -37,7 +37,8 @@ class BookingController extends Controller
         return view('front.portal.booking',[
             'services' => $services,
             'professionals' => $professionals,
-            'portal' => $portal
+            'portal' => $portal,
+            'requiresPayment' => true
         ]);
     }
 

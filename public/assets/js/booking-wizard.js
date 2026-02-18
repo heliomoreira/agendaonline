@@ -257,11 +257,21 @@
 
         _renderCalLoading();
 
+        const today = new Date();
         const y = S.calY, m = S.calM;
-        const startDate = `${y}-${String(m).padStart(2,'0')}-01`;
+
+        // Se é o mês atual, começa hoje; se é mês futuro, começa no dia 1
+        let startDay = 1;
+        if (y === today.getFullYear() && m === today.getMonth() + 1) {
+            startDay = today.getDate();
+        }
+
+        const startDate = `${y}-${String(m).padStart(2,'0')}-${String(startDay).padStart(2,'0')}`;
         const endDate   = `${y}-${String(m).padStart(2,'0')}-${new Date(y, m, 0).getDate()}`;
         const params    = new URLSearchParams({ service_id: S.svcId, start_date: startDate, end_date: endDate });
         if (S.proId) params.append('professional_id', S.proId);
+
+        console.log('Fetching slots:', { startDate, endDate, serviceId: S.svcId, professionalId: S.proId });
 
         const baseUrl = CFG.routes?.availableSlots || '/available-slots';
 
