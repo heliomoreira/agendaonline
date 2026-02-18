@@ -32,9 +32,12 @@ class BookingController extends Controller
     {
         $services = Service::all();
         $professionals = Professional::all();
+        $portal = Portal::all()->first();
+
         return view('front.portal.booking',[
             'services' => $services,
-            'professionals' => $professionals
+            'professionals' => $professionals,
+            'portal' => $portal
         ]);
     }
 

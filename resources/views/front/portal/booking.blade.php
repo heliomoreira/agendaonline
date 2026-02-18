@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $portal->name ?? 'Jorge Nogueira' }} | Agenda Online</title>
+    <title>{{ $portal->title ?? '' }} | Agenda Online</title>
 
     <link rel="icon" type="image/png" href="{{ global_asset('storage/' . ($portal->logo ?? 'default-logo.png')) }}">
 
@@ -593,7 +593,7 @@
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="/{{ $portal->slug ?? '' }}">
             <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="" class="navbar-logo">
-            <span class="fw-semibold" style="font-size:.9rem">{{ $portal->name ?? '' }}</span>
+            <span class="fw-semibold" style="font-size:.9rem">{{ $portal->title ?? '' }}</span>
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav">
             <i class="ri-menu-line fs-4"></i>
@@ -625,7 +625,7 @@
     <div class="offcanvas-header border-bottom">
         <div class="d-flex align-items-center gap-2">
             <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="" class="navbar-logo">
-            <span class="fw-semibold">{{ $portal->name ?? '' }}</span>
+            <span class="fw-semibold">{{ $portal->title ?? '' }}</span>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
@@ -653,9 +653,9 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-logo">
-                <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="{{ $portal->name ?? '' }}">
+                <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="{{ $portal->title ?? '' }}">
             </div>
-            <h1 class="hero-title">{{ $portal->name ?? '' }}</h1>
+            <h1 class="hero-title">{{ $portal->title ?? '' }}</h1>
         </div>
     </section>
 
@@ -966,8 +966,8 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="" class="footer-logo">
-                        <span class="h6 mb-0">{{ $portal->name ?? '' }}</span>
+                        <img src="{{global_asset('storage/' . ($portal->logo ?? ''))}}" alt="" class="footer-logo">
+                        <span class="h6 mb-0">{{ $portal->title ?? '' }}</span>
                     </div>
                     @if($portal->address ?? null)
                         <p class="text-white-50 small mb-2">
