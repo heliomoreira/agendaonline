@@ -71,7 +71,6 @@
 
 @push('scripts')
     <script src="{{ global_asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
-    <script src=""></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
