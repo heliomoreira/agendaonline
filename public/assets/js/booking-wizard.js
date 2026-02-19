@@ -16,8 +16,8 @@
  *   routes: {
  *     professionals: '/services/{id}/professionals',  // {id} substituído em runtime
  *     availableSlots: '/available-slots',
- *     bookSlot:       '/booking/confirmar',
- *     paymentIntent:  '/booking/payment-intent',  // só se requiresPayment = true
+ *     bookSlot:       '/agendamento/confirmar',
+ *     paymentIntent:  '/agendamento/payment-intent',  // só se requiresPayment = true
  *   },
  *   csrfToken: '...',
  * }
@@ -611,7 +611,7 @@
 
         try {
             // Tentar criar PaymentIntent no servidor primeiro
-            const intentRes = await fetch(CFG.routes?.paymentIntent || '/booking/payment-intent', {
+            const intentRes = await fetch(CFG.routes?.paymentIntent || '/agendamento/payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -650,7 +650,6 @@
                     variables: {
                         colorPrimary: CFG.corPrimaria || '#2563eb',
                         fontFamily: "'Inter', sans-serif",
-                        fontSize: '15px',
                         borderRadius: '10px',
                     }
                 }
@@ -737,7 +736,7 @@
                 // Modo fallback: Card Element (criar PI no submit)
                 console.log('Using Card Element payment flow');
 
-                const intentRes = await fetch(CFG.routes?.paymentIntent || '/booking/payment-intent', {
+                const intentRes = await fetch(CFG.routes?.paymentIntent || '/agendamento/payment-intent', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -806,7 +805,7 @@
             }
 
             // Confirmar booking no servidor
-            const bookRes = await fetch(CFG.routes?.bookSlot || '/booking/confirmar', {
+            const bookRes = await fetch(CFG.routes?.bookSlot || '/agendamento/confirmar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
