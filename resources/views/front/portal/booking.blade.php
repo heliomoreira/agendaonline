@@ -1173,7 +1173,8 @@
     <script src="https://js.stripe.com/v3/"></script>
 @endif
 
-<script src="{{ global_asset('assets/js/booking-wizard.js') }}"></script>
+<script src="{{ global_asset('assets/js/booking-wizard.js') }}?v={{ time() }}"></script>
+
 
 @if($errors->any())
     <script>document.addEventListener('DOMContentLoaded', () => wizGo(4));</script>

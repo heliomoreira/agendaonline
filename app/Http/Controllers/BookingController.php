@@ -460,4 +460,33 @@ class BookingController extends Controller
     {
         return $start1->lt($end2) && $end1->gt($start2);
     }
+
+    public function createPaymentIntent(Request $request)
+    {
+        $service = Service::findOrFail($request->service_id);
+        $amount = $service->price * 100; // em cêntimos
+
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+        $paymentIntent = \Stripe\PaymentIntent::create([
+            'amount' => $amount,
+            'currency' => 'eur',
+            'payment_method_types' => [
+                'card',
+                'multibanco',
+                'ideal',  // opcional
+            ],
+            'metadata' => [
+                'service_id' => $request->service_id,
+                'professional_id' => $request->professional_id,
+                'day' => $request->day,
+                'start_hour' => $request->start_hour,
+            ],
+        ]);
+
+        return response()->json([
+            'clientSecret' => $paymentIntent->client_secret,
+            'paymentIntentId' => $paymentIntent->id,
+        ]);
+    }
 }

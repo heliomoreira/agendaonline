@@ -597,18 +597,27 @@
         _sidebars();
 
         _stripe = Stripe(CFG.stripeKey);
-        const elements = _stripe.elements();
-        _cardElement   = elements.create('card', {
-            style: {
-                base: {
+        _stripe = Stripe(CFG.stripeKey, { locale: 'pt' });
+
+        const elements = _stripe.elements({
+            locale: 'pt',
+            appearance: {
+                theme: 'stripe',
+                variables: {
+                    colorPrimary: CFG.corPrimaria || '#2563eb',
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '15px',
-                    color: '#111827',
-                    '::placeholder': { color: '#9ca3af' },
-                },
-                invalid: { color: '#dc2626' },
-            },
+                    borderRadius: '10px',
+                }
+            }
         });
+
+        _cardElement = elements.create('payment', {
+            layout: { type: 'tabs', defaultCollapsed: false },
+            fields: {
+                billingDetails: { email: 'auto' }
+            }
+        });
+
         _cardElement.mount('#wizCardElement');
         _cardElement.on('change', e => {
             const errEl = document.getElementById('wizCardErrors');
