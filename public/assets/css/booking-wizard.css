@@ -4,6 +4,88 @@
  * Ou compilar via Vite: resources/css/booking-wizard.css
  */
 
+:root {
+    --wizard-radius: 16px;
+    --card-radius: 12px;
+}
+
+/* Nota: --cor-primaria e --cor-primaria-rgb são definidas inline no blade
+   porque são variáveis dinâmicas que vêm da base de dados ($portal) */
+
+/* ── Base styles ────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* ── Navbar ─────────────────────────────────────────── */
+.navbar {
+    padding: .6rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.navbar-logo {
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* ── Hero section ───────────────────────────────────── */
+.hero-section {
+    position: relative;
+    min-height: 260px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 80px;
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15,23,42,.82) 0%, rgba(30,58,138,.72) 100%);
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem 1rem 0;
+}
+.hero-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    border: 3px solid rgba(255,255,255,.25);
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.hero-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero-title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.02em;
+}
+
+/* ── Wizard section ─────────────────────────────────── */
+.wizard-section {
+    margin-top: -64px;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 3rem;
+}
+
 /* ── Card principal ────────────────────────────────── */
 .wiz-card {
     background: #fff;
@@ -716,4 +798,168 @@ section.wizard {
     border: 1.5px solid;
     display: inline-block;
     flex-shrink: 0;
+}
+
+/* ── Footer ─────────────────────────────────────────── */
+.app-footer {
+    background: #0f172a;
+    color: #fff;
+    padding: 2.5rem 0 1.5rem;
+}
+.footer-logo {
+    height: 36px;
+    width: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.app-footer h6 {
+    font-size: .68rem;
+    letter-spacing: .06em;
+    color: #94a3b8;
+}
+.app-footer h5 {
+    font-size: .9rem;
+    margin-bottom: 0;
+}
+
+/* ── Service cards ──────────────────────────────────── */
+.service-card {
+    position: relative;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .2s;
+    background: #fff;
+}
+.service-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transform: translateY(-2px);
+}
+.service-card.selected {
+    border-color: var(--bs-primary, #2563eb);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+.wiz-sel-mark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    z-index: 3;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, .3);
+}
+.service-card.selected .wiz-sel-mark {
+    display: flex;
+}
+.service-card-image {
+    height: 110px;
+    overflow: hidden;
+    background: #f8fafc;
+}
+.service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+.service-card:hover .service-card-image img {
+    transform: scale(1.04);
+}
+.service-card-body {
+    padding: .75rem .85rem;
+}
+.service-card-title {
+    font-size: .82rem;
+    font-weight: 600;
+    margin-bottom: .25rem;
+    color: #1e293b;
+}
+.service-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-top: .35rem;
+}
+.service-card-price {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--bs-primary, #2563eb);
+}
+.service-card-duration {
+    font-size: .68rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+}
+
+/* ── Calendar helpers ───────────────────────────────── */
+.wiz-cal-nb {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #475569;
+    transition: all .15s;
+    font-size: .85rem;
+}
+.wiz-cal-nb:hover {
+    background: #f1f5f9;
+}
+.wiz-cal-nb:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+}
+
+/* ── Legend dots ────────────────────────────────────── */
+.wiz-ldot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid;
+    display: inline-block;
+}
+
+/* ── Stripe Payment Element ────────────────────────── */
+#wizCardElement {
+    min-height: 120px;
+    padding: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #fff;
+}
+
+#wizCardErrors {
+    color: #dc2626;
+    font-size: .78rem;
+    margin-top: .5rem;
+    min-height: 20px;
+}
+
+/* Stripe Elements custom styling */
+.StripeElement {
+    padding: .75rem;
+}
+
+.StripeElement--focus {
+    border-color: var(--bs-primary, #2563eb);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.StripeElement--invalid {
+    border-color: #dc2626;
 }

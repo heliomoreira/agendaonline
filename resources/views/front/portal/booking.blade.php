@@ -1163,7 +1163,7 @@
             availableSlots: '{{ url('/available-slots') }}',
             bookSlot: '{{ route('book.slot', ['admin' => false]) }}',
             @if($requiresPayment ?? false)
-            {{--    paymentIntent:  '{{ route('book.payment.intent') }}',--}}
+               paymentIntent:  '{{ route('book.payment.intent') }}',
             @endif
         },
     };

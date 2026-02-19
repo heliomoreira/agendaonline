@@ -16,8 +16,8 @@
  *   routes: {
  *     professionals: '/services/{id}/professionals',  // {id} substituído em runtime
  *     availableSlots: '/available-slots',
- *     bookSlot:       '/agendamento/confirmar',
- *     paymentIntent:  '/agendamento/payment-intent',  // só se requiresPayment = true
+ *     bookSlot:       '/booking/confirmar',
+ *     paymentIntent:  '/booking/payment-intent',  // só se requiresPayment = true
  *   },
  *   csrfToken: '...',
  * }
@@ -582,10 +582,14 @@
        STEP 5 — PAGAMENTO (STRIPE) — OPCIONAL
     ═══════════════════════════════════════════════ */
     let _stripe      = null;
+    let _elements    = null;
+    let _paymentElement = null;
     let _cardElement = null;
     let _stripeMounted = false;
+    let _clientSecret = null;
+    let _useCardElement = false; // fallback se Payment Element falhar
 
-    function _initStripe() {
+    async function _initStripe() {
         if (!CFG.requiresPayment || _stripeMounted) return;
 
         // Actualizar resumo de pagamento no panel 5
@@ -596,33 +600,124 @@
 
         _sidebars();
 
-        _stripe = Stripe(CFG.stripeKey);
+        // Mostrar loading no container
+        const container = document.getElementById('wizCardElement');
+        if (container) {
+            container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;padding:2rem;gap:.5rem;color:#6b7280"><div class="wiz-spin wiz-spin-dk"></div><span>A carregar métodos de pagamento...</span></div>';
+        }
+
+        // Inicializar Stripe com locale PT
         _stripe = Stripe(CFG.stripeKey, { locale: 'pt' });
 
-        const elements = _stripe.elements({
-            locale: 'pt',
-            appearance: {
-                theme: 'stripe',
-                variables: {
-                    colorPrimary: CFG.corPrimaria || '#2563eb',
-                    fontFamily: "'Inter', sans-serif",
-                    borderRadius: '10px',
+        try {
+            // Tentar criar PaymentIntent no servidor primeiro
+            const intentRes = await fetch(CFG.routes?.paymentIntent || '/booking/payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': CFG.csrfToken,
+                },
+                body: JSON.stringify({
+                    service_id:      S.svcId,
+                    professional_id: S.proId,
+                    day:             S.date,
+                    start_hour:      S.time,
+                    client_name:     document.getElementById('wizFN')?.value || '',
+                    client_phone_1:  document.getElementById('wizFPh')?.value || '',
+                    client_email:    document.getElementById('wizFE')?.value || '',
+                }),
+            });
+
+            // Verificar se resposta é JSON
+            const contentType = intentRes.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Servidor retornou resposta inválida. Por favor, contacte o suporte.');
+            }
+
+            const intentData = await intentRes.json();
+            if (!intentRes.ok || !intentData.client_secret) {
+                throw new Error(intentData.message || 'Erro ao iniciar pagamento.');
+            }
+
+            _clientSecret = intentData.client_secret;
+
+            // Criar Elements com clientSecret (Payment Element)
+            _elements = _stripe.elements({
+                clientSecret: _clientSecret,
+                locale: 'pt',
+                appearance: {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: CFG.corPrimaria || '#2563eb',
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: '15px',
+                        borderRadius: '10px',
+                    }
                 }
-            }
-        });
+            });
 
-        _cardElement = elements.create('payment', {
-            layout: { type: 'tabs', defaultCollapsed: false },
-            fields: {
-                billingDetails: { email: 'auto' }
-            }
-        });
+            _paymentElement = _elements.create('payment', {
+                layout: { type: 'tabs', defaultCollapsed: false },
+                fields: { billingDetails: { name: 'auto', email: 'auto', phone: 'auto' } },
+                wallets: { applePay: 'never', googlePay: 'never' }
+            });
 
-        _cardElement.mount('#wizCardElement');
-        _cardElement.on('change', e => {
-            const errEl = document.getElementById('wizCardErrors');
-            if (errEl) errEl.textContent = e.error ? e.error.message : '';
-        });
+            if (container) container.innerHTML = '';
+            _paymentElement.mount('#wizCardElement');
+
+            _paymentElement.on('change', e => {
+                const errEl = document.getElementById('wizCardErrors');
+                if (errEl) errEl.textContent = e.error ? e.error.message : '';
+            });
+
+            console.log('Payment Element mounted (supports Card, MB WAY, Multibanco)');
+
+        } catch (err) {
+            console.warn('Payment Element failed, falling back to Card Element:', err);
+
+            // Fallback: usar Card Element simples
+            _useCardElement = true;
+            _clientSecret = null; // limpar secret se houver
+
+            try {
+                _elements = _stripe.elements({ locale: 'pt' });
+                _cardElement = _elements.create('card', {
+                    style: {
+                        base: {
+                            fontFamily: "'Inter', sans-serif",
+                            fontSize: '15px',
+                            color: '#111827',
+                            '::placeholder': { color: '#9ca3af' },
+                        },
+                        invalid: { color: '#dc2626' },
+                    },
+                });
+
+                if (container) container.innerHTML = '';
+                _cardElement.mount('#wizCardElement');
+
+                _cardElement.on('change', e => {
+                    const errEl = document.getElementById('wizCardErrors');
+                    if (errEl) errEl.textContent = e.error ? e.error.message : '';
+                });
+
+                console.log('Card Element mounted (fallback mode - card only)');
+
+                // Mostrar aviso ao utilizador
+                const warningEl = document.createElement('div');
+                warningEl.className = 'alert alert-warning mt-3 mb-0';
+                warningEl.innerHTML = '<i class="ri-information-line me-2"></i><small>Apenas pagamento por cartão disponível neste momento.</small>';
+                container.parentElement.insertBefore(warningEl, container.nextSibling);
+
+            } catch (cardErr) {
+                console.error('Card Element also failed:', cardErr);
+                if (container) {
+                    container.innerHTML = `<div class="alert alert-danger mb-0"><i class="ri-error-warning-line me-2"></i>Erro ao carregar pagamento. Por favor, recarregue a página ou contacte o suporte.</div>`;
+                }
+                return;
+            }
+        }
+
         _stripeMounted = true;
     }
 
@@ -630,57 +725,102 @@
         e.preventDefault();
         const btn    = document.getElementById('wizPayBtn');
         const errBox = document.getElementById('wizStripeErr');
+        const errMsg = document.getElementById('wizStripeErrMsg');
         if (errBox) errBox.style.display = 'none';
         btn.disabled  = true;
         btn.innerHTML = '<div class="wiz-spin" style="width:14px;height:14px;border-width:2px"></div> A processar…';
 
         try {
-            // 1. Criar PaymentIntent no servidor
-            const intentRes = await fetch(CFG.routes?.paymentIntent || '/agendamento/payment-intent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': CFG.csrfToken,
-                },
-                body: JSON.stringify({
-                    service_id:      document.getElementById('wizFS').value,
-                    professional_id: document.getElementById('wizFP').value,
-                    day:             document.getElementById('wizFD').value,
-                    start_hour:      document.getElementById('wizFT').value,
-                    client_name:     document.getElementById('wizFN').value,
-                    client_phone_1:  document.getElementById('wizFPh').value,
-                    client_email:    document.getElementById('wizFE')?.value || '',
-                }),
-            });
+            let paymentIntentId = null;
 
-            const intentData = await intentRes.json();
-            if (!intentRes.ok || !intentData.client_secret) {
-                throw new Error(intentData.message || 'Erro ao iniciar pagamento.');
+            if (_useCardElement) {
+                // Modo fallback: Card Element (criar PI no submit)
+                console.log('Using Card Element payment flow');
+
+                const intentRes = await fetch(CFG.routes?.paymentIntent || '/booking/payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': CFG.csrfToken,
+                    },
+                    body: JSON.stringify({
+                        service_id:      S.svcId,
+                        professional_id: S.proId,
+                        day:             S.date,
+                        start_hour:      S.time,
+                        client_name:     document.getElementById('wizFN')?.value || '',
+                        client_phone_1:  document.getElementById('wizFPh')?.value || '',
+                        client_email:    document.getElementById('wizFE')?.value || '',
+                    }),
+                });
+
+                const intentData = await intentRes.json();
+                if (!intentRes.ok || !intentData.client_secret) {
+                    throw new Error(intentData.message || 'Erro ao processar pagamento.');
+                }
+
+                const { paymentIntent, error } = await _stripe.confirmCardPayment(
+                    intentData.client_secret,
+                    {
+                        payment_method: {
+                            card: _cardElement,
+                            billing_details: {
+                                name: document.getElementById('wizFN')?.value || '',
+                                email: document.getElementById('wizFE')?.value || '',
+                                phone: document.getElementById('wizFPh')?.value || '',
+                            }
+                        }
+                    }
+                );
+
+                if (error) throw new Error(error.message);
+                paymentIntentId = paymentIntent.id;
+
+            } else {
+                // Modo normal: Payment Element (PI já criado)
+                console.log('Using Payment Element flow');
+
+                if (!_clientSecret) {
+                    throw new Error('Erro ao processar pagamento. Por favor, recarregue a página.');
+                }
+
+                const { error } = await _stripe.confirmPayment({
+                    elements: _elements,
+                    confirmParams: {
+                        return_url: window.location.origin + (CFG.routes?.bookingSuccess || '/booking/success'),
+                        payment_method_data: {
+                            billing_details: {
+                                name: document.getElementById('wizFN')?.value || '',
+                                email: document.getElementById('wizFE')?.value || '',
+                                phone: document.getElementById('wizFPh')?.value || '',
+                            }
+                        }
+                    },
+                    redirect: 'if_required'
+                });
+
+                if (error) throw new Error(error.message);
+
+                // Extrair payment_intent_id do client_secret
+                paymentIntentId = _clientSecret.split('_secret_')[0];
             }
 
-            // 2. Confirmar com Stripe.js
-            const { paymentIntent, error } = await _stripe.confirmCardPayment(
-                intentData.client_secret,
-                { payment_method: { card: _cardElement, billing_details: { name: document.getElementById('wizFN').value } } }
-            );
-            if (error) throw new Error(error.message);
-
-            // 3. Confirmar booking no servidor
-            const bookRes = await fetch(CFG.routes?.bookSlot || '/agendamento/confirmar', {
+            // Confirmar booking no servidor
+            const bookRes = await fetch(CFG.routes?.bookSlot || '/booking/confirmar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': CFG.csrfToken,
                 },
                 body: JSON.stringify({
-                    service_id:        document.getElementById('wizFS').value,
-                    professional_id:   document.getElementById('wizFP').value,
-                    day:               document.getElementById('wizFD').value,
-                    start_hour:        document.getElementById('wizFT').value,
-                    client_name:       document.getElementById('wizFN').value,
-                    client_phone_1:    document.getElementById('wizFPh').value,
+                    service_id:        S.svcId,
+                    professional_id:   S.proId,
+                    day:               S.date,
+                    start_hour:        S.time,
+                    client_name:       document.getElementById('wizFN')?.value,
+                    client_phone_1:    document.getElementById('wizFPh')?.value,
                     client_email:      document.getElementById('wizFE')?.value || '',
-                    payment_intent_id: paymentIntent.id,
+                    payment_intent_id: paymentIntentId,
                 }),
             });
 
@@ -691,7 +831,11 @@
             window.location.href = bookData.redirect || '/';
 
         } catch (err) {
-            if (errBox) { errBox.textContent = err.message; errBox.style.display = 'block'; }
+            console.error('Payment error:', err);
+            if (errBox && errMsg) {
+                errMsg.textContent = err.message;
+                errBox.style.display = 'flex';
+            }
             btn.disabled  = false;
             btn.innerHTML = '<i class="ri-secure-payment-line me-1"></i> Pagar e Confirmar';
         }
