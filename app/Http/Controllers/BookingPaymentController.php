@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agenda;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
@@ -36,7 +37,6 @@ class BookingPaymentController extends Controller
                 'payment_method_types' => [
                     'card',
                     'multibanco',
-                    // 'ideal', // opcional - para contas NL
                 ],
                 'metadata' => [
                     'service_id' => $request->service_id,
@@ -118,7 +118,7 @@ class BookingPaymentController extends Controller
         \Log::info('Payment succeeded', ['payment_intent' => $paymentIntent->id]);
 
         // Buscar ou criar marcação
-        $booking = \App\Models\Booking::firstOrCreate(
+        $booking = Agenda::firstOrCreate(
             ['payment_intent_id' => $paymentIntent->id],
             [
                 'service_id' => $paymentIntent->metadata->service_id,
@@ -161,7 +161,7 @@ class BookingPaymentController extends Controller
     {
         \Log::warning('Payment failed', ['payment_intent' => $paymentIntent->id]);
 
-        $booking = \App\Models\Booking::where('payment_intent_id', $paymentIntent->id)->first();
+        $booking = Agenda::where('payment_intent_id', $paymentIntent->id)->first();
         if ($booking) {
             $booking->update([
                 'status' => 'payment_failed',
@@ -177,7 +177,7 @@ class BookingPaymentController extends Controller
     {
         \Log::info('Payment canceled', ['payment_intent' => $paymentIntent->id]);
 
-        $booking = \App\Models\Booking::where('payment_intent_id', $paymentIntent->id)->first();
+        $booking = Agenda::where('payment_intent_id', $paymentIntent->id)->first();
         if ($booking) {
             $booking->update([
                 'status' => 'canceled',

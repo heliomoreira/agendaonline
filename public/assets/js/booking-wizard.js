@@ -725,7 +725,10 @@
         const btn    = document.getElementById('wizPayBtn');
         const errBox = document.getElementById('wizStripeErr');
         const errMsg = document.getElementById('wizStripeErrMsg');
-        if (errBox) errBox.style.display = 'none';
+        if (errBox) {
+            errBox.classList.add('d-none');
+            errBox.classList.remove('d-flex');
+        }
         btn.disabled  = true;
         btn.innerHTML = '<div class="wiz-spin" style="width:14px;height:14px;border-width:2px"></div> A processar…';
 
@@ -783,7 +786,7 @@
                     throw new Error('Erro ao processar pagamento. Por favor, recarregue a página.');
                 }
 
-                const { error } = await _stripe.confirmPayment({
+                const { error, paymentIntent } = await _stripe.confirmPayment({
                     elements: _elements,
                     confirmParams: {
                         return_url: window.location.origin + (CFG.routes?.bookingSuccess || '/booking/success'),
@@ -800,11 +803,25 @@
 
                 if (error) throw new Error(error.message);
 
-                // Extrair payment_intent_id do client_secret
-                paymentIntentId = _clientSecret.split('_secret_')[0];
+                // Se retornou paymentIntent, verificar status
+                if (paymentIntent) {
+                    paymentIntentId = paymentIntent.id;
+
+                    // Se é Multibanco, o pagamento fica pendente
+                    if (paymentIntent.status === 'requires_action' ||
+                        paymentIntent.status === 'requires_payment_method') {
+                        // Multibanco - mostrar mensagem e não tentar confirmar ainda
+                        alert('Referência Multibanco gerada! Use a referência mostrada para pagar. Receberá confirmação por email quando o pagamento for processado.');
+                        window.location.href = CFG.routes?.bookingSuccess || '/';
+                        return;
+                    }
+                } else {
+                    // Extrair payment_intent_id do client_secret
+                    paymentIntentId = _clientSecret.split('_secret_')[0];
+                }
             }
 
-            // Confirmar booking no servidor
+            // Confirmar booking no servidor (só para cartão com sucesso imediato)
             const bookRes = await fetch(CFG.routes?.bookSlot || '/agendamento/confirmar', {
                 method: 'POST',
                 headers: {
@@ -823,6 +840,12 @@
                 }),
             });
 
+            // Verificar se resposta é JSON
+            const contentType = bookRes.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Erro no servidor. Por favor, contacte o suporte.');
+            }
+
             const bookData = await bookRes.json();
             if (!bookRes.ok) throw new Error(bookData.message || 'Erro ao confirmar marcação.');
 
@@ -833,7 +856,8 @@
             console.error('Payment error:', err);
             if (errBox && errMsg) {
                 errMsg.textContent = err.message;
-                errBox.style.display = 'flex';
+                errBox.classList.remove('d-none');
+                errBox.classList.add('d-flex');
             }
             btn.disabled  = false;
             btn.innerHTML = '<i class="ri-secure-payment-line me-1"></i> Pagar e Confirmar';

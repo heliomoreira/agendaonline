@@ -95,7 +95,7 @@
 
     <!-- ─── HERO ───────────────────────────────── -->
     <section class="hero-section"
-             style="background-image: url('{{ global_asset(($portal->background_image ?? null) ? 'storage/' . $portal->background_image : 'images/default-background-empresa.webp') }}');">
+             style="background-image: url('{{ global_asset(($portal->background_image ?? null) ? 'storage/' . $portal->background_image : 'assets/images/default-background-empresa.webp') }}');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-logo">
@@ -363,7 +363,14 @@
                         <div class="row g-4">
                             <div class="col-lg-8">
                                 <h5 class="fw-bold mb-1">Pagamento</h5>
-                                <p class="text-muted small mb-4">Introduza os dados do cartão para confirmar a marcação.</p>
+                                <p class="text-muted small mb-3">Escolha o método de pagamento para confirmar a marcação.</p>
+
+                                <div class="alert alert-info border-0 mb-4 d-flex align-items-start gap-2" style="background: #eff6ff;">
+                                    <i class="ri-information-line mt-1 flex-shrink-0 text-primary"></i>
+                                    <div style="font-size: .82rem;">
+                                        <strong>MB WAY:</strong> Selecione <strong>Multibanco</strong> e use a referência gerada para pagar através da app MB WAY.
+                                    </div>
+                                </div>
                                 <div class="alert alert-light border mb-4 d-flex align-items-center gap-3">
                                     <i class="ri-price-tag-3-line fs-4 text-primary flex-shrink-0"></i>
                                     <div>
@@ -371,8 +378,8 @@
                                         <div class="text-muted small" id="wizPayAmount">—</div>
                                     </div>
                                 </div>
-                                <div class="alert alert-danger d-flex align-items-start gap-2 mb-3"
-                                     id="wizStripeErr" style="display:none">
+                                <div class="alert alert-danger d-none align-items-start gap-2 mb-3"
+                                     id="wizStripeErr">
                                     <i class="ri-error-warning-line mt-1 flex-shrink-0"></i>
                                     <span id="wizStripeErrMsg"></span>
                                 </div>

@@ -489,4 +489,32 @@ class BookingController extends Controller
             'paymentIntentId' => $paymentIntent->id,
         ]);
     }
+
+    public function success(Request $request)
+    {
+        $paymentIntentId = $request->query('payment_intent');
+
+        if ($paymentIntentId) {
+            // Buscar na Stripe o status
+            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+            $pi = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+
+            // Se Multibanco e ainda não pago
+            if ($pi->status === 'requires_action') {
+                return view('booking.pending-payment', [
+                    'entity' => $pi->next_action->multibanco_display_details->entity ?? null,
+                    'reference' => $pi->next_action->multibanco_display_details->reference ?? null,
+                    'amount' => $pi->amount / 100,
+                ]);
+            }
+
+            // Se já pago, mostrar confirmação
+            if ($pi->status === 'succeeded') {
+                $booking = Agenda::where('payment_intent_id', $paymentIntentId)->first();
+                return view('booking.confirmation', compact('booking'));
+            }
+        }
+
+        return redirect('/');
+    }
 }
