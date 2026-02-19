@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/images/favicon.png">
-    <title>Jorge Nogueira | Agenda Online</title>
+    <title>{{$portal->title}} | Agenda Online</title>
 
     <link rel="icon" type="image/png" href="https://app.meuhorario.ai//uploads/images/empresa/2/logo_1769803021.png">
 
@@ -27,7 +27,7 @@
         <a class="navbar-brand d-flex align-items-center gap-2" href="/">
             <img src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png" alt=""
                  class="navbar-logo">
-            <span class="fw-semibold">Jorge Nogueira</span>
+            <span class="fw-semibold">{{$portal->title}}</span>
         </a>
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav">
@@ -37,18 +37,18 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto align-items-center gap-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="/navalha-urbana">
+                    <a class="nav-link" href="/">
                         <i class="ri-home-8-line me-1"></i>Início
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-primary btn-sm px-3" href="/navalha-urbana/agendamento">
+                    <a class="btn btn-primary btn-sm px-3" href="/booking">
                         <i class="ri-calendar-check-line me-1"></i>
                         Agendar
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/navalha-urbana/cliente/login">
+                    <a class="nav-link" href="#">
                         <i class="ri-login-box-line me-1"></i>Entrar
                     </a>
                 </li>
@@ -62,20 +62,20 @@
         <div class="d-flex align-items-center gap-2">
             <img src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png" alt=""
                  class="navbar-logo">
-            <span class="fw-semibold">Jorge Nogueira</span>
+            <span class="fw-semibold">>{{$portal->title}}</span>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
         <nav class="nav flex-column gap-1">
-            <a class="nav-link px-3 py-2 rounded" href="/navalha-urbana">
+            <a class="nav-link px-3 py-2 rounded" href="/">
                 <i class="ri-home-line me-2"></i>Início
             </a>
-            <a class="nav-link px-3 py-2 rounded text-primary fw-semibold" href="/navalha-urbana/agendamento">
+            <a class="nav-link px-3 py-2 rounded text-primary fw-semibold" href="/booking">
                 <i class="ri-calendar-check-line me-2"></i>Agendar
             </a>
             <hr class="my-2">
-            <a class="nav-link px-3 py-2 rounded" href="/navalha-urbana/cliente/login">
+            <a class="nav-link px-3 py-2 rounded" href="#">
                 <i class="ri-login-box-line me-2"></i>Entrar
             </a>
         </nav>
@@ -92,7 +92,7 @@
                 <img src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png" alt="Navalha Urbana">
             </div>
 
-            <h1 class="hero-title">Jorge Nogueira</h1>
+            <h1 class="hero-title">{{$portal->title}}</h1>
             <a href="/booking" class="btn btn-primary btn-lg px-5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -114,9 +114,9 @@
 {{--                <span class="comodidade-badge">
                     <i class="ri-wheelchair-line"></i>
                     Acessibilidade                </span>--}}
-                <span class="comodidade-badge">
+    {{--            <span class="comodidade-badge">
                     <i class="ri-parent-line"></i>
-                    Crianças                </span>
+                    Crianças                </span>--}}
                 <span class="comodidade-badge">
                     <i class="ri-snowy-line"></i>
                     Ar-condicionado                </span>
@@ -154,7 +154,7 @@
                     <div class="info-card-content">
                         <div class="info-card-label">Endereço</div>
                         <div class="info-card-value">
-                            R. Dom Afonso Henriques 3299
+                            Morada....
                         </div>
                     </div>
                 </div>
