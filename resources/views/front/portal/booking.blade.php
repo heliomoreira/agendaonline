@@ -95,7 +95,7 @@
 
     <!-- ─── HERO ───────────────────────────────── -->
     <section class="hero-section"
-             style="background-image: url('{{ global_asset(($portal->background_image ?? null) ? 'storage/' . $portal->background_image : 'assets/images/default-background-empresa.webp') }}');">
+             style="background-image: url('{{ global_asset(($portal->background_image ?? null) ? 'storage/' . $portal->background_image : 'assets/images/bg_massagens.jpeg') }}');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-logo">
@@ -310,7 +310,7 @@
                                         <label class="form-label fw-semibold">Nome completo <span class="text-danger">*</span></label>
                                         <input type="text" name="client_name" id="wizFN"
                                                class="form-control {{ $errors->has('client_name') ? 'is-invalid' : '' }}"
-                                               value="{{ old('client_name') }}" placeholder="João Silva"
+                                               value="{{ old('client_name') }}" placeholder="O seu nome"
                                                autocomplete="name" required>
                                         <div class="invalid-feedback">Campo obrigatório</div>
                                     </div>
@@ -326,7 +326,7 @@
                                         <label class="form-label fw-semibold">E-mail</label>
                                         <input type="email" name="client_email" id="wizFE"
                                                class="form-control {{ $errors->has('client_email') ? 'is-invalid' : '' }}"
-                                               value="{{ old('client_email') }}" placeholder="joao@email.pt"
+                                               value="{{ old('client_email') }}" placeholder="oseuemail@email.pt"
                                                autocomplete="email">
                                     </div>
                                     <div class="col-12">

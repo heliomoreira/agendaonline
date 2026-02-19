@@ -25,7 +25,6 @@ class ServiceRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'duration' => ['required', 'integer', 'min:1'],
             'price' => ['required', 'numeric', 'min:0'],
-            'image' => ['nullable', 'string', 'max:255'],
             'order' => ['nullable', 'integer', 'min:0'],
             'status' => ['required', 'boolean'],
             'notes' => ['nullable', 'string'],

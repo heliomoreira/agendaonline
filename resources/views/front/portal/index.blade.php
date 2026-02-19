@@ -17,6 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="https://agende.meuhorario.ai/css/app.css" rel="stylesheet">
+
     <meta name="csrf-param" content="_csrf-frontend">
     <meta name="csrf-token"
           content="melCABZ3w7T0cGVMNxZDRsBI8DlkgRqiDkdvdC5uvnTQjDVNZD_2_pIIV3gCQgQShCyqV1PQL80-MR03SyHQBw==">
@@ -25,7 +26,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-            <img src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png" alt=""
+            <img src="storage/{{$portal->logo}}" alt=""
                  class="navbar-logo">
             <span class="fw-semibold">{{$portal->title}}</span>
         </a>
@@ -60,8 +61,10 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNav">
     <div class="offcanvas-header border-bottom">
         <div class="d-flex align-items-center gap-2">
-            <img src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png" alt=""
-                 class="navbar-logo">
+            <img
+                src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png"
+                alt=""
+                class="navbar-logo">
             <span class="fw-semibold">>{{$portal->title}}</span>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -85,11 +88,11 @@
 <main>
 
     <section class="hero-section"
-             style="background-image: url('https://app.meuhorario.ai//images/default-background-empresa.webp');">
+             style="background-image: url('{{global_asset('assets/images/bg_massagens.jpeg')}}');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-logo">
-                <img src="https://jorgenogueira.agendaonline.pt/storage/tenants/logos/e3ddd66b-6942-4578-8166-e2e888eba879.png" alt="Navalha Urbana">
+                <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="{{ $portal->title ?? '' }}">
             </div>
 
             <h1 class="hero-title">{{$portal->title}}</h1>
@@ -111,12 +114,12 @@
                                                             <span class="comodidade-badge">
                     <i class="ri-wifi-line"></i>
                     Wi-Fi                </span>
-{{--                <span class="comodidade-badge">
-                    <i class="ri-wheelchair-line"></i>
-                    Acessibilidade                </span>--}}
-    {{--            <span class="comodidade-badge">
-                    <i class="ri-parent-line"></i>
-                    Crianças                </span>--}}
+                {{--                <span class="comodidade-badge">
+                                    <i class="ri-wheelchair-line"></i>
+                                    Acessibilidade                </span>--}}
+                {{--            <span class="comodidade-badge">
+                                <i class="ri-parent-line"></i>
+                                Crianças                </span>--}}
                 <span class="comodidade-badge">
                     <i class="ri-snowy-line"></i>
                     Ar-condicionado                </span>
@@ -184,8 +187,8 @@
                     <div class="col-sm-6 col-lg-4">
                         <div class="service-card">
                             <div class="service-card-image">
-                                <img src="https://app.meuhorario.ai//uploads/images/servico/2/2/servico_1769802512.png"
-                                     alt="Barba">
+                                <img src="storage/{{$service->image}}"
+                                     alt="{{$service->name}}">
                             </div>
                             <div class="service-card-body">
                                 <h5 class="service-card-title">{{$service->name}}</h5>
@@ -198,7 +201,7 @@
                                         {{$service->duration}} min
                                     </div>
                                 </div>
-                                <a href="/navalha-urbana/agendamento" class="btn btn-primary btn-lg px-5">
+                                <a href="/booking" class="btn btn-primary btn-lg px-5">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round" data-lucide="calendar-plus"
@@ -206,7 +209,8 @@
                                         <path d="M16 19h6"></path>
                                         <path d="M16 2v4"></path>
                                         <path d="M19 16v6"></path>
-                                        <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                                        <path
+                                            d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
                                         <path d="M3 10h18"></path>
                                         <path d="M8 2v4"></path>
                                     </svg>
@@ -288,41 +292,41 @@
 
                     </div>
                 </div>--}}
-               {{-- <div class="col-sm-6 col-lg-4">
-                    <div class="service-card">
-                        <div class="service-card-image">
-                            <img src="https://app.meuhorario.ai//uploads/images/servico/2/6/servico_1769802682.png"
-                                 alt="Hidratação">
-                        </div>
-                        <div class="service-card-body">
-                            <h5 class="service-card-title">Hidratação</h5>
-                            <div class="service-card-footer">
-                                <div class="service-card-price">
-                                    20.00€
-                                </div>
-                                <div class="service-card-duration">
-                                    <i class="ri-time-line me-1"></i>
-                                    30 min
-                                </div>
-                            </div>
-                            <a href="/navalha-urbana/agendamento" class="btn btn-primary btn-lg px-5">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round" data-lucide="calendar-plus"
-                                     class="lucide lucide-calendar-plus">
-                                    <path d="M16 19h6"></path>
-                                    <path d="M16 2v4"></path>
-                                    <path d="M19 16v6"></path>
-                                    <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                                    <path d="M3 10h18"></path>
-                                    <path d="M8 2v4"></path>
-                                </svg>
-                                Agendar
-                            </a>
-                        </div>
+                {{-- <div class="col-sm-6 col-lg-4">
+                     <div class="service-card">
+                         <div class="service-card-image">
+                             <img src="https://app.meuhorario.ai//uploads/images/servico/2/6/servico_1769802682.png"
+                                  alt="Hidratação">
+                         </div>
+                         <div class="service-card-body">
+                             <h5 class="service-card-title">Hidratação</h5>
+                             <div class="service-card-footer">
+                                 <div class="service-card-price">
+                                     20.00€
+                                 </div>
+                                 <div class="service-card-duration">
+                                     <i class="ri-time-line me-1"></i>
+                                     30 min
+                                 </div>
+                             </div>
+                             <a href="/navalha-urbana/agendamento" class="btn btn-primary btn-lg px-5">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round" data-lucide="calendar-plus"
+                                      class="lucide lucide-calendar-plus">
+                                     <path d="M16 19h6"></path>
+                                     <path d="M16 2v4"></path>
+                                     <path d="M19 16v6"></path>
+                                     <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                                     <path d="M3 10h18"></path>
+                                     <path d="M8 2v4"></path>
+                                 </svg>
+                                 Agendar
+                             </a>
+                         </div>
 
-                    </div>
-                </div>--}}
+                     </div>
+                 </div>--}}
                 {{--<div class="col-sm-6 col-lg-4">
                     <div class="service-card">
                         <div class="service-card-image">

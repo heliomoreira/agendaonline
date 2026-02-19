@@ -32,7 +32,7 @@ class PortalController extends Controller
         $updatePortal->fill($request->except('logo'));
 
         if ($request->hasFile('logo')) {
-            $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos');
+            $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos',150,150);
             $updatePortal->logo = $path;
         }
 
