@@ -596,7 +596,33 @@
         const nameEl   = document.getElementById('wizPaySvcName');
         const amountEl = document.getElementById('wizPayAmount');
         if (nameEl)   nameEl.textContent   = S.svcName  || '';
-        if (amountEl) amountEl.textContent = S.svcPrice ? `Total: ${S.svcPrice}` : 'Valor a pagar';
+
+        // Calcular valor com percentagem
+        if (amountEl && S.svcPrice) {
+            const percentage = CFG.paymentPercentage || 100;
+            const fullPrice = parseFloat(S.svcPrice.replace('€', '').replace(',', '.').trim()) || 0;
+            const amountToPay = (fullPrice * percentage) / 100;
+
+            if (percentage < 100) {
+                amountEl.innerHTML = `
+                    <div class="d-flex align-items-baseline gap-2 mb-1">
+                        <span class="badge bg-primary" style="font-size: 0.7rem;">SINAL ${percentage}%</span>
+                        <strong class="fs-5 text-primary">€${amountToPay.toFixed(2)}</strong>
+                    </div>
+                    <div style="font-size: 0.75rem; color: #6b7280;">
+                        Valor total do serviço: €${fullPrice.toFixed(2)}
+                        <br>Restante a pagar no local: €${(fullPrice - amountToPay).toFixed(2)}
+                    </div>
+                `;
+            } else {
+                amountEl.innerHTML = `
+                    <div class="d-flex align-items-baseline gap-2">
+                        <span class="badge bg-success" style="font-size: 0.7rem;">PAGAMENTO TOTAL</span>
+                        <strong class="fs-5 text-primary">€${fullPrice.toFixed(2)}</strong>
+                    </div>
+                `;
+            }
+        }
 
         _sidebars();
 

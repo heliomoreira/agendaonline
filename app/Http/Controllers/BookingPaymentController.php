@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Agenda;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
@@ -26,13 +25,20 @@ class BookingPaymentController extends Controller
         ]);
 
         $service = Service::findOrFail($request->service_id);
-        $amount = (int) ($service->price * 100); // converter para cêntimos
+
+        // Percentagem a cobrar (hardcoded por agora, depois vem de config)
+        $paymentPercentage = 50; // 50% do valor total
+
+        // Calcular valor a pagar
+        $fullAmount = $service->price;
+        $amountToPay = ($fullAmount * $paymentPercentage) / 100;
+        $amountInCents = (int) ($amountToPay * 100); // converter para cêntimos
 
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
             $paymentIntent = PaymentIntent::create([
-                'amount' => $amount,
+                'amount' => $amountInCents,
                 'currency' => 'eur',
                 'payment_method_types' => [
                     'card',
@@ -46,14 +52,20 @@ class BookingPaymentController extends Controller
                     'client_name' => $request->client_name,
                     'client_phone_1' => $request->client_phone_1,
                     'client_email' => $request->client_email ?? '',
+                    'full_amount' => $fullAmount,
+                    'payment_percentage' => $paymentPercentage,
+                    'amount_paid' => $amountToPay,
                 ],
-                'description' => "Marcação: {$service->name}",
+                'description' => "Sinal {$paymentPercentage}%: {$service->name}",
                 'receipt_email' => $request->client_email,
             ]);
 
             return response()->json([
                 'client_secret' => $paymentIntent->client_secret,
                 'payment_intent_id' => $paymentIntent->id,
+                'amount' => $amountToPay,
+                'full_amount' => $fullAmount,
+                'percentage' => $paymentPercentage,
             ]);
 
         } catch (\Exception $e) {
@@ -118,7 +130,7 @@ class BookingPaymentController extends Controller
         \Log::info('Payment succeeded', ['payment_intent' => $paymentIntent->id]);
 
         // Buscar ou criar marcação
-        $booking = Agenda::firstOrCreate(
+        $booking = \App\Models\Booking::firstOrCreate(
             ['payment_intent_id' => $paymentIntent->id],
             [
                 'service_id' => $paymentIntent->metadata->service_id,
@@ -161,7 +173,7 @@ class BookingPaymentController extends Controller
     {
         \Log::warning('Payment failed', ['payment_intent' => $paymentIntent->id]);
 
-        $booking = Agenda::where('payment_intent_id', $paymentIntent->id)->first();
+        $booking = \App\Models\Booking::where('payment_intent_id', $paymentIntent->id)->first();
         if ($booking) {
             $booking->update([
                 'status' => 'payment_failed',
@@ -177,7 +189,7 @@ class BookingPaymentController extends Controller
     {
         \Log::info('Payment canceled', ['payment_intent' => $paymentIntent->id]);
 
-        $booking = Agenda::where('payment_intent_id', $paymentIntent->id)->first();
+        $booking = \App\Models\Booking::where('payment_intent_id', $paymentIntent->id)->first();
         if ($booking) {
             $booking->update([
                 'status' => 'canceled',

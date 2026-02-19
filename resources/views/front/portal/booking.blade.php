@@ -371,11 +371,13 @@
                                         <strong>MB WAY:</strong> Selecione <strong>Multibanco</strong> e use a referência gerada para pagar através da app MB WAY.
                                     </div>
                                 </div>
-                                <div class="alert alert-light border mb-4 d-flex align-items-center gap-3">
-                                    <i class="ri-price-tag-3-line fs-4 text-primary flex-shrink-0"></i>
-                                    <div>
-                                        <div class="fw-bold" id="wizPaySvcName">—</div>
-                                        <div class="text-muted small" id="wizPayAmount">—</div>
+                                <div class="alert alert-light border mb-4">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <i class="ri-price-tag-3-line fs-4 text-primary flex-shrink-0 mt-1"></i>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold mb-1" id="wizPaySvcName">—</div>
+                                            <div id="wizPayAmount" class="text-muted small">—</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="alert alert-danger d-none align-items-start gap-2 mb-3"
@@ -471,7 +473,7 @@
             </div>
             <hr class="my-4 border-secondary">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">
-                <p class="mb-0">&copy; {{ date('Y') }} meuhorario.ai - Todos os direitos reservados.</p>
+                <p class="mb-0">&copy; {{ date('Y') }} Agenda Online - Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
@@ -495,6 +497,7 @@
     window.WizConfig = {
         corPrimaria:     '{{ $portal->cor_primaria ?? '#2563eb' }}',
         requiresPayment: {{ ($requiresPayment ?? false) ? 'true' : 'false' }},
+        paymentPercentage: {{ $paymentPercentage ?? 100 }},
         stripeKey:       '{{ $stripeKey ?? config('services.stripe.key') ?? env('STRIPE_KEY') ?? '' }}',
         csrfToken:       '{{ csrf_token() }}',
         routes: {
