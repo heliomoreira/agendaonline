@@ -143,7 +143,7 @@
                     <div class="info-card-content">
                         <div class="info-card-label">Telefone</div>
                         <div class="info-card-value">
-                            <a href="" class="text-decoration-none text-dark">22 000 00 00</a>
+                            <a href="" class="text-decoration-none text-dark">931 602 223</a>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                     <div class="info-card-content">
                         <div class="info-card-label">Endereço</div>
                         <div class="info-card-value">
-                            Morada....
+                            R. D. Afonso Henriques 1553
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                     <div class="info-card-content">
                         <div class="info-card-label">Horário</div>
                         <div class="info-card-value">
-                            Hoje: 09:00 - 19:00
+                            Hoje: 09:00 - 20:00
                         </div>
                     </div>
                 </div>
