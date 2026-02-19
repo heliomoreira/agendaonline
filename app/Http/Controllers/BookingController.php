@@ -38,7 +38,7 @@ class BookingController extends Controller
             'services' => $services,
             'professionals' => $professionals,
             'portal' => $portal,
-            'requiresPayment' => true
+            'requiresPayment' => false
         ]);
     }
 
