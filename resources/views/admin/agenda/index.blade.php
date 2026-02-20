@@ -75,7 +75,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const calendarEl = document.getElementById('calendar');
-
             // holds the currently selected professional id ('' = all)
             let activeProfessional = '';
 
