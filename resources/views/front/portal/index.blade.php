@@ -183,9 +183,9 @@
                         <i class="ri-time-line"></i>
                     </div>
                     <div class="info-card-content">
-                        <div class="info-card-label">Horário</div>
+                        <div class="info-card-label">Horário | Hoje</div>
                         <div class="info-card-value" style="font-size: 0.9rem;">
-                            Hoje: {{$todayHours}}
+                            {{$todayHours}}
                         </div>
                     </div>
                 </div>
