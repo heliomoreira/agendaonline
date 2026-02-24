@@ -52,15 +52,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-primary btn-sm px-3" href="/{{ $portal->slug ?? '' }}/agendamento" style="font-size:.8rem; border-radius:8px">
+                    <a class="btn btn-sm px-3 {{ $portal->button_background_color ? '' : 'btn-primary' }}"
+                       href="/booking"
+                       style="font-size:.8rem; border-radius:8px; @if($portal->button_background_color) background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }} @endif">
                         <i class="ri-calendar-check-line me-1"></i>Agendar
                     </a>
                 </li>
-                <li class="nav-item">
+             {{--   <li class="nav-item">
                     <a class="nav-link" href="/{{ $portal->slug ?? '' }}/cliente/login" style="font-size:.85rem">
                         <i class="ri-login-box-line me-1"></i>Entrar
                     </a>
-                </li>
+                </li>--}}
             </ul>
         </div>
     </div>
@@ -453,7 +455,7 @@
                         </ul>
                     @endif
                 </div>
-                <div class="col-lg-4">
+                {{--<div class="col-lg-4">
                     <h6 class="text-uppercase small mb-3">Redes Sociais</h6>
                     <div class="d-flex gap-2 flex-wrap mb-4">
                         @if($portal->instagram ?? null)
@@ -469,7 +471,7 @@
                     <a href="/{{ $portal->slug ?? '' }}/agendamento" class="btn btn-primary w-100" style="font-size:.82rem;border-radius:10px">
                         <i class="ri-calendar-check-line me-2"></i>Agendar Agora
                     </a>
-                </div>
+                </div>--}}
             </div>
             <hr class="my-4 border-secondary">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">

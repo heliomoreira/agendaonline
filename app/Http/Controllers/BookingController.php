@@ -35,12 +35,12 @@ class BookingController extends Controller
         $professionals = Professional::all();
         $portal = Portal::all()->first();
 
-        return view('front.portal.booking',[
+        return view('front.portal.booking', [
             'services' => $services,
             'professionals' => $professionals,
             'portal' => $portal,
-            'requiresPayment' => true, //@todo hardcoded
-            'paymentPercentage' => 50, //@todo hardcoded
+            'requiresPayment' => $portal->requires_payment,
+            'paymentPercentage' => $portal->payment_percentage,
         ]);
     }
 
@@ -611,12 +611,12 @@ class BookingController extends Controller
         if ($booking->client_email) {
             // Email de confirmação (se já pago) ou aguardando pagamento
             if ($paid) {
-               dd("paid");// Mail::to($booking->client_email)->send(new BookingConfirmed($booking));
+                dd("paid");// Mail::to($booking->client_email)->send(new BookingConfirmed($booking));
             }
 
             // Se cliente não tem conta, convidar a criar
             if ($client && !$client->hasAccount()) {
-               @dd("invite to create");
+                @dd("invite to create");
                 // Mail::to($client->email)->send(new InviteToCreateAccount($client, $booking));
             }
         }

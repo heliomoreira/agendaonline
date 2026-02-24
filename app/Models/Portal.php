@@ -22,6 +22,8 @@ class Portal extends Model
         'main_color',
         'secondary_color',
         'button_background_color',
-        'button_text_color'
+        'button_text_color',
+        'requires_payment',
+        'payment_percentage'
     ];
 }
