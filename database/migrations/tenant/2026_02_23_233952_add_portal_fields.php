@@ -10,7 +10,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-
         Schema::table('portal', function (Blueprint $table) {
             $table->string('subtitle', 255)->nullable()->after('title');
             $table->string('background_image', 255)->nullable()->after('subtitle');
