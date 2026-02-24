@@ -1,83 +1,40 @@
 @extends('layouts.app')
 @section('content')
-    {{--<div class="row g-6">
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="d-flex align-items-end row">
-                    <div class="col-7">
-                        <div class="card-body text-nowrap">
-                            <h5 class="card-title mb-0">Congratulations John! 🎉</h5>
-                            <p class="mb-2">Best seller of the month</p>
-                            <h4 class="text-primary mb-1">$48.9k</h4>
-                            <a href="javascript:;" class="btn btn-primary">View Sales</a>
-                        </div>
+    @if (session('success'))
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-solid-success alert-dismissible fade show d-flex align-items-center"
+                     role="alert">
+            <span class="alert-icon rounded me-2">
+                <i class="icon-base ti tabler-check icon-md"></i>
+            </span>
+                    <div class="flex-grow-1">
+                        {{ session('success') }}
                     </div>
-                    <div class="col-5 text-center text-sm-left">
-                        <div class="card-body pb-0 px-0 px-md-4">
-                            <img src="{{global_asset('theme/assets/img/illustrations/card-advance-sale.png')}}"
-                                 height="140"
-                                 alt="view sales"/>
-                        </div>
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+            </div>
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-solid-danger d-flex align-items-center" role="alert">
+            <span class="alert-icon rounded">
+              <i class="icon-base ti tabler-x"></i>
+            </span>
+                    <div>
+                        <strong>Existem alguns erros:</strong>
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-8">
-            <div class="card h-100">
-                <div class="card-header d-flex justify-content-between">
-                    <h5 class="card-title mb-0">Statistics</h5>
-                    <small class="text-body-secondary">Updated 1 month ago</small>
-                </div>
-                <div class="card-body d-flex align-items-end">
-                    <div class="w-100">
-                        <div class="row gy-3">
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-primary me-4 p-2"><i
-                                            class="icon-base ti tabler-chart-pie-2 icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">230k</h5>
-                                        <small>Sales</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-info me-4 p-2"><i
-                                            class="icon-base ti tabler-users icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">8.549k</h5>
-                                        <small>Customers</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-danger me-4 p-2"><i
-                                            class="icon-base ti tabler-shopping-cart icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">1.423k</h5>
-                                        <small>Products</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-success me-4 p-2"><i
-                                            class="icon-base ti tabler-currency-dollar icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">$9745</h5>
-                                        <small>Revenue</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>--}}
+    @endif
     <div class="row">
         <div class="col-12">
             <h4 class="my-4">Gestão de SMS</h4>
@@ -87,15 +44,101 @@
         <div class="col-12 order-3 mt-3">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title"><i class="ti tabler-calendar"></i> </h5>
+                    <h5 class="card-title"><i class="ti tabler-device-mobile-message"></i> Detalhe</h5>
                 </div>
-
+                {{ html()->form('PUT', route('sms.update'))->acceptsFiles()->class('modal-content')->open() }}
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label" for="sms_sender">Remetente SMS</label>
+                            {{html()->text('sms_sender')->id('sms_sender')->class('form-control')->value($tenant->sms_sender)->disabled()}}
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="sms_credits">Saldo SMS</label>
+                            {{html()->text('sms_credits')->id('sms_credits')->class('form-control')->value($tenant->sms_credits . " €")->disabled()}}
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="sms_status">Estado SMS</label>
+                            {{ html()->select('sms_status', [0 => 'Inativo', 1 => 'Ativo'], $tenant->sms_status)->id('sms_status')->class('form-select') }}
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="sms_send_hour">Hora de Envio</label>
+                            <input type="time" name="sms_send_hour" class="form-control"
+                                   value="{{$tenant->sms_send_hour}}">
+                        </div>
+                    </div>
+
 
                 </div>
                 <div class="card-footer">
                     <div class="row">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{html()->form()->close()}}
+            </div>
+
+        </div>
+    </div>
+    <div class="row g-6 mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title"><i class="ti tabler-bell-ringing"></i> Listagem de Envios ({{$notifications->total()}})</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table border-top">
+                            <thead class="border-bottom">
+                            <tr style="background-color: #f1f1f1">
+                                <th>Destinatário</th>
+                                <th>Data do Serviço</th>
+                                <th>Hora de Início</th>
+                                <th>Hora de Fim</th>
+                                <th>Hora de Envio SMS</th>
+                                <th>Estado</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($notifications as $notification)
+                                <tr>
+                                    <td class="pt-5">
+                                        <div class="d-flex justify-content-start align-items-center">
+                                            <div class="d-flex flex-column">
+                                                <p class="mb-0 text-heading">{{ $notification->destinatary }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $notification->service_day }}</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $notification->service_start_hour }}h</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $notification->service_end_hour }}h</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $notification->send_hour }}h</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{!! \App\Helpers\Helper::smsStatus($notification->status) !!}</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
                         <div class="col-12 text-end">
+                            {{ $notifications->appends(\Request::except('page'))->links('pagination::bootstrap-5') }}
                         </div>
                     </div>
                 </div>

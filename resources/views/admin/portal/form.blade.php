@@ -161,51 +161,49 @@
                             <div class="tab-pane fade" id="navs-top-hours" role="tabpanel">
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="monday">Segunda-feira</label>
+                                        <label class="form-label" for="monday_hours">Segunda-feira</label>
                                         {{html()->text('monday_hours')->id('monday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="tuesday">Terça-feira</label>
+                                        <label class="form-label" for="tuesday_hours">Terça-feira</label>
                                         {{html()->text('tuesday_hours')->id('tuesday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="wednesday">Quarta-feira</label>
+                                        <label class="form-label" for="wednesday_hours">Quarta-feira</label>
                                         {{html()->text('wednesday_hours')->id('wednesday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="thursday">Quinta-feira</label>
+                                        <label class="form-label" for="thursday_hours">Quinta-feira</label>
                                         {{html()->text('thursday_hours')->id('thursday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="friday">Sexta-feira</label>
+                                        <label class="form-label" for="friday_hours">Sexta-feira</label>
                                         {{html()->text('friday_hours')->id('friday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="saturday">Sábado</label>
+                                        <label class="form-label" for="saturday_hours">Sábado</label>
                                         {{html()->text('saturday_hours')->id('saturday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-3">
-                                        <label class="form-label" for="sunday">Domingo</label>
+                                        <label class="form-label" for="sunday_hours">Domingo</label>
                                         {{html()->text('sunday_hours')->id('sunday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                     <hr class="my-2"/>
                     <div class="row">
                         <div class="d-flex gap-2">

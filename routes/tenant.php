@@ -146,6 +146,7 @@ Route::middleware([
 
             Route::prefix('sms')->group(function () {
                 Route::get('/', [SmsController::class, 'index'])->name('sms.index');
+                Route::put('/update', [SmsController::class, 'update'])->name('sms.update');
             });
         });
     });
