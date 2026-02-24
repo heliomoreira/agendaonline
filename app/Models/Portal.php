@@ -8,5 +8,17 @@ class Portal extends Model
 {
     protected $table = 'portal';
 
-    protected $fillable = ['title', 'logo', 'main_color', 'secondary_color'];
+    protected $fillable = [
+        'title',
+        'subtitle',
+        'address',
+        'postal_code',
+        'city',
+        'phone_1',
+        'phone_2',
+        'email',
+        'about_us',
+        'logo',
+        'main_color',
+        'secondary_color'];
 }

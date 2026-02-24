@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/images/favicon.png">
     <title>{{$portal->title}} | Agenda Online</title>
 
-    <link rel="icon" type="image/png" href="https://app.meuhorario.ai//uploads/images/empresa/2/logo_1769803021.png">
+    <link rel="icon" type="image/png" href="">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,7 +143,7 @@
                     <div class="info-card-content">
                         <div class="info-card-label">Telefone</div>
                         <div class="info-card-value">
-                            <a href="" class="text-decoration-none text-dark">931 602 223</a>
+                            <a href="" class="text-decoration-none text-dark">{{$portal->phone_1}}</a>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                     <div class="info-card-content">
                         <div class="info-card-label">Endereço</div>
                         <div class="info-card-value">
-                            R. D. Afonso Henriques 1553
+                            {{$portal->address}}
                         </div>
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                 {{--<div class="col-sm-6 col-lg-4">
                     <div class="service-card">
                         <div class="service-card-image">
-                            <img src="https://app.meuhorario.ai//uploads/images/servico/2/3/servico_1769802621.png"
+                            <img src=""
                                  alt="Corte + Barba">
                         </div>
                         <div class="service-card-body">
@@ -405,8 +405,8 @@
         <div class="container">
             <div class="text-center">
                 <h2>Vamos agendar?</h2>
-                <p>Escolha o melhor horário para você</p>
-                <a href="/navalha-urbana/agendamento" class="btn btn-lg">
+                <p>Escolha o melhor horário para si</p>
+                <a href="/booking" class="btn btn-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          data-lucide="calendar-plus" class="lucide lucide-calendar-plus">
@@ -423,7 +423,7 @@
         </div>
     </section>
 
-    <section class="py-5 bg-white">
+    {{--<section class="py-5 bg-white">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="fw-bold mb-2">Conheça a nossa equipa</h2>
@@ -433,13 +433,13 @@
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card border-0 shadow-sm h-100 text-center p-4 card-profissional">
                         <div class="mb-3">
-                            <img src="https://app.meuhorario.ai//images/default-user.jpg" alt="Bruno Inacio da Silva"
+                            <img src="" alt="Bruno Inacio da Silva"
                                  class="rounded-circle border border-3"
                                  style="width: 110px; height: 110px; object-fit: cover;">
                         </div>
                         <h6 class="fw-bold mb-1">Bruno Inacio da Silva</h6>
                         <div class="mb-3"></div>
-                        <a href="/navalha-urbana/profissional/26" class="btn btn-outline-dark btn-sm rounded-pill px-4">
+                        <a href="/profissional/26" class="btn btn-outline-dark btn-sm rounded-pill px-4">
                             Ver perfil
                         </a>
                     </div>
@@ -447,13 +447,13 @@
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card border-0 shadow-sm h-100 text-center p-4 card-profissional">
                         <div class="mb-3">
-                            <img src="https://app.meuhorario.ai//uploads/images/user/2/3/profile_1769803173.png"
+                            <img src=""
                                  alt="Frederico Ricardo" class="rounded-circle border border-3"
                                  style="width: 110px; height: 110px; object-fit: cover;">
                         </div>
                         <h6 class="fw-bold mb-1">Frederico Ricardo</h6>
                         <div class="mb-3"></div>
-                        <a href="/navalha-urbana/profissional/3" class="btn btn-outline-dark btn-sm rounded-pill px-4">
+                        <a href="profissional/3" class="btn btn-outline-dark btn-sm rounded-pill px-4">
                             Ver perfil
                         </a>
                     </div>
@@ -461,57 +461,26 @@
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card border-0 shadow-sm h-100 text-center p-4 card-profissional">
                         <div class="mb-3">
-                            <img src="https://app.meuhorario.ai//uploads/images/user/2/2/profile_1769803183.png"
+                            <img src=""
                                  alt="Junior Maia" class="rounded-circle border border-3"
                                  style="width: 110px; height: 110px; object-fit: cover;">
                         </div>
                         <h6 class="fw-bold mb-1">Junior Maia</h6>
                         <div class="mb-3"></div>
-                        <a href="/navalha-urbana/profissional/2" class="btn btn-outline-dark btn-sm rounded-pill px-4">
+                        <a href="/profissional/2" class="btn btn-outline-dark btn-sm rounded-pill px-4">
                             Ver perfil
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section>--}}
 
     <section class="py-5 bg-white">
         <div class="container">
             <h2 class="text-center fw-bold mb-4">Um pouco sobre nós</h2>
             <div class="row g-4 justify-content-center">
-                <p>A <strong>Barbearia Navalha Urbana</strong> &eacute; um espa&ccedil;o pensado para homens que
-                    valorizam estilo, cuidado pessoal e uma experi&ecirc;ncia de atendimento diferenciada. Inspirada na
-                    tradi&ccedil;&atilde;o das barbearias cl&aacute;ssicas e alinhada &agrave;s tend&ecirc;ncias
-                    modernas, a Navalha Urbana une t&eacute;cnica, conforto e identidade urbana em um s&oacute; lugar.
-                </p>
-
-                <p>🎯 Localizada no centro da cidade, a barbearia oferece um ambiente moderno com decora&ccedil;&atilde;o
-                    industrial, combinando madeira, metal e concreto, criando um espa&ccedil;o acolhedor e ao mesmo
-                    tempo sofisticado. O atendimento &eacute; realizado em poltronas profissionais, com ilumina&ccedil;&atilde;o
-                    adequada, climatiza&ccedil;&atilde;o e som ambiente cuidadosamente selecionado para proporcionar
-                    conforto e bem-estar durante toda a experi&ecirc;ncia.</p>
-
-                <p>⭐ A equipe &eacute; formada por barbeiros qualificados e em constante atualiza&ccedil;&atilde;o,
-                    especializados em cortes cl&aacute;ssicos e contempor&acirc;neos, degrad&ecirc;s, alinhamento e
-                    desenho de barba com navalha, al&eacute;m de consultoria de estilo personalizada. Cada atendimento
-                    come&ccedil;a com uma conversa para entender o perfil, a rotina e as prefer&ecirc;ncias do cliente,
-                    garantindo um resultado alinhado &agrave;s expectativas.</p>
-
-                <p>✂️ Os servi&ccedil;os incluem cortes masculinos, barba completa com toalha quente, acabamento de
-                    barba, sobrancelha masculina e combina&ccedil;&otilde;es personalizadas. Para a finaliza&ccedil;&atilde;o,
-                    s&atilde;o utilizados produtos profissionais de alta qualidade, como pomadas modeladoras, &oacute;leos
-                    e balms para barba, al&eacute;m de lo&ccedil;&otilde;es p&oacute;s-barba dermatologicamente
-                    testadas.</p>
-
-                <p>📲 A Navalha Urbana preza pela pontualidade, organiza&ccedil;&atilde;o e higiene, oferecendo
-                    agendamento online com confirma&ccedil;&atilde;o autom&aacute;tica, hist&oacute;rico de atendimentos
-                    e facilidade nas formas de pagamento. O cliente encontra um atendimento sem pressa, aten&ccedil;&atilde;o
-                    aos detalhes e um ambiente que vai al&eacute;m do corte, transformando cada visita em um momento de
-                    cuidado e estilo.</p>
-
-                <p>Mais do que uma barbearia, a Navalha Urbana &eacute; um ponto de encontro para quem busca identidade,
-                    confian&ccedil;a e um visual bem executado, com qualidade do in&iacute;cio ao fim.</p>
+                {{$portal->about_us}}
             </div>
         </div>
     </section>
@@ -521,18 +490,18 @@
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <img src="https://app.meuhorario.ai//uploads/images/empresa/2/logo_1769803021.png" alt=""
+                        <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt=""
                              class="footer-logo">
-                        <span class="h5 mb-0">Navalha Urbana</span>
+                        <span class="h5 mb-0">{{$portal->title}}</span>
                     </div>
 
                     <p class="text-white-50 small mb-2">
                         <i class="ri-map-pin-line me-2"></i>
-                        Rua José Alencar , 568 </p>
+                        {{$portal->address}} </p>
 
                     <p class="text-white-50 small mb-2">
                         <i class="ri-phone-line me-2"></i>
-                        (41) 98806-2315 </p>
+                        {{$portal->phone_1}} </p>
                 </div>
 
                 <div class="col-lg-4">
@@ -577,32 +546,32 @@
                     </ul>
                 </div>
 
-                <div class="col-lg-4">
+                {{--<div class="col-lg-4">
                     <h6 class="text-uppercase small mb-3">Redes Sociais</h6>
                     <div class="d-flex gap-2 flex-wrap mb-4">
-                        <a href="https://instagram.com/@meuhorarioai" target="_blank"
+                        <a href="https://instagram.com/" target="_blank"
                            class="btn btn-outline-light btn-sm">
                             <i class="ri-instagram-line"></i>
                         </a>
-                        <a href="@meuhorarioai" target="_blank" class="btn btn-outline-light btn-sm">
+                        <a href="" target="_blank" class="btn btn-outline-light btn-sm">
                             <i class="ri-facebook-line"></i>
                         </a>
-                        <a href="https://wa.me/5541988062315" target="_blank" class="btn btn-outline-success btn-sm">
+                        <a href="https://wa.me/910000000" target="_blank" class="btn btn-outline-success btn-sm">
                             <i class="ri-whatsapp-line"></i>
                         </a>
                     </div>
 
-                    <a href="/navalha-urbana/agendamento" class="btn btn-primary w-100">
+                    <a href="/booking" class="btn btn-primary w-100">
                         <i class="ri-calendar-check-line me-2"></i>Agendar Agora
                     </a>
-                </div>
+                </div>--}}
             </div>
 
             <hr class="my-4 border-secondary">
 
             <div
                 class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">
-                <p class="mb-0">&copy; 2026 meuhorario.ai - Todos os direitos reservados.</p>
+                <p class="mb-0">&copy; 2026 Agenda Online - Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
@@ -618,18 +587,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    window.AppConfig = {
-        slug: 'navalha-urbana',
-        csrfToken: 'melCABZ3w7T0cGVMNxZDRsBI8DlkgRqiDkdvdC5uvnTQjDVNZD_2_pIIV3gCQgQShCyqV1PQL80-MR03SyHQBw==',
-        csrfParam: '_csrf-frontend',
-        baseUrl: '/?slug=navalha-urbana',
-        isLoggedIn: false,
-        corPrimaria: '#2563eb',
-        corPrimariaRgb: '37,99,235'
-    };
-</script>
-<script src="https://agende.meuhorario.ai/js/app.js"></script>
+
+<script src="{{global_asset('assets/js/app.js')}}"></script>
 
 </body>
 </html>

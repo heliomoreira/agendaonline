@@ -47,8 +47,42 @@
 
                     <div class="row g-6">
                         <div class="col-md-4">
-                            <label class="form-label" for="name">Título</label>
+                            <label class="form-label" for="title">Título</label>
                             {{html()->text('title')->id('title')->class('form-control')->placeholder('')}}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="subtitle">Sub Título</label>
+                            {{html()->text('subtitle')->id('subtitle')->class('form-control')->placeholder('')}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label class="form-label" for="address">Morada</label>
+                            {{html()->text('address')->id('address')->class('form-control')->placeholder('')}}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="city">Localidade</label>
+                            {{html()->text('city')->id('city')->class('form-control')->placeholder('')}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label class="form-label" for="phone_1">Telefone 1</label>
+                            {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="phone_2">Telefone 2</label>
+                            {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="email">Email</label>
+                            {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="form-label" for="about_us">Sobre Nós</label>
+                            {{html()->textarea('about_us')->id('about_us')->class('form-control')->rows(5)->placeholder('')}}
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -122,3 +156,6 @@
             </div>
         </div>
 @endsection
+@push('scripts')
+
+@endpush
