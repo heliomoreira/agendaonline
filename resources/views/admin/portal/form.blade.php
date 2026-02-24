@@ -49,10 +49,16 @@
                     <div class="nav-align-top nav-tabs-shadow">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button type="button" class="nav-link active waves-effect" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-home" aria-controls="navs-top-home" aria-selected="false" tabindex="-1">Home</button>
+                                <button type="button" class="nav-link active waves-effect" role="tab"
+                                        data-bs-toggle="tab" data-bs-target="#navs-top-home"
+                                        aria-controls="navs-top-home" aria-selected="false" tabindex="-1">Home
+                                </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-profile" aria-controls="navs-top-profile" aria-selected="false" tabindex="-1">Pagamento</button>
+                                <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#navs-top-profile" aria-controls="navs-top-profile"
+                                        aria-selected="false" tabindex="-1">Pagamento
+                                </button>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -125,11 +131,19 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
-
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="requires_payment">Pré-Pagamento</label>
+                                        {{html()->select('requires_payment')->options([0=>'Não', 1=>'Sim'])->id('requires_payment')->class('form-select')->placeholder('--Selecionar--')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="payment_percentage">% Pré-pagamento</label>
+                                        {{html()->text('payment_percentage')->id('payment_percentage')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
 
 
                     <hr class="my-2"/>
