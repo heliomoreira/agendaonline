@@ -32,6 +32,10 @@ class Portal extends Model
         'thursday_hours',
         'friday_hours',
         'saturday_hours',
-        'sunday_hours'
+        'sunday_hours',
+        'payment_stripe_key',
+        'payment_stripe_secret',
+        'payment_stripe_allow_card',
+        'payment_stripe_allow_multibanco',
     ];
 }
