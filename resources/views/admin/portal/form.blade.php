@@ -95,6 +95,14 @@
                             {{ html()->input('color', 'secondary_color')->class('form-control')->style('height: 39px') }}
                         </div>
                         <div class="col-md-2">
+                            <label class="form-label" for="button_background_color">Cor Fundo Botões</label>
+                            {{ html()->input('color', 'button_background_color')->class('form-control')->style('height: 39px') }}
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="button_text_color">Cor Texto Botões</label>
+                            {{ html()->input('color', 'button_text_color')->class('form-control')->style('height: 39px') }}
+                        </div>
+                        <div class="col-md-2">
                             <label for="logo" class="form-label">Logotipo</label>
                             <input type="file" class="form-control" id="logo" name="logo">
                             @if(isset($portal->logo))

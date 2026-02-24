@@ -43,16 +43,20 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-primary btn-sm px-3" href="/booking">
+                    <a class="btn {{ $portal->button_background_color ? 'btn-sm px-3' : 'btn-primary btn-sm px-3' }}"
+                       @if($portal->button_background_color)
+                           style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : '' }}"
+                       @endif
+                       href="/booking">
                         <i class="ri-calendar-check-line me-1"></i>
                         Agendar
                     </a>
                 </li>
-                <li class="nav-item">
+               {{-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ri-login-box-line me-1"></i>Entrar
                     </a>
-                </li>
+                </li>--}}
             </ul>
         </div>
     </div>
@@ -74,13 +78,19 @@
             <a class="nav-link px-3 py-2 rounded" href="/">
                 <i class="ri-home-line me-2"></i>Início
             </a>
-            <a class="nav-link px-3 py-2 rounded text-primary fw-semibold" href="/booking">
+            <a class="nav-link px-3 py-2 rounded fw-semibold"
+               @if($portal->button_background_color)
+                   style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
+               @else
+                   style="color: var(--bs-primary);"
+               @endif
+               href="/booking">
                 <i class="ri-calendar-check-line me-2"></i>Agendar
             </a>
-            <hr class="my-2">
+           {{-- <hr class="my-2">
             <a class="nav-link px-3 py-2 rounded" href="#">
                 <i class="ri-login-box-line me-2"></i>Entrar
-            </a>
+            </a>--}}
         </nav>
     </div>
 </div>
@@ -96,7 +106,11 @@
             </div>
 
             <h1 class="hero-title">{{$portal->title}}</h1>
-            <a href="/booking" class="btn btn-primary btn-lg px-5">
+            <a href="/booking"
+               class="btn btn-lg px-5 {{ $portal->button_background_color ? '' : 'btn-primary' }}"
+               @if($portal->button_background_color)
+                   style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
+                @endif>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                      data-lucide="calendar-plus" class="lucide lucide-calendar-plus">
@@ -191,9 +205,12 @@
                                      alt="{{$service->name}}">
                             </div>
                             <div class="service-card-body">
-                                <h5 class="service-card-title">{{$service->name}}</h5>
+                                <h5 class="service-card-title"
+                                    @if($portal->main_color) style="color: {{ $portal->main_color }};" @endif>
+                                    {{$service->name}}
+                                </h5>
                                 <div class="service-card-footer">
-                                    <div class="service-card-price">
+                                    <div class="service-card-price" {{ $portal->secondary_color ? 'style=color:' . $portal->secondary_color . ';' : '' }}>
                                         {{$service->price}}€
                                     </div>
                                     <div class="service-card-duration">
@@ -201,7 +218,11 @@
                                         {{$service->duration}} min
                                     </div>
                                 </div>
-                                <a href="/booking" class="btn btn-primary btn-lg px-5">
+                                <a href="/booking"
+                                   class="btn btn-lg px-5 {{ $portal->button_background_color ? '' : 'btn-primary' }}"
+                                   @if($portal->button_background_color)
+                                       style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
+                                    @endif>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round" data-lucide="calendar-plus"
@@ -209,8 +230,7 @@
                                         <path d="M16 19h6"></path>
                                         <path d="M16 2v4"></path>
                                         <path d="M19 16v6"></path>
-                                        <path
-                                            d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                                        <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
                                         <path d="M3 10h18"></path>
                                         <path d="M8 2v4"></path>
                                     </svg>

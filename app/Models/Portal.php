@@ -20,5 +20,8 @@ class Portal extends Model
         'about_us',
         'logo',
         'main_color',
-        'secondary_color'];
+        'secondary_color',
+        'button_background_color',
+        'button_text_color'
+    ];
 }
