@@ -11,6 +11,7 @@ class PortalController extends Controller
     public function index()
     {
         $portal = Portal::first();
+
         return view('admin.portal.form', compact('portal'));
     }
 

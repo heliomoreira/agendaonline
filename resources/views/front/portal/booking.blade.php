@@ -430,30 +430,38 @@
                             <i class="ri-map-pin-line me-2"></i>{{ $portal->address }}
                         </p>
                     @endif
-                    @if($portal->phone ?? null)
+                    @if($portal->phone_1 ?? null)
                         <p class="text-white-50 small mb-2">
-                            <i class="ri-phone-line me-2"></i>{{ $portal->phone }}
+                            <i class="ri-phone-line me-2"></i>{{ $portal->phone_1 }}
                         </p>
                     @endif
                 </div>
                 <div class="col-lg-4">
-                    @if(isset($portal->schedule) && count($portal->schedule))
+
                         <h6 class="text-uppercase small mb-3">Horários</h6>
-                        <ul class="list-unstyled small text-white-50">
-                            @foreach($portal->schedule as $dayName => $hours)
-                                <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                                    <span>{{ $dayName }}</span>
-                                    <span>
-                                @if($hours)
-                                            {{ $hours }}
-                                        @else
-                                            <span class="text-danger">Fechado</span>
-                                        @endif
-                            </span>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                    <ul class="list-unstyled small text-white-50">
+                        @foreach([
+                            'Seg' => $portal->monday_hours,
+                            'Ter' => $portal->tuesday_hours,
+                            'Qua' => $portal->wednesday_hours,
+                            'Qui' => $portal->thursday_hours,
+                            'Sex' => $portal->friday_hours,
+                            'Sáb' => $portal->saturday_hours,
+                            'Dom' => $portal->sunday_hours,
+                        ] as $day => $hours)
+                            <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
+                                <span>{{ $day }}</span>
+                                <span>
+                                    @if($hours)
+                                        {{ $hours }}
+                                    @else
+                                        <span class="text-danger">Fechado</span>
+                                    @endif
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+
                 </div>
                 {{--<div class="col-lg-4">
                     <h6 class="text-uppercase small mb-3">Redes Sociais</h6>

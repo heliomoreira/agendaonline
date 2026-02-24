@@ -25,6 +25,13 @@ class Portal extends Model
         'button_text_color',
         'requires_payment',
         'payment_percentage',
-        'background_image'
+        'background_image',
+        'monday_hours',
+        'tuesday_hours',
+        'wednesday_hours',
+        'thursday_hours',
+        'friday_hours',
+        'saturday_hours',
+        'sunday_hours'
     ];
 }

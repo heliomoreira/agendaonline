@@ -25,7 +25,19 @@ class TenantController extends Controller
         $professionals = Professional::all();
         $portal = Portal::first();
 
-        return view('front.portal.index', compact('tenant', 'services', 'professionals', 'portal'));
+        $days = [
+            0 => 'sunday_hours',
+            1 => 'monday_hours',
+            2 => 'tuesday_hours',
+            3 => 'wednesday_hours',
+            4 => 'thursday_hours',
+            5 => 'friday_hours',
+            6 => 'saturday_hours',
+        ];
+
+        $todayHours = $portal->{$days[now()->dayOfWeek]} ?? 'Fechado';
+
+        return view('front.portal.index', compact('tenant', 'services', 'professionals', 'portal','todayHours'));
     }
 
     public function signup()

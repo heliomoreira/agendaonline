@@ -60,6 +60,12 @@
                                         aria-selected="false" tabindex="-1">Pagamento
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#navs-top-hours" aria-controls="navs-top-hours"
+                                        aria-selected="false" tabindex="-1">Horário
+                                </button>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active show" id="navs-top-home" role="tabpanel">
@@ -130,9 +136,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label for="background_image" class="form-label">Imagem Fundo</label>
-                                        <input type="file" class="form-control" id="background_image" name="background_image">
+                                        <input type="file" class="form-control" id="background_image"
+                                               name="background_image">
                                         @if(isset($portal->background_image))
-                                            <img src="{{ url('/storage/'.$portal->background_image) }}" alt="Portal Image"
+                                            <img src="{{ url('/storage/'.$portal->background_image) }}"
+                                                 alt="Portal Image"
                                                  class="img-thumbnail mt-2" style="max-width: 200px;">
                                         @endif
                                     </div>
@@ -147,6 +155,50 @@
                                     <div class="col-md-4">
                                         <label class="form-label" for="payment_percentage">% Pré-pagamento</label>
                                         {{html()->text('payment_percentage')->id('payment_percentage')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="navs-top-hours" role="tabpanel">
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="monday">Segunda-feira</label>
+                                        {{html()->text('monday_hours')->id('monday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="tuesday">Terça-feira</label>
+                                        {{html()->text('tuesday_hours')->id('tuesday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="wednesday">Quarta-feira</label>
+                                        {{html()->text('wednesday_hours')->id('wednesday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="thursday">Quinta-feira</label>
+                                        {{html()->text('thursday_hours')->id('thursday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="friday">Sexta-feira</label>
+                                        {{html()->text('friday_hours')->id('friday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="saturday">Sábado</label>
+                                        {{html()->text('saturday_hours')->id('saturday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="sunday">Domingo</label>
+                                        {{html()->text('sunday_hours')->id('sunday_hours')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
                             </div>

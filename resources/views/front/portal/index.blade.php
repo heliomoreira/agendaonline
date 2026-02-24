@@ -52,11 +52,11 @@
                         Agendar
                     </a>
                 </li>
-               {{-- <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ri-login-box-line me-1"></i>Entrar
-                    </a>
-                </li>--}}
+                {{-- <li class="nav-item">
+                     <a class="nav-link" href="#">
+                         <i class="ri-login-box-line me-1"></i>Entrar
+                     </a>
+                 </li>--}}
             </ul>
         </div>
     </div>
@@ -87,10 +87,10 @@
                href="/booking">
                 <i class="ri-calendar-check-line me-2"></i>Agendar
             </a>
-           {{-- <hr class="my-2">
-            <a class="nav-link px-3 py-2 rounded" href="#">
-                <i class="ri-login-box-line me-2"></i>Entrar
-            </a>--}}
+            {{-- <hr class="my-2">
+             <a class="nav-link px-3 py-2 rounded" href="#">
+                 <i class="ri-login-box-line me-2"></i>Entrar
+             </a>--}}
         </nav>
     </div>
 </div>
@@ -184,8 +184,8 @@
                     </div>
                     <div class="info-card-content">
                         <div class="info-card-label">Horário</div>
-                        <div class="info-card-value">
-                            Hoje: 09:00 - 20:00
+                        <div class="info-card-value" style="font-size: 0.9rem;">
+                            Hoje: {{$todayHours}}
                         </div>
                     </div>
                 </div>
@@ -210,7 +210,8 @@
                                     {{$service->name}}
                                 </h5>
                                 <div class="service-card-footer">
-                                    <div class="service-card-price" {{ $portal->secondary_color ? 'style=color:' . $portal->secondary_color . ';' : '' }}>
+                                    <div
+                                        class="service-card-price" {{ $portal->secondary_color ? 'style=color:' . $portal->secondary_color . ';' : '' }}>
                                         {{$service->price}}€
                                     </div>
                                     <div class="service-card-duration">
@@ -230,7 +231,8 @@
                                         <path d="M16 19h6"></path>
                                         <path d="M16 2v4"></path>
                                         <path d="M19 16v6"></path>
-                                        <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                                        <path
+                                            d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
                                         <path d="M3 10h18"></path>
                                         <path d="M8 2v4"></path>
                                     </svg>
@@ -527,42 +529,26 @@
                 <div class="col-lg-4">
                     <h6 class="text-uppercase small mb-3">Horários</h6>
                     <ul class="list-unstyled small text-white-50">
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Dom</span>
-                            <span>
-                                                            <span class="text-danger">Fechado</span>
-                                                    </span>
-                        </li>
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Seg</span>
-                            <span>
-                                                            09:00-19:00                                                    </span>
-                        </li>
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Ter</span>
-                            <span>
-                                                            08:00-19:00                                                    </span>
-                        </li>
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Qua</span>
-                            <span>
-                                                            09:00-19:00                                                    </span>
-                        </li>
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Qui</span>
-                            <span>
-                                                            09:00-19:00                                                    </span>
-                        </li>
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Sex</span>
-                            <span>
-                                                            09:00-19:00                                                    </span>
-                        </li>
-                        <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
-                            <span>Sáb</span>
-                            <span>
-                                                            09:00-19:00                                                    </span>
-                        </li>
+                        @foreach([
+                            'Seg' => $portal->monday_hours,
+                            'Ter' => $portal->tuesday_hours,
+                            'Qua' => $portal->wednesday_hours,
+                            'Qui' => $portal->thursday_hours,
+                            'Sex' => $portal->friday_hours,
+                            'Sáb' => $portal->saturday_hours,
+                            'Dom' => $portal->sunday_hours,
+                        ] as $day => $hours)
+                            <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
+                                <span>{{ $day }}</span>
+                                <span>
+                                    @if($hours)
+                                        {{ $hours }}
+                                    @else
+                                        <span class="text-danger">Fechado</span>
+                                    @endif
+                                </span>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
 

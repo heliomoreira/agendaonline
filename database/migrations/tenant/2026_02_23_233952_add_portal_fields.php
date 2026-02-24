@@ -10,7 +10,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        DB::statement('ALTER TABLE portal ROW_FORMAT=DYNAMIC');
 
         Schema::table('portal', function (Blueprint $table) {
             $table->string('subtitle', 255)->nullable()->after('title');
@@ -26,6 +25,14 @@ return new class extends Migration {
             $table->string('button_text_color', 10)->nullable()->after('button_background_color');
             $table->boolean('requires_payment')->default(false)->after('button_text_color');
             $table->integer('payment_percentage')->nullable()->after('requires_payment');
+            $table->string('monday_hours')->nullable()->after('payment_percentage');
+            $table->string('tuesday_hours')->nullable()->after('monday_hours');
+            $table->string('wednesday_hours')->nullable()->after('tuesday_hours');
+            $table->string('thursday_hours')->nullable()->after('wednesday_hours');
+            $table->string('friday_hours')->nullable()->after('thursday_hours');
+            $table->string('saturday_hours')->nullable()->after('friday_hours');
+            $table->string('sunday_hours')->nullable()->after('saturday_hours');
+
         });
     }
 
@@ -48,6 +55,13 @@ return new class extends Migration {
             $table->dropColumn('button_text_color');
             $table->dropColumn('requires_payment');
             $table->dropColumn('payment_percentage');
+            $table->dropColumn('monday_hours');
+            $table->dropColumn('tuesday_hours');
+            $table->dropColumn('wednesday_hours');
+            $table->dropColumn('thursday_hours');
+            $table->dropColumn('friday_hours');
+            $table->dropColumn('saturday_hours');
+            $table->dropColumn('sunday_hours');
         });
     }
 };
