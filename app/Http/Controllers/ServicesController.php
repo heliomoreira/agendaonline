@@ -61,9 +61,13 @@ class ServicesController extends Controller
         try {
             $service = new Service();
             $service->fill($request->validated());
-            $service->save();
 
-            Log::info("service criado com ID {$service->id}");
+            if ($request->hasFile('image')) {
+                $image = $this->imageService->uploadImage($request->file('image'), 'tenants/services/images');
+                $service->image = $image;
+
+            }
+            $service->save();
 
             return redirect()->route('services.edit', ['id' => $service->id])
                 ->with('success', __('modules.service_created'));

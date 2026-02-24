@@ -36,6 +36,11 @@ class PortalController extends Controller
             $updatePortal->logo = $path;
         }
 
+        if ($request->hasFile('background_image')) {
+            $path = $imageService->uploadImage($request->file('background_image'), 'tenants/background_image',1920,400);
+            $updatePortal->background_image = $path;
+        }
+
         $updatePortal->save();
         return redirect()->back()->with('success', 'Portal atualizado com sucesso.');
     }

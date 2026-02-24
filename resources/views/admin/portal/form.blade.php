@@ -128,6 +128,14 @@
                                                  class="img-thumbnail mt-2" style="max-width: 200px;">
                                         @endif
                                     </div>
+                                    <div class="col-md-2">
+                                        <label for="background_image" class="form-label">Imagem Fundo</label>
+                                        <input type="file" class="form-control" id="background_image" name="background_image">
+                                        @if(isset($portal->background_image))
+                                            <img src="{{ url('/storage/'.$portal->background_image) }}" alt="Portal Image"
+                                                 class="img-thumbnail mt-2" style="max-width: 200px;">
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">

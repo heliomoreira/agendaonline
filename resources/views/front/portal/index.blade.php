@@ -98,7 +98,7 @@
 <main>
 
     <section class="hero-section"
-             style="background-image: url('{{global_asset('assets/images/bg_massagens.jpeg')}}');">
+             style="background-image: url('{{ $portal->background_image ? global_asset('storage/' . $portal->background_image) : global_asset('assets/images/bg_massagens.jpeg') }}');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-logo">
