@@ -15,6 +15,7 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -141,6 +142,10 @@ Route::middleware([
 
             Route::prefix('notifications')->group(function () {
                 Route::get('/', [NotificationsController::class, 'index'])->name('notifications.index');
+            });
+
+            Route::prefix('sms')->group(function () {
+                Route::get('/', [SmsController::class, 'index'])->name('sms.index');
             });
         });
     });

@@ -87,7 +87,7 @@
                     Versão BETA
                 </span>
                 </li>
-                <li class="menu-item mt-4">
+                <li class="menu-item mt-4 {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
                     <a href="/admin" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-dashboard"></i>
                         <div data-i18n="Dashboard">Dashboard</div>
@@ -96,31 +96,31 @@
                 <li class="menu-header small">
                     <span class="menu-header-text" data-i18n="Módulos">Módulos</span>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('clients.*') ? 'active' : '' }}">
                     <a href="{{route('clients.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-users"></i>
                         <div data-i18n="Clientes">Clientes</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('agenda*') ? 'active' : '' }}">
                     <a href="{{route('agenda.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-calendar"></i>
                         <div data-i18n="Marcações">Marcações</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('products*') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-list"></i>
                         <div data-i18n="Produtos">Produtos</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('services*') ? 'active' : '' }}">
                     <a href="{{route('services.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-layout-list"></i>
                         <div data-i18n="Serviços">Serviços</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('professionals*') ? 'active' : '' }}">
                     <a href="{{route('professionals.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-user"></i>
                         <div data-i18n="Profissionais">Profissionais</div>
@@ -132,7 +132,7 @@
                 <li class="menu-header small">
                     <span class="menu-header-text" data-i18n="Admin">Admin</span>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('notifications*') ? 'active' : '' }}">
                     <a href="{{route('notifications.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-bell-ringing"></i>
                         <div data-i18n="Notificações">Notificações</div>
@@ -144,16 +144,22 @@
                         <div data-i18n="Configurações">Configurações</div>
                     </a>
                 </li>--}}
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('account-settings*') ? 'active' : '' }}">
                     <a href="/admin/account-settings" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-briefcase"></i>
                         <div data-i18n="Dados de Conta">Dados de Conta</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
                     <a href="/admin/portal" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-world-www"></i>
                         <div data-i18n="Portal">Portal</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ request()->routeIs('sms*') ? 'active' : '' }}">
+                    <a href="/admin/sms" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-device-mobile-message"></i>
+                        <div data-i18n="SMS">SMS</div>
                     </a>
                 </li>
               {{--  <li class="menu-item">
