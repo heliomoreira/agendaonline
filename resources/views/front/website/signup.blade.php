@@ -173,15 +173,8 @@
                             </label>
                         </div>
                     </div>
-                    <button class="btn btn-primary d-grid w-100">Sign up</button>
+                    <button class="btn btn-primary d-grid w-100">Registar</button>
                 </form>
-
-                <p class="text-center">
-                    <span>Already have an account?</span>
-                    <a href="/login">
-                        <span>Sign in instead</span>
-                    </a>
-                </p>
             </div>
         </div>
         <!-- /Register -->

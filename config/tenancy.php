@@ -19,10 +19,8 @@ return [
     'central_domains' => [
         '127.0.0.1',
         'localhost',
-        'agendaonline.local',
-        '*.agendaonline.local',
-        'bitsislab.xyz',
-        '*.bitsislab.xyz',
+        'agendaonline.test',
+        '*.agendaonline.test',
         'agendaonline.pt',
         '*.agendaonline.pt',
     ],
