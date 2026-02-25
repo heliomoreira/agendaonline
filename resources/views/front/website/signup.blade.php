@@ -121,8 +121,8 @@
         <!-- Register -->
         <div class="d-flex col-12 col-xl-4 align-items-center authentication-bg p-sm-12 p-6">
             <div class="w-px-400 mx-auto mt-12 pt-5">
-                <h4 class="mb-1">Adventure starts here 🚀</h4>
-                <p class="mb-6">Make your app management easy and fun!</p>
+                <h4 class="mb-1">Criar conta 🚀</h4>
+                <p class="mb-6">{{--Make your app management easy and fun!--}}</p>
 
                 <form id="formAuthentication" class="mb-6" action="/signup/create-tenant" method="post">
                     @csrf
@@ -164,7 +164,7 @@
                             <span class="input-group-text cursor-pointer"><i class="icon-base ti tabler-eye-off"></i></span>
                         </div>
                     </div>
-                    <div class="mb-6 mt-8">
+                 {{--   <div class="mb-6 mt-8">
                         <div class="form-check mb-8 ms-2">
                             <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
                             <label class="form-check-label" for="terms-conditions">
@@ -172,7 +172,7 @@
                                 <a href="javascript:void(0);">privacy policy & terms</a>
                             </label>
                         </div>
-                    </div>
+                    </div>--}}
                     <button class="btn btn-primary d-grid w-100">Registar</button>
                 </form>
             </div>
