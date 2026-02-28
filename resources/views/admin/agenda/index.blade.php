@@ -71,12 +71,10 @@
 
 @push('scripts')
     <script src="{{ global_asset('assets/plugins/fullcalendar/index.global.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const calendarEl = document.getElementById('calendar');
-
             // holds the currently selected professional id ('' = all)
             let activeProfessional = '';
 

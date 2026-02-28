@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceRequest;
 use App\Models\Service;
+use App\Models\Tenant;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ServicesController extends Controller
 {
+
+    public function __construct(protected ImageService $imageService)
+    {
+
+    }
+
     public function index()
     {
         try {
@@ -53,9 +61,13 @@ class ServicesController extends Controller
         try {
             $service = new Service();
             $service->fill($request->validated());
-            $service->save();
 
-            Log::info("service criado com ID {$service->id}");
+            if ($request->hasFile('image')) {
+                $image = $this->imageService->uploadImage($request->file('image'), 'tenants/services/images');
+                $service->image = $image;
+
+            }
+            $service->save();
 
             return redirect()->route('services.edit', ['id' => $service->id])
                 ->with('success', __('modules.service_created'));
@@ -70,10 +82,15 @@ class ServicesController extends Controller
         try {
             $service = Service::findOrFail($id);
             $service->fill($request->validated());
+
+
+            if ($request->hasFile('image')) {
+                $image = $this->imageService->uploadImage($request->file('image'), 'tenants/services/images');
+                $service->image = $image;
+
+            }
+
             $service->save();
-
-            Log::info("service atualizado com ID {$service->id}");
-
             return redirect()->route('services.edit', ['id' => $service->id])
                 ->with('success', __('modules.service_updated'));
         } catch (\Exception $e) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingPaymentController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocationController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TenantController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -141,6 +143,11 @@ Route::middleware([
             Route::prefix('notifications')->group(function () {
                 Route::get('/', [NotificationsController::class, 'index'])->name('notifications.index');
             });
+
+            Route::prefix('sms')->group(function () {
+                Route::get('/', [SmsController::class, 'index'])->name('sms.index');
+                Route::put('/update', [SmsController::class, 'update'])->name('sms.update');
+            });
         });
     });
 
@@ -149,7 +156,11 @@ Route::middleware([
      */
     Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
     Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
-    //Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
+    Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
     Route::post('/book-slot/{admin?}', [BookingController::class, 'bookSlot'])->name('book.slot');
+    Route::post('/booking/payment-intent', [BookingPaymentController::class, 'createPaymentIntent'])->name('book.payment.intent');
+    Route::post('/booking/stripe/webhook', [BookingPaymentController::class, 'handleWebhook'])
+        ->withoutMiddleware(['web']);
+    Route::get('/booking/success', [BookingController::class, 'success'])->name('booking.success');
 
 });

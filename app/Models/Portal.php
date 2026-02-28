@@ -8,5 +8,34 @@ class Portal extends Model
 {
     protected $table = 'portal';
 
-    protected $fillable = ['title', 'logo', 'main_color', 'secondary_color'];
+    protected $fillable = [
+        'title',
+        'subtitle',
+        'address',
+        'postal_code',
+        'city',
+        'phone_1',
+        'phone_2',
+        'email',
+        'about_us',
+        'logo',
+        'main_color',
+        'secondary_color',
+        'button_background_color',
+        'button_text_color',
+        'requires_payment',
+        'payment_percentage',
+        'background_image',
+        'monday_hours',
+        'tuesday_hours',
+        'wednesday_hours',
+        'thursday_hours',
+        'friday_hours',
+        'saturday_hours',
+        'sunday_hours',
+        'payment_stripe_key',
+        'payment_stripe_secret',
+        'payment_stripe_allow_card',
+        'payment_stripe_allow_multibanco',
+    ];
 }

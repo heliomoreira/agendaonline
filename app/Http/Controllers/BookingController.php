@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -27,6 +28,21 @@ class BookingController extends Controller
     private const SLOT_INTERVAL = 30; // minutes
     private const SUNDAY = 0;
     private const SATURDAY = 6;
+
+    public function index()
+    {
+        $services = Service::all();
+        $professionals = Professional::all();
+        $portal = Portal::all()->first();
+
+        return view('front.portal.booking', [
+            'services' => $services,
+            'professionals' => $professionals,
+            'portal' => $portal,
+            'requiresPayment' => $portal->requires_payment,
+            'paymentPercentage' => $portal->payment_percentage,
+        ]);
+    }
 
     public function bookSlot(Request $request, $admin = false)
     {
@@ -96,6 +112,9 @@ class BookingController extends Controller
             'service_id' => $request->service_id,
             'professional_id' => $request->professional_id,
             'client_id' => $client->id,
+            'client_name' => $request->client_name,
+            'client_email' => $request->client_email,
+            'client_phone_1' => $request->client_phone_1,
             'day' => $request->day,
             'start_hour' => $start->format('H:i'),
             'end_hour' => $end->format('H:i'),
@@ -445,5 +464,173 @@ class BookingController extends Controller
     private function periodsOverlap(Carbon $start1, Carbon $end1, Carbon $start2, Carbon $end2): bool
     {
         return $start1->lt($end2) && $end1->gt($start2);
+    }
+
+    public function createPaymentIntent(Request $request)
+    {
+        $service = Service::findOrFail($request->service_id);
+        $amount = $service->price * 100; // em cêntimos
+
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+        $paymentIntent = \Stripe\PaymentIntent::create([
+            'amount' => $amount,
+            'currency' => 'eur',
+            'payment_method_types' => [
+                'card',
+                'multibanco',
+                'ideal',  // opcional
+            ],
+            'metadata' => [
+                'service_id' => $request->service_id,
+                'professional_id' => $request->professional_id,
+                'day' => $request->day,
+                'start_hour' => $request->start_hour,
+            ],
+        ]);
+
+        return response()->json([
+            'clientSecret' => $paymentIntent->client_secret,
+            'paymentIntentId' => $paymentIntent->id,
+        ]);
+    }
+
+    public function success(Request $request)
+    {
+        $paymentIntentId = $request->query('payment_intent');
+
+        if ($paymentIntentId) {
+            // Buscar na Stripe o status
+            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+            $pi = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+
+            // Se Multibanco e ainda não pago
+            if ($pi->status === 'requires_action') {
+                return view('booking.pending-payment', [
+                    'entity' => $pi->next_action->multibanco_display_details->entity ?? null,
+                    'reference' => $pi->next_action->multibanco_display_details->reference ?? null,
+                    'amount' => $pi->amount / 100,
+                ]);
+            }
+
+            // Se já pago, mostrar confirmação
+            if ($pi->status === 'succeeded') {
+                $booking = Agenda::where('payment_intent_id', $paymentIntentId)->first();
+                return view('booking.confirmation', compact('booking'));
+            }
+        }
+
+        return redirect('/');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'service_id' => 'required|exists:services,id',
+            'professional_id' => 'nullable|exists:professionals,id',
+            'day' => 'required|date|after_or_equal:today',
+            'start_hour' => 'required',
+            'client_name' => 'required|string|max:255',
+            'client_phone_1' => 'required|string|max:20',
+            'client_email' => 'nullable|email|max:255',
+            'notes' => 'nullable|string|max:1000',
+            'payment_intent_id' => 'nullable|string', // se veio do Stripe
+        ]);
+
+        $service = Service::with('portal')->findOrFail($validated['service_id']);
+
+        // Verificar se slot ainda está disponível
+
+        //@todo Validar
+        $isAvailable = $this->checkSlotAvailability(
+            $validated['service_id'],
+            $validated['day'],
+            $validated['start_hour'],
+            $validated['professional_id']
+        );
+
+        if (!$isAvailable) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Este horário já não está disponível. Por favor, escolha outro.',
+            ], 422);
+        }
+
+        // Calcular hora de fim
+        $startTime = Carbon::createFromFormat('H:i', $validated['start_hour']);
+        $endTime = $startTime->copy()->addMinutes($service->duration);
+
+        // Buscar ou criar cliente
+        $client = null;
+        if ($validated['client_email']) {
+            $client = Client::where('email', $validated['client_email'])->first();
+        }
+
+        if (!$client && $validated['client_email']) {
+            // Criar novo cliente
+            $client = Client::create([
+                'name' => $validated['client_name'],
+                'email' => $validated['client_email'],
+                'phone_1' => $validated['client_phone_1'],
+            ]);
+        }
+
+        // Determinar status inicial
+        $status = 'pending';
+        $paid = false;
+
+        if ($validated['payment_intent_id']) {
+            // Pagamento já foi feito (cartão)
+            $status = 'confirmed';
+            $paid = true;
+        } elseif ($service->portal->requires_payment) {
+            // Requer pagamento mas ainda não foi pago (Multibanco pendente)
+            $status = 'payment_pending';
+        } else {
+            // Não requer pagamento
+            $status = 'pending';
+        }
+
+        // Criar marcação
+        $booking = Agenda::create([
+            'client_id' => $client?->id,
+            'service_id' => $validated['service_id'],
+            'professional_id' => $validated['professional_id'],
+            'day' => $validated['day'],
+            'start_hour' => $validated['start_hour'],
+            'end_hour' => $endTime->format('H:i'),
+            'client_name' => $validated['client_name'],
+            'client_email' => $validated['client_email'],
+            'client_phone_1' => $validated['client_phone_1'],
+            'notes' => $validated['notes'],
+            'amount' => $service->price,
+            'payment_intent_id' => $validated['payment_intent_id'],
+            'status' => $status,
+            'paid' => $paid,
+            'confirmed_at' => $paid ? now() : null,
+        ]);
+
+        // Enviar emails
+        if ($booking->client_email) {
+            // Email de confirmação (se já pago) ou aguardando pagamento
+            if ($paid) {
+                dd("paid");// Mail::to($booking->client_email)->send(new BookingConfirmed($booking));
+            }
+
+            // Se cliente não tem conta, convidar a criar
+            if ($client && !$client->hasAccount()) {
+                @dd("invite to create");
+                // Mail::to($client->email)->send(new InviteToCreateAccount($client, $booking));
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $paid
+                ? 'Marcação confirmada com sucesso!'
+                : 'Marcação registada. Aguardando confirmação de pagamento.',
+            'booking_id' => $booking->id,
+            'redirect' => route('booking.confirmation', $booking->id),
+        ]);
     }
 }

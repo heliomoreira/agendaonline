@@ -1,0 +1,965 @@
+/*
+ * booking-wizard.css
+ * Publicar em: public/css/booking-wizard.css
+ * Ou compilar via Vite: resources/css/booking-wizard.css
+ */
+
+:root {
+    --wizard-radius: 16px;
+    --card-radius: 12px;
+}
+
+/* Nota: --cor-primaria e --cor-primaria-rgb são definidas inline no blade
+   porque são variáveis dinâmicas que vêm da base de dados ($portal) */
+
+/* ── Base styles ────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* ── Navbar ─────────────────────────────────────────── */
+.navbar {
+    padding: .6rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.navbar-logo {
+    height: 34px;
+    width: 34px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* ── Hero section ───────────────────────────────────── */
+.hero-section {
+    position: relative;
+    min-height: 260px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 80px;
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15,23,42,.82) 0%, rgba(30,58,138,.72) 100%);
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem 1rem 0;
+}
+.hero-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    border: 3px solid rgba(255,255,255,.25);
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.hero-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.hero-title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.02em;
+}
+
+/* ── Wizard section ─────────────────────────────────── */
+.wizard-section {
+    margin-top: -64px;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 3rem;
+}
+
+.wizard-section .container {
+    max-width: 860px;
+}
+
+/* ── Card principal ────────────────────────────────── */
+.wiz-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+    overflow: hidden;
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+/* Card sobrepõe o hero */
+section.wizard {
+    margin-top: -40px;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 4rem;
+}
+
+/* ── Stepper / nav ─────────────────────────────────── */
+.wiz-nav {
+    display: flex;
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+    overflow-x: auto;
+    scrollbar-width: none;
+    align-items: center;
+    justify-content: center;
+    gap: .25rem;
+    padding: 1rem 1rem;
+    white-space: nowrap;
+}
+.wiz-nav::-webkit-scrollbar { display: none; }
+
+.wiz-nav-item {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .875rem 1.25rem;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: .68rem;
+    font-weight: 500;
+    color: #9ca3af;
+    transition: all .2s;
+}
+.wiz-nav-item.active {
+    border-bottom-color: var(--bs-primary, #2563eb);
+    color: var(--bs-primary, #2563eb);
+    font-weight: 700;
+}
+.wiz-nav-item.done { color: #374151; font-weight: 600; }
+
+.wiz-nav-badge {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .6rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    transition: all .2s;
+}
+.wiz-nav-item.active .wiz-nav-badge,
+.wiz-nav-item.done   .wiz-nav-badge {
+    background: var(--bs-primary, #2563eb);
+    border-color: var(--bs-primary, #2563eb);
+    color: #fff;
+}
+.wiz-nav-sep {
+    align-self: center;
+    color: #d1d5db;
+    flex-shrink: 0;
+    padding: 0 .1rem;
+    font-size: .65rem;
+}
+
+/* ── Painéis ───────────────────────────────────────── */
+.wiz-panel { display: none; padding: 1.75rem; }
+.wiz-panel.active { display: block; animation: wizUp .28s ease; }
+
+@keyframes wizUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ── Service cards (override do app.css) ───────────── */
+.service-card {
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    position: relative;
+}
+.service-card:hover { transform: translateY(-3px); }
+.service-card.wiz-sel {
+    outline: 3px solid var(--bs-primary, #2563eb);
+    outline-offset: 2px;
+}
+.wiz-sel-mark {
+    display: none;
+    position: absolute;
+    top: .6rem;
+    right: .6rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    z-index: 1;
+    box-shadow: 0 2px 6px rgba(37,99,235,.4);
+}
+.service-card.wiz-sel .wiz-sel-mark { display: flex; }
+
+/* ── Profissionais ─────────────────────────────────── */
+.wiz-pro {
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    padding: .875rem 1rem;
+    cursor: pointer;
+    transition: all .18s;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: .875rem;
+}
+.wiz-pro:hover { border-color: var(--bs-primary, #2563eb); transform: translateX(3px); }
+.wiz-pro.selected   { border-color: var(--bs-primary, #2563eb); background: #eff6ff; }
+
+/* Pro cards (demo HTML / classes alternativas) */
+.pro-card {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .2s;
+}
+.pro-card:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+.pro-card.selected {
+    border-color: var(--bs-primary, #2563eb);
+    background: rgba(37, 99, 235, .03);
+}
+.pro-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.pro-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-primary, #2563eb);
+    font-weight: 700;
+    font-size: .75rem;
+    flex-shrink: 0;
+}
+.pro-name {
+    font-size: .82rem;
+    font-weight: 600;
+}
+.pro-role {
+    font-size: .68rem;
+    color: #94a3b8;
+}
+
+.wiz-pro-photo {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+    flex-shrink: 0;
+    transition: border-color .2s;
+}
+.wiz-pro.selected .wiz-pro-photo { border-color: var(--bs-primary, #2563eb); }
+
+.wiz-pro-init {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    font-weight: 800;
+    font-size: .92rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.wiz-pro-ck {
+    margin-left: auto;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: .68rem;
+    flex-shrink: 0;
+}
+.wiz-pro.selected .wiz-pro-ck { display: flex; }
+
+/* ── Calendário ────────────────────────────────────── */
+.wiz-cal-nb {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    transition: all .18s;
+    padding: 0;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+.wiz-cal-nb:hover:not(:disabled) {
+    border-color: var(--bs-primary, #2563eb);
+    color: var(--bs-primary, #2563eb);
+    background: #eff6ff;
+}
+.wiz-cal-nb:disabled { opacity: .3; cursor: not-allowed; }
+
+.wiz-cg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.wiz-cw {
+    text-align: center;
+    font-size: .62rem;
+    font-weight: 700;
+    color: #9ca3af;
+    padding: .3rem 0 .5rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+.wiz-cd {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    font-size: .8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+    border: 2px solid transparent;
+    gap: 2px;
+}
+.wiz-cd.empty, .wiz-cd.past { cursor: default; }
+.wiz-cd.past { color: #d1d5db; }
+.wiz-cd.ld   { cursor: default; color: #9ca3af; }
+
+.wiz-cd.hi { background: #ecfdf5; color: #065f46; font-weight: 700; }
+.wiz-cd.hi:hover {
+    background: #059669; color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(5,150,105,.3);
+}
+.wiz-cd.md { background: #fffbeb; color: #92400e; font-weight: 700; }
+.wiz-cd.md:hover {
+    background: #d97706; color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(217,119,6,.3);
+}
+.wiz-cd.lo { background: #fef2f2; color: #991b1b; font-weight: 700; }
+.wiz-cd.lo:hover {
+    background: #dc2626; color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(220,38,38,.3);
+}
+.wiz-cd.selected {
+    background: var(--bs-primary, #2563eb) !important;
+    color: #fff !important;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 3px 8px rgba(37,99,235,.35) !important;
+    transform: scale(1.1) !important;
+    font-weight: 700;
+}
+/* Alias para compatibilidade com HTML inline */
+.wiz-cd.wiz-cd-sel {
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    font-weight: 700;
+}
+.wiz-cd.wiz-cd-off {
+    color: #d1d5db;
+    cursor: default;
+}
+.wiz-cd.tod:not(.past) { box-shadow: 0 0 0 2px var(--bs-primary, #2563eb); }
+
+.wiz-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+.hi  .wiz-dot { background: #059669; }
+.md  .wiz-dot { background: #d97706; }
+.lo  .wiz-dot { background: #dc2626; }
+.selected .wiz-dot { background: rgba(255,255,255,.65); }
+
+/* ── Slots de hora ─────────────────────────────────── */
+.wiz-sg,
+.wiz-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: .4rem;
+}
+.wiz-slot {
+    padding: .48rem .3rem;
+    border-radius: 7px;
+    border: 1.5px solid #e5e7eb;
+    background: #fff;
+    font-size: .79rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+    color: #374151;
+    font-family: inherit;
+    line-height: 1.3;
+}
+.wiz-slot:hover {
+    border-color: var(--bs-primary, #2563eb);
+    color: var(--bs-primary, #2563eb);
+    background: #eff6ff;
+}
+.wiz-slot.selected {
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    border-color: #1d4ed8;
+}
+.wiz-slot-pn {
+    font-size: .57rem;
+    margin-top: 2px;
+    opacity: .7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ── Resumo sidebar ────────────────────────────────── */
+.wiz-summary {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+}
+.wiz-summary h6 {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #94a3b8;
+    margin-bottom: .75rem;
+}
+.wiz-sum-row {
+    display: flex;
+    align-items: flex-start;
+    gap: .65rem;
+    padding: .55rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+.wiz-sum-row:last-child { border: none; }
+.wiz-sum-row i {
+    color: var(--bs-primary, #2563eb);
+    margin-top: 2px;
+    flex-shrink: 0;
+    font-size: .8rem;
+}
+.wiz-sum-row strong {
+    font-weight: 600;
+}
+.wiz-sum-ico {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: #eff6ff;
+    color: var(--bs-primary, #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    flex-shrink: 0;
+}
+.wiz-sum-lbl {
+    font-size: .63rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1;
+}
+.wiz-sum-val {
+    font-size: .83rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: .12rem;
+    line-height: 1.3;
+}
+
+/* ── Search input ──────────────────────────────────── */
+.wiz-search {
+    position: relative;
+    max-width: 280px;
+    margin-bottom: 1rem;
+}
+.wiz-search i {
+    position: absolute;
+    left: .7rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+    font-size: .8rem;
+}
+.wiz-search input {
+    padding-left: 2rem;
+    font-size: .78rem;
+}
+
+/* ── Spinner ───────────────────────────────────────── */
+.wiz-spin {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    animation: wizSp .6s linear infinite;
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+.wiz-spin-dk {
+    border-color: rgba(0,0,0,.1);
+    border-top-color: var(--bs-primary, #2563eb);
+}
+@keyframes wizSp { to { transform: rotate(360deg); } }
+
+/* ── Form styles ──────────────────────────────────── */
+.form-control {
+    font-size: .82rem;
+    border-radius: 10px;
+    border-color: #e2e8f0;
+    padding: .5rem .75rem;
+}
+.form-control:focus {
+    border-color: var(--bs-primary, #2563eb);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .1);
+}
+.form-label {
+    font-size: .75rem;
+    margin-bottom: .3rem;
+}
+
+/* ── Actions bar ──────────────────────────────────── */
+.wiz-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+.wiz-actions .btn {
+    font-size: .8rem;
+    border-radius: 10px;
+}
+.wiz-actions .btn-primary {
+    background: var(--bs-primary, #2563eb);
+    border-color: var(--bs-primary, #2563eb);
+}
+.wiz-actions .btn-primary:hover {
+    filter: brightness(1.08);
+}
+.wiz-actions .btn-primary:disabled {
+    opacity: .5;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — Mobile first
+═══════════════════════════════════════════════════ */
+
+/* ── 769px – 900px (tablets with 5 steps) ────────── */
+@media (min-width: 769px) and (max-width: 900px) {
+    .wiz-nav-item {
+        font-size: .62rem;
+        gap: .3rem;
+    }
+    .wiz-nav {
+        gap: .2rem;
+        padding: .875rem .75rem;
+    }
+}
+
+/* ── < 576px  (phones) ─────────────────────────── */
+@media (max-width: 575.98px) {
+
+    /* Card ocupa toda a largura sem margens laterais */
+    section.wizard {
+        margin-top: -20px;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 2rem;
+    }
+    section.wizard .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .wiz-card {
+        border-radius: 12px 12px 0 0;
+    }
+
+    /* Painéis com menos padding */
+    .wiz-panel {
+        padding: 1.1rem;
+    }
+
+    /* Stepper — esconder texto, mostrar só número (excepto passo ativo) */
+    .wiz-nav {
+        padding: .75rem .5rem;
+        gap: .15rem;
+        justify-content: flex-start;
+    }
+    .wiz-nav-item {
+        padding: .5rem .6rem;
+        justify-content: center;
+        font-size: .65rem;
+        gap: .25rem;
+    }
+    .wiz-nav-item span:not(.wiz-nav-badge) {
+        display: none;
+    }
+    .wiz-nav-item.active span:not(.wiz-nav-badge) {
+        display: inline;
+    }
+    .wiz-nav-badge {
+        width: 18px;
+        height: 18px;
+        font-size: .55rem;
+    }
+    .wiz-nav-sep {
+        padding: 0;
+        font-size: .6rem;
+    }
+
+    /* Service cards — 1 coluna, imagem mais baixa */
+    .service-card-image img,
+    .service-card-image > div {
+        height: 120px !important;
+    }
+
+    /* Calendário — células menores */
+    .wiz-cd {
+        font-size: .72rem;
+        border-radius: 5px;
+    }
+    .wiz-cg {
+        gap: 2px;
+    }
+    .wiz-cw {
+        font-size: .55rem;
+        padding: .2rem 0 .4rem;
+    }
+
+    /* Slots — grid mais compacto */
+    .wiz-sg {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: .3rem;
+    }
+    .wiz-slot {
+        font-size: .72rem;
+        padding: .42rem .2rem;
+    }
+
+    /* Botões de navegação — full width em coluna */
+    .wiz-actions {
+        flex-direction: column-reverse;
+        gap: .5rem;
+    }
+    .wiz-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Formulário — 1 coluna */
+    .col-md-6 {
+        grid-column: 1 / -1;
+    }
+}
+
+/* ── 576px – 767px  (landscape phones / small tablets) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+    section.wizard {
+        margin-top: -28px;
+        padding-bottom: 2.5rem;
+    }
+
+    .wiz-panel {
+        padding: 1.35rem;
+    }
+
+    /* Stepper — mostrar só 2 primeiras palavras do label */
+    .wiz-nav-item {
+        padding: .75rem .95rem;
+    }
+
+    /* Calendário — ligeiramente mais compacto */
+    .wiz-cd { font-size: .75rem; }
+}
+
+/* ── 768px – 991px  (tablets) ──────────────────── */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+    section.wizard {
+        margin-top: -35px;
+    }
+
+    /* Service cards — 2 colunas */
+    /* (Bootstrap col-sm-6 já trata disto) */
+
+    /* Calendário ok a este tamanho */
+}
+
+/* ── Touch — melhorar áreas de toque ───────────── */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Calendário — células maiores para toque */
+    .wiz-cd {
+        min-height: 36px;
+    }
+
+    /* Slots — área de toque mais generosa */
+    .wiz-slot {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    /* Pro cards — feedback de toque */
+    .wiz-pro:active {
+        opacity: .85;
+        transform: scale(.98);
+    }
+
+    /* Service cards */
+    .service-card:active {
+        transform: scale(.98);
+    }
+
+    /* Botões nav calendário — maiores */
+    .wiz-cal-nb {
+        width: 38px;
+        height: 38px;
+        font-size: 1.25rem;
+    }
+}
+
+/* ── Stepper overflow seguro em qualquer tamanho ─ */
+.wiz-nav {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ── Prevenir zoom em inputs iOS ────────────────── */
+@media (max-width: 767.98px) {
+    .form-control,
+    .form-select,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+        font-size: 16px !important; /* iOS não faz zoom acima de 16px */
+    }
+}
+
+/* ── Resumo mobile (step 4) ────────────────────── */
+.wiz-mob-sum {
+    background: #eff6ff;
+    border: 1px solid rgba(37,99,235,.2);
+    border-radius: 10px;
+    padding: .875rem 1rem;
+    font-size: .84rem;
+    color: #1e3a8a;
+    line-height: 1.9;
+}
+.wiz-mob-sum strong {
+    color: #1d4ed8;
+    font-weight: 600;
+}
+
+/* ── Legenda do calendário ──────────────────────── */
+.wiz-ldot {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    border: 1.5px solid;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* ── Footer ─────────────────────────────────────────── */
+.app-footer {
+    background: #0f172a;
+    color: #fff;
+    padding: 2.5rem 0 1.5rem;
+}
+.footer-logo {
+    height: 36px;
+    width: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.app-footer h6 {
+    font-size: .68rem;
+    letter-spacing: .06em;
+    color: #94a3b8;
+}
+.app-footer h5 {
+    font-size: .9rem;
+    margin-bottom: 0;
+}
+
+/* ── Service cards ──────────────────────────────────── */
+.service-card {
+    position: relative;
+    border: 2px solid #e2e8f0;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .2s;
+    background: #fff;
+}
+.service-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transform: translateY(-2px);
+}
+.service-card.selected {
+    border-color: var(--bs-primary, #2563eb);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+.wiz-sel-mark {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bs-primary, #2563eb);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    z-index: 3;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, .3);
+}
+.service-card.selected .wiz-sel-mark {
+    display: flex;
+}
+.service-card-image {
+    height: 110px;
+    overflow: hidden;
+    background: #f8fafc;
+}
+.service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+.service-card:hover .service-card-image img {
+    transform: scale(1.04);
+}
+.service-card-body {
+    padding: .75rem .85rem;
+}
+.service-card-title {
+    font-size: .82rem;
+    font-weight: 600;
+    margin-bottom: .25rem;
+    color: #1e293b;
+}
+.service-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-top: .35rem;
+}
+.service-card-price {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--bs-primary, #2563eb);
+}
+.service-card-duration {
+    font-size: .68rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+}
+
+/* ── Calendar helpers ───────────────────────────────── */
+.wiz-cal-nb {
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #475569;
+    transition: all .15s;
+    font-size: .85rem;
+}
+.wiz-cal-nb:hover {
+    background: #f1f5f9;
+}
+.wiz-cal-nb:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+}
+
+/* ── Legend dots ────────────────────────────────────── */
+.wiz-ldot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid;
+    display: inline-block;
+}
+
+/* ── Stripe Payment Element ────────────────────────── */
+#wizCardElement {
+    min-height: 200px;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+#wizCardErrors {
+    color: #dc2626;
+    font-size: .78rem;
+    margin-top: .75rem;
+    min-height: 20px;
+}
+
+/* Wrapper para melhor espaçamento */
+.wiz-payment-wrapper {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}

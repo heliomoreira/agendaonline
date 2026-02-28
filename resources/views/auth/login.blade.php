@@ -121,7 +121,7 @@
         <div class="d-flex col-12 col-xl-4 align-items-center authentication-bg p-sm-12 p-6">
             <div class="w-px-400 mx-auto mt-12 pt-5">
                 <h4 class="mb-1">Bem vind@ à Agenda Online! 👋</h4>
-                <p class="mb-6">Please sign-in to your account and start the adventure</p>
+                <p class="mb-6">{{--Please sign-in to your account and start the adventure--}}</p>
 
                 <form id="formAuthentication" class="mb-6" action="{{ route('login') }}" method="POST">
                     @csrf
@@ -149,7 +149,7 @@
                                     class="icon-base ti tabler-eye-off"></i></span>
                         </div>
                     </div>
-                    <div class="my-8">
+                    {{--<div class="my-8">
                         <div class="d-flex justify-content-between">
                             <div class="form-check mb-0 ms-2">
                                 <input class="form-check-input" type="checkbox" id="remember-me"/>
@@ -159,8 +159,8 @@
                                 <p class="mb-0">Forgot Password?</p>
                             </a>
                         </div>
-                    </div>
-                    <button class="btn btn-primary d-grid w-100">Sign in</button>
+                    </div>--}}
+                    <button class="btn btn-primary d-grid w-100">Login</button>
                 </form>
                 @if ($errors->any())
                     <div style="color:red;">
@@ -168,9 +168,9 @@
                     </div>
                 @endif
                 <p class="text-center">
-                    <span>New on our platform?</span>
-                    <a href="auth-register-cover.html">
-                        <span>Create an account</span>
+                    <span>Ainda não tem conta?</span>
+                    <a href="/signup">
+                        <span>Crie conta</span>
                     </a>
                 </p>
             </div>

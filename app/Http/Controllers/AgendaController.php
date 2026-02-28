@@ -24,6 +24,7 @@ class AgendaController extends Controller
         $services = Service::pluck('name', 'id');
         $professionals = Professional::pluck('name', 'id');
         $clients = Client::pluck('name', 'id');
+
         return view('admin.agenda.index',
             [
                 'services' => $services,
@@ -48,6 +49,7 @@ class AgendaController extends Controller
 
     public function getEvents(Request $request)
     {
+
         $startParam = $request->query('start'); // ISO string
         $endParam = $request->query('end');   // ISO string
 
@@ -64,8 +66,10 @@ class AgendaController extends Controller
         }
 
         $events = $query->get()->map(function ($item) {
-            $start = Carbon::parse("{$item->day} {$item->start_hour}")->toIso8601String();
-            $end = Carbon::parse("{$item->day} {$item->end_hour}")->toIso8601String();
+            $start = Carbon::parse($item->day)
+                ->setTimeFromTimeString($item->start_hour);
+            $end = Carbon::parse($item->day)
+                ->setTimeFromTimeString($item->end_hour);
 
             return [
                 'id' => $item->id,

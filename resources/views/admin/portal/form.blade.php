@@ -45,28 +45,181 @@
 
                     {{ html()->modelForm($portal, 'PUT', route('portal.update', $portal->id ?? 1))->acceptsFiles()->open() }}
 
-                    <div class="row g-6">
-                        <div class="col-md-4">
-                            <label class="form-label" for="name">Título</label>
-                            {{html()->text('title')->id('title')->class('form-control')->placeholder('')}}
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-2">
-                            <label class="form-label" for="main_color">Cor Principal</label>
-                            {{ html()->input('color', 'main_color')->class('form-control')->style('height: 39px') }}
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="secondary_color">Cor Secundária</label>
-                            {{ html()->input('color', 'secondary_color')->class('form-control')->style('height: 39px') }}
-                        </div>
-                        <div class="col-md-2">
-                            <label for="logo" class="form-label">Logotipo</label>
-                            <input type="file" class="form-control" id="logo" name="logo">
-                            @if(isset($portal->logo))
-                                <img src="{{ url('/storage/'.$portal->logo) }}" alt="Portal Image"
-                                     class="img-thumbnail mt-2" style="max-width: 200px;">
-                            @endif
+
+                    <div class="nav-align-top nav-tabs-shadow">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link active waves-effect" role="tab"
+                                        data-bs-toggle="tab" data-bs-target="#navs-top-home"
+                                        aria-controls="navs-top-home" aria-selected="false" tabindex="-1">Home
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#navs-top-profile" aria-controls="navs-top-profile"
+                                        aria-selected="false" tabindex="-1">Pagamento
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab"
+                                        data-bs-target="#navs-top-hours" aria-controls="navs-top-hours"
+                                        aria-selected="false" tabindex="-1">Horário
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="navs-top-home" role="tabpanel">
+                                <div class="row g-6">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="title">Título</label>
+                                        {{html()->text('title')->id('title')->class('form-control')->placeholder('')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="subtitle">Sub Título</label>
+                                        {{html()->text('subtitle')->id('subtitle')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="address">Morada</label>
+                                        {{html()->text('address')->id('address')->class('form-control')->placeholder('')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="city">Localidade</label>
+                                        {{html()->text('city')->id('city')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="phone_1">Telefone 1</label>
+                                        {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="phone_2">Telefone 2</label>
+                                        {{html()->text('phone_2')->id('phone_2')->class('form-control')->placeholder('')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="email">Email</label>
+                                        {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label" for="about_us">Sobre Nós</label>
+                                        {{html()->textarea('about_us')->id('about_us')->class('form-control')->rows(5)->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="main_color">Cor Principal</label>
+                                        {{ html()->input('color', 'main_color')->class('form-control')->style('height: 39px') }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="secondary_color">Cor Secundária</label>
+                                        {{ html()->input('color', 'secondary_color')->class('form-control')->style('height: 39px') }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="button_background_color">Cor Fundo Botões</label>
+                                        {{ html()->input('color', 'button_background_color')->class('form-control')->style('height: 39px') }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="button_text_color">Cor Texto Botões</label>
+                                        {{ html()->input('color', 'button_text_color')->class('form-control')->style('height: 39px') }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="logo" class="form-label">Logotipo</label>
+                                        <input type="file" class="form-control" id="logo" name="logo">
+                                        @if(isset($portal->logo))
+                                            <img src="{{ url('/storage/'.$portal->logo) }}" alt="Portal Image"
+                                                 class="img-thumbnail mt-2" style="max-width: 200px;">
+                                        @endif
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="background_image" class="form-label">Imagem Fundo</label>
+                                        <input type="file" class="form-control" id="background_image"
+                                               name="background_image">
+                                        @if(isset($portal->background_image))
+                                            <img src="{{ url('/storage/'.$portal->background_image) }}"
+                                                 alt="Portal Image"
+                                                 class="img-thumbnail mt-2" style="max-width: 200px;">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="requires_payment">Pré-Pagamento</label>
+                                        {{html()->select('requires_payment')->options([0=>'Não', 1=>'Sim'])->id('requires_payment')->class('form-select')->placeholder('--Selecionar--')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="payment_percentage">% Pré-pagamento</label>
+                                        {{html()->text('payment_percentage')->id('payment_percentage')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="payment_stripe_key">Stripe Key</label>
+                                        {{html()->text('payment_stripe_key')->id('payment_stripe_key')->class('form-control')->placeholder('')}}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="payment_stripe_secret">Stripe Secret</label>
+                                        {{html()->text('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('')}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="payment_stripe_allow_card">Cartão de Crédito</label>
+                                        {{html()->select('payment_stripe_allow_card')->id('payment_stripe_allow_card')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="payment_stripe_allow_multibanco">Multibanco / MBWay</label>
+                                        {{html()->select('payment_stripe_allow_multibanco')->id('payment_stripe_allow_multibanco')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="navs-top-hours" role="tabpanel">
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="monday_hours">Segunda-feira</label>
+                                        {{html()->text('monday_hours')->id('monday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="tuesday_hours">Terça-feira</label>
+                                        {{html()->text('tuesday_hours')->id('tuesday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="wednesday_hours">Quarta-feira</label>
+                                        {{html()->text('wednesday_hours')->id('wednesday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="thursday_hours">Quinta-feira</label>
+                                        {{html()->text('thursday_hours')->id('thursday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="friday_hours">Sexta-feira</label>
+                                        {{html()->text('friday_hours')->id('friday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="saturday_hours">Sábado</label>
+                                        {{html()->text('saturday_hours')->id('saturday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="sunday_hours">Domingo</label>
+                                        {{html()->text('sunday_hours')->id('sunday_hours')->class('form-control')->placeholder('')}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr class="my-2"/>
@@ -122,3 +275,6 @@
             </div>
         </div>
 @endsection
+@push('scripts')
+
+@endpush
