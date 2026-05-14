@@ -16,7 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-    <link href="https://agende.meuhorario.ai/css/app.css" rel="stylesheet">
+    <link href="{{global_asset('assets/css/app.css')}}" rel="stylesheet">
 
     <meta name="csrf-param" content="_csrf-frontend">
     <meta name="csrf-token"
