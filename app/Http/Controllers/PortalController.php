@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PortalRequest;
 use App\Models\Portal;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
@@ -11,11 +12,12 @@ class PortalController extends Controller
     public function index()
     {
         $portal = Portal::first();
+        $domain = tenant()->domains->first()?->domain;
 
-        return view('admin.portal.form', compact('portal'));
+        return view('admin.portal.form', compact('portal', 'domain'));
     }
 
-    public function update(Request $request, $id, ImageService $imageService)
+    public function update(PortalRequest $request, $id, ImageService $imageService)
     {
         $request->validate([
             'logo' => ['nullable', 'image', 'max:2048'], // Ou 'profile_image' ou o que usares

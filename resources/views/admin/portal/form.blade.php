@@ -38,8 +38,11 @@
     <div class="row g-6">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header header-elements">
+                <div class="card-header header-elements d-flex justify-content-between align-items-center">
                     <h5 class="mb-0 me-2">Gestão do Portal</h5>
+                    <a href="http://{{ $domain }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                        <i class="icon-base ti tabler-external-link me-1"></i> Ver portal
+                    </a>
                 </div>
                 <div class="card-body">
 
@@ -164,14 +167,16 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label" for="payment_stripe_secret">Stripe Secret</label>
-                                        {{html()->text('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('')}}
+                                        {{html()->password('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('')}}
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-label" for="payment_stripe_allow_card">Cartão de Crédito</label>
+                                        <label class="form-label" for="payment_stripe_allow_card">Cartão de
+                                            Crédito</label>
                                         {{html()->select('payment_stripe_allow_card')->id('payment_stripe_allow_card')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-label" for="payment_stripe_allow_multibanco">Multibanco / MBWay</label>
+                                        <label class="form-label" for="payment_stripe_allow_multibanco">Multibanco /
+                                            MBWay</label>
                                         {{html()->select('payment_stripe_allow_multibanco')->id('payment_stripe_allow_multibanco')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
                                     </div>
                                 </div>
