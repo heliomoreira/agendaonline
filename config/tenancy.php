@@ -19,8 +19,8 @@ return [
     'central_domains' => [
         '127.0.0.1',
         'localhost',
-        'agendaonline.test',
-        '*.agendaonline.test',
+        'agendaonline.local',
+        '*.agendaonline.local',
         'agendaonline.pt',
         '*.agendaonline.pt',
     ],

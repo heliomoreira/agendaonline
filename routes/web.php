@@ -21,6 +21,10 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::post('/signup/create-tenant', [TenantController::class, 'createTenant']);
         Route::get('/signup/account-created', [TenantController::class, 'createTenant']);
 
+        //Route::get('/signup', [TenantController::class, 'showRegistrationForm'])->name('register');
+
+// Processar registo
+        Route::post('/signup/create-tenant', [TenantController::class, 'createTenant'])->name('register.create');
     });
 }
 

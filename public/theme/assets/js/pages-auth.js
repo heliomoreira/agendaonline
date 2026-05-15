@@ -14,21 +14,21 @@ document.addEventListener('DOMContentLoaded', function () {
           username: {
             validators: {
               notEmpty: {
-                message: 'Please enter username'
+                message: 'Insira o nome de utilizador'
               },
               stringLength: {
                 min: 6,
-                message: 'Username must be more than 6 characters'
+                message: 'Nome de utilizador deve ter mais do que 6 caracteres'
               }
             }
           },
           email: {
             validators: {
               notEmpty: {
-                message: 'Please enter your email'
+                message: 'Insira o seu email'
               },
               emailAddress: {
-                message: 'Please enter a valid email address'
+                message: 'Insira um email válido'
               }
             }
           },
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
               },
               stringLength: {
                 min: 6,
-                message: 'Username must be more than 6 characters'
+                message: 'Nome de utilizador deve ter mais do que 6 caracteres'
               }
             }
           },

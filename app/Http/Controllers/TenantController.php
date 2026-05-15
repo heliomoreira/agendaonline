@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterTenantRequest;
 use App\Models\Portal;
 use App\Models\Professional;
 use App\Models\Service;
@@ -45,7 +46,7 @@ class TenantController extends Controller
         return view('front.website.signup');
     }
 
-    public function createTenant(Request $request)
+    public function createTenant(RegisterTenantRequest  $request)
     {
         $validate = Validator::make($request->all(), [
             'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
