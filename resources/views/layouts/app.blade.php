@@ -108,12 +108,12 @@
                         <div data-i18n="Marcações">Marcações</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('products*') ? 'active' : '' }}">
+                {{--<li class="menu-item {{ request()->routeIs('products*') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-list"></i>
                         <div data-i18n="Produtos">Produtos</div>
                     </a>
-                </li>
+                </li>--}}
                 <li class="menu-item {{ request()->routeIs('services*') ? 'active' : '' }}">
                     <a href="{{route('services.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-layout-list"></i>
