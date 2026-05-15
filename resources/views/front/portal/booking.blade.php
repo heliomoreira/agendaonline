@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $portal->title ?? 'Jorge Nogueira' }} | Agenda Online</title>
+    <title>{{ $portal?->title ?? 'Agenda Online' }} | Agenda Online</title>
 
-    <link rel="icon" type="image/png" href="{{ global_asset('storage/' . ($portal->logo ?? 'default-logo.png')) }}">
+    <link rel="icon" type="image/png" href="{{ $portal?->logo ? global_asset('storage/' . $portal->logo) : '' }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,76 +17,79 @@
 
     <style>
         :root {
-            --cor-primaria: {{ $portal->cor_primaria ?? '#2563eb' }};
-            --cor-primaria-rgb: {{ $portal->cor_primaria_rgb ?? '37, 99, 235' }};
+            --cor-primaria:     {{ $portal?->cor_primaria ?? '#2563eb' }};
+            --cor-primaria-rgb: {{ $portal?->cor_primaria_rgb ?? '37, 99, 235' }};
         }
-        /* Todos os outros estilos agora estão em booking-wizard.css */
     </style>
+
     @php
         try {
             if (class_exists('Lunaweb\RecaptchaV3\RecaptchaV3')) {
                 echo RecaptchaV3::initJs();
             }
-        } catch (\Exception $e) {
-            // RecaptchaV3 not available
-        }
+        } catch (\Exception $e) { /* RecaptchaV3 not available */ }
     @endphp
 </head>
 <body>
 
-<!-- ─── NAVBAR ──────────────────────────────────── -->
+{{-- ======================================================
+     NAVBAR
+====================================================== --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="/{{ $portal->slug ?? '' }}">
-            <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="" class="navbar-logo">
-            <span class="fw-semibold" style="font-size:.9rem">{{ $portal->title ?? '' }}</span>
+        <a class="navbar-brand d-flex align-items-center gap-2" href="/{{ $portal?->slug ?? '' }}">
+            @if($portal?->logo)
+                <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal->title ?? '' }}" class="navbar-logo">
+            @endif
+            <span class="fw-semibold" style="font-size:.9rem">{{ $portal?->title ?? '' }}</span>
         </a>
+
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav">
             <i class="ri-menu-line fs-4"></i>
         </button>
+
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto align-items-center gap-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="/{{ $portal->slug ?? '' }}" style="font-size:.85rem">
+                    <a class="nav-link" href="/{{ $portal?->slug ?? '' }}" style="font-size:.85rem">
                         <i class="ri-home-8-line me-1"></i>Início
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-sm px-3 {{ $portal->button_background_color ? '' : 'btn-primary' }}"
+                    <a class="btn btn-sm px-3 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
                        href="/booking"
-                       style="font-size:.8rem; border-radius:8px; @if($portal->button_background_color) background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }} @endif">
+                       style="font-size:.8rem; border-radius:8px; {{ $portal?->button_background_color ? 'background-color:' . $portal->button_background_color . '; border-color:' . $portal->button_background_color . '; ' . ($portal->button_text_color ? 'color:' . $portal->button_text_color . ';' : 'color:#fff;') : '' }}">
                         <i class="ri-calendar-check-line me-1"></i>Agendar
                     </a>
                 </li>
-             {{--   <li class="nav-item">
-                    <a class="nav-link" href="/{{ $portal->slug ?? '' }}/cliente/login" style="font-size:.85rem">
-                        <i class="ri-login-box-line me-1"></i>Entrar
-                    </a>
-                </li>--}}
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- ─── OFFCANVAS MOBILE ───────────────────────── -->
+{{-- ======================================================
+     OFFCANVAS MOBILE
+====================================================== --}}
 <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNav">
     <div class="offcanvas-header border-bottom">
         <div class="d-flex align-items-center gap-2">
-            <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="" class="navbar-logo">
-            <span class="fw-semibold">{{ $portal->title ?? '' }}</span>
+            @if($portal?->logo)
+                <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal?->title ?? '' }}" class="navbar-logo">
+            @endif
+            <span class="fw-semibold">{{ $portal?->title ?? '' }}</span>
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
         <nav class="nav flex-column gap-1">
-            <a class="nav-link px-3 py-2 rounded" href="/{{ $portal->slug ?? '' }}">
+            <a class="nav-link px-3 py-2 rounded" href="/{{ $portal?->slug ?? '' }}">
                 <i class="ri-home-line me-2"></i>Início
             </a>
-            <a class="nav-link px-3 py-2 rounded text-primary fw-semibold" href="/{{ $portal->slug ?? '' }}/agendamento">
+            <a class="nav-link px-3 py-2 rounded text-primary fw-semibold" href="/{{ $portal?->slug ?? '' }}/agendamento">
                 <i class="ri-calendar-check-line me-2"></i>Agendar
             </a>
             <hr class="my-2">
-            <a class="nav-link px-3 py-2 rounded" href="/{{ $portal->slug ?? '' }}/cliente/login">
+            <a class="nav-link px-3 py-2 rounded" href="/{{ $portal?->slug ?? '' }}/cliente/login">
                 <i class="ri-login-box-line me-2"></i>Entrar
             </a>
         </nav>
@@ -95,19 +98,25 @@
 
 <main>
 
-    <!-- ─── HERO ───────────────────────────────── -->
+    {{-- ======================================================
+         HERO
+    ====================================================== --}}
     <section class="hero-section"
-             style="background-image: url('{{ global_asset(($portal->background_image ?? null) ? 'storage/' . $portal->background_image : 'assets/images/bg_massagens.jpeg') }}');">
+             style="background-image: url('{{ $portal?->background_image ? global_asset('storage/' . $portal->background_image) : global_asset('assets/images/bg_massagens.jpeg') }}');">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-logo">
-                <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="{{ $portal->title ?? '' }}">
-            </div>
-            <h1 class="hero-title">{{ $portal->title ?? '' }}</h1>
+            @if($portal?->logo)
+                <div class="hero-logo">
+                    <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal?->title ?? '' }}">
+                </div>
+            @endif
+            <h1 class="hero-title">{{ $portal?->title ?? '' }}</h1>
         </div>
     </section>
 
-    <!-- ─── WIZARD ─────────────────────────────── -->
+    {{-- ======================================================
+         WIZARD
+    ====================================================== --}}
     <section class="wizard-section">
         <div class="container">
             <div class="wiz-card">
@@ -137,12 +146,12 @@
                     @endif
                 </div>
 
-                {{-- ── P1: Serviço ─────────────────────────── --}}
+                {{-- ── P1: Serviço ──────────────────────────────── --}}
                 <div class="wiz-panel active" id="wizP1">
                     <h5 class="fw-bold mb-1">Que serviço pretende?</h5>
                     <p class="text-muted small mb-4">Clique no serviço que deseja agendar.</p>
 
-                    @if(count($services) >= 7)
+                    @if(($services ?? collect())->count() >= 7)
                         <div class="position-relative mb-4" style="max-width:320px">
                             <i class="ri-search-line position-absolute"
                                style="left:.75rem;top:50%;transform:translateY(-50%);color:#9ca3af;pointer-events:none"></i>
@@ -152,19 +161,19 @@
                     @endif
 
                     <div class="row g-4" id="wizSvcGrid">
-                        @foreach($services as $svc)
+                        @forelse($services ?? [] as $svc)
                             <div class="col-sm-6 col-lg-4 wiz-col"
-                                 data-q="{{ strtolower($svc->name . ' ' . ($svc->description ?? '')) }}">
+                                 data-q="{{ strtolower(($svc->name ?? '') . ' ' . ($svc->description ?? '')) }}">
                                 <div class="service-card"
                                      data-id="{{ $svc->id }}"
-                                     data-name="{{ $svc->name }}"
+                                     data-name="{{ $svc->name ?? '' }}"
                                      data-duration="{{ $svc->duration ?? 30 }}"
                                      data-price="{{ isset($svc->price) ? number_format($svc->price, 2, ',', '.') . ' €' : '' }}"
                                      onclick="wizSelSvc(this)">
                                     <div class="wiz-sel-mark"><i class="ri-check-line"></i></div>
                                     <div class="service-card-image">
-                                        @if(isset($svc->image) && $svc->image)
-                                            <img src="{{ global_asset('storage/' . $svc->image) }}" alt="{{ $svc->name }}">
+                                        @if($svc->image ?? null)
+                                            <img src="{{ global_asset('storage/' . $svc->image) }}" alt="{{ $svc->name ?? '' }}">
                                         @else
                                             <div class="d-flex align-items-center justify-content-center bg-light"
                                                  style="height:150px;color:#d1d5db;font-size:2.5rem">
@@ -173,8 +182,8 @@
                                         @endif
                                     </div>
                                     <div class="service-card-body">
-                                        <h5 class="service-card-title">{{ $svc->name }}</h5>
-                                        @if($svc->description ?? false)
+                                        <h5 class="service-card-title">{{ $svc->name ?? '' }}</h5>
+                                        @if($svc->description ?? null)
                                             <p class="text-muted mb-2" style="font-size:.78rem;line-height:1.4">
                                                 {{ Str::limit($svc->description, 60) }}
                                             </p>
@@ -184,17 +193,19 @@
                                                 <div class="service-card-price">{{ number_format($svc->price, 2, ',', '.') }}€</div>
                                             @endif
                                             @if(isset($svc->duration))
+                                                @php $h = floor($svc->duration / 60); $m = $svc->duration % 60; @endphp
                                                 <div class="service-card-duration">
                                                     <i class="ri-time-line me-1"></i>
-                                                    @php $h = floor($svc->duration/60); $m = $svc->duration%60; @endphp
-                                                    {{ $h > 0 ? $h.'h' : '' }}{{ $m > 0 ? $m.'min' : '' }}
+                                                    {{ $h > 0 ? $h . 'h' : '' }}{{ $m > 0 ? $m . 'min' : '' }}
                                                 </div>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <p class="text-muted">Nenhum serviço disponível de momento.</p>
+                        @endforelse
                     </div>
 
                     <div class="wiz-actions">
@@ -205,7 +216,7 @@
                     </div>
                 </div>
 
-                {{-- ── P2: Profissional ────────────────────── --}}
+                {{-- ── P2: Profissional ──────────────────────────── --}}
                 <div class="wiz-panel" id="wizP2">
                     <div class="row g-4">
                         <div class="col-lg-8">
@@ -229,7 +240,7 @@
                     </div>
                 </div>
 
-                {{-- ── P3: Data & Hora ─────────────────────── --}}
+                {{-- ── P3: Data & Hora ───────────────────────────── --}}
                 <div class="wiz-panel" id="wizP3">
                     <div class="row g-4">
                         <div class="col-lg-8">
@@ -247,18 +258,18 @@
                                     @endforeach
                                 </div>
                                 <div class="d-flex flex-wrap gap-3 mt-3 pt-2 border-top" style="font-size:.67rem;color:#6b7280">
-                            <span class="d-flex align-items-center gap-1">
-                                <span class="wiz-ldot" style="background:#ecfdf5;border-color:#059669"></span>Muita disponibilidade
-                            </span>
+                                <span class="d-flex align-items-center gap-1">
+                                    <span class="wiz-ldot" style="background:#ecfdf5;border-color:#059669"></span>Muita disponibilidade
+                                </span>
                                     <span class="d-flex align-items-center gap-1">
-                                <span class="wiz-ldot" style="background:#fffbeb;border-color:#d97706"></span>Disponibilidade média
-                            </span>
+                                    <span class="wiz-ldot" style="background:#fffbeb;border-color:#d97706"></span>Disponibilidade média
+                                </span>
                                     <span class="d-flex align-items-center gap-1">
-                                <span class="wiz-ldot" style="background:#fef2f2;border-color:#dc2626"></span>Últimas vagas
-                            </span>
+                                    <span class="wiz-ldot" style="background:#fef2f2;border-color:#dc2626"></span>Últimas vagas
+                                </span>
                                     <span class="d-flex align-items-center gap-1">
-                                <span class="wiz-ldot" style="background:#f8fafc;border-color:#e5e7eb"></span>Sem disponibilidade
-                            </span>
+                                    <span class="wiz-ldot" style="background:#f8fafc;border-color:#e5e7eb"></span>Sem disponibilidade
+                                </span>
                                 </div>
                             </div>
                             <div id="wizSlots" style="display:none"></div>
@@ -275,7 +286,7 @@
                     </div>
                 </div>
 
-                {{-- ── P4: Dados do cliente ────────────────── --}}
+                {{-- ── P4: Dados do cliente ──────────────────────── --}}
                 <div class="wiz-panel" id="wizP4">
                     <div class="row g-4">
                         <div class="col-lg-8">
@@ -287,7 +298,11 @@
                             @if($errors->any())
                                 <div class="alert alert-danger d-flex align-items-start gap-2 mb-4">
                                     <i class="ri-error-warning-line mt-1 flex-shrink-0"></i>
-                                    <div>@foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach</div>
+                                    <div>
+                                        @foreach($errors->all() as $e)
+                                            <div>{{ $e }}</div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             @endif
 
@@ -298,9 +313,7 @@
                                         if (class_exists('Lunaweb\RecaptchaV3\RecaptchaV3')) {
                                             echo RecaptchaV3::field('register');
                                         }
-                                    } catch (\Exception $e) {
-                                        // RecaptchaV3 not available, skip
-                                    }
+                                    } catch (\Exception $e) { /* skip */ }
                                 @endphp
                                 <input type="hidden" name="service_id"      id="wizFS">
                                 <input type="hidden" name="professional_id" id="wizFP">
@@ -359,7 +372,7 @@
                     </div>
                 </div>
 
-                {{-- ── P5: Pagamento (opcional) ────────────── --}}
+                {{-- ── P5: Pagamento (opcional) ──────────────────── --}}
                 @if($requiresPayment ?? false)
                     <div class="wiz-panel" id="wizP5">
                         <div class="row g-4">
@@ -367,12 +380,13 @@
                                 <h5 class="fw-bold mb-1">Pagamento</h5>
                                 <p class="text-muted small mb-3">Escolha o método de pagamento para confirmar a marcação.</p>
 
-                                <div class="alert alert-info border-0 mb-4 d-flex align-items-start gap-2" style="background: #eff6ff;">
+                                <div class="alert alert-info border-0 mb-4 d-flex align-items-start gap-2" style="background:#eff6ff;">
                                     <i class="ri-information-line mt-1 flex-shrink-0 text-primary"></i>
-                                    <div style="font-size: .82rem;">
+                                    <div style="font-size:.82rem;">
                                         <strong>MB WAY:</strong> Selecione <strong>Multibanco</strong> e use a referência gerada para pagar através da app MB WAY.
                                     </div>
                                 </div>
+
                                 <div class="alert alert-light border mb-4">
                                     <div class="d-flex align-items-start gap-3">
                                         <i class="ri-price-tag-3-line fs-4 text-primary flex-shrink-0 mt-1"></i>
@@ -382,11 +396,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="alert alert-danger d-none align-items-start gap-2 mb-3"
-                                     id="wizStripeErr">
+
+                                <div class="alert alert-danger d-none align-items-start gap-2 mb-3" id="wizStripeErr">
                                     <i class="ri-error-warning-line mt-1 flex-shrink-0"></i>
                                     <span id="wizStripeErrMsg"></span>
                                 </div>
+
                                 <form id="wizPayForm">
                                     <div class="mb-3">
                                         <label class="form-label fw-semibold">Método de pagamento <span class="text-danger">*</span></label>
@@ -402,6 +417,7 @@
                                         </button>
                                     </div>
                                 </form>
+
                                 <p class="text-muted mt-3 mb-0" style="font-size:.72rem">
                                     <i class="ri-shield-check-line me-1"></i>
                                     Pagamento seguro processado por Stripe. Os seus dados não são armazenados.
@@ -416,85 +432,72 @@
         </div>{{-- /container --}}
     </section>
 
-    <!-- ─── FOOTER ─────────────────────────────── -->
+    {{-- ======================================================
+         FOOTER
+    ====================================================== --}}
     <footer class="app-footer">
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="d-flex align-items-center gap-3 mb-3">
-                        <img src="{{ global_asset('storage/' . ($portal->logo ?? '')) }}" alt="" class="footer-logo">
-                        <span class="h6 mb-0">{{ $portal->title ?? '' }}</span>
+                        @if($portal?->logo)
+                            <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="" class="footer-logo">
+                        @endif
+                        <span class="h6 mb-0">{{ $portal?->title ?? '' }}</span>
                     </div>
-                    @if($portal->address ?? null)
+                    @if($portal?->address)
                         <p class="text-white-50 small mb-2">
                             <i class="ri-map-pin-line me-2"></i>{{ $portal->address }}
                         </p>
                     @endif
-                    @if($portal->phone_1 ?? null)
+                    @if($portal?->phone_1)
                         <p class="text-white-50 small mb-2">
                             <i class="ri-phone-line me-2"></i>{{ $portal->phone_1 }}
                         </p>
                     @endif
                 </div>
-                <div class="col-lg-4">
 
-                        <h6 class="text-uppercase small mb-3">Horários</h6>
+                <div class="col-lg-4">
+                    <h6 class="text-uppercase small mb-3">Horários</h6>
                     <ul class="list-unstyled small text-white-50">
                         @foreach([
-                            'Seg' => $portal->monday_hours,
-                            'Ter' => $portal->tuesday_hours,
-                            'Qua' => $portal->wednesday_hours,
-                            'Qui' => $portal->thursday_hours,
-                            'Sex' => $portal->friday_hours,
-                            'Sáb' => $portal->saturday_hours,
-                            'Dom' => $portal->sunday_hours,
+                            'Seg' => $portal?->monday_hours,
+                            'Ter' => $portal?->tuesday_hours,
+                            'Qua' => $portal?->wednesday_hours,
+                            'Qui' => $portal?->thursday_hours,
+                            'Sex' => $portal?->friday_hours,
+                            'Sáb' => $portal?->saturday_hours,
+                            'Dom' => $portal?->sunday_hours,
                         ] as $day => $hours)
                             <li class="d-flex justify-content-between py-1 border-bottom border-secondary">
                                 <span>{{ $day }}</span>
                                 <span>
-                                    @if($hours)
+                                @if($hours)
                                         {{ $hours }}
                                     @else
                                         <span class="text-danger">Fechado</span>
                                     @endif
-                                </span>
+                            </span>
                             </li>
                         @endforeach
                     </ul>
-
                 </div>
-                {{--<div class="col-lg-4">
-                    <h6 class="text-uppercase small mb-3">Redes Sociais</h6>
-                    <div class="d-flex gap-2 flex-wrap mb-4">
-                        @if($portal->instagram ?? null)
-                            <a href="{{ $portal->instagram }}" target="_blank" class="btn btn-outline-light btn-sm"><i class="ri-instagram-line"></i></a>
-                        @endif
-                        @if($portal->facebook ?? null)
-                            <a href="{{ $portal->facebook }}" target="_blank" class="btn btn-outline-light btn-sm"><i class="ri-facebook-line"></i></a>
-                        @endif
-                        @if($portal->whatsapp ?? null)
-                            <a href="https://wa.me/{{ preg_replace('/\D/', '', $portal->whatsapp) }}" target="_blank" class="btn btn-outline-success btn-sm"><i class="ri-whatsapp-line"></i></a>
-                        @endif
-                    </div>
-                    <a href="/{{ $portal->slug ?? '' }}/agendamento" class="btn btn-primary w-100" style="font-size:.82rem;border-radius:10px">
-                        <i class="ri-calendar-check-line me-2"></i>Agendar Agora
-                    </a>
-                </div>--}}
             </div>
+
             <hr class="my-4 border-secondary">
+
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">
                 <p class="mb-0">&copy; {{ date('Y') }} Agenda Online - Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
+
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-{{-- RecaptchaV3 stub para evitar erros se não estiver carregado --}}
 <script>
     if (typeof grecaptcha === 'undefined') {
-        console.warn('RecaptchaV3 not loaded, using stub');
         window.grecaptcha = {
             ready: function(cb) { cb(); },
             execute: function() { return Promise.resolve('no-recaptcha-token'); }
@@ -502,14 +505,13 @@
     }
 </script>
 
-{{-- Wizard Config --}}
 <script>
     window.WizConfig = {
-        corPrimaria:     '{{ $portal->cor_primaria ?? '#2563eb' }}',
-        requiresPayment: {{ ($requiresPayment ?? false) ? 'true' : 'false' }},
+        corPrimaria:       '{{ $portal?->cor_primaria ?? '#2563eb' }}',
+        requiresPayment:   {{ ($requiresPayment ?? false) ? 'true' : 'false' }},
         paymentPercentage: {{ $paymentPercentage ?? 100 }},
-        stripeKey:       '{{ $stripeKey ?? config('services.stripe.key') ?? env('STRIPE_KEY') ?? '' }}',
-        csrfToken:       '{{ csrf_token() }}',
+        stripeKey:         '{{ $stripeKey ?? config('services.stripe.key', '') }}',
+        csrfToken:         '{{ csrf_token() }}',
         routes: {
             professionals:  '/services/{id}/professionals',
             availableSlots: '{{ url('/available-slots') }}',
@@ -520,17 +522,6 @@
             @endif
         },
     };
-
-    // Debug: verificar se Stripe key está configurada
-    if (window.WizConfig.requiresPayment) {
-        console.log('Payment required: Yes');
-        console.log('Stripe key present:', window.WizConfig.stripeKey ? 'Yes (starts with ' + window.WizConfig.stripeKey.substring(0, 7) + '...)' : 'NO - MISSING!');
-        if (!window.WizConfig.stripeKey) {
-            console.error('❌ STRIPE KEY IS MISSING! Check your .env file and config/services.php');
-            console.error('Expected: STRIPE_KEY=pk_test_... or STRIPE_KEY=pk_live_...');
-        }
-    }
-
 </script>
 
 @if($requiresPayment ?? false)

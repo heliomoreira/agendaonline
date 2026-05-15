@@ -65,7 +65,7 @@
 
 <div class="authentication-wrapper authentication-cover">
     <!-- Logo -->
-    <a href="index.html" class="app-brand auth-cover-brand">
+    <a href="/" class="app-brand auth-cover-brand">
         <span class="app-brand-logo demo">
           <span class="text-primary">
             <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -167,6 +167,13 @@
                         {{ $errors->first() }}
                     </div>
                 @endif
+                <p class="text-center">
+                    <span>Não se recorda da password?</span>
+                    <a href="/password-recovering">
+                        <span>Recuperar Password</span>
+                    </a>
+                </p>
+                <hr>
                 <p class="text-center">
                     <span>Ainda não tem conta?</span>
                     <a href="/signup">
