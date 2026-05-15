@@ -71,7 +71,7 @@ class BookingController extends Controller
         $portal = Portal::all()->first();
 
 
-        $client = Client::updateOrCreate(
+        $client = Client::firstOrCreate(
             [
                 'phone_1' => $request->client_phone_1
             ],
