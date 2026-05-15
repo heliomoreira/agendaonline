@@ -60,12 +60,8 @@
                     <div class="row g-6">
                         <div class="col-md-3">
                             <label class="form-label" for="name">Serviço</label>
-                            <select id="service_id" name="service_id" class="form-select" required>
-                                <option value="">Selecionar...</option>
-                                @foreach($services as $service)
-                                    <option value="{{ $service->id }}">{{ $service->name }}</option>
-                                @endforeach
-                            </select>
+                            {{html()->select('service_id')->options($services)->placeholder('Seleccionar...')->class('form-select')}}
+
                         </div>
                         <div class="col-md-3">
                             <label class="form-label" for="name">Profissional</label>

@@ -27,7 +27,8 @@
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="/">
             @if($portal?->logo)
-                <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal->title ?? '' }}" class="navbar-logo">
+                <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal->title ?? '' }}"
+                     class="navbar-logo">
             @endif
             <span class="fw-semibold">{{ $portal?->title ?? '' }}</span>
         </a>
@@ -65,7 +66,8 @@
     <div class="offcanvas-header border-bottom">
         <div class="d-flex align-items-center gap-2">
             @if($portal?->logo)
-                <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal?->title ?? '' }}" class="navbar-logo">
+                <img src="{{ global_asset('storage/' . $portal->logo) }}" alt="{{ $portal?->title ?? '' }}"
+                     class="navbar-logo">
             @endif
             <span class="fw-semibold">{{ $portal?->title ?? '' }}</span>
         </div>
@@ -114,9 +116,12 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                      class="lucide lucide-calendar-plus">
-                    <path d="M16 19h6"></path><path d="M16 2v4"></path><path d="M19 16v6"></path>
+                    <path d="M16 19h6"></path>
+                    <path d="M16 2v4"></path>
+                    <path d="M19 16v6"></path>
                     <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                    <path d="M3 10h18"></path><path d="M8 2v4"></path>
+                    <path d="M3 10h18"></path>
+                    <path d="M8 2v4"></path>
                 </svg>
                 Agendar horário
             </a>
@@ -184,7 +189,15 @@
                     <div class="col-sm-6 col-lg-4">
                         <div class="service-card">
                             <div class="service-card-image">
-                                <img src="storage/{{ $service->image }}" alt="{{ $service->name }}">
+                                @if($service->image ?? null)
+                                    <img src="{{ global_asset('storage/' . $service->image) }}"
+                                         alt="{{ $service->name ?? '' }}">
+                                @else
+                                    <div class="d-flex align-items-center justify-content-center bg-light"
+                                         style="height:150px;color:#d1d5db;font-size:2.5rem">
+                                        <i class="ri-scissors-line"></i>
+                                    </div>
+                                @endif
                             </div>
                             <div class="service-card-body">
                                 <h5 class="service-card-title"
@@ -209,9 +222,13 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                          stroke-linejoin="round" class="lucide lucide-calendar-plus">
-                                        <path d="M16 19h6"></path><path d="M16 2v4"></path><path d="M19 16v6"></path>
-                                        <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                                        <path d="M3 10h18"></path><path d="M8 2v4"></path>
+                                        <path d="M16 19h6"></path>
+                                        <path d="M16 2v4"></path>
+                                        <path d="M19 16v6"></path>
+                                        <path
+                                            d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                                        <path d="M3 10h18"></path>
+                                        <path d="M8 2v4"></path>
                                     </svg>
                                     Agendar
                                 </a>
@@ -237,9 +254,12 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="lucide lucide-calendar-plus">
-                        <path d="M16 19h6"></path><path d="M16 2v4"></path><path d="M19 16v6"></path>
+                        <path d="M16 19h6"></path>
+                        <path d="M16 2v4"></path>
+                        <path d="M19 16v6"></path>
                         <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                        <path d="M3 10h18"></path><path d="M8 2v4"></path>
+                        <path d="M3 10h18"></path>
+                        <path d="M8 2v4"></path>
                     </svg>
                     Agendar horário
                 </a>
@@ -317,7 +337,8 @@
 
             <hr class="my-4 border-secondary">
 
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-white-50">
                 <p class="mb-0">&copy; {{ date('Y') }} Agenda Online - Todos os direitos reservados.</p>
             </div>
         </div>

@@ -126,20 +126,22 @@ class BookingController extends Controller
         $service = Service::find($request->service_id);
         $serviceName = $service ? $service->name : 'o seu serviço';
 
-        $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+        if ($tenant->sms_status && $tenant->sms_sender != null && $tenant->sms_credits > 0.04) {
 
-        NotificationService::saveNotification(
-            $tenant->id,
-            $booking->id,
-            $tenant->sms_sender,
-            $request->client_phone_1,
-            'sms',
-            $text,
-            $request->day,
-            $start->format('H:i'),
-            $end->format('H:i')
-        );
+            $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
 
+            NotificationService::saveNotification(
+                $tenant->id,
+                $booking->id,
+                $tenant->sms_sender,
+                $request->client_phone_1,
+                'sms',
+                $text,
+                $request->day,
+                $start->format('H:i'),
+                $end->format('H:i')
+            );
+        }
 
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));

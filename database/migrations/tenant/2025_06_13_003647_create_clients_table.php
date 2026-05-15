@@ -23,10 +23,16 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->unsignedBigInteger('district_id')->nullable();
             $table->unsignedBigInteger('county_id')->nullable();
-            $table->boolean('marketing_allowed')->default(false);
             $table->date('birthdate')->nullable();
             $table->string('type')->nullable();
             $table->text('notes')->nullable();
+            $table->string('password')->nullable()->after('email');
+            $table->rememberToken()->after('password');
+            $table->timestamp('email_verified_at')->nullable()->after('remember_token');
+            $table->string('password_reset_token')->nullable();
+            $table->timestamp('password_reset_expires_at')->nullable();
+            $table->boolean('marketing_allowed')->default(false);
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
