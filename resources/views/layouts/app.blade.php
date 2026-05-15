@@ -84,7 +84,7 @@
             <ul class="menu-inner py-1" style="background-color: #0b0f23">
                 <li class="menu-item text-center">
                 <span class="badge bg-label-warning">
-                    Versão BETA
+                    Versão Alpha
                 </span>
                 </li>
                 <li class="menu-item mt-4 {{ request()->routeIs('dashboard*') ? 'active' : '' }}">
