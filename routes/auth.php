@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminPasswordResetController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -10,6 +11,19 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+
+Route::middleware(['web'])->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/forgot-password', [AdminPasswordResetController::class, 'showForgotForm'])
+            ->name('password.forgot.form');
+        Route::post('/forgot-password', [AdminPasswordResetController::class, 'sendResetLink'])
+            ->name('password.forgot.send');
+        Route::get('/reset-password/{token}', [AdminPasswordResetController::class, 'showResetForm'])
+            ->name('password.reset.form');
+        Route::post('/reset-password', [AdminPasswordResetController::class, 'resetPassword'])
+            ->name('password.reset.update');
+    });
+});
 /*
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

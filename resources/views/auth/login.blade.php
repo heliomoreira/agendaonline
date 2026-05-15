@@ -169,7 +169,7 @@
                 @endif
                 <p class="text-center">
                     <span>Não se recorda da password?</span>
-                    <a href="/password-recovering">
+                    <a href="/admin/forgot-password">
                         <span>Recuperar Password</span>
                     </a>
                 </p>

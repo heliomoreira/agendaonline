@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AccountSettingsController;
+use App\Http\Controllers\Auth\AdminPasswordResetController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BookingController;
@@ -56,6 +57,7 @@ Route::middleware([
 
             return redirect()->route('login');
         })->name('logout');
+
 
         /*
         * Admin Application routes
