@@ -58,6 +58,10 @@
                             <th>Serviço</th>
                             <td><span id="eventService"></span></td>
                         </tr>
+                        <tr>
+                            <th>Observações</th>
+                            <td><span id="eventNotes"></span></td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -140,6 +144,7 @@
                     document.getElementById('eventProfessional').innerText = info.event.extendedProps.professional || 'Não definido';
                     document.getElementById('eventCustomer').innerText = info.event.extendedProps.client || 'Não definido';
                     document.getElementById('eventService').innerText = info.event.extendedProps.service || 'Não definido';
+                    document.getElementById('eventNotes').innerText = info.event.extendedProps.notes || '—';
 
                     const modal = new bootstrap.Modal(document.getElementById('eventModal'));
                     modal.show();
