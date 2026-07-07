@@ -106,6 +106,17 @@
                             <input type="text" id="client_phone_1" name="client_phone_1" class="form-control" required>
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-12 pt-4">
+                            <h5 class="mb-2 border-bottom pb-1">
+                                <i class="icon-base ti tabler-file"></i>
+                                Observações
+                            </h5>
+                        </div>
+                        <div class="col-md-6 pt-4">
+                            <textarea class="form-control" id="notes" name="notes" rows="5"></textarea>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex gap-2">

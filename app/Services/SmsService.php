@@ -1,72 +1,74 @@
 <?php
-
 namespace App\Services;
 
-use App\Models\Tenant;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
-    public static function send($tenant_id, $sender, $destinatary, $text)
+    private Client $client;
+
+    public function __construct()
     {
 
-        try {
-            $url = env("EZ4U_SMS_URL");
+    }
 
-            $client = new Client();
-            $response = $client->request('POST', $url . '/sendSMS.php', [
-                'query' => [
-                    'licensekey' => env('EZ4U_SMS_API'),
-                    'phoneNumber' => $destinatary,
-                    'messageText' => $text,
-                    'account' => env('EZ4U_SMS_ACCOUNT'),
-                    'alfaSender' => $sender,
-                    'CC' => 1,
-                ]
+    public static function send(string $receiver, string $message, string $sender): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $client = new Client([
+                'base_uri' => rtrim(config('sms.sms_url'), '/'),
+                'headers'  => [
+                    'Content-Type'  => 'application/json',
+                    'Authorization' => 'Basic ' . config('sms.sms_token'),
+                ],
+            ]);
+
+            $response = $client->post('/api/rest/sms', [
+                'json' => [
+                    'to'           => ['351' . $receiver],
+                    'from'         => $sender,
+                    'message'      => $message,
+                    'campaignName' => $sender,
+                    'parts'        => 10,
+                ],
             ]);
 
             $res = json_decode($response->getBody()->getContents(), true);
 
-            if ($res['Result'] == "OK") {
+            return isset($res['result'][0]['accepted']) && $res['result'][0]['accepted'] === true
+                ? response()->json('ok', 200)
+                : response()->json('error', 422);
 
-                self::removeCredits($tenant_id, 1);
+        } catch (GuzzleException $e) {
+            Log::error('SMS send failed', ['error' => $e->getMessage()]);
+            return response()->json('error', 500);
+        }
+    }
 
-                return response()->json('ok', 200);
-            } else {
-                return response()->json('error', $response->getStatusCode());
+    public function getSmsDeliveryDetails(string $smsId): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $response = $this->client->get("/api/rest/sms/{$smsId}");
+            $res = json_decode($response->getBody()->getContents(), true);
+
+            $sms = $res['data'][0] ?? null;
+
+            if (!$sms) {
+                return response()->json('not_found', 404);
             }
 
-        } catch (\GuzzleHttp\Exception\ClientException $ex) {
-            Log::error($ex);
-            $response = $ex->getResponse();
-            return response()->json('error', $response->getStatusCode());
-        }
-    }
+            return response()->json([
+                'id'          => $sms['id'],
+                'is_delivered'=> $sms['isDelivered'],
+                'is_clicked'  => $sms['isClicked'],
+                'events'      => $sms['events'],
+            ]);
 
-    public static function removeCredits($tenant_id, $totalSms)
-    {
-        $total = $totalSms * config('sms.sms_value');
-
-        $result = Tenant::where('id', $tenant_id)->decrement('sms_credits', $total);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function addCredits($totalValue)
-    {
-        $result = tenant()->update([
-            'sms_credits' => tenant()->sms_credits + $totalValue,
-        ]);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
+        } catch (GuzzleException $e) {
+            Log::error('SMS delivery details failed', ['smsId' => $smsId, 'error' => $e->getMessage()]);
+            return response()->json('error', 500);
         }
     }
 }
