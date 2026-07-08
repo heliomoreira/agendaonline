@@ -48,15 +48,29 @@ class AgendaController extends Controller
             'professionals' => $professionals,
         ]);
     }
-    public function list()
+    public function list(Request $request)
     {
+        $services      = Service::orderBy('name')->get();
+        $professionals = Professional::orderBy('name')->get();
+
         $events = Agenda::with(['service', 'professional'])
             ->visibleTo(auth()->user())
             ->upcoming()
-            ->get();
+            ->when($request->filled('service_id'),
+                fn ($q) => $q->where('service_id', $request->service_id))
+            ->when($request->filled('professional_id'),
+                fn ($q) => $q->where('professional_id', $request->professional_id))
+            ->when($request->filled('date_from'),
+                fn ($q) => $q->whereDate('day', '>=', $request->date_from))
+            ->when($request->filled('date_to'),
+                fn ($q) => $q->whereDate('day', '<=', $request->date_to))
+            ->paginate(15)
+            ->withQueryString();
 
         return view('admin.agenda.list', [
-            'events' => $events,
+            'events'        => $events,
+            'services'      => $services,
+            'professionals' => $professionals,
         ]);
     }
     public function getEvents(Request $request)

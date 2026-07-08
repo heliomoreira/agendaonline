@@ -102,12 +102,25 @@
                         <div data-i18n="Clientes">Clientes</div>
                     </a>
                 </li>
-                <li class="menu-item {{ request()->routeIs('agenda*') ? 'active' : '' }}">
-                    <a href="{{route('agenda.index')}}" class="menu-link">
+                  <li class="menu-item {{ request()->routeIs('agenda*') ? 'active open' : '' }}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ti tabler-calendar"></i>
                         <div data-i18n="Marcações">Marcações</div>
                     </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item {{ request()->routeIs('agenda.index') ? 'active' : '' }}" >
+                            <a href="{{route('agenda.index')}}" class="menu-link">
+                                <div data-i18n="Agenda">Agenda</div>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ request()->routeIs('agenda.list') ? 'active' : '' }}" >
+                            <a href="{{route('agenda.list')}}" class="menu-link">
+                                <div data-i18n="Listagem">Listagem</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 {{--<li class="menu-item {{ request()->routeIs('products*') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-list"></i>
