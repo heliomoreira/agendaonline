@@ -25,7 +25,7 @@ use Illuminate\Validation\ValidationException;
 
 class BookingController extends Controller
 {
-    private const SLOT_INTERVAL = 30; // minutes
+    private const SLOT_INTERVAL = 30;
     private const SUNDAY = 0;
     private const SATURDAY = 6;
 
@@ -365,7 +365,7 @@ class BookingController extends Controller
     {
         $allSlots = [];
         $dateString = $date->toDateString();
-        $slotInterval = config('app.slot_interval', self::SLOT_INTERVAL);
+        $slotInterval = config('booking.slot_interval', self::SLOT_INTERVAL);
 
         foreach ($workingBlocks as $block) {
             $blockSlots = $this->generateSlotsForWorkingBlock(

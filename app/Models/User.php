@@ -25,6 +25,8 @@ class User extends Authenticatable
         'username',
         'tenant_id',
         'password',
+        'only_own_agenda',
+        'professional_id',
     ];
 
     /**
@@ -47,11 +49,17 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'only_own_agenda' => 'boolean',
         ];
     }
 
     public function tenant()
     {
         return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
+    }
+
+    public function isRestrictedToOwnAgenda(): bool
+    {
+        return $this->only_own_agenda && ! is_null($this->professional_id);
     }
 }

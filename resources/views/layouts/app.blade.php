@@ -162,6 +162,12 @@
                         <div data-i18n="SMS">SMS</div>
                     </a>
                 </li>
+                <li class="menu-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <a href="{{route('users.index')}}" class="menu-link">
+                        <i class="menu-icon icon-base ti tabler-user-shield"></i>
+                        <div data-i18n="Utilizadores">Utilizadores</div>
+                    </a>
+                </li>
               {{--  <li class="menu-item">
                     <a href="/admin/locations" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-home"></i>

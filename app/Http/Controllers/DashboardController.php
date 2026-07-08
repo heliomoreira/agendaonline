@@ -9,10 +9,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $nextEvents = Agenda::with(['service', 'professional'])->upcoming()->get();
+        $nextEvents = Agenda::with(['service', 'professional'])
+            ->visibleTo(auth()->user())
+            ->upcoming()
+            ->get();
 
         return view('admin.dashboard.index', [
-            'nextEvents' => $nextEvents
+            'nextEvents' => $nextEvents,
         ]);
     }
 }

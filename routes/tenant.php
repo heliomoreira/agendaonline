@@ -18,6 +18,7 @@ use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -149,6 +150,16 @@ Route::middleware([
             Route::prefix('sms')->group(function () {
                 Route::get('/', [SmsController::class, 'index'])->name('sms.index');
                 Route::put('/update', [SmsController::class, 'update'])->name('sms.update');
+            });
+
+            Route::prefix('/users')->group(function () {
+                Route::get('/', [UsersController::class, 'index'])->name('users.index');
+                Route::get('/form', [UsersController::class, 'form'])->name('users.form');
+                Route::get('/edit/{id}', [UsersController::class, 'edit'])->name('users.edit');
+
+                Route::post('/store', [UsersController::class, 'store'])->name('users.store');
+                Route::put('/update/{id}', [UsersController::class, 'update'])->name('users.update');
+                Route::delete('/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
             });
         });
     });

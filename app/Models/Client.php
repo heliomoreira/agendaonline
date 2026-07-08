@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,20 +10,24 @@ use Illuminate\Notifications\Notifiable;
 
 class Client extends Model
 {
-    use HasFactory, Notifiable, softDeletes;
+
+    use HasFactory, Notifiable, softDeletes, CanResetPassword;
 
     protected $fillable = [
         'name', 'phone_1', 'phone_2', 'email', 'address', 'number_port', 'zip_code',
-        'city', 'district_id', 'county_id', 'marketing_allowed', 'type','birthdate', 'notes',
+        'city', 'district_id', 'county_id', 'marketing_allowed', 'type', 'birthdate', 'notes',
+        'password',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     /* ═══════════════════════════════════════

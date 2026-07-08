@@ -377,4 +377,13 @@ class Agenda extends Model
     {
         return $this->canBeCancelled();
     }
+
+    public function scopeVisibleTo($query, $user)
+    {
+        if ($user && $user->isRestrictedToOwnAgenda()) {
+            return $query->where('professional_id', $user->professional_id);
+        }
+
+        return $query;
+    }
 }

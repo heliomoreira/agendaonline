@@ -22,15 +22,17 @@ class AgendaController extends Controller
     public function index()
     {
         $services = Service::pluck('name', 'id');
-        $professionals = Professional::pluck('name', 'id');
+
+        $user = auth()->user();
+        if ($user && $user->isRestrictedToOwnAgenda()) {
+            $professionals = Professional::where('id', $user->professional_id)->pluck('name', 'id');
+        } else {
+            $professionals = Professional::pluck('name', 'id');
+        }
+
         $clients = Client::pluck('name', 'id');
 
-        return view('admin.agenda.index',
-            [
-                'services' => $services,
-                'professionals' => $professionals,
-                'clients' => $clients,
-            ]);
+        return view('admin.agenda.index', compact('services', 'professionals', 'clients'));
     }
 
 
@@ -58,10 +60,12 @@ class AgendaController extends Controller
         $end = $endParam ? Carbon::parse($endParam)->format('Y-m-d') : now()->endOfWeek()->format('Y-m-d');
 
         $query = Agenda::with(['client', 'professional', 'service'])
-            ->whereBetween('day', [$start, $end]);
+            ->whereBetween('day', [$start, $end])
+            ->visibleTo(auth()->user());
 
-        // Optional server-side filter by professional
-        if ($request->filled('professional_id')) {
+        $user = auth()->user();
+
+        if (! ($user && $user->isRestrictedToOwnAgenda()) && $request->filled('professional_id')) {
             $query->where('professional_id', $request->query('professional_id'));
         }
 
