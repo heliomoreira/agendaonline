@@ -116,6 +116,7 @@ Route::middleware([
             Route::prefix('agenda')->group(function () {
                 Route::get('/', [AgendaController::class, 'index'])->name('agenda.index');
                 Route::get('/form', [AgendaController::class, 'form'])->name('agenda.form');
+                Route::get('/list', [AgendaController::class, 'list'])->name('agenda.list');
                 Route::get('/edit/{id}', [AgendaController::class, 'edit'])->name('agenda.edit');
                 Route::post('/store', [AgendaController::class, 'store'])->name('agenda.store');
                 Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');

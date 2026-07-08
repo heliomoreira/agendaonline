@@ -48,7 +48,17 @@ class AgendaController extends Controller
             'professionals' => $professionals,
         ]);
     }
+    public function list()
+    {
+        $events = Agenda::with(['service', 'professional'])
+            ->visibleTo(auth()->user())
+            ->upcoming()
+            ->get();
 
+        return view('admin.agenda.list', [
+            'events' => $events,
+        ]);
+    }
     public function getEvents(Request $request)
     {
 

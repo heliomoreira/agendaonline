@@ -1,144 +1,162 @@
 @extends('layouts.app')
 @section('content')
-    {{--<div class="row g-6">
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="d-flex align-items-end row">
-                    <div class="col-7">
-                        <div class="card-body text-nowrap">
-                            <h5 class="card-title mb-0">Congratulations John! 🎉</h5>
-                            <p class="mb-2">Best seller of the month</p>
-                            <h4 class="text-primary mb-1">$48.9k</h4>
-                            <a href="javascript:;" class="btn btn-primary">View Sales</a>
-                        </div>
-                    </div>
-                    <div class="col-5 text-center text-sm-left">
-                        <div class="card-body pb-0 px-0 px-md-4">
-                            <img src="{{global_asset('theme/assets/img/illustrations/card-advance-sale.png')}}"
-                                 height="140"
-                                 alt="view sales"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-xl-8">
-            <div class="card h-100">
-                <div class="card-header d-flex justify-content-between">
-                    <h5 class="card-title mb-0">Statistics</h5>
-                    <small class="text-body-secondary">Updated 1 month ago</small>
-                </div>
-                <div class="card-body d-flex align-items-end">
-                    <div class="w-100">
-                        <div class="row gy-3">
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-primary me-4 p-2"><i
-                                            class="icon-base ti tabler-chart-pie-2 icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">230k</h5>
-                                        <small>Sales</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-info me-4 p-2"><i
-                                            class="icon-base ti tabler-users icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">8.549k</h5>
-                                        <small>Customers</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-danger me-4 p-2"><i
-                                            class="icon-base ti tabler-shopping-cart icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">1.423k</h5>
-                                        <small>Products</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="badge rounded bg-label-success me-4 p-2"><i
-                                            class="icon-base ti tabler-currency-dollar icon-lg"></i></div>
-                                    <div class="card-info">
-                                        <h5 class="mb-0">$9745</h5>
-                                        <small>Revenue</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>--}}
+    {{-- ===== Cabeçalho de boas-vindas ===== --}}
     <div class="row">
         <div class="col-12">
-            <h4 class="my-4">Dashboard</h4>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 my-4">
+                <div>
+                    <h4 class="mb-1">Dashboard</h4>
+                    <p class="mb-0 text-body-secondary text-capitalize">
+                        {{ \Carbon\Carbon::now()->translatedFormat('l, d \d\e F \d\e Y') }}
+                    </p>
+                </div>
+                <a href="{{ route('agenda.index') }}" class="btn btn-primary">
+                    <i class="ti tabler-calendar-plus me-1"></i> Ver Agenda
+                </a>
+            </div>
         </div>
     </div>
+
+    <div class="row g-4 mb-2">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="avatar">
+                            <span class="avatar-initial bg-label-primary rounded">
+                                <i class="ti tabler-calendar-event icon-lg"></i>
+                            </span>
+                        </div>
+                        <span class="badge bg-label-primary rounded-pill">Hoje</span>
+                    </div>
+                    <p class="mb-1 text-body-secondary">Serviços de Hoje</p>
+                    <h4 class="mb-0">{{ $servicesToday ?? 0 }}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-xl-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="avatar">
+                            <span class="avatar-initial bg-label-info rounded">
+                                <i class="ti tabler-calendar-week icon-lg"></i>
+                            </span>
+                        </div>
+                        <span class="badge bg-label-info rounded-pill">Semana</span>
+                    </div>
+                    <p class="mb-1 text-body-secondary">Serviços esta Semana</p>
+                    <h4 class="mb-0">{{ $servicesWeek ?? 0 }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
-        <div class="col-12 order-3 mt-3">
+        <div class="col-12 mt-3">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title"><i class="ti tabler-calendar"></i> Próximos Serviços</h5>
+                    <h5 class="card-title mb-0">
+                        <i class="ti tabler-calendar-clock me-1"></i> Próximos Serviços
+                    </h5>
+                    <span class="badge bg-label-secondary rounded-pill">
+                        {{ count($nextEvents) }} agendado{{ count($nextEvents) === 1 ? '' : 's' }}
+                    </span>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table border-top">
+                        <table class="table table-hover mb-0 align-middle">
                             <thead class="border-bottom">
                             <tr>
                                 <th>Serviço</th>
                                 <th>Data</th>
-                                <th>Hora de Início</th>
-                                <th>Hora de Fim</th>
+                                <th>Horário</th>
                                 <th>Profissional</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            @foreach($nextEvents as $event)
+                            <tbody class="table-border-bottom-0">
+                            @forelse($nextEvents as $event)
+                                @php
+                                    // Iniciais do profissional (1ª e última palavra)
+                                    $parts = array_values(array_filter(explode(' ', trim($event->professional->name))));
+                                    $initials = mb_strtoupper(
+                                        mb_substr($parts[0] ?? '', 0, 1) .
+                                        (count($parts) > 1 ? mb_substr(end($parts), 0, 1) : '')
+                                    );
+
+                                    // Data amigável + destaque para hoje/amanhã
+                                    try {
+                                        $date = \Carbon\Carbon::parse($event->day);
+                                        $dateLabel = $date->translatedFormat('d M Y');
+                                        $weekday   = ucfirst($date->translatedFormat('l'));
+                                        $isToday    = $date->isToday();
+                                        $isTomorrow = $date->isTomorrow();
+                                    } catch (\Throwable $e) {
+                                        $dateLabel = $event->day; $weekday = ''; $isToday = false; $isTomorrow = false;
+                                    }
+                                @endphp
                                 <tr>
-                                    <td class="pt-5">
-                                        <div class="d-flex justify-content-start align-items-center">
-                                            <div class="d-flex flex-column">
-                                                <p class="mb-0 text-heading">{{ $event->service->name }}</p>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-sm me-3">
+                                                <span class="avatar-initial bg-label-primary rounded">
+                                                    <i class="ti tabler-briefcase"></i>
+                                                </span>
                                             </div>
+                                            <span class="fw-medium text-heading">{{ $event->service->name }}</span>
                                         </div>
                                     </td>
-                                    <td class="pt-5">
-                                        <p class="mb-0 text-heading">{{ $event->day }}</p>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <span class="text-heading">{{ $dateLabel }}</span>
+                                            @if($isToday)
+                                                <span class="badge bg-label-success rounded-pill mt-1 align-self-start">Hoje</span>
+                                            @elseif($isTomorrow)
+                                                <span class="badge bg-label-warning rounded-pill mt-1 align-self-start">Amanhã</span>
+                                            @elseif($weekday)
+                                                <small class="text-body-secondary">{{ $weekday }}</small>
+                                            @endif
+                                        </div>
                                     </td>
-                                    <td class="pt-5">
-                                        <p class="mb-0 text-heading">{{ $event->start_hour }}h</p>
+                                    <td>
+                                        <span class="badge bg-label-info rounded-pill">
+                                            <i class="ti tabler-clock me-1"></i>{{ $event->start_hour }}h – {{ $event->end_hour }}h
+                                        </span>
                                     </td>
-                                    <td class="pt-5">
-                                        <p class="mb-0 text-heading">{{ $event->end_hour }}h</p>
-                                    </td>
-                                    <td class="pt-5">
-                                        <p class="mb-0 text-heading">{{ $event->professional->name }}</p>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-sm me-2">
+                                                <span class="avatar-initial bg-label-secondary rounded-circle">{{ $initials }}</span>
+                                            </div>
+                                            <span class="text-heading">{{ $event->professional->name }}</span>
+                                        </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="text-center py-5">
+                                            <i class="ti tabler-calendar-off text-body-secondary mb-2" style="font-size: 2.5rem;"></i>
+                                            <p class="mb-0 text-body-secondary">Não há serviços agendados de momento.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-12 text-end">
-                            <a href="{{ route('agenda.index') }}">Ver Agenda</a>
-                        </div>
-                    </div>
+
+                <div class="card-footer text-end">
+                    <a href="{{ route('agenda.index') }}" class="fw-medium">
+                        Ver Agenda completa <i class="ti tabler-arrow-right ms-1"></i>
+                    </a>
                 </div>
             </div>
-
         </div>
     </div>
+
 @endsection

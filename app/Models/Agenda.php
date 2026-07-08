@@ -386,4 +386,18 @@ class Agenda extends Model
 
         return $query;
     }
+
+    public function paymentStatus()
+    {
+        return $this->belongsTo(PaymentStatus::class);
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($agenda) {
+            if (is_null($agenda->payment_status_id)) {
+                $agenda->payment_status_id = PaymentStatus::default()?->id;
+            }
+        });
+    }
 }

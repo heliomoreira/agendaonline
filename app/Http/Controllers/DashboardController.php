@@ -14,8 +14,11 @@ class DashboardController extends Controller
             ->upcoming()
             ->get();
 
+
         return view('admin.dashboard.index', [
-            'nextEvents' => $nextEvents,
+            'nextEvents'           => $nextEvents,
+            'servicesToday'        => Agenda::whereDate('day', today())->count(),
+            'servicesWeek'         => Agenda::whereBetween('day', [now()->startOfWeek(), now()->endOfWeek()])->count(),
         ]);
     }
 }
