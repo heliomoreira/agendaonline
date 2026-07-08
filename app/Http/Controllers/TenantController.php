@@ -60,6 +60,8 @@ class TenantController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
+            'only_own_agenda' => 0,
+            'type' => 1,
             'tenant_id' => $response->getData()->data->id]);
 
 

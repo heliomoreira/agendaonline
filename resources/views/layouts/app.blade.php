@@ -127,53 +127,54 @@
                     </a>
                 </li>
 
-
-                <!-- Misc -->
-                <li class="menu-header small">
-                    <span class="menu-header-text" data-i18n="Admin">Admin</span>
-                </li>
-                <li class="menu-item {{ request()->routeIs('notifications*') ? 'active' : '' }}">
-                    <a href="{{route('notifications.index')}}" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-bell-ringing"></i>
-                        <div data-i18n="Notificações">Notificações</div>
-                    </a>
-                </li>
-                {{--<li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-settings"></i>
-                        <div data-i18n="Configurações">Configurações</div>
-                    </a>
-                </li>--}}
-                <li class="menu-item {{ request()->routeIs('account-settings*') ? 'active' : '' }}">
-                    <a href="/admin/account-settings" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-briefcase"></i>
-                        <div data-i18n="Dados de Conta">Dados de Conta</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
-                    <a href="/admin/portal" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-world-www"></i>
-                        <div data-i18n="Portal">Portal</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('sms*') ? 'active' : '' }}">
-                    <a href="/admin/sms" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-device-mobile-message"></i>
-                        <div data-i18n="SMS">SMS</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                    <a href="{{route('users.index')}}" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-user-shield"></i>
-                        <div data-i18n="Utilizadores">Utilizadores</div>
-                    </a>
-                </li>
-              {{--  <li class="menu-item">
-                    <a href="/admin/locations" class="menu-link">
-                        <i class="menu-icon icon-base ti tabler-home"></i>
-                        <div data-i18n="Localizações">Localizações</div>
-                    </a>
-                </li>--}}
+                @if(\Auth()->user()->type == 1)
+                    <!-- Misc -->
+                    <li class="menu-header small">
+                        <span class="menu-header-text" data-i18n="Admin">Admin</span>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('notifications*') ? 'active' : '' }}">
+                        <a href="{{route('notifications.index')}}" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-bell-ringing"></i>
+                            <div data-i18n="Notificações">Notificações</div>
+                        </a>
+                    </li>
+                    {{--<li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-settings"></i>
+                            <div data-i18n="Configurações">Configurações</div>
+                        </a>
+                    </li>--}}
+                    <li class="menu-item {{ request()->routeIs('account-settings*') ? 'active' : '' }}">
+                        <a href="/admin/account-settings" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-briefcase"></i>
+                            <div data-i18n="Dados de Conta">Dados de Conta</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
+                        <a href="/admin/portal" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-world-www"></i>
+                            <div data-i18n="Portal">Portal</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('sms*') ? 'active' : '' }}">
+                        <a href="/admin/sms" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-device-mobile-message"></i>
+                            <div data-i18n="SMS">SMS</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                        <a href="{{route('users.index')}}" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-user-shield"></i>
+                            <div data-i18n="Utilizadores">Utilizadores</div>
+                        </a>
+                    </li>
+                @endif
+                {{--  <li class="menu-item">
+                      <a href="/admin/locations" class="menu-link">
+                          <i class="menu-icon icon-base ti tabler-home"></i>
+                          <div data-i18n="Localizações">Localizações</div>
+                      </a>
+                  </li>--}}
                 {{--<li class="menu-item">
                     <a href="#" class="menu-link">
                         <i class="menu-icon icon-base ti tabler-lifebuoy"></i>

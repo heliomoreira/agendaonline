@@ -26,6 +26,7 @@ class User extends Authenticatable
         'tenant_id',
         'password',
         'only_own_agenda',
+        'type',
         'professional_id',
     ];
 

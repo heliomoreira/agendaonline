@@ -74,10 +74,28 @@
                             </div>
                         </div>
                         <div class="row g-6 mt-1">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                                 <label class="form-label" for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
                                        value="{{ old('email', $user->email) }}">
+                            </div>
+                            <div class="col-md-4 form-password-toggle">
+                                <label class="form-label" for="password">
+                                    Password {{ $user->id ? '(deixe em branco para manter)' : '' }}
+                                </label>
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                                    <span class="input-group-text cursor-pointer">
+                                        <i class="icon-base ti tabler-eye-off"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="password_confirmation">Confirmar Password</label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                       name="password_confirmation"
+                                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                             </div>
                         </div>
                         <div class="row g-6 mt-1">
@@ -111,23 +129,9 @@
                             </div>
                         </div>
                         <div class="row g-6 mt-1">
-                            <div class="col-md-6 form-password-toggle">
-                                <label class="form-label" for="password">
-                                    Password {{ $user->id ? '(deixe em branco para manter)' : '' }}
-                                </label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" class="form-control" id="password" name="password"
-                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
-                                    <span class="input-group-text cursor-pointer">
-                                        <i class="icon-base ti tabler-eye-off"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label" for="password_confirmation">Confirmar Password</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                       name="password_confirmation"
-                                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                            <div class="col-md-3">
+                                <label class="form-label d-block" for="type">Tipo</label>
+                                {{html()->select('type')->options([1 => 'Administrador', 2 => 'Utilizador'])->value(old('type', $user->type))->class('form-select')->id('type')}}
                             </div>
                         </div>
                     </div>

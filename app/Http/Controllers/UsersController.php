@@ -80,6 +80,7 @@ class UsersController extends Controller
             $user->email = $request->input('email');
             $user->username = $request->input('username');
             $user->only_own_agenda = $request->boolean('only_own_agenda');
+            $user->type = $request->input('type');
             $user->professional_id = $request->boolean('only_own_agenda')
                 ? $request->input('professional_id')
                 : null;
@@ -110,6 +111,7 @@ class UsersController extends Controller
             $user->email = $request->input('email');
             $user->username = $request->input('username');
             $user->only_own_agenda = $request->boolean('only_own_agenda');
+            $user->type = $request->input('type');
             $user->professional_id = $request->boolean('only_own_agenda')
                 ? $request->input('professional_id')
                 : null;
