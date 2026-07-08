@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agenda;
 use App\Models\Client;
 use App\Models\Notification;
+use App\Models\PaymentStatus;
 use App\Models\Professional;
 use App\Models\Service;
 use App\Services\BookingService;
@@ -73,6 +74,17 @@ class AgendaController extends Controller
             'professionals' => $professionals,
         ]);
     }
+    public function show(Agenda $agenda)
+    {
+        $this->authorizeAgenda($agenda);
+
+        $agenda->load(['client', 'service', 'professional', 'paymentStatus']);
+
+        return view('admin.agenda.show', [
+            'agenda'          => $agenda,
+            'paymentStatuses' => PaymentStatus::ordered()->get(),
+        ]);
+    }
     public function getEvents(Request $request)
     {
 
@@ -127,5 +139,32 @@ class AgendaController extends Controller
         $deleteNotification = $this->notificationService->deleteNotification(tenant('id'), $eventId);
 
         return response()->json(['success' => true], 200);
+    }
+
+    public function updatePayment(Request $request, Agenda $agenda)
+    {
+        $this->authorizeAgenda($agenda);
+
+        $data = $request->validate([
+            'payment_status_id' => ['required', 'exists:payment_statuses,id'],
+        ]);
+
+        $status = PaymentStatus::findOrFail($data['payment_status_id']);
+
+        $agenda->update([
+            'payment_status_id' => $status->id,
+            'paid' => $status->is_paid ? ($agenda->paid ?? now()) : null,
+        ]);
+
+        return back()->with('success', 'Estado do pagamento atualizado.');
+    }
+
+    private function authorizeAgenda(Agenda $agenda): void
+    {
+        $user = auth()->user();
+        abort_if(
+            $user && $user->isRestrictedToOwnAgenda() && $agenda->professional_id !== $user->professional_id,
+            403
+        );
     }
 }

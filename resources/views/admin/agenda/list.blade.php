@@ -122,7 +122,9 @@
                                                         <i class="ti tabler-briefcase"></i>
                                                     </span>
                                                 </div>
-                                                <span class="fw-medium text-heading">{{ $event->service->name }}</span>
+                                                <span class="fw-medium text-heading">
+                                                    <a href="{{ route('agenda.show', $event) }}">  {{ $event->service->name }}</a>
+                                                </span>
                                             </div>
                                         </td>
                                         <td>

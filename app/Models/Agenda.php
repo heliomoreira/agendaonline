@@ -40,6 +40,8 @@ class Agenda extends Model
         'cancelled_at',
         'cancellation_reason',
         'cancelled_by',
+
+        'payment_status_id',
     ];
 
     protected $casts = [

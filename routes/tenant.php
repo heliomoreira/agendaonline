@@ -123,6 +123,9 @@ Route::middleware([
                 Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
 
                 Route::delete('/cancel-event/{id}',[AgendaController::class, 'cancelEvent'])->name('agenda.cancel-event');
+
+                Route::get('/{agenda}', [AgendaController::class, 'show'])->name('agenda.show');
+                Route::patch('/{agenda}/pagamento', [AgendaController::class, 'updatePayment'])->name('agenda.payment');
             });
 
             Route::prefix('account-settings')->group(function () {

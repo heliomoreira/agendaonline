@@ -15,8 +15,7 @@ return new class extends Migration
             $table->foreignId('payment_status_id')
                 ->nullable()
                 ->constrained('payment_statuses')
-                ->nullOnDelete();
-            $table->timestamp('paid_at')->nullable();
+                ->nullOnDelete()->after('payment_status_id');
         });
     }
 
@@ -27,7 +26,6 @@ return new class extends Migration
     {
         Schema::table('agenda', function (Blueprint $table) {
             $table->dropForeign(['payment_status_id']);
-            $table->dropColumn(['payment_status_id', 'paid_at']);
         });
     }
 };
