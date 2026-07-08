@@ -37,5 +37,15 @@ class Portal extends Model
         'payment_stripe_secret',
         'payment_stripe_allow_card',
         'payment_stripe_allow_multibanco',
+        'enable_portal',
+        'enable_booking',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'enable_portal' => 'boolean',
+            'enable_booking' => 'boolean',
+        ];
+    }
 }

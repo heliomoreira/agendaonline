@@ -40,7 +40,7 @@
             <div class="card">
                 <div class="card-header header-elements d-flex justify-content-between align-items-center">
                     <h5 class="mb-0 me-2">Gestão do Portal</h5>
-                    <a href="http://{{ $domain }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <a href="https://{{ $domain }}" target="_blank" class="btn btn-sm btn-outline-primary">
                         <i class="icon-base ti tabler-external-link me-1"></i> Ver portal
                     </a>
                 </div>
@@ -72,7 +72,19 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active show" id="navs-top-home" role="tabpanel">
-                                <div class="row g-6">
+                                <div class="row g-6" style="">
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="enable_portal">Portal Activo</label>
+                                        {{html()->select('enable_portal')->id('enable_portal')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_portal ?? 0)->class('form-select')->disabled()}}
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="enable_booking">Marcações Activas</label>
+                                        {{html()->select('enable_booking')->id('enable_booking')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_booking ?? 0)->class('form-select')->disabled()}}
+                                    </div>
+                                </div>
+
+                                <div class="row g-6 mt-1">
                                     <div class="col-md-4">
                                         <label class="form-label" for="title">Título</label>
                                         {{html()->text('title')->id('title')->class('form-control')->placeholder('')}}
