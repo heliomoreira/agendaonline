@@ -601,7 +601,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item mt-0" href="pages-account-settings-account.html">
+                                    <a class="dropdown-item mt-0" href="#">
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0 me-2">
                                                 <div class="avatar avatar-online">
@@ -611,7 +611,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <h6 class="mb-0">{{Auth()->user()->name}}</h6>
-                                                <small class="text-body-secondary">Admin</small>
+                                               {{-- <small class="text-body-secondary">Admin</small>--}}
                                             </div>
                                         </div>
                                     </a>
@@ -619,7 +619,7 @@
                                 <li>
                                     <div class="dropdown-divider my-1 mx-n2"></div>
                                 </li>
-                                <li>
+                              {{--  <li>
                                     <a class="dropdown-item" href="pages-profile-user.html"> <i
                                             class="icon-base ti tabler-user me-3 icon-md"></i><span
                                             class="align-middle">My Profile</span> </a>
@@ -650,7 +650,7 @@
                                     <a class="dropdown-item" href="pages-faq.html"> <i
                                             class="icon-base ti tabler-question-mark me-3 icon-md"></i><span
                                             class="align-middle">FAQ</span> </a>
-                                </li>
+                                </li>--}}
                                 <li>
                                     <div class="d-grid px-2 pt-2 pb-1">
                                         <a class="btn btn-sm btn-danger d-flex" href="{{ route('logout') }}"
