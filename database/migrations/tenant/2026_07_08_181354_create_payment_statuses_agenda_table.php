@@ -16,6 +16,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('payment_statuses')
                 ->nullOnDelete()->after('payment_status_id');
+            $table->timestamp('paid_at')->nullable()->after('payment_status_id');
         });
     }
 
@@ -26,6 +27,7 @@ return new class extends Migration
     {
         Schema::table('agenda', function (Blueprint $table) {
             $table->dropForeign(['payment_status_id']);
+            $table->dropForeign(['paid_at']);
         });
     }
 };

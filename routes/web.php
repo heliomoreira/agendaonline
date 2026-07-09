@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientAuthController;
+use App\Http\Controllers\ClientDashboardController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductsController;
@@ -52,9 +53,9 @@ Route::prefix('client')->name('client.')->group(function () {
         Route::get('/bookings/{booking}', [ClientDashboardController::class, 'show'])->name('bookings.show');
         Route::post('/bookings/{booking}/cancel', [ClientDashboardController::class, 'cancel'])->name('bookings.cancel');
 
-        Route::get('/profile', [ClientProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/profile', [ClientProfileController::class, 'update'])->name('profile.update');
-        Route::put('/profile/password', [ClientProfileController::class, 'updatePassword'])->name('profile.password');
+     //   Route::get('/profile', [ClientProfileController::class, 'edit'])->name('profile.edit');
+      //  Route::put('/profile', [ClientProfileController::class, 'update'])->name('profile.update');
+      //  Route::put('/profile/password', [ClientProfileController::class, 'updatePassword'])->name('profile.password');
 
         Route::post('/logout', [ClientAuthController::class, 'logout'])->name('logout');
     });

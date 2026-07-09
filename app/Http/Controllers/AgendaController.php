@@ -18,7 +18,8 @@ class AgendaController extends Controller
     public function __construct(
         private NotificationService $notificationService,
     )
-    {}
+    {
+    }
 
     public function index()
     {
@@ -49,31 +50,33 @@ class AgendaController extends Controller
             'professionals' => $professionals,
         ]);
     }
+
     public function list(Request $request)
     {
-        $services      = Service::orderBy('name')->get();
+        $services = Service::orderBy('name')->get();
         $professionals = Professional::orderBy('name')->get();
 
         $events = Agenda::with(['service', 'professional'])
             ->visibleTo(auth()->user())
             ->upcoming()
             ->when($request->filled('service_id'),
-                fn ($q) => $q->where('service_id', $request->service_id))
+                fn($q) => $q->where('service_id', $request->service_id))
             ->when($request->filled('professional_id'),
-                fn ($q) => $q->where('professional_id', $request->professional_id))
+                fn($q) => $q->where('professional_id', $request->professional_id))
             ->when($request->filled('date_from'),
-                fn ($q) => $q->whereDate('day', '>=', $request->date_from))
+                fn($q) => $q->whereDate('day', '>=', $request->date_from))
             ->when($request->filled('date_to'),
-                fn ($q) => $q->whereDate('day', '<=', $request->date_to))
+                fn($q) => $q->whereDate('day', '<=', $request->date_to))
             ->paginate(15)
             ->withQueryString();
 
         return view('admin.agenda.list', [
-            'events'        => $events,
-            'services'      => $services,
+            'events' => $events,
+            'services' => $services,
             'professionals' => $professionals,
         ]);
     }
+
     public function show(Agenda $agenda)
     {
         $this->authorizeAgenda($agenda);
@@ -81,10 +84,11 @@ class AgendaController extends Controller
         $agenda->load(['client', 'service', 'professional', 'paymentStatus']);
 
         return view('admin.agenda.show', [
-            'agenda'          => $agenda,
+            'agenda' => $agenda,
             'paymentStatuses' => PaymentStatus::ordered()->get(),
         ]);
     }
+
     public function getEvents(Request $request)
     {
 
@@ -101,7 +105,7 @@ class AgendaController extends Controller
 
         $user = auth()->user();
 
-        if (! ($user && $user->isRestrictedToOwnAgenda()) && $request->filled('professional_id')) {
+        if (!($user && $user->isRestrictedToOwnAgenda()) && $request->filled('professional_id')) {
             $query->where('professional_id', $request->query('professional_id'));
         }
 
@@ -141,22 +145,32 @@ class AgendaController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    public function updatePayment(Request $request, Agenda $agenda)
+    public function update(Request $request, $id)
     {
+        $agenda = Agenda::findOrFail($id);
+
         $this->authorizeAgenda($agenda);
 
         $data = $request->validate([
             'payment_status_id' => ['required', 'exists:payment_statuses,id'],
+            'paid' => ['nullable', 'date'],
+            'notes' => ['nullable', 'string', 'max:2000'],
         ]);
 
         $status = PaymentStatus::findOrFail($data['payment_status_id']);
 
+        $paid = $request->filled('paid')
+            ? $data['paid']
+            : ($status->is_paid ? ($agenda->paid ?? now()) : null);
+
         $agenda->update([
             'payment_status_id' => $status->id,
-            'paid' => $status->is_paid ? ($agenda->paid ?? now()) : null,
+            'paid' => $status->is_paid,
+            'paid_at' => $paid,
+            'notes' => $data['notes'] ?? null,
         ]);
 
-        return back()->with('success', 'Estado do pagamento atualizado.');
+        return back()->with('success', 'Marcação atualizada.');
     }
 
     private function authorizeAgenda(Agenda $agenda): void

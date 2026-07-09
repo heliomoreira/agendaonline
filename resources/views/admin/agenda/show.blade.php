@@ -1,6 +1,43 @@
 @extends('layouts.app')
 @section('content')
 
+    @if (session('success'))
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-solid-success alert-dismissible fade show d-flex align-items-center"
+                     role="alert">
+                    <span class="alert-icon rounded me-2">
+                        <i class="icon-base ti tabler-check icon-md"></i>
+                    </span>
+                    <div class="flex-grow-1">
+                        {{ session('success') }}
+                    </div>
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-solid-danger d-flex align-items-center" role="alert">
+                    <span class="alert-icon rounded">
+                        <i class="icon-base ti tabler-x"></i>
+                    </span>
+                    <div>
+                        <strong>Existem alguns erros:</strong>
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     @php
         // Data amigável + dia da semana (mesmo padrão da listagem)
         try {
@@ -17,61 +54,54 @@
             mb_substr($parts[0] ?? '', 0, 1) .
             (count($parts) > 1 ? mb_substr(end($parts), 0, 1) : '')
         );
+
+        // Valor da data de pagamento para o input date (Y-m-d)
+        $paidValue = $agenda->paid_at
+            ? \Carbon\Carbon::parse($agenda->paid_at)->format('Y-m-d')
+            : '';
     @endphp
 
-    {{-- ===== Cabeçalho ===== --}}
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-        <div>
-            <div class="d-flex align-items-center gap-2 mb-1">
-                <a href="{{ route('agenda.list') }}" class="btn btn-icon btn-sm btn-outline-secondary" title="Voltar">
-                    <i class="ti tabler-arrow-left"></i>
-                </a>
-                <h4 class="mb-0">Detalhe da Marcação</h4>
-            </div>
-            <small class="text-body-secondary ms-5 ps-2">#{{ $agenda->id }}</small>
-        </div>
-
-        <div class="d-flex gap-2">
-            {{-- Ajustar a rota de edição ao que tiver (ex.: agenda.edit) --}}
-            <a href="{{ route('agenda.form', $agenda) }}" class="btn btn-outline-primary">
-                <i class="ti tabler-edit me-1"></i>Editar
-            </a>
+    {{-- ===== Cabeçalho da página ===== --}}
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="d-flex align-items-center gap-2 m-0">
+                <i class="icon-base ti tabler-calendar-event"></i>
+                Detalhe da Marcação
+            </h5>
+            <hr class="my-2"/>
         </div>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-        </div>
-    @endif
-
     <div class="row g-6">
+        <div class="col-md-12">
+            {{ html()->modelForm($agenda, 'PUT', route('agenda.update', $agenda->id))->open() }}
+            {{ html()->token() }}
 
-        {{-- ===== Coluna principal ===== --}}
-        <div class="col-lg-8">
-
-            {{-- Dados da marcação --}}
-            <div class="card mb-6">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="ti tabler-calendar-event me-2"></i>Marcação</h5>
+            <div class="card">
+                <div class="card-header header-elements">
+                    <h5 class="mb-0 me-2">
+                        Detalhe da Marcação
+                        {!! $agenda->id ? '| <span style="color:#2A7AD4">#' . $agenda->id . '</span>' : '' !!}
+                    </h5>
                 </div>
+
                 <div class="card-body">
-                    <div class="row g-4">
-                        <div class="col-sm-6">
-                            <small class="text-body-secondary d-block mb-1">Serviço</small>
+                    {{-- ===== Dados da marcação (só leitura) ===== --}}
+                    <div class="row g-6">
+                        <div class="col-md-3">
+                            <label class="form-label">Serviço</label>
                             <div class="d-flex align-items-center">
                                 <div class="avatar avatar-sm me-2">
                                     <span class="avatar-initial bg-label-primary rounded">
-                                        <i class="ti tabler-briefcase"></i>
+                                        <i class="icon-base ti tabler-briefcase"></i>
                                     </span>
                                 </div>
                                 <span class="fw-medium text-heading">{{ $agenda->service->name }}</span>
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
-                            <small class="text-body-secondary d-block mb-1">Profissional</small>
+                        <div class="col-md-3">
+                            <label class="form-label">Profissional</label>
                             <div class="d-flex align-items-center">
                                 <div class="avatar avatar-sm me-2">
                                     <span class="avatar-initial bg-label-secondary rounded-circle">{{ $proInitials }}</span>
@@ -80,120 +110,141 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
-                            <small class="text-body-secondary d-block mb-1">Data</small>
-                            <span class="text-heading">{{ $dateLabel }}</span>
-                            @if($weekday)<small class="text-body-secondary d-block">{{ $weekday }}</small>@endif
+                        <div class="col-md-3">
+                            <label class="form-label">Data</label>
+                            <div class="text-heading">{{ $dateLabel }}</div>
+                            @if($weekday)<small class="text-body-secondary">{{ $weekday }}</small>@endif
                         </div>
 
-                        <div class="col-sm-6">
-                            <small class="text-body-secondary d-block mb-1">Horário</small>
-                            <span class="badge bg-label-info rounded-pill">
-                                <i class="ti tabler-clock me-1"></i>{{ $agenda->start_hour }}h – {{ $agenda->end_hour }}h
-                            </span>
+                        <div class="col-md-3">
+                            <label class="form-label">Horário</label>
+                            <div>
+                                <span class="badge bg-label-info rounded-pill">
+                                    <i class="icon-base ti tabler-clock me-1"></i>{{ $agenda->start_hour }}h – {{ $agenda->end_hour }}h
+                                </span>
+                            </div>
                         </div>
-
-                        {{-- Campos opcionais: descomente se existirem no seu model/BD --}}
-                        {{-- <div class="col-sm-6">
-                            <small class="text-body-secondary d-block mb-1">Duração</small>
-                            <span class="text-heading">{{ $agenda->service->duration ?? '—' }} min</span>
-                        </div>
-                        <div class="col-sm-6">
-                            <small class="text-body-secondary d-block mb-1">Preço</small>
-                            <span class="text-heading">{{ number_format($agenda->service->price ?? 0, 2, ',', '.') }} €</span>
-                        </div> --}}
                     </div>
 
-                    @if(!empty($agenda->notes))
-                        <hr class="my-4">
-                        <small class="text-body-secondary d-block mb-1">Observações</small>
-                        <p class="mb-0 text-heading">{{ $agenda->notes }}</p>
-                    @endif
-                </div>
-            </div>
+                    <hr class="my-4"/>
 
-            {{-- Cliente --}}
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="ti tabler-user me-2"></i>Cliente</h5>
-                </div>
-                <div class="card-body">
+                    {{-- ===== Cliente (só leitura, antes do pagamento) ===== --}}
+                    <h6 class="mb-3"><i class="icon-base ti tabler-user me-2"></i>Cliente</h6>
                     @if($agenda->client)
-                        <div class="row g-4">
-                            <div class="col-sm-6">
-                                <small class="text-body-secondary d-block mb-1">Nome</small>
-                                <span class="fw-medium text-heading">{{ $agenda->client->name }}</span>
+                        <div class="row g-6">
+                            <div class="col-md-4">
+                                <label class="form-label">Nome</label>
+                                <div class="fw-medium text-heading">{{ $agenda->client->name }}</div>
                             </div>
                             @if(!empty($agenda->client->email))
-                                <div class="col-sm-6">
-                                    <small class="text-body-secondary d-block mb-1">Email</small>
-                                    <a href="mailto:{{ $agenda->client->email }}" class="text-heading">{{ $agenda->client->email }}</a>
+                                <div class="col-md-4">
+                                    <label class="form-label">Email</label>
+                                    <div><a href="mailto:{{ $agenda->client->email }}" class="text-heading">{{ $agenda->client->email }}</a></div>
                                 </div>
                             @endif
                             @if(!empty($agenda->client->phone))
-                                <div class="col-sm-6">
-                                    <small class="text-body-secondary d-block mb-1">Telefone</small>
-                                    <a href="tel:{{ $agenda->client->phone }}" class="text-heading">{{ $agenda->client->phone }}</a>
+                                <div class="col-md-4">
+                                    <label class="form-label">Telefone</label>
+                                    <div><a href="tel:{{ $agenda->client->phone }}" class="text-heading">{{ $agenda->client->phone }}</a></div>
                                 </div>
                             @endif
                         </div>
                     @else
                         <p class="mb-0 text-body-secondary">Marcação sem cliente associado.</p>
                     @endif
-                </div>
-            </div>
-        </div>
 
-        {{-- ===== Coluna lateral: pagamento ===== --}}
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0"><i class="ti tabler-cash me-2"></i>Pagamento</h5>
-                </div>
-                <div class="card-body text-center">
-                    @php $ps = $agenda->paymentStatus; @endphp
+                    <hr class="my-4"/>
 
-                    <span class="badge bg-label-{{ $ps->color ?? 'secondary' }} rounded-pill fs-6 px-3 py-2 mb-3">
-                        {{ $ps->name ?? 'Sem estado' }}
-                    </span>
+                    {{-- ===== Pagamento (editável) ===== --}}
+                    <h6 class="mb-3"><i class="icon-base ti tabler-cash me-2"></i>Pagamento</h6>
+                    <div class="row g-6">
+                        <div class="col-md-4">
+                            <label class="form-label" for="payment_status_id">Estado do pagamento</label>
+                            {{ html()->select('payment_status_id', $paymentStatuses->pluck('name', 'id')->toArray())
+                                    ->id('payment_status_id')
+                                    ->class('form-select') }}
+                        </div>
 
-                    @if($agenda->paid)
-                        <p class="text-body-secondary small mb-3">
-                            <i class="ti tabler-check me-1"></i>
-                            Pago em {{ \Carbon\Carbon::parse($agenda->paid)->translatedFormat('d/m/Y') }}
-                        </p>
-                    @endif
+                        <div class="col-md-4">
+                            <label class="form-label" for="paid_at">Data de pagamento</label>
+                            {{ html()->date('paid_at')
+                                    ->value(old('paid_at', $paidValue))
+                                    ->id('paid_at')
+                                    ->class('form-control') }}
+                            <small class="text-body-secondary">
+                                Deixe em branco para preencher automaticamente conforme o estado.
+                            </small>
+                        </div>
+                    </div>
 
-                    {{-- Alterar estado: um clique por estado, sem JS extra --}}
-                    <div class="dropdown d-grid">
-                        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="ti tabler-refresh me-1"></i>Alterar estado
-                        </button>
-                        <ul class="dropdown-menu w-100">
-                            @foreach($paymentStatuses as $status)
-                                <li>
-                                    <form method="POST" action="{{ route('agenda.payment', $agenda) }}" class="d-grid">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="payment_status_id" value="{{ $status->id }}">
-                                        <button type="submit"
-                                                class="dropdown-item d-flex align-items-center justify-content-between {{ optional($ps)->id === $status->id ? 'active' : '' }}">
-                                            <span>
-                                                <span class="badge bg-label-{{ $status->color }} rounded-circle p-1 me-2">&nbsp;</span>
-                                                {{ $status->name }}
-                                            </span>
-                                            @if(optional($ps)->id === $status->id)
-                                                <i class="ti tabler-check"></i>
-                                            @endif
-                                        </button>
-                                    </form>
-                                </li>
-                            @endforeach
-                        </ul>
+                    <hr class="my-4"/>
+
+                    {{-- ===== Observações (editável) ===== --}}
+                    <div class="row g-6">
+                        <div class="col-md-12">
+                            <label class="form-label" for="notes">Observações</label>
+                            {{ html()->textarea('notes')
+                                    ->id('notes')
+                                    ->class('form-control')
+                                    ->rows(4)
+                                    ->placeholder('Notas internas sobre a marcação...') }}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
+                <div class="card-footer d-flex flex-wrap justify-content-between gap-2">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                        </button>
+                        <a href="{{ route('agenda.list') }}" class="btn btn-secondary waves-effect waves-light">
+                            <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                        </a>
+                    </div>
+
+                    <button type="button" id="cancelEvent"
+                            class="btn btn-outline-danger waves-effect"
+                            data-url="{{ route('agenda.cancel-event', $agenda->id) }}"
+                            data-redirect="{{ route('agenda.list') }}">
+                        <i class="icon-base ti tabler-trash"></i> Cancelar marcação
+                    </button>
+                </div>
+            </div>
+
+            {{ html()->closeModelForm() }}
+        </div>
     </div>
+
+    <script>
+        document.getElementById('cancelEvent')?.addEventListener('click', async function () {
+            if (!confirm('Tem a certeza que quer cancelar esta marcação? Esta ação não pode ser revertida.')) return;
+
+            const btn   = this;
+            const token = document.querySelector('meta[name="csrf-token"]')?.content
+                || document.querySelector('input[name="_token"]')?.value;
+
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(btn.dataset.url, {
+                    method: 'DELETE', // ajustar ao verbo real da rota (ver php artisan route:list)
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'Accept': 'application/json',
+                    },
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    window.location = btn.dataset.redirect;
+                } else {
+                    alert('Não foi possível cancelar a marcação.');
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                alert('Ocorreu um erro ao cancelar.');
+                btn.disabled = false;
+            }
+        });
+    </script>
 @endsection
