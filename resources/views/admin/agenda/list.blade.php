@@ -4,6 +4,7 @@
     @php
         $filtersApplied = request()->filled('service_id')
             || request()->filled('professional_id')
+            || request()->filled('payment_status_id')
             || request()->filled('date_from')
             || request()->filled('date_to');
     @endphp
@@ -30,7 +31,7 @@
 
                     {{-- ===== Barra de filtros ===== --}}
                     <div class="card-body border-bottom">
-                        <form method="GET" action="{{ route('agenda.list') }}" class="row g-3 align-items-end">
+                        <form method="GET" action="{{ route('agenda.list') }}" class="row g-3">
                             <div class="col-12 col-sm-6 col-lg-3">
                                 <label class="form-label mb-1" for="filter-service">Serviço</label>
                                 <select name="service_id" id="filter-service" class="form-select">
@@ -55,26 +56,41 @@
                                 </select>
                             </div>
 
-                            <div class="col-6 col-lg-2">
-                                <label class="form-label mb-1" for="filter-date-from">De</label>
-                                <input type="date" name="date_from" id="filter-date-from"
-                                       class="form-control" value="{{ request('date_from') }}">
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <label class="form-label mb-1" for="filter-payment">Pagamento</label>
+                                <select name="payment_status_id" id="filter-payment" class="form-select">
+                                    <option value="">Todos</option>
+                                    @foreach($paymentStatuses as $status)
+                                        <option value="{{ $status->id }}" @selected(request('payment_status_id') == $status->id)>
+                                            {{ $status->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
 
-                            <div class="col-6 col-lg-2">
-                                <label class="form-label mb-1" for="filter-date-to">Até</label>
-                                <input type="date" name="date_to" id="filter-date-to"
-                                       class="form-control" value="{{ request('date_to') }}">
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label class="form-label mb-1" for="filter-date-from">De</label>
+                                        <input type="date" name="date_from" id="filter-date-from"
+                                               class="form-control" value="{{ request('date_from') }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label mb-1" for="filter-date-to">Até</label>
+                                        <input type="date" name="date_to" id="filter-date-to"
+                                               class="form-control" value="{{ request('date_to') }}">
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="col-12 col-lg-2 d-flex gap-2">
-                                <button type="submit" class="btn btn-primary flex-grow-1">
+                            <div class="col-12 d-flex gap-2">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">
                                     <i class="ti tabler-filter me-1"></i>Filtrar
                                 </button>
                                 @if($filtersApplied)
-                                    <a href="{{ route('agenda.list') }}" class="btn btn-outline-secondary"
+                                    <a href="{{ route('agenda.list') }}" class="btn btn-outline-secondary waves-effect"
                                        title="Limpar filtros">
-                                        <i class="ti tabler-x"></i>
+                                        <i class="ti tabler-x me-1"></i>Limpar
                                     </a>
                                 @endif
                             </div>
@@ -90,6 +106,7 @@
                                     <th>Serviço</th>
                                     <th>Data</th>
                                     <th>Horário</th>
+                                    <th>Pagamento</th>
                                     <th>Profissional</th>
                                 </tr>
                                 </thead>
@@ -122,9 +139,9 @@
                                                         <i class="ti tabler-briefcase"></i>
                                                     </span>
                                                 </div>
-                                                <span class="fw-medium text-heading">
-                                                    <a href="{{ route('agenda.show', $event) }}">  {{ $event->service->name }}</a>
-                                                </span>
+                                                <a href="{{ route('agenda.show', $event) }}" class="fw-medium text-heading">
+                                                    {{ $event->service->name }}
+                                                </a>
                                             </div>
                                         </td>
                                         <td>
@@ -145,6 +162,15 @@
                                             </span>
                                         </td>
                                         <td>
+                                            @if($event->paymentStatus)
+                                                <span class="badge bg-label-{{ $event->paymentStatus->color }} rounded-pill">
+                                                    {{ $event->paymentStatus->name }}
+                                                </span>
+                                            @else
+                                                <span class="badge bg-label-secondary rounded-pill">Sem estado</span>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="avatar avatar-sm me-2">
                                                     <span class="avatar-initial bg-label-secondary rounded-circle">{{ $initials }}</span>
@@ -155,11 +181,12 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="5">
                                             <div class="text-center py-5">
-                                                <i class="ti tabler-calendar-search text-body-secondary mb-2" style="font-size: 2.5rem;"></i>
+                                                <i class="ti tabler-calendar-search text-body-secondary mb-2"
+                                                   style="font-size: 2.5rem;"></i>
                                                 <p class="mb-1 text-body-secondary">Nenhuma marcação corresponde aos filtros aplicados.</p>
-                                                <a href="{{ route('agenda.index') }}" class="fw-medium">Limpar filtros</a>
+                                                <a href="{{ route('agenda.list') }}" class="fw-medium">Limpar filtros</a>
                                             </div>
                                         </td>
                                     </tr>

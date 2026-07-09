@@ -88,40 +88,83 @@
                 <div class="card-body">
                     {{-- ===== Dados da marcação (só leitura) ===== --}}
                     <div class="row g-6">
-                        <div class="col-md-3">
-                            <label class="form-label">Serviço</label>
+                        {{-- Serviço --}}
+                        <div class="col-sm-6 col-lg-4">
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-sm me-2">
-                                    <span class="avatar-initial bg-label-primary rounded">
-                                        <i class="icon-base ti tabler-briefcase"></i>
-                                    </span>
+                                <div class="avatar avatar-sm me-3">
+                <span class="avatar-initial bg-label-primary rounded">
+                    <i class="icon-base ti tabler-briefcase"></i>
+                </span>
                                 </div>
-                                <span class="fw-medium text-heading">{{ $agenda->service->name }}</span>
+                                <div>
+                                    <small class="text-body-secondary d-block">Serviço</small>
+                                    <span class="fw-medium text-heading">{{ $agenda->service->name }}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Profissional</label>
+                        {{-- Valor --}}
+                        <div class="col-sm-6 col-lg-4">
                             <div class="d-flex align-items-center">
-                                <div class="avatar avatar-sm me-2">
+                                <div class="avatar avatar-sm me-3">
+                <span class="avatar-initial bg-label-success rounded">
+                    <i class="icon-base ti tabler-currency-euro"></i>
+                </span>
+                                </div>
+                                <div>
+                                    <small class="text-body-secondary d-block">Valor</small>
+                                    <span class="fw-medium text-heading">
+                    @if(!is_null($agenda->service->price))
+                                            {{ number_format($agenda->service->price, 2, ',', '.') }} €
+                                        @else
+                                            —
+                                        @endif
+                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Profissional --}}
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar avatar-sm me-3">
                                     <span class="avatar-initial bg-label-secondary rounded-circle">{{ $proInitials }}</span>
                                 </div>
-                                <span class="fw-medium text-heading">{{ $agenda->professional->name }}</span>
+                                <div>
+                                    <small class="text-body-secondary d-block">Profissional</small>
+                                    <span class="fw-medium text-heading">{{ $agenda->professional->name }}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Data</label>
-                            <div class="text-heading">{{ $dateLabel }}</div>
-                            @if($weekday)<small class="text-body-secondary">{{ $weekday }}</small>@endif
+                        {{-- Data --}}
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar avatar-sm me-3">
+                <span class="avatar-initial bg-label-warning rounded">
+                    <i class="icon-base ti tabler-calendar-event"></i>
+                </span>
+                                </div>
+                                <div>
+                                    <small class="text-body-secondary d-block">Data</small>
+                                    <span class="fw-medium text-heading">{{ $dateLabel }}</span>
+                                    @if($weekday)<small class="text-body-secondary d-block">{{ $weekday }}</small>@endif
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Horário</label>
-                            <div>
-                                <span class="badge bg-label-info rounded-pill">
-                                    <i class="icon-base ti tabler-clock me-1"></i>{{ $agenda->start_hour }}h – {{ $agenda->end_hour }}h
-                                </span>
+                        {{-- Horário --}}
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="d-flex align-items-center">
+                                <div class="avatar avatar-sm me-3">
+                <span class="avatar-initial bg-label-info rounded">
+                    <i class="icon-base ti tabler-clock"></i>
+                </span>
+                                </div>
+                                <div>
+                                    <small class="text-body-secondary d-block">Horário</small>
+                                    <span class="fw-medium text-heading">{{ $agenda->start_hour }}h – {{ $agenda->end_hour }}h</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -142,10 +185,10 @@
                                     <div><a href="mailto:{{ $agenda->client->email }}" class="text-heading">{{ $agenda->client->email }}</a></div>
                                 </div>
                             @endif
-                            @if(!empty($agenda->client->phone))
+                            @if(!empty($agenda->client->phone_1))
                                 <div class="col-md-4">
                                     <label class="form-label">Telefone</label>
-                                    <div><a href="tel:{{ $agenda->client->phone }}" class="text-heading">{{ $agenda->client->phone }}</a></div>
+                                    <div><a href="tel:{{ $agenda->client->phone_1 }}" class="text-heading">{{ $agenda->client->phone_1 }}</a></div>
                                 </div>
                             @endif
                         </div>
@@ -158,14 +201,14 @@
                     {{-- ===== Pagamento (editável) ===== --}}
                     <h6 class="mb-3"><i class="icon-base ti tabler-cash me-2"></i>Pagamento</h6>
                     <div class="row g-6">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label" for="payment_status_id">Estado do pagamento</label>
                             {{ html()->select('payment_status_id', $paymentStatuses->pluck('name', 'id')->toArray())
                                     ->id('payment_status_id')
                                     ->class('form-select') }}
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label" for="paid_at">Data de pagamento</label>
                             {{ html()->date('paid_at')
                                     ->value(old('paid_at', $paidValue))

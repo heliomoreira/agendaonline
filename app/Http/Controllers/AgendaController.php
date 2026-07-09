@@ -56,13 +56,15 @@ class AgendaController extends Controller
         $services = Service::orderBy('name')->get();
         $professionals = Professional::orderBy('name')->get();
 
-        $events = Agenda::with(['service', 'professional'])
+        $events = Agenda::with(['service', 'professional', 'paymentStatus'])
             ->visibleTo(auth()->user())
             ->upcoming()
             ->when($request->filled('service_id'),
                 fn($q) => $q->where('service_id', $request->service_id))
             ->when($request->filled('professional_id'),
                 fn($q) => $q->where('professional_id', $request->professional_id))
+            ->when($request->filled('payment_status_id'),
+                fn($q) => $q->where('payment_status_id', $request->payment_status_id))
             ->when($request->filled('date_from'),
                 fn($q) => $q->whereDate('day', '>=', $request->date_from))
             ->when($request->filled('date_to'),
@@ -73,6 +75,7 @@ class AgendaController extends Controller
         return view('admin.agenda.list', [
             'events' => $events,
             'services' => $services,
+            'paymentStatuses' => PaymentStatus::ordered()->get(),
             'professionals' => $professionals,
         ]);
     }
@@ -153,21 +156,22 @@ class AgendaController extends Controller
 
         $data = $request->validate([
             'payment_status_id' => ['required', 'exists:payment_statuses,id'],
-            'paid' => ['nullable', 'date'],
-            'notes' => ['nullable', 'string', 'max:2000'],
+            'paid_at'           => ['nullable', 'date'],
+            'notes'             => ['nullable', 'string', 'max:2000'],
         ]);
 
         $status = PaymentStatus::findOrFail($data['payment_status_id']);
 
-        $paid = $request->filled('paid')
-            ? $data['paid']
-            : ($status->is_paid ? ($agenda->paid ?? now()) : null);
+        // Usa a data manual se preenchida; senão, deriva do is_paid
+        $paidAt = $request->filled('paid_at')
+            ? $data['paid_at']
+            : ($status->is_paid ? ($agenda->paid_at ?? now()) : null);
 
         $agenda->update([
             'payment_status_id' => $status->id,
-            'paid' => $status->is_paid,
-            'paid_at' => $paid,
-            'notes' => $data['notes'] ?? null,
+            'paid'              => $status->is_paid,
+            'paid_at'           => $paidAt,
+            'notes'             => $data['notes'] ?? null,
         ]);
 
         return back()->with('success', 'Marcação atualizada.');
