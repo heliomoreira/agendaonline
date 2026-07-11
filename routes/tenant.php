@@ -16,6 +16,7 @@ use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UsersController;
@@ -131,6 +132,11 @@ Route::middleware([
             Route::prefix('account-settings')->group(function () {
                 Route::get('/', [AccountSettingsController::class, 'index'])->name('account-settings.index');
                 Route::put('/update', [AccountSettingsController::class, 'updateAccount'])->name('account-settings.updateAccount');
+            });
+
+            Route::prefix('settings')->group(function () {
+                Route::get('/', [SettingsController::class, 'index'])->name('settings.index');
+                Route::put('/update', [SettingsController::class, 'update'])->name('settings.update');
 
             });
 

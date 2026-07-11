@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PortalRequest;
 use App\Models\Portal;
+use App\Models\Setting;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PortalController extends Controller
 {

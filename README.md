@@ -17,3 +17,10 @@ Webmin > Servers > MariaDB Database Server > User Permissions > Create a new use
 
 php artisan storage:link
 Create folder storage/app/public/tenants/logos
+
+### Install Redis
+sudo dnf install redis
+
+sudo systemctl enable redis
+
+sudo systemctl start redis

@@ -181,6 +181,12 @@
                             <div data-i18n="Utilizadores">Utilizadores</div>
                         </a>
                     </li>
+                    <li class="menu-item {{ request()->routeIs('settings.*') ? 'active' : '' }}">
+                        <a href="{{route('settings.index')}}" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-settings"></i>
+                            <div data-i18n="Configurações">Configurações</div>
+                        </a>
+                    </li>
                 @endif
                 {{--  <li class="menu-item">
                       <a href="/admin/locations" class="menu-link">
