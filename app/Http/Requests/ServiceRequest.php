@@ -28,6 +28,8 @@ class ServiceRequest extends FormRequest
             'order' => ['nullable', 'integer', 'min:0'],
             'status' => ['required', 'boolean'],
             'notes' => ['nullable', 'string'],
+            'sms_template_id' => ['nullable', 'exists:sms_templates,id'],
+
         ];
     }
 

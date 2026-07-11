@@ -136,18 +136,17 @@ class BookingController extends Controller
 
         if ($tenant->sms_status && $tenant->sms_sender != null && $tenant->sms_credits > 0.04) {
 
-            $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+            $service->load('smsTemplate');
+            $template = $service->smsTemplate;
+
+            $text = ($template && $template->status)
+                ? $this->renderTemplate($template->body, $booking)
+                : "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
 
             NotificationService::saveNotification(
-                $tenant->id,
-                $booking->id,
-                $tenant->sms_sender,
-                $request->client_phone_1,
-                'sms',
-                $text,
-                $request->day,
-                $start->format('H:i'),
-                $end->format('H:i')
+                $tenant->id, $booking->id, $tenant->sms_sender,
+                $request->client_phone_1, 'sms', $text,
+                $request->day, $start->format('H:i'), $end->format('H:i')
             );
         }
 
@@ -654,6 +653,16 @@ class BookingController extends Controller
                 : 'Marcação registada. Aguardando confirmação de pagamento.',
             'booking_id' => $booking->id,
             'redirect' => route('booking.confirmation', $booking->id),
+        ]);
+    }
+
+    private function renderTemplate(string $body, Agenda $booking): string
+    {
+        return strtr($body, [
+            '[NOME_CLIENTE]' => $booking->client_name,
+            '[DATA]'         => Carbon::parse($booking->day)->format('d/m/Y'),
+            '[HORA]'         => $booking->start_hour,
+            '[SERVICO]'      => $booking->service->name ?? '',
         ]);
     }
 }
