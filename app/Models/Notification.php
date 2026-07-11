@@ -18,6 +18,7 @@ class Notification extends Model
         'service_day',
         'service_start_hour',
         'service_end_hour',
+        'send_date',
         'send_hour',
         'status'
     ];
