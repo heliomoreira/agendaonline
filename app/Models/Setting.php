@@ -11,11 +11,11 @@ class Setting extends Model
 
     protected $fillable = [
         'client_validation',
-        'allow_overlap'
+        'booking_allow_overlap'
     ];
 
     protected $casts = [
-        'allow_overlap' => 'boolean',
+        'booking_allow_overlap' => 'boolean',
         'client_validation' => ClientValidation::class,
     ];
 
@@ -34,7 +34,7 @@ class Setting extends Model
     {
         return [
             'client_validation' => null,
-            'allow_overlap' => false,
+            'booking_allow_overlap' => false,
         ];
     }
 }

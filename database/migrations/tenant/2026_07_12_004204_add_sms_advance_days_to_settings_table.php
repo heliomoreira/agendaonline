@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->unsignedTinyInteger('sms_advance_days')->default(1)->after('allow_overlap');
+            $table->time('sms_send_hour')->default('18:00:00')->after('allow_overlap');
+            $table->unsignedTinyInteger('sms_advance_days')->default(1)->after('sms_send_hour');
         });
     }
 
@@ -22,6 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('settings', function (Blueprint $table) {
+            $table->dropColumn('sms_send_hour');
             $table->dropColumn('sms_advance_days');
         });
     }

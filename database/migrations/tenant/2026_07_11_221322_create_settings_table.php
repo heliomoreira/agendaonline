@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->enum('client_validation', ['email', 'phone', 'email_and_phone'])->nullable();
-            $table->boolean('allow_overlap')->default(false);
+            $table->boolean('booking_allow_overlap')->default(false);
             $table->timestamps();
         });
     }

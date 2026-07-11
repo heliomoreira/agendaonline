@@ -74,10 +74,10 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <label for="allow_overlap" class="form-label">Permitir Sobreposição</label>
-                        {{ html()->select('allow_overlap', ['0' => 'Não', '1' => 'Sim'], $settings->allow_overlap ?? 0)
+                        <label for="booking_allow_overlap" class="form-label">Permitir Sobreposição</label>
+                        {{ html()->select('booking_allow_overlap', ['0' => 'Não', '1' => 'Sim'], $settings->booking_allow_overlap ?? 0)
                             ->class('form-select')
-                            ->id('allow_overlap') }}
+                            ->id('booking_allow_overlap') }}
                         <small class="text-muted">Permite marcações no mesmo horário.</small>
                     </div>
                 </div>

@@ -560,7 +560,7 @@ class BookingController extends Controller
 
         // Sobreposição: se ligada, ignora a verificação de disponibilidade
         // e deixa a marcação partilhar o horário com outra existente.
-        $allowOverlap = Setting::current()->allow_overlap;
+        $allowOverlap = Setting::current()->booking_allow_overlap;
 
         if (!$allowOverlap) {
             //@todo Validar

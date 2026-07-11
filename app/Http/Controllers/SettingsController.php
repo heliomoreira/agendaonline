@@ -16,11 +16,11 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'allow_overlap' => 'required|boolean',
+            'booking_allow_overlap' => 'required|boolean',
         ]);
 
         $settings = Setting::current();
-        $settings->update($request->only(['client_validation', 'allow_overlap']));
+        $settings->update($request->only(['client_validation', 'booking_allow_overlap']));
 
         return redirect()->back()->with('success', 'Configurações atualizadas com sucesso.');
 
