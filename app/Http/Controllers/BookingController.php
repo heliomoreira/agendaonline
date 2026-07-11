@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Models\Setting;
 
 class BookingController extends Controller
 {
@@ -85,26 +86,33 @@ class BookingController extends Controller
         $start = Carbon::parse("{$request->day} {$request->start_hour}");
         $end = $start->copy()->addMinutes($service->duration);
 
-        // Verificar conflitos
-        $conflict = Agenda::where('professional_id', $request->professional_id)
-            ->where('day', $request->day)
-            ->where(function ($q) use ($start, $end) {
-                $q->where(function ($q2) use ($start, $end) {
-                    $q2->where('start_hour', '<', $start->format('H:i'))
-                        ->where('end_hour', '>', $start->format('H:i'));
-                })
-                    ->orWhere(function ($q2) use ($start, $end) {
-                        $q2->where('start_hour', '<', $end->format('H:i'))
-                            ->where('end_hour', '>', $end->format('H:i'));
-                    })
-                    ->orWhere(function ($q2) use ($start, $end) {
-                        $q2->where('start_hour', '>=', $start->format('H:i'))
-                            ->where('end_hour', '<=', $end->format('H:i'));
-                    });
-            })->exists();
+        // Sobreposição de marcações: se ligada nas definições, qualquer
+        // marcação (portal ou admin) pode partilhar o mesmo horário e a
+        // verificação de conflito é ignorada.
+        $allowOverlap = Setting::current()->allow_overlap;
 
-        if ($conflict) {
-            return redirect()->back()->withInput()->withErrors(['Este horário já está reservado. Por favor, escolha outro.']);
+        if (!$allowOverlap) {
+            // Verificar conflitos
+            $conflict = Agenda::where('professional_id', $request->professional_id)
+                ->where('day', $request->day)
+                ->where(function ($q) use ($start, $end) {
+                    $q->where(function ($q2) use ($start, $end) {
+                        $q2->where('start_hour', '<', $start->format('H:i'))
+                            ->where('end_hour', '>', $start->format('H:i'));
+                    })
+                        ->orWhere(function ($q2) use ($start, $end) {
+                            $q2->where('start_hour', '<', $end->format('H:i'))
+                                ->where('end_hour', '>', $end->format('H:i'));
+                        })
+                        ->orWhere(function ($q2) use ($start, $end) {
+                            $q2->where('start_hour', '>=', $start->format('H:i'))
+                                ->where('end_hour', '<=', $end->format('H:i'));
+                        });
+                })->exists();
+
+            if ($conflict) {
+                return redirect()->back()->withInput()->withErrors(['Este horário já está reservado. Por favor, escolha outro.']);
+            }
         }
 
         // Criar marcação
@@ -168,11 +176,16 @@ class BookingController extends Controller
                 return response()->json(['message' => 'Nenhum profissional disponível'], 404);
             }
 
+            // Com a sobreposição ligada, os horários já reservados continuam
+            // a aparecer como disponíveis para qualquer pessoa.
+            $ignoreBookings = Setting::current()->allow_overlap;
+
             $results = $this->calculateAvailableSlots(
                 $validatedData['start_date'],
                 $validatedData['end_date'],
                 $service,
-                $professionals
+                $professionals,
+                $ignoreBookings
             );
 
             return response()->json($results);
@@ -209,7 +222,8 @@ class BookingController extends Controller
         string     $startDate,
         string     $endDate,
         Service    $service,
-        Collection $professionals
+        Collection $professionals,
+        bool       $ignoreBookings = false
     ): array
     {
         $results = [];
@@ -226,7 +240,7 @@ class BookingController extends Controller
             }
 
             foreach ($professionals as $professional) {
-                $slots = $this->getProfessionalAvailableSlots($date, $professional, $service, $locationBlocks);
+                $slots = $this->getProfessionalAvailableSlots($date, $professional, $service, $locationBlocks, $ignoreBookings);
 
                 if (!empty($slots)) {
                     $results[] = [
@@ -264,7 +278,8 @@ class BookingController extends Controller
         Carbon       $date,
         Professional $professional,
         Service      $service,
-        Collection   $locationBlocks
+        Collection   $locationBlocks,
+        bool         $ignoreBookings = false
     ): array
     {
         $workingBlocks = $this->getProfessionalWorkingHours($professional->id, $date->dayOfWeek);
@@ -277,7 +292,10 @@ class BookingController extends Controller
             return [];
         }
 
-        $bookedSlots = $this->getBookedSlots($professional->id, $date);
+        // Só as marcações existentes são ignoradas quando a sobreposição está
+        // ligada. Almoço, bloqueios de local e indisponibilidades continuam
+        // a ser respeitados (não são "sobreposições" de marcações).
+        $bookedSlots = $ignoreBookings ? [] : $this->getBookedSlots($professional->id, $date);
         $blockedIntervals = $this->getBlockedIntervals($professional->id, $date, $locationBlocks);
 
         return $this->generateAvailableSlots($workingBlocks, $date, $service->duration, $bookedSlots, $blockedIntervals);
@@ -541,21 +559,25 @@ class BookingController extends Controller
 
         $service = Service::with('portal')->findOrFail($validated['service_id']);
 
-        // Verificar se slot ainda está disponível
+        // Sobreposição: se ligada, ignora a verificação de disponibilidade
+        // e deixa a marcação partilhar o horário com outra existente.
+        $allowOverlap = Setting::current()->allow_overlap;
 
-        //@todo Validar
-        $isAvailable = $this->checkSlotAvailability(
-            $validated['service_id'],
-            $validated['day'],
-            $validated['start_hour'],
-            $validated['professional_id']
-        );
+        if (!$allowOverlap) {
+            //@todo Validar
+            $isAvailable = $this->checkSlotAvailability(
+                $validated['service_id'],
+                $validated['day'],
+                $validated['start_hour'],
+                $validated['professional_id']
+            );
 
-        if (!$isAvailable) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Este horário já não está disponível. Por favor, escolha outro.',
-            ], 422);
+            if (!$isAvailable) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Este horário já não está disponível. Por favor, escolha outro.',
+                ], 422);
+            }
         }
 
         // Calcular hora de fim
@@ -616,12 +638,11 @@ class BookingController extends Controller
         if ($booking->client_email) {
             // Email de confirmação (se já pago) ou aguardando pagamento
             if ($paid) {
-                dd("paid");// Mail::to($booking->client_email)->send(new BookingConfirmed($booking));
+                // Mail::to($booking->client_email)->send(new BookingConfirmed($booking));
             }
 
             // Se cliente não tem conta, convidar a criar
             if ($client && !$client->hasAccount()) {
-                @dd("invite to create");
                 // Mail::to($client->email)->send(new InviteToCreateAccount($client, $booking));
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ClientValidation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -15,6 +16,7 @@ class Setting extends Model
 
     protected $casts = [
         'allow_overlap' => 'boolean',
+        'client_validation' => ClientValidation::class,
     ];
 
     public static function current(): self
@@ -31,7 +33,7 @@ class Setting extends Model
     protected static function defaults(): array
     {
         return [
-            'client_validation' => 'email',
+            'client_validation' => null,
             'allow_overlap' => false,
         ];
     }
