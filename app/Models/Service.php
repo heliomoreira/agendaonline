@@ -13,7 +13,7 @@ class Service extends Model
 {
     use HasFactory, Notifiable, softDeletes;
 
-    protected $fillable = ['name', 'duration', 'price', 'image', 'order', 'status', 'notes'];
+    protected $fillable = ['name', 'duration', 'price', 'image', 'order', 'status', 'notes','sms_template_id'];
 
     public function professionals()
     {
@@ -34,6 +34,11 @@ class Service extends Model
     protected function active(Builder $query): Builder
     {
         return $query->where('status', true);
+    }
+
+    public function smsTemplate()
+    {
+        return $this->belongsTo(SmsTemplate::class);
     }
 
 }

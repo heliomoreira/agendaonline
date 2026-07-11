@@ -169,12 +169,27 @@
                             <div data-i18n="Portal">Portal</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ request()->routeIs('sms*') ? 'active' : '' }}">
-                        <a href="/admin/sms" class="menu-link">
+
+                    <li class="menu-item {{ request()->routeIs('sms*') ? 'active open' : '' }}">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon icon-base ti tabler-device-mobile-message"></i>
                             <div data-i18n="SMS">SMS</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item {{ request()->routeIs('sms.index') ? 'active' : '' }}" >
+                                <a href="{{route('sms.index')}}" class="menu-link">
+                                    <div data-i18n="Gestão">Gestão</div>
+                                </a>
+                            </li>
+                            <li class="menu-item {{ request()->routeIs('sms.templates.list') ? 'active' : '' }}" >
+                                <a href="{{route('sms.templates.list')}}" class="menu-link">
+                                    <div data-i18n="Templates">Templates</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
+
                     <li class="menu-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
                         <a href="{{route('users.index')}}" class="menu-link">
                             <i class="menu-icon icon-base ti tabler-user-shield"></i>

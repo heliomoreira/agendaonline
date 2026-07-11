@@ -54,7 +54,8 @@
             {{ html()->token() }}
             <div class="card">
                 <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">Detalhe {!!  $service->name ? '| <span style="color:#2A7AD4">' . $service->name . '</span>': ''  !!}</h5>
+                    <h5 class="mb-0 me-2">
+                        Detalhe {!!  $service->name ? '| <span style="color:#2A7AD4">' . $service->name . '</span>': ''  !!}</h5>
                 </div>
                 <div class="card-body">
                     <div class="row g-6">
@@ -73,6 +74,14 @@
                         <div class="col-md-4">
                             <label class="form-label" for="image">Imagem</label>
                             {{html()->file('image')->id('image')->class('form-control')}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label class="form-label" for="sms_template_id">Template de SMS</label>
+                            {{ html()->select('sms_template_id', $templates)
+                                ->placeholder('— Sem template (usa texto padrão) —')
+                                ->class('form-select') }}
                         </div>
                     </div>
                     <div class="row mt-3">

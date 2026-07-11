@@ -160,6 +160,14 @@ Route::middleware([
             Route::prefix('sms')->group(function () {
                 Route::get('/', [SmsController::class, 'index'])->name('sms.index');
                 Route::put('/update', [SmsController::class, 'update'])->name('sms.update');
+
+                Route::get('/templates/list', [SmsController::class, 'templatesList'])->name('sms.templates.list');
+                Route::get('/templates/form', [SmsController::class, 'templatesForm'])->name('sms.templates.form');
+                Route::post('/templates/store', [SmsController::class, 'templatesStore'])->name('sms.templates.store');
+                Route::put('/templates/update/{id}', [SmsController::class, 'templatesUpdate'])->name('sms.templates.update');
+                Route::get('/templates/edit/{id}', [SmsController::class, 'templatesEdit'])->name('sms.templates.edit');
+                Route::delete('/templates/destroy/{id}', [SmsController::class, 'templatesDestroy'])->name('sms.templates.destroy');
+
             });
 
             Route::prefix('/users')->group(function () {

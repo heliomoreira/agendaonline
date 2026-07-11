@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceRequest;
 use App\Models\Service;
+use App\Models\SmsTemplate;
 use App\Models\Tenant;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
@@ -34,8 +35,10 @@ class ServicesController extends Controller
     {
         try {
             $service = new Service();
+            $templates = SmsTemplate::where('status', 1)->pluck('title', 'id');
             return view('admin.services.form', [
-                'service' => $service
+                'service' => $service,
+                'templates' => $templates
             ]);
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de service: ' . $e->getMessage());
@@ -47,8 +50,10 @@ class ServicesController extends Controller
     {
         try {
             $service = Service::findOrFail($id);
+            $templates = SmsTemplate::where('status', 1)->pluck('title', 'id');
             return view('admin.services.form', [
-                'service' => $service
+                'service' => $service,
+                'templates' => $templates
             ]);
         } catch (\Exception $e) {
             Log::error("Erro ao editar service com ID {$id}: " . $e->getMessage());
@@ -83,13 +88,10 @@ class ServicesController extends Controller
             $service = Service::findOrFail($id);
             $service->fill($request->validated());
 
-
             if ($request->hasFile('image')) {
                 $image = $this->imageService->uploadImage($request->file('image'), 'tenants/services/images');
                 $service->image = $image;
-
             }
-
             $service->save();
             return redirect()->route('services.edit', ['id' => $service->id])
                 ->with('success', __('modules.service_updated'));

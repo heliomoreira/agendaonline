@@ -35,14 +35,14 @@
                                         </td>
                                         <td>
                                             @if($client->phone_1)
-                                                <a href="tel:{{ $client->phone_1 }}">{{ $client->phone_1 }}</a>
+                                                <a href="{{ $editUrl }}">{{ $client->phone_1 }}</a>
                                             @else
                                                 <span class="text-muted">—</span>
                                             @endif
                                         </td>
                                         <td>
                                             @if($client->email)
-                                                <a href="mailto:{{ $client->email }}">{{ $client->email }}</a>
+                                                <a href="{{ $editUrl }}">{{ $client->email }}</a>
                                             @else
                                                 <span class="text-muted">—</span>
                                             @endif
