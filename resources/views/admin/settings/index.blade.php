@@ -101,7 +101,7 @@
                     <div class="col-md-2">
                         <label class="form-label" for="sms_send_hour">Hora de Envio</label>
                         <input type="time" name="sms_send_hour" class="form-control" id="sms_send_hour"
-                               value="{{$settings->sms_send_hour}}">
+                               value="{{ $settings->sms_send_hour ? \Carbon\Carbon::parse($settings->sms_send_hour)->format('H:i') : '' }}">
                     </div>
                 </div>
 
@@ -112,9 +112,6 @@
                 <button type="submit" class="btn btn-primary waves-effect waves-light">
                     <i class="icon-base ti tabler-device-floppy me-1"></i> Gravar
                 </button>
-                <a href="{{ route('professionals.index') }}" class="btn btn-outline-secondary waves-effect">
-                    <i class="icon-base ti tabler-arrow-left me-1"></i> Voltar
-                </a>
             </div>
 
             {{ html()->form()->close() }}

@@ -142,7 +142,7 @@
                         <button type="submit" class="btn btn-primary waves-effect waves-light">
                             <i class="icon-base ti tabler-device-floppy"></i> Gravar
                         </button>
-                        <a href="{{ route('professionals.index') }}"
+                        <a href="{{ route('account-settings.index') }}"
                            class="btn btn-secondary waves-effect waves-light">
                             <i class="icon-base ti tabler-arrow-left"></i> Voltar
                         </a>
