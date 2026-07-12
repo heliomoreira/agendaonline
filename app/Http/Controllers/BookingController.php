@@ -89,7 +89,7 @@ class BookingController extends Controller
         // Sobreposição de marcações: se ligada nas definições, qualquer
         // marcação (portal ou admin) pode partilhar o mesmo horário e a
         // verificação de conflito é ignorada.
-        $allowOverlap = Setting::current()->allow_overlap;
+        $allowOverlap = Setting::current()->booking_allow_overlap;
 
         if (!$allowOverlap) {
             // Verificar conflitos
@@ -177,7 +177,7 @@ class BookingController extends Controller
 
             // Com a sobreposição ligada, os horários já reservados continuam
             // a aparecer como disponíveis para qualquer pessoa.
-            $ignoreBookings = Setting::current()->allow_overlap;
+            $ignoreBookings = Setting::current()->booking_allow_overlap;
 
             $results = $this->calculateAvailableSlots(
                 $validatedData['start_date'],
