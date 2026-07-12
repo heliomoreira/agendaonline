@@ -663,9 +663,22 @@ class BookingController extends Controller
         return strtr($body, [
             '[NOME_CLIENTE]' => $booking->client_name,
             '[DATA]' => $date->format('d/m/Y'),
-            '[DIA_SEMANA]' => ucfirst($date->dayName),
+            '[DIA_SEMANA]' => $this->weekDay($date),
             '[HORA]' => $booking->start_hour,
             '[SERVICO]' => $booking->service->name ?? '',
         ]);
+    }
+
+    private function weekDay(Carbon $date): string
+    {
+        return [
+            Carbon::MONDAY    => 'Segunda-feira',
+            Carbon::TUESDAY   => 'Terça-feira',
+            Carbon::WEDNESDAY => 'Quarta-feira',
+            Carbon::THURSDAY  => 'Quinta-feira',
+            Carbon::FRIDAY    => 'Sexta-feira',
+            Carbon::SATURDAY  => 'Sábado',
+            Carbon::SUNDAY    => 'Domingo',
+        ][$date->dayOfWeek];
     }
 }
