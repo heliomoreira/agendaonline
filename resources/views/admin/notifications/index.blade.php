@@ -16,6 +16,7 @@
                                 <th>Data do Serviço</th>
                                 <th>Hora de Início</th>
                                 <th>Hora de Fim</th>
+                                <th>Dia de Envio</th>
                                 <th>Hora de Envio SMS</th>
                                 <th>Estado</th>
                             </tr>
@@ -38,6 +39,9 @@
                                     </td>
                                     <td class="pt-5">
                                         <p class="mb-0 text-heading">{{ $notification->service_end_hour }}h</p>
+                                    </td>
+                                    <td class="pt-5">
+                                        <p class="mb-0 text-heading">{{ $notification->send_day }}</p>
                                     </td>
                                     <td class="pt-5">
                                         <p class="mb-0 text-heading">{{ $notification->send_hour }}h</p>
