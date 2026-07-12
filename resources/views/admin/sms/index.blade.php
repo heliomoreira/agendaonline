@@ -61,11 +61,6 @@
                             <label class="form-label" for="sms_status">Estado SMS</label>
                             {{ html()->select('sms_status', [0 => 'Inativo', 1 => 'Ativo'], $tenant->sms_status)->id('sms_status')->class('form-select') }}
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label" for="sms_send_hour">Hora de Envio</label>
-                            <input type="time" name="sms_send_hour" class="form-control"
-                                   value="{{$tenant->sms_send_hour}}">
-                        </div>
                     </div>
 
 

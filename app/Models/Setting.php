@@ -11,12 +11,15 @@ class Setting extends Model
 
     protected $fillable = [
         'client_validation',
-        'booking_allow_overlap'
+        'booking_allow_overlap',
+        'sms_send_hour',
+        'sms_advance_days'
     ];
 
     protected $casts = [
         'booking_allow_overlap' => 'boolean',
         'client_validation' => ClientValidation::class,
+        'sms_advance_days' => 'integer',
     ];
 
     public static function current(): self
@@ -35,6 +38,8 @@ class Setting extends Model
         return [
             'client_validation' => null,
             'booking_allow_overlap' => false,
+            'sms_send_hour' => '18:00:00',
+            'sms_advance_days' => 1,
         ];
     }
 }

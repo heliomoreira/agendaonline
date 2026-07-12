@@ -81,6 +81,31 @@
                         <small class="text-muted">Permite marcações no mesmo horário.</small>
                     </div>
                 </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex align-items-center mb-4">
+                    <i class="icon-base ti tabler-calendar text-primary me-2"></i>
+                    <h6 class="mb-0 text-primary">SMS</h6>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label class="form-label" for="sms_advance_days">Dias de Antecedência</label>
+                        {{ html()->select('sms_advance_days')
+                            ->id('sms_advance_days')
+                            ->class('form-select')
+                            ->options([1 => "1 dia", 2 => "2 dias", 3 => "3 dias", 4 => "4 dias", 5 => "5 dias", 6 => "6 dias", 7 => "7 dias"])
+                            ->value($settings->sms_advance_days ?? 1) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label" for="sms_send_hour">Hora de Envio</label>
+                        <input type="time" name="sms_send_hour" class="form-control" id="sms_send_hour"
+                               value="{{$settings->sms_send_hour}}">
+                    </div>
+                </div>
+
+
             </div>
 
             <div class="card-footer d-flex gap-2">
