@@ -32,22 +32,34 @@ class SendNotification extends Command
     {
         try {
 
-            $currentTime = Carbon::now();
-            $timeFormatted = $currentTime->format('H:i:00');
+            $now = Carbon::now();
+            $today = $now->format('Y-m-d');
+            $timeFormatted = $now->format('H:i:00');
 
             $notifications = Notification::where('status', 'scheduled')
-                ->where('service_day', Carbon::tomorrow()->format('Y-m-d'))
-                ->where(function($query) use ($timeFormatted) {
-                    $query->where('send_hour', '=', $timeFormatted);
+                // já devia ter saído (data de envio passou, ou é hoje e a hora chegou)
+                ->where(function ($q) use ($today, $timeFormatted) {
+                    $q->where('send_date', '<', $today)
+                        ->orWhere(function ($q2) use ($today, $timeFormatted) {
+                            $q2->where('send_date', $today)
+                                ->where('send_hour', '<=', $timeFormatted);
+                        });
+                })
+                // mas o serviço ainda não passou (senão o lembrete é inútil)
+                ->where(function ($q) use ($today, $timeFormatted) {
+                    $q->where('service_day', '>', $today)
+                        ->orWhere(function ($q2) use ($today, $timeFormatted) {
+                            $q2->where('service_day', $today)
+                                ->where('service_start_hour', '>=', $timeFormatted);
+                        });
                 })
                 ->get();
 
             foreach ($notifications as $notification) {
                 SmsService::send(
-                    $notification->tenant_id,
-                    $notification->sender,
                     $notification->destinatary,
                     $notification->text,
+                    $notification->sender,
                 );
 
                 NotificationService::markAsSent($notification->id);
