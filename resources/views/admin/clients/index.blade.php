@@ -62,9 +62,15 @@
                         </div>
                     </div>
 
-                    @if($clients instanceof \Illuminate\Contracts\Pagination\Paginator)
-                        <div class="card-footer">
-                            {{ $clients->links() }}
+                    @if($clients->total() > 0)
+                        <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+                            <small class="text-body-secondary">
+                                A mostrar {{ $clients->firstItem() }}–{{ $clients->lastItem() }}
+                                de {{ $clients->total() }} cliente{{ $clients->total() === 1 ? '' : 's' }}
+                            </small>
+                            @if($clients->hasPages())
+                                {{ $clients->withQueryString()->links() }}
+                            @endif
                         </div>
                     @endif
                 </div>

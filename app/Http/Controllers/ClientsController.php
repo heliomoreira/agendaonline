@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
 use App\Models\Client;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -12,7 +13,7 @@ class ClientsController extends Controller
     public function index()
     {
         try {
-            $clients = Client::all();
+            $clients = Client::paginate(15);
             return view('admin.clients.index', [
                 'clients' => $clients
             ]);
@@ -51,11 +52,7 @@ class ClientsController extends Controller
     public function store(CustomerRequest $request): \Illuminate\Http\RedirectResponse
     {
         try {
-            $client = new Client();
-            $client->fill($request->all());
-            $client->save();
-
-            Log::info("Cliente criado com ID {$client->id}");
+            $client = CustomerService::findOrCreate($request->validated());
 
             return redirect()->route('clients.edit', ['id' => $client->id])
                 ->with('success', __('modules.client_created'));

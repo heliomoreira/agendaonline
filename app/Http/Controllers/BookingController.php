@@ -13,6 +13,7 @@ use App\Models\ProfessionalWorkingHour;
 use App\Models\Service;
 use App\Models\Tenant;
 use App\Notifications\BookingConfirmation;
+use App\Services\CustomerService;
 use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -579,24 +580,14 @@ class BookingController extends Controller
             }
         }
 
-        // Calcular hora de fim
         $startTime = Carbon::createFromFormat('H:i', $validated['start_hour']);
         $endTime = $startTime->copy()->addMinutes($service->duration);
 
-        // Buscar ou criar cliente
-        $client = null;
-        if ($validated['client_email']) {
-            $client = Client::where('email', $validated['client_email'])->first();
-        }
-
-        if (!$client && $validated['client_email']) {
-            // Criar novo cliente
-            $client = Client::create([
-                'name' => $validated['client_name'],
-                'email' => $validated['client_email'],
-                'phone_1' => $validated['client_phone_1'],
-            ]);
-        }
+        $client = CustomerService::findOrCreate([
+            'name'    => $validated['client_name'],
+            'email'   => $validated['client_email'],
+            'phone_1' => $validated['client_phone_1'],
+        ]);
 
         // Determinar status inicial
         $status = 'pending';

@@ -57,9 +57,9 @@
                 <div class="row mb-5">
                     <div class="col-md-3">
                         <label for="client_validation" class="form-label">Validação Cliente</label>
-                        {{ html()->select('client_validation', [null=>'Não Validar','email' => 'Email', 'phone_1' => 'Telemóvel','email_and_phone' => 'Email e Telemóvel'], $settings->client_validation ?? null)
-                            ->class('form-select')
-                            ->id('client_validation') }}
+                        {{ html()->select('client_validation', ['' => 'Não Validar','email' => 'Email','phone_1' => 'Telemóvel','email_and_phone' => 'Email e Telemóvel'], $settings->client_validation?->value)
+                        ->class('form-select')
+                        ->id('client_validation') }}
                         <small class="text-muted">Campo usado para verificar duplicados.</small>
                     </div>
                 </div>

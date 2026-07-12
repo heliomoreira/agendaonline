@@ -20,7 +20,6 @@ class SettingsController extends Controller
             'sms_send_hour' => 'required|date_format:H:i',
             'sms_advance_days' => 'required|integer|min:1|max:7',
         ]);
-
         $settings = Setting::current();
         $settings->update($request->only(['client_validation', 'booking_allow_overlap','sms_send_hour','sms_advance_days']));
 

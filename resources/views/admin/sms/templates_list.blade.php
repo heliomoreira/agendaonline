@@ -56,6 +56,17 @@
                             </table>
                         </div>
                     </div>
+                    @if($templates->total() > 0)
+                        <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
+                            <small class="text-body-secondary">
+                                A mostrar {{ $templates->firstItem() }}–{{ $templates->lastItem() }}
+                                de {{ $templates->total() }} template{{ $templates->total() === 1 ? '' : 's' }}
+                            </small>
+                            @if($templates->hasPages())
+                                {{ $templates->withQueryString()->links() }}
+                            @endif
+                        </div>
+                    @endif
                 </div>
             @endif
         </div>
