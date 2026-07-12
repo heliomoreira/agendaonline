@@ -28,7 +28,7 @@ class NotificationService
             'service_start_hour' => $service_start_hour,
             'service_end_hour' => $service_end_hour,
             'send_day' => $sendDate->toDateString(),
-            'send_hour' => tenant()->sms_send_hour,
+            'send_hour' => Setting::current()->sms_send_hour ?? "18:00:00",
             'status' => 'scheduled',
         ]);
     }
