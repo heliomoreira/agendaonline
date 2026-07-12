@@ -27,7 +27,7 @@ class NotificationService
             'service_day' => $service_day,
             'service_start_hour' => $service_start_hour,
             'service_end_hour' => $service_end_hour,
-            'send_date' => $sendDate->toDateString(),
+            'send_day' => $sendDate->toDateString(),
             'send_hour' => tenant()->sms_send_hour,
             'status' => 'scheduled',
         ]);
