@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->time('sms_send_hour')->default('18:00:00')->after('allow_overlap');
+            $table->time('sms_send_hour')->default('18:00:00')->after('booking_allow_overlap');
             $table->unsignedTinyInteger('sms_advance_days')->default(1)->after('sms_send_hour');
         });
     }
