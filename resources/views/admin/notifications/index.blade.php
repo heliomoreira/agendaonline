@@ -13,6 +13,7 @@
                             <thead class="border-bottom">
                             <tr style="background-color: #f1f1f1">
                                 <th>Destinatário</th>
+                                <th>Texto</th>
                                 <th>Data do Serviço</th>
                                 <th>Hora de Início</th>
                                 <th>Hora de Fim</th>
@@ -30,6 +31,16 @@
                                                 <p class="mb-0 text-heading">{{ $notification->destinatary }}</p>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td class="pt-5">
+                                        <button type="button"
+                                                class="btn btn-sm btn-icon btn-text-secondary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#smsTextModal"
+                                                data-text="{{ $notification->text }}"
+                                                title="Ver mensagem">
+                                            <i class="icon-base ti tabler-message"></i>
+                                        </button>
                                     </td>
                                     <td class="pt-5">
                                         <p class="mb-0 text-heading">{{ $notification->service_day }}</p>
@@ -66,4 +77,26 @@
 
         </div>
     </div>
+    <div class="modal fade" id="smsTextModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensagem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="smsTextContent" class="mb-0" style="white-space: pre-wrap;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('scripts')
+    <script>
+        const smsModal = document.getElementById('smsTextModal');
+        smsModal.addEventListener('show.bs.modal', function (event) {
+            const text = event.relatedTarget.getAttribute('data-text');
+            document.getElementById('smsTextContent').textContent = text;
+        });
+    </script>
+@endpush

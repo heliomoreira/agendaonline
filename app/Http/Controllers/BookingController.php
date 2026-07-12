@@ -658,11 +658,14 @@ class BookingController extends Controller
 
     private function renderTemplate(string $body, Agenda $booking): string
     {
+        $date = Carbon::parse($booking->day)->locale('pt_PT');
+
         return strtr($body, [
             '[NOME_CLIENTE]' => $booking->client_name,
-            '[DATA]'         => Carbon::parse($booking->day)->format('d/m/Y'),
-            '[HORA]'         => $booking->start_hour,
-            '[SERVICO]'      => $booking->service->name ?? '',
+            '[DATA]' => $date->format('d/m/Y'),
+            '[DIA_SEMANA]' => ucfirst($date->dayName),
+            '[HORA]' => $booking->start_hour,
+            '[SERVICO]' => $booking->service->name ?? '',
         ]);
     }
 }

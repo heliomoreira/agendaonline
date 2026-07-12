@@ -99,6 +99,7 @@
                         @foreach([
                             '[NOME_CLIENTE]' => 'Nome do cliente',
                             '[DATA]'         => 'Data da marcação',
+                            '[DIA_SEMANA]'   => 'Dia da semana',
                             '[HORA]'         => 'Hora da marcação',
                             '[SERVICO]'      => 'Serviço agendado',
                         ] as $code => $label)
