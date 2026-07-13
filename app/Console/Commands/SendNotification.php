@@ -39,9 +39,9 @@ class SendNotification extends Command
             $notifications = Notification::where('status', 'scheduled')
                 // já devia ter saído (data de envio passou, ou é hoje e a hora chegou)
                 ->where(function ($q) use ($today, $timeFormatted) {
-                    $q->where('send_date', '<', $today)
+                    $q->where('send_day', '<', $today)
                         ->orWhere(function ($q2) use ($today, $timeFormatted) {
-                            $q2->where('send_date', $today)
+                            $q2->where('send_day', $today)
                                 ->where('send_hour', '<=', $timeFormatted);
                         });
                 })
