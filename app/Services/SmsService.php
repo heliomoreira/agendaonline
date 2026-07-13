@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
@@ -19,19 +20,19 @@ class SmsService
         try {
             $client = new Client([
                 'base_uri' => rtrim(config('sms.sms_url'), '/'),
-                'headers'  => [
-                    'Content-Type'  => 'application/json',
+                'headers' => [
+                    'Content-Type' => 'application/json',
                     'Authorization' => 'Basic ' . config('sms.sms_token'),
                 ],
             ]);
 
             $response = $client->post('/api/rest/sms', [
                 'json' => [
-                    'to'           => ['351' . $receiver],
-                    'from'         => $sender,
-                    'message'      => $message,
+                    'to' => [$receiver],
+                    'from' => $sender,
+                    'message' => $message,
                     'campaignName' => $sender,
-                    'parts'        => 10,
+                    'parts' => 10,
                 ],
             ]);
 
@@ -60,10 +61,10 @@ class SmsService
             }
 
             return response()->json([
-                'id'          => $sms['id'],
-                'is_delivered'=> $sms['isDelivered'],
-                'is_clicked'  => $sms['isClicked'],
-                'events'      => $sms['events'],
+                'id' => $sms['id'],
+                'is_delivered' => $sms['isDelivered'],
+                'is_clicked' => $sms['isClicked'],
+                'events' => $sms['events'],
             ]);
 
         } catch (GuzzleException $e) {

@@ -55,6 +55,7 @@ class BookingController extends Controller
             'start_hour' => 'required|date_format:H:i',
             'client_name' => 'required|string|max:255',
             'client_phone_1' => 'required|integer',
+            'client_id' => 'nullable|exists:clients,id',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -72,16 +73,24 @@ class BookingController extends Controller
         $tenant = Tenant::find(tenant('id'));
         $portal = Portal::all()->first();
 
+        // Cliente escolhido na pesquisa (back-office) ou, caso contrário,
+        // procura por telemóvel e cria um novo se não existir.
+        $client = $request->filled('client_id')
+            ? Client::find($request->client_id)
+            : null;
 
-        $client = Client::firstOrCreate(
-            [
-                'phone_1' => $request->client_phone_1
-            ],
-            [
-                'name' => $request->client_name,
-                'email' => $request->client_email,
-            ]
-        );
+        if (!$client) {
+            $client = Client::firstOrCreate(
+                [
+                    'phone_1' => $request->client_phone_1
+                ],
+                [
+                    'name' => $request->client_name,
+                    'email' => $request->client_email,
+                    'phone_1_country_code' => $request->client_phone_1_country_code ?? '351',
+                ]
+            );
+        }
 
         $service = Service::findOrFail($request->service_id);
         $start = Carbon::parse("{$request->day} {$request->start_hour}");
@@ -132,21 +141,46 @@ class BookingController extends Controller
 
         $booking->load(['client', 'service', 'professional']);
 
-        $service = Service::find($request->service_id);
         $serviceName = $service ? $service->name : 'o seu serviço';
 
+        // ---- SMS ao cliente ----
         if ($tenant->sms_status && $tenant->sms_sender != null && $tenant->sms_credits > 0.04) {
 
             $service->load('smsTemplate');
             $template = $service->smsTemplate;
 
-            $text = ($template && $template->status)
+            $text = ($template && $template->status && filled($template->body))
                 ? $this->renderTemplate($template->body, $booking)
-                : "Olá, lembramos que tem o serviço {$serviceName} agendado para amanhã às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+                : "Olá, lembramos que tem o serviço {$serviceName} agendado para o dia "
+                . Carbon::parse($request->day)->format('d/m/Y') . " às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+
+            $clientPhone = $client->phone_1_country_code . $client->phone_1;
 
             NotificationService::saveNotification(
                 $tenant->id, $booking->id, $tenant->sms_sender,
-                $request->client_phone_1, 'sms', $text,
+                $clientPhone, 'sms', $text,
+                $request->day, $start->format('H:i'), $end->format('H:i')
+            );
+        }
+
+        // ---- SMS ao encarregado (só se for menor e a opção estiver ativa) ----
+        if (
+            $tenant->sms_status && $tenant->sms_sender != null && $tenant->sms_credits > 0.08
+            && $client->is_minor && $client->send_sms_to_parent && $client->parent_phone_1
+        ) {
+            $client->load('parentSmsTemplate');
+            $parentTemplate = $client->parentSmsTemplate;
+
+            $parentText = ($parentTemplate && $parentTemplate->status && filled($parentTemplate->body))
+                ? $this->renderTemplate($parentTemplate->body, $booking)
+                : "Olá, informamos que {$booking->client_name} tem o serviço {$serviceName} agendado para o dia "
+                . Carbon::parse($request->day)->format('d/m/Y') . " às {$request->start_hour}. Obrigado.";
+
+            $parentPhone = $client->parent_phone_1_country_code . $client->parent_phone_1;
+
+            NotificationService::saveNotification(
+                $tenant->id, $booking->id, $tenant->sms_sender,
+                $parentPhone, 'sms', $parentText,
                 $request->day, $start->format('H:i'), $end->format('H:i')
             );
         }
@@ -154,13 +188,12 @@ class BookingController extends Controller
         Notification::route('mail', $request->client_email)
             ->notify(new BookingConfirmation($booking));
 
-
         if ($admin) {
-            return redirect()->back()->with('success', 'Agendamento reservado com sucesso!');
+            return redirect()->route('agenda.show', $booking->id)
+                ->with('success', 'Agendamento reservado com sucesso!');
         } else {
             return view('front.portal.confirmation', compact('portal', 'booking', 'tenant'));
         }
-
     }
 
 

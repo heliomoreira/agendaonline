@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
 use App\Models\Client;
+use App\Models\SmsTemplate;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -27,8 +28,10 @@ class ClientsController extends Controller
     {
         try {
             $client = new Client();
+            $templates = SmsTemplate::where('status', 1)->pluck('title', 'id');
             return view('admin.clients.form', [
-                'client' => $client
+                'client' => $client,
+                'templates' => $templates
             ]);
         } catch (\Exception $e) {
             Log::error('Erro ao carregar formulário de cliente: ' . $e->getMessage());
@@ -40,8 +43,10 @@ class ClientsController extends Controller
     {
         try {
             $client = Client::findOrFail($id);
+            $templates = SmsTemplate::where('status', 1)->pluck('title', 'id');
             return view('admin.clients.form', [
-                'client' => $client
+                'client' => $client,
+                'templates' => $templates
             ]);
         } catch (\Exception $e) {
             Log::error("Erro ao editar cliente com ID {$id}: " . $e->getMessage());
@@ -92,5 +97,26 @@ class ClientsController extends Controller
             Log::error("Erro ao eliminar cliente com ID {$id}: " . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao eliminar o cliente.'));
         }
+    }
+
+    public function search(Request $request)
+    {
+        $q = trim($request->get('q', ''));
+
+        if (mb_strlen($q) < 2) {
+            return response()->json([]);
+        }
+
+        $clients = Client::query()
+            ->where(function ($query) use ($q) {
+                $query->where('name', 'like', "%{$q}%")
+                    ->orWhere('phone_1', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%");
+            })
+            ->orderBy('name')
+            ->limit(10)
+            ->get(['id', 'name', 'email', 'phone_1', 'phone_1_country_code']);
+
+        return response()->json($clients);
     }
 }

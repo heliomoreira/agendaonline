@@ -14,9 +14,17 @@ class Client extends Model
     use HasFactory, Notifiable, softDeletes, CanResetPassword;
 
     protected $fillable = [
-        'name', 'phone_1', 'phone_2', 'email', 'address', 'number_port', 'zip_code',
+        'name', 'phone_1', 'phone_2', 'phone_1_country_code',
+        'phone_2_country_code', 'email', 'address', 'number_port', 'zip_code',
         'city', 'district_id', 'county_id', 'marketing_allowed', 'type', 'birthdate', 'notes',
-        'password',
+        'password', 'is_minor',
+        'parent_name',
+        'parent_phone_1_country_code',
+        'parent_phone_1',
+        'parent_email',
+        'parent_notes',
+        'send_sms_to_parent',
+        'parent_sms_template_id',
     ];
 
     protected $hidden = [
@@ -28,6 +36,8 @@ class Client extends Model
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'password' => 'hashed',
+        'is_minor' => 'boolean',
+        'send_sms_to_parent' => 'boolean',
     ];
 
     /* ═══════════════════════════════════════
@@ -51,6 +61,11 @@ class Client extends Model
     public function scopeVerified($query)
     {
         return $query->whereNotNull('email_verified_at');
+    }
+
+    public function parentSmsTemplate()
+    {
+        return $this->belongsTo(SmsTemplate::class, 'parent_sms_template_id');
     }
 
     /* ═══════════════════════════════════════

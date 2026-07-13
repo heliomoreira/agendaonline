@@ -75,6 +75,8 @@ Route::middleware([
 
                 Route::post('/store', [ClientsController::class, 'store'])->name('clients.store');
                 Route::put('/update/{id}', [ClientsController::class, 'update'])->name('clients.update');
+
+                Route::get('/search', [ClientsController::class, 'search'])->name('clients.search');
             });
 
             Route::prefix('services')->group(function () {
