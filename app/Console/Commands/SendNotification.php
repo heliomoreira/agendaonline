@@ -65,11 +65,11 @@ class SendNotification extends Command
                 NotificationService::markAsSent($notification->id);
             }
 
-            return true;
+           return self::SUCCESS;
 
         } catch (\Exception $e) {
             Log::error('Error sending notifications: ' . $e->getMessage());
-            return false;
+            return self::FAILURE;
         }
     }
 }
