@@ -150,7 +150,7 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-end">
+                <div class="card-footer text-end pt-5">
                     <a href="{{ route('agenda.index') }}" class="fw-medium">
                         Ver Agenda completa <i class="ti tabler-arrow-right ms-1"></i>
                     </a>

@@ -5,12 +5,10 @@
             <div class="col-md-12">
                 <div class="alert alert-solid-success alert-dismissible fade show d-flex align-items-center"
                      role="alert">
-            <span class="alert-icon rounded me-2">
-                <i class="icon-base ti tabler-check icon-md"></i>
-            </span>
-                    <div class="flex-grow-1">
-                        {{ session('success') }}
-                    </div>
+                    <span class="alert-icon rounded me-2">
+                        <i class="icon-base ti tabler-check icon-md"></i>
+                    </span>
+                    <div class="flex-grow-1">{{ session('success') }}</div>
                     <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Fechar"></button>
                 </div>
             </div>
@@ -20,9 +18,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-solid-danger d-flex align-items-center" role="alert">
-            <span class="alert-icon rounded">
-              <i class="icon-base ti tabler-x"></i>
-            </span>
+                    <span class="alert-icon rounded"><i class="icon-base ti tabler-x"></i></span>
                     <div>
                         <strong>Existem alguns erros:</strong>
                         <ul class="mb-0">
@@ -35,76 +31,94 @@
             </div>
         </div>
     @endif
+
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="d-flex align-items-center gap-2 m-0">
+                <i class="icon-base ti tabler-world"></i>
+                Gestão do Portal
+            </h5>
+            <hr class="my-2"/>
+        </div>
+    </div>
+
     <div class="row g-6">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header header-elements d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0 me-2">Gestão do Portal</h5>
-                    <a href="https://{{ $domain }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                        <i class="icon-base ti tabler-external-link me-1"></i> Ver portal
-                    </a>
+                <div class="card-header header-elements">
+                    <h5 class="mb-0 me-2">Configuração do Portal</h5>
+                    <div class="card-header-elements ms-auto">
+                        <a href="https://{{ $domain }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="icon-base ti tabler-external-link me-1"></i> Ver portal
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
 
                     {{ html()->modelForm($portal, 'PUT', route('portal.update', $portal->id ?? 1))->acceptsFiles()->open() }}
-
 
                     <div class="nav-align-top nav-tabs-shadow">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button type="button" class="nav-link active waves-effect" role="tab"
                                         data-bs-toggle="tab" data-bs-target="#navs-top-home"
-                                        aria-controls="navs-top-home" aria-selected="false" tabindex="-1">Home
+                                        aria-controls="navs-top-home" aria-selected="true">
+                                    <i class="icon-base ti tabler-home me-1"></i> Home
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab"
                                         data-bs-target="#navs-top-profile" aria-controls="navs-top-profile"
-                                        aria-selected="false" tabindex="-1">Pagamento
+                                        aria-selected="false">
+                                    <i class="icon-base ti tabler-credit-card me-1"></i> Pagamento
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button type="button" class="nav-link waves-effect" role="tab" data-bs-toggle="tab"
                                         data-bs-target="#navs-top-hours" aria-controls="navs-top-hours"
-                                        aria-selected="false" tabindex="-1">Horário
+                                        aria-selected="false">
+                                    <i class="icon-base ti tabler-clock me-1"></i> Horário
                                 </button>
                             </li>
                         </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active show" id="navs-top-home" role="tabpanel">
-                                <div class="row g-6" style="">
-                                    <div class="col-md-2">
-                                        <label class="form-label" for="enable_portal">Portal Activo</label>
-                                        {{html()->select('enable_portal')->id('enable_portal')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_portal ?? 0)->class('form-select')->disabled()}}
 
+                        <div class="tab-content">
+                            {{-- ===== Home ===== --}}
+                            <div class="tab-pane active show" id="navs-top-home" role="tabpanel">
+                                <div class="row g-4">
+                                    <div class="col-md-2">
+                                        <label class="form-label" for="enable_portal">Portal Ativo</label>
+                                        {{html()->select('enable_portal')->id('enable_portal')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_portal ?? 0)->class('form-select')->disabled()}}
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-label" for="enable_booking">Marcações Activas</label>
+                                        <label class="form-label" for="enable_booking">Marcações Ativas</label>
                                         {{html()->select('enable_booking')->id('enable_booking')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_booking ?? 0)->class('form-select')->disabled()}}
                                     </div>
                                 </div>
 
-                                <div class="row g-6 mt-1">
-                                    <div class="col-md-4">
+                                <div class="row g-4 mt-1">
+                                    <div class="col-md-6">
                                         <label class="form-label" for="title">Título</label>
                                         {{html()->text('title')->id('title')->class('form-control')->placeholder('')}}
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label class="form-label" for="subtitle">Sub Título</label>
                                         {{html()->text('subtitle')->id('subtitle')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-4">
+
+                                <div class="row g-4 mt-1">
+                                    <div class="col-md-6">
                                         <label class="form-label" for="address">Morada</label>
                                         {{html()->text('address')->id('address')->class('form-control')->placeholder('')}}
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label class="form-label" for="city">Localidade</label>
                                         {{html()->text('city')->id('city')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+
+                                <div class="row g-4 mt-1">
                                     <div class="col-md-4">
                                         <label class="form-label" for="phone_1">Telefone 1</label>
                                         {{html()->text('phone_1')->id('phone_1')->class('form-control')->placeholder('')}}
@@ -118,51 +132,59 @@
                                         {{html()->text('email')->id('email')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+
+                                <div class="row g-4 mt-1">
                                     <div class="col-md-12">
                                         <label class="form-label" for="about_us">Sobre Nós</label>
                                         {{html()->textarea('about_us')->id('about_us')->class('form-control')->rows(5)->placeholder('')}}
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+
+                                <h6 class="text-muted fw-semibold mb-3 mt-5">Aparência</h6>
+                                <div class="row g-4">
                                     <div class="col-md-2">
                                         <label class="form-label" for="main_color">Cor Principal</label>
-                                        {{ html()->input('color', 'main_color')->class('form-control')->style('height: 39px') }}
+                                        {{ html()->input('color', 'main_color')->class('form-control form-control-color w-100')->id('main_color') }}
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="secondary_color">Cor Secundária</label>
-                                        {{ html()->input('color', 'secondary_color')->class('form-control')->style('height: 39px') }}
+                                        {{ html()->input('color', 'secondary_color')->class('form-control form-control-color w-100')->id('secondary_color') }}
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="button_background_color">Cor Fundo Botões</label>
-                                        {{ html()->input('color', 'button_background_color')->class('form-control')->style('height: 39px') }}
+                                        {{ html()->input('color', 'button_background_color')->class('form-control form-control-color w-100')->id('button_background_color') }}
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="button_text_color">Cor Texto Botões</label>
-                                        {{ html()->input('color', 'button_text_color')->class('form-control')->style('height: 39px') }}
+                                        {{ html()->input('color', 'button_text_color')->class('form-control form-control-color w-100')->id('button_text_color') }}
                                     </div>
-                                    <div class="col-md-2">
+                                </div>
+
+                                <div class="row g-4 mt-1">
+                                    <div class="col-md-3">
                                         <label for="logo" class="form-label">Logotipo</label>
-                                        <input type="file" class="form-control" id="logo" name="logo">
+                                        <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
                                         @if(isset($portal->logo))
-                                            <img src="{{ url('/storage/'.$portal->logo) }}" alt="Portal Image"
+                                            <img src="{{ url('/storage/'.$portal->logo) }}" alt="Logótipo"
                                                  class="img-thumbnail mt-2" style="max-width: 200px;">
                                         @endif
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <label for="background_image" class="form-label">Imagem Fundo</label>
                                         <input type="file" class="form-control" id="background_image"
-                                               name="background_image">
+                                               name="background_image" accept="image/*">
                                         @if(isset($portal->background_image))
                                             <img src="{{ url('/storage/'.$portal->background_image) }}"
-                                                 alt="Portal Image"
+                                                 alt="Imagem de fundo"
                                                  class="img-thumbnail mt-2" style="max-width: 200px;">
                                         @endif
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- ===== Pagamento ===== --}}
                             <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
-                                <div class="row mt-3">
+                                <div class="row g-4">
                                     <div class="col-md-4">
                                         <label class="form-label" for="requires_payment">Pré-Pagamento</label>
                                         {{html()->select('requires_payment')->options([0=>'Não', 1=>'Sim'])->id('requires_payment')->class('form-select')->placeholder('--Selecionar--')}}
@@ -172,7 +194,8 @@
                                         {{html()->text('payment_percentage')->id('payment_percentage')->class('form-control')->placeholder('')}}
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+
+                                <div class="row g-4 mt-1">
                                     <div class="col-md-4">
                                         <label class="form-label" for="payment_stripe_key">Stripe Key</label>
                                         {{html()->text('payment_stripe_key')->id('payment_stripe_key')->class('form-control')->placeholder('')}}
@@ -182,56 +205,44 @@
                                         {{html()->password('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('')}}
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-label" for="payment_stripe_allow_card">Cartão de
-                                            Crédito</label>
+                                        <label class="form-label" for="payment_stripe_allow_card">Cartão de Crédito</label>
                                         {{html()->select('payment_stripe_allow_card')->id('payment_stripe_allow_card')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-label" for="payment_stripe_allow_multibanco">Multibanco /
-                                            MBWay</label>
+                                        <label class="form-label" for="payment_stripe_allow_multibanco">Multibanco / MBWay</label>
                                         {{html()->select('payment_stripe_allow_multibanco')->id('payment_stripe_allow_multibanco')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- ===== Horário ===== --}}
                             <div class="tab-pane fade" id="navs-top-hours" role="tabpanel">
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="monday_hours">Segunda-feira</label>
                                         {{html()->text('monday_hours')->id('monday_hours')->class('form-control')->placeholder('')}}
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="tuesday_hours">Terça-feira</label>
                                         {{html()->text('tuesday_hours')->id('tuesday_hours')->class('form-control')->placeholder('')}}
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="wednesday_hours">Quarta-feira</label>
                                         {{html()->text('wednesday_hours')->id('wednesday_hours')->class('form-control')->placeholder('')}}
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="thursday_hours">Quinta-feira</label>
                                         {{html()->text('thursday_hours')->id('thursday_hours')->class('form-control')->placeholder('')}}
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="friday_hours">Sexta-feira</label>
                                         {{html()->text('friday_hours')->id('friday_hours')->class('form-control')->placeholder('')}}
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="saturday_hours">Sábado</label>
                                         {{html()->text('saturday_hours')->id('saturday_hours')->class('form-control')->placeholder('')}}
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="form-label" for="sunday_hours">Domingo</label>
                                         {{html()->text('sunday_hours')->id('sunday_hours')->class('form-control')->placeholder('')}}
                                     </div>
@@ -239,59 +250,23 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="my-2"/>
-                    <div class="row">
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                <i class="icon-base ti tabler-device-floppy"></i> Gravar
-                            </button>
-                            <a href="{{ route('portal.index') }}"
-                               class="btn btn-secondary waves-effect waves-light">
-                                <i class="icon-base ti tabler-arrow-left"></i> Voltar
-                            </a>
-                        </div>
-                    </div>
-                    {{html()->closeModelForm()}}
-                    {{--<form action="{{ route('portal.update', $portal->id) }}" method="POST"
-                          enctype="multipart/form-data" class="row">
-                        @csrf
-                        @method('PUT')
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="title" class="form-label">Título</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                       value="{{ old('title', $portal->title) }}" required>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="description" class="form-label">Cor Principal</label>
-
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="description" class="form-label">Cor Secundária</label>
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-
-                        </div>
-
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Imagem</label>
-                                <input type="file" class="form-control" id="image" name="image">
-                                @if($portal->image)
-                                    <img src="{{ asset('storage/' . $portal->image) }}" alt="Portal Image"
-                                         class="img-thumbnail mt-2" style="max-width: 200px;">
-                                @endif
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </form>--}}
                 </div>
+
+                <div class="card-footer">
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                            <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                        </button>
+                        <a href="{{ route('portal.index') }}" class="btn btn-secondary waves-effect waves-light">
+                            <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                        </a>
+                    </div>
+                </div>
+
+                {{ html()->closeModelForm() }}
             </div>
         </div>
+    </div>
 @endsection
 @push('scripts')
-
 @endpush

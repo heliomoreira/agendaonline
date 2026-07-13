@@ -18,13 +18,19 @@ class ServicesController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $services = Service::all();
-            return view('admin.services.index', [
-                'services' => $services
-            ]);
+            $services = Service::query()
+                ->when($request->filled('search'),
+                    fn ($q) => $q->where('name', 'like', "%{$request->search}%"))
+                ->when($request->filled('status'),
+                    fn ($q) => $q->where('status', $request->status))
+                ->orderBy('order')
+                ->paginate(15)
+                ->withQueryString();
+
+            return view('admin.services.index', compact('services'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar serviços: ' . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao carregar a lista de serviços.'));

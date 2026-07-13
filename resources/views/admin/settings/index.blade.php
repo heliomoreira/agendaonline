@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     @if (session('success'))
         <div class="row">
@@ -36,43 +35,47 @@
         </div>
     @endif
 
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <h5 class="d-flex align-items-center gap-2 m-0">
+                <i class="icon-base ti tabler-settings"></i>
+                Configurações
+            </h5>
+            <hr class="my-2"/>
+        </div>
+    </div>
+
     <div class="row g-6">
         <div class="col-12">
             {{ html()->form('POST', route('settings.update'))->acceptsFiles()->class('card')->open() }}
             @method('PUT')
             @csrf
 
-            <div class="card-header d-flex align-items-center">
-                <i class="icon-base ti tabler-settings me-2"></i>
-                <h5 class="mb-0">Configurações</h5>
+            <div class="card-header header-elements">
+                <h5 class="mb-0 me-2">Definições Gerais</h5>
             </div>
 
             <div class="card-body">
-                {{-- Secção: Clientes --}}
-                <div class="d-flex align-items-center mb-4">
-                    <i class="icon-base ti tabler-users text-primary me-2"></i>
-                    <h6 class="mb-0 text-primary">Clientes</h6>
-                </div>
 
-                <div class="row mb-5">
+                {{-- ===== Clientes ===== --}}
+                <h6 class="text-muted fw-semibold mb-3">
+                    <i class="icon-base ti tabler-users me-1"></i> Clientes
+                </h6>
+                <div class="row g-4">
                     <div class="col-md-3">
                         <label for="client_validation" class="form-label">Validação Cliente</label>
                         {{ html()->select('client_validation', ['' => 'Não Validar','email' => 'Email','phone_1' => 'Telemóvel','email_and_phone' => 'Email e Telemóvel'], $settings->client_validation?->value)
-                        ->class('form-select')
-                        ->id('client_validation') }}
+                            ->class('form-select')
+                            ->id('client_validation') }}
                         <small class="text-muted">Campo usado para verificar duplicados.</small>
                     </div>
                 </div>
 
-                <hr class="my-4">
-
-                {{-- Secção: Marcações --}}
-                <div class="d-flex align-items-center mb-4">
-                    <i class="icon-base ti tabler-calendar text-primary me-2"></i>
-                    <h6 class="mb-0 text-primary">Marcações</h6>
-                </div>
-
-                <div class="row">
+                {{-- ===== Marcações ===== --}}
+                <h6 class="text-muted fw-semibold mb-3 mt-5">
+                    <i class="icon-base ti tabler-calendar me-1"></i> Marcações
+                </h6>
+                <div class="row g-4">
                     <div class="col-md-3">
                         <label for="booking_allow_overlap" class="form-label">Permitir Sobreposição</label>
                         {{ html()->select('booking_allow_overlap', ['0' => 'Não', '1' => 'Sim'], $settings->booking_allow_overlap ?? 0)
@@ -82,14 +85,11 @@
                     </div>
                 </div>
 
-                <hr class="my-4">
-
-                <div class="d-flex align-items-center mb-4">
-                    <i class="icon-base ti tabler-calendar text-primary me-2"></i>
-                    <h6 class="mb-0 text-primary">SMS</h6>
-                </div>
-
-                <div class="row">
+                {{-- ===== SMS ===== --}}
+                <h6 class="text-muted fw-semibold mb-3 mt-5">
+                    <i class="icon-base ti tabler-device-mobile-message me-1"></i> SMS
+                </h6>
+                <div class="row g-4">
                     <div class="col-md-2">
                         <label class="form-label" for="sms_advance_days">Dias de Antecedência</label>
                         {{ html()->select('sms_advance_days')
@@ -97,6 +97,7 @@
                             ->class('form-select')
                             ->options([1 => "1 dia", 2 => "2 dias", 3 => "3 dias", 4 => "4 dias", 5 => "5 dias", 6 => "6 dias", 7 => "7 dias"])
                             ->value($settings->sms_advance_days ?? 1) }}
+                        <small class="text-muted">Quando enviar o lembrete antes da marcação.</small>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label" for="sms_send_hour">Hora de Envio</label>
@@ -104,7 +105,6 @@
                                value="{{ $settings->sms_send_hour ? \Carbon\Carbon::parse($settings->sms_send_hour)->format('H:i') : '' }}">
                     </div>
                 </div>
-
 
             </div>
 

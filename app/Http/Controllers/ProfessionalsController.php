@@ -14,15 +14,26 @@ use Illuminate\Support\Facades\Log;
 
 class ProfessionalsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
         try {
-            $professionals = ProfessionalService::list();
+            $professionals = Professional::query()
+                ->when($request->filled('search'), function ($q) use ($request) {
+                    $search = $request->search;
+                    $q->where(function ($sub) use ($search) {
+                        $sub->where('name', 'like', "%{$search}%")
+                            ->orWhere('phone_1', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%");
+                    });
+                })
+                ->when($request->filled('status'),
+                    fn ($q) => $q->where('status', $request->status))
+                ->orderBy('name')
+                ->paginate(15)
+                ->withQueryString();
 
-            return view('admin.professionals.index', [
-                'professionals' => $professionals
-            ]);
+            return view('admin.professionals.index', compact('professionals'));
         } catch (\Exception $e) {
             Log::error('Erro ao listar Profissionais: ' . $e->getMessage());
             return redirect()->back()->withErrors(__('Ocorreu um erro ao carregar a lista de Profissionais.'));
