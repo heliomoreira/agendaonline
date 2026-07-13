@@ -111,9 +111,11 @@
                                                     <i class="icon-base ti {{ $isParent ? 'tabler-shield-half-filled' : 'tabler-user' }}"></i>
                                                 </span>
                                             </div>
-                                            <div class="d-flex flex-column">
+                                            <div>
                                                 <span class="fw-medium">{{ $notification->destinatary }}</span>
-                                                <small class="text-muted">{{ $isParent ? 'Encarregado' : 'Cliente' }}</small>
+                                                @if($isParent)
+                                                    <span class="badge rounded-pill bg-label-warning fw-normal ms-1">Encarregado</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

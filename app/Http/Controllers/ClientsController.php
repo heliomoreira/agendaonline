@@ -11,10 +11,26 @@ use Illuminate\Support\Facades\Log;
 
 class ClientsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $clients = Client::orderBy('name')->paginate(15);
+            $clients = Client::query()
+                ->when($request->filled('search'), function ($q) use ($request) {
+                    $search = $request->search;
+                    $q->where(function ($sub) use ($search) {
+                        $sub->where('name', 'like', "%{$search}%")
+                            ->orWhere('phone_1', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%");
+                    });
+                })
+                ->when($request->filled('city'),
+                    fn ($q) => $q->where('city', 'like', "%{$request->city}%"))
+                ->when($request->filled('is_minor'),
+                    fn ($q) => $q->where('is_minor', $request->is_minor))
+                ->orderBy('name')
+                ->paginate(15)
+                ->withQueryString();
+
             return view('admin.clients.index', [
                 'clients' => $clients
             ]);
