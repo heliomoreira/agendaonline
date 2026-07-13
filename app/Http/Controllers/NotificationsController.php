@@ -10,7 +10,9 @@ class NotificationsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Notification::where('tenant_id', tenant('id'))->query();
+        $query = Notification::query();
+
+        $query->where('tenant_id', tenant('id'));
 
         // Pesquisa por destinatário / texto
         if ($request->filled('search')) {
