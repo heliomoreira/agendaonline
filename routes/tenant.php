@@ -42,7 +42,17 @@ Route::middleware([
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
 
-    Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
+    Route::middleware('portal.active')->group(function () {
+        Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
+        Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
+        Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
+        Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
+        Route::post('/book-slot/{admin?}', [BookingController::class, 'bookSlot'])->name('book.slot');
+        Route::post('/booking/payment-intent', [BookingPaymentController::class, 'createPaymentIntent'])->name('book.payment.intent');
+        Route::post('/booking/stripe/webhook', [BookingPaymentController::class, 'handleWebhook'])
+            ->withoutMiddleware(['web']);
+        Route::get('/booking/success', [BookingController::class, 'success'])->name('booking.success');
+    });
 
     Route::get('/admin', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
@@ -125,7 +135,7 @@ Route::middleware([
                 Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
                 Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
 
-                Route::delete('/cancel-event/{id}',[AgendaController::class, 'cancelEvent'])->name('agenda.cancel-event');
+                Route::delete('/cancel-event/{id}', [AgendaController::class, 'cancelEvent'])->name('agenda.cancel-event');
 
                 Route::get('/{agenda}', [AgendaController::class, 'show'])->name('agenda.show');
                 Route::put('/{agenda}/update', [AgendaController::class, 'update'])->name('agenda.update');
@@ -187,13 +197,6 @@ Route::middleware([
     /*
      * Public routes
      */
-    Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
-    Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
-    Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
-    Route::post('/book-slot/{admin?}', [BookingController::class, 'bookSlot'])->name('book.slot');
-    Route::post('/booking/payment-intent', [BookingPaymentController::class, 'createPaymentIntent'])->name('book.payment.intent');
-    Route::post('/booking/stripe/webhook', [BookingPaymentController::class, 'handleWebhook'])
-        ->withoutMiddleware(['web']);
-    Route::get('/booking/success', [BookingController::class, 'success'])->name('booking.success');
+
 
 });

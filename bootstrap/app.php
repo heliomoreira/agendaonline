@@ -6,6 +6,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Stancl\Tenancy\Exceptions\TenantCouldNotBeIdentifiedOnDomainException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Middleware\EnsurePortalActive;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,6 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return route('login');
         });
+
+        $middleware->alias([
+            'portal.active' => EnsurePortalActive::class,
+        ]);
 
         $middleware->redirectUsersTo(function (Request $request) {
             if ($request->is('cliente') || $request->is('cliente/*')) {

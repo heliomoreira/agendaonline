@@ -26,10 +26,6 @@ class TenantController extends Controller
         $professionals = Professional::all();
         $portal = Portal::first();
 
-        if (!$portal->enable_portal) {
-            return redirect()->away('https://agendaonline.pt');
-        }
-
         $days = [
             0 => 'sunday_hours',
             1 => 'monday_hours',
