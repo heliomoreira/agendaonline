@@ -88,11 +88,11 @@
                                 <div class="row g-4">
                                     <div class="col-md-2">
                                         <label class="form-label" for="enable_portal">Portal Ativo</label>
-                                        {{html()->select('enable_portal')->id('enable_portal')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_portal ?? 0)->class('form-select')->disabled()}}
+                                        {{html()->select('enable_portal')->id('enable_portal')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_portal ?? 0)->class('form-select')}}
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="enable_booking">Marcações Ativas</label>
-                                        {{html()->select('enable_booking')->id('enable_booking')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_booking ?? 0)->class('form-select')->disabled()}}
+                                        {{html()->select('enable_booking')->id('enable_booking')->options([0=>'Não', 1=>'Sim'])->value($portal->enable_booking ?? 0)->class('form-select')}}
                                     </div>
                                 </div>
 

@@ -44,16 +44,18 @@
                         <i class="ri-home-8-line me-1"></i>Início
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-sm px-3 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
-                       @if($portal?->button_background_color)
-                           style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : '' }}"
-                       @endif
-                       href="/booking">
-                        <i class="ri-calendar-check-line me-1"></i>
-                        Agendar
-                    </a>
-                </li>
+                @if($portal->enable_booking)
+                    <li class="nav-item">
+                        <a class="btn btn-sm px-3 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
+                           @if($portal?->button_background_color)
+                               style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : '' }}"
+                           @endif
+                           href="/booking">
+                            <i class="ri-calendar-check-line me-1"></i>
+                            Agendar
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
@@ -78,15 +80,17 @@
             <a class="nav-link px-3 py-2 rounded" href="/">
                 <i class="ri-home-line me-2"></i>Início
             </a>
-            <a class="nav-link px-3 py-2 rounded fw-semibold"
-               @if($portal?->button_background_color)
-                   style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
-               @else
-                   style="color: var(--bs-primary);"
-               @endif
-               href="/booking">
-                <i class="ri-calendar-check-line me-2"></i>Agendar
-            </a>
+            @if($portal->enable_booking)
+                <a class="nav-link px-3 py-2 rounded fw-semibold"
+                   @if($portal?->button_background_color)
+                       style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
+                   @else
+                       style="color: var(--bs-primary);"
+                   @endif
+                   href="/booking">
+                    <i class="ri-calendar-check-line me-2"></i>Agendar
+                </a>
+            @endif
         </nav>
     </div>
 </div>
@@ -107,25 +111,25 @@
             @endif
 
             <h1 class="hero-title">{{ $portal?->title ?? '' }}</h1>
-
-            <a href="/booking"
-               class="btn btn-lg px-5 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
-               @if($portal?->button_background_color)
-                   style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
-                @endif>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="lucide lucide-calendar-plus">
-                    <path d="M16 19h6"></path>
-                    <path d="M16 2v4"></path>
-                    <path d="M19 16v6"></path>
-                    <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                    <path d="M3 10h18"></path>
-                    <path d="M8 2v4"></path>
-                </svg>
-                Agendar horário
-            </a>
-
+            @if($portal->enable_booking)
+                <a href="/booking"
+                   class="btn btn-lg px-5 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
+                   @if($portal?->button_background_color)
+                       style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
+                    @endif>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="lucide lucide-calendar-plus">
+                        <path d="M16 19h6"></path>
+                        <path d="M16 2v4"></path>
+                        <path d="M19 16v6"></path>
+                        <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                        <path d="M3 10h18"></path>
+                        <path d="M8 2v4"></path>
+                    </svg>
+                    Agendar horário
+                </a>
+            @endif
             <div class="hero-comodidades mt-4">
                 <span class="comodidade-badge"><i class="ri-wifi-line"></i> Wi-Fi</span>
                 <span class="comodidade-badge"><i class="ri-snowy-line"></i> Ar-condicionado</span>
@@ -177,96 +181,97 @@
             </div>
         </div>
     </div>
-
-    {{-- ======================================================
-         SERVIÇOS
-    ====================================================== --}}
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center fw-bold mb-2">Os nossos serviços</h2>
-            <div class="row g-4">
-                @forelse($services ?? [] as $service)
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="service-card">
-                            <div class="service-card-image">
-                                @if($service->image ?? null)
-                                    <img src="{{ global_asset('storage/' . $service->image) }}"
-                                         alt="{{ $service->name ?? '' }}">
-                                @else
-                                    <div class="d-flex align-items-center justify-content-center bg-light"
-                                         style="height:150px;color:#d1d5db;font-size:2.5rem">
-                                        <i class="ri-scissors-line"></i>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="service-card-body">
-                                <h5 class="service-card-title"
-                                    @if($portal?->main_color) style="color: {{ $portal->main_color }};" @endif>
-                                    {{ $service->name }}
-                                </h5>
-                                <div class="service-card-footer">
-                                    <div class="service-card-price"
-                                         @if($portal?->secondary_color) style="color: {{ $portal->secondary_color }};" @endif>
-                                        {{ $service->price }}€
-                                    </div>
-                                    <div class="service-card-duration">
-                                        <i class="ri-time-line me-1"></i>
-                                        {{ $service->duration }} min
-                                    </div>
+    @if($portal->enable_booking)
+        {{-- ======================================================
+             SERVIÇOS
+        ====================================================== --}}
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center fw-bold mb-2">Os nossos serviços</h2>
+                <div class="row g-4">
+                    @forelse($services ?? [] as $service)
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="service-card">
+                                <div class="service-card-image">
+                                    @if($service->image ?? null)
+                                        <img src="{{ global_asset('storage/' . $service->image) }}"
+                                             alt="{{ $service->name ?? '' }}">
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center bg-light"
+                                             style="height:150px;color:#d1d5db;font-size:2.5rem">
+                                            <i class="ri-scissors-line"></i>
+                                        </div>
+                                    @endif
                                 </div>
-                                <a href="/booking"
-                                   class="btn btn-lg px-5 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
-                                   @if($portal?->button_background_color)
-                                       style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
-                                    @endif>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round" class="lucide lucide-calendar-plus">
-                                        <path d="M16 19h6"></path>
-                                        <path d="M16 2v4"></path>
-                                        <path d="M19 16v6"></path>
-                                        <path
-                                            d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                                        <path d="M3 10h18"></path>
-                                        <path d="M8 2v4"></path>
-                                    </svg>
-                                    Agendar
-                                </a>
+                                <div class="service-card-body">
+                                    <h5 class="service-card-title"
+                                        @if($portal?->main_color) style="color: {{ $portal->main_color }};" @endif>
+                                        {{ $service->name }}
+                                    </h5>
+                                    <div class="service-card-footer">
+                                        <div class="service-card-price"
+                                             @if($portal?->secondary_color) style="color: {{ $portal->secondary_color }};" @endif>
+                                            {{ $service->price }}€
+                                        </div>
+                                        <div class="service-card-duration">
+                                            <i class="ri-time-line me-1"></i>
+                                            {{ $service->duration }} min
+                                        </div>
+                                    </div>
+                                    <a href="/booking"
+                                       class="btn btn-lg px-5 {{ $portal?->button_background_color ? '' : 'btn-primary' }}"
+                                       @if($portal?->button_background_color)
+                                           style="background-color: {{ $portal->button_background_color }}; border-color: {{ $portal->button_background_color }}; {{ $portal->button_text_color ? 'color: ' . $portal->button_text_color . ';' : 'color: #fff;' }}"
+                                        @endif>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                             stroke-linejoin="round" class="lucide lucide-calendar-plus">
+                                            <path d="M16 19h6"></path>
+                                            <path d="M16 2v4"></path>
+                                            <path d="M19 16v6"></path>
+                                            <path
+                                                d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                                            <path d="M3 10h18"></path>
+                                            <path d="M8 2v4"></path>
+                                        </svg>
+                                        Agendar
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @empty
-                    <p class="text-center text-muted">Nenhum serviço disponível de momento.</p>
-                @endforelse
+                    @empty
+                        <p class="text-center text-muted">Nenhum serviço disponível de momento.</p>
+                    @endforelse
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    {{-- ======================================================
-         CTA
-    ====================================================== --}}
-    <section class="cta-section">
-        <div class="container">
-            <div class="text-center">
-                <h2>Vamos agendar?</h2>
-                <p>Escolha o melhor horário para si</p>
-                <a href="/booking" class="btn btn-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                         class="lucide lucide-calendar-plus">
-                        <path d="M16 19h6"></path>
-                        <path d="M16 2v4"></path>
-                        <path d="M19 16v6"></path>
-                        <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
-                        <path d="M3 10h18"></path>
-                        <path d="M8 2v4"></path>
-                    </svg>
-                    Agendar horário
-                </a>
+        {{-- ======================================================
+             CTA
+        ====================================================== --}}
+        <section class="cta-section">
+            <div class="container">
+                <div class="text-center">
+                    <h2>Vamos agendar?</h2>
+                    <p>Escolha o melhor horário para si</p>
+                    <a href="/booking" class="btn btn-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="lucide lucide-calendar-plus">
+                            <path d="M16 19h6"></path>
+                            <path d="M16 2v4"></path>
+                            <path d="M19 16v6"></path>
+                            <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+                            <path d="M3 10h18"></path>
+                            <path d="M8 2v4"></path>
+                        </svg>
+                        Agendar horário
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    @endif
     {{-- ======================================================
          SOBRE NÓS
     ====================================================== --}}

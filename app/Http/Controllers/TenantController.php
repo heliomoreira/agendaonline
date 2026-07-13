@@ -26,6 +26,10 @@ class TenantController extends Controller
         $professionals = Professional::all();
         $portal = Portal::first();
 
+        if (!$portal->enable_portal) {
+            return redirect()->away('https://agendaonline.pt');
+        }
+
         $days = [
             0 => 'sunday_hours',
             1 => 'monday_hours',
@@ -38,7 +42,7 @@ class TenantController extends Controller
 
         $todayHours = $portal->{$days[now()->dayOfWeek]} ?? 'Fechado';
 
-        return view('front.portal.index', compact('tenant', 'services', 'professionals', 'portal','todayHours'));
+        return view('front.portal.index', compact('tenant', 'services', 'professionals', 'portal', 'todayHours'));
     }
 
     public function signup()
@@ -46,7 +50,7 @@ class TenantController extends Controller
         return view('front.website.signup');
     }
 
-    public function createTenant(RegisterTenantRequest  $request)
+    public function createTenant(RegisterTenantRequest $request)
     {
         $validate = Validator::make($request->all(), [
             'g-recaptcha-response' => 'required|recaptchav3:register,0.5'
