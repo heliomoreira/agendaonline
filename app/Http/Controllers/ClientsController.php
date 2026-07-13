@@ -14,7 +14,7 @@ class ClientsController extends Controller
     public function index()
     {
         try {
-            $clients = Client::paginate(15);
+            $clients = Client::orderBy('name')->paginate(15);
             return view('admin.clients.index', [
                 'clients' => $clients
             ]);

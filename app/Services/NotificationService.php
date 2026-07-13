@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class NotificationService
 {
-    public static function saveNotification($tenant_id, $appointment_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour)
+    public static function saveNotification($tenant_id, $appointment_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour, $recipient_type = 'client')
     {
         $advanceDays = (int) (Setting::current()->sms_advance_days ?? 1);
         $sendDate = Carbon::parse($service_day)->subDays($advanceDays);
@@ -22,6 +22,7 @@ class NotificationService
             'appointment_id' => $appointment_id,
             'sender' => $sender,
             'destinatary' => $destinatary,
+            'recipient_type' => $recipient_type,
             'type' => $type,
             'text' => $text,
             'service_day' => $service_day,

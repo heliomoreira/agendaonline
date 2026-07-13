@@ -181,7 +181,8 @@ class BookingController extends Controller
             NotificationService::saveNotification(
                 $tenant->id, $booking->id, $tenant->sms_sender,
                 $parentPhone, 'sms', $parentText,
-                $request->day, $start->format('H:i'), $end->format('H:i')
+                $request->day, $start->format('H:i'), $end->format('H:i'),
+                'parent'
             );
         }
 

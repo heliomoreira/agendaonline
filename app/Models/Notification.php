@@ -13,6 +13,7 @@ class Notification extends Model
         'appointment_id',
         'sender',
         'destinatary',
+        'recipient_type',
         'type',
         'text',
         'service_day',
@@ -22,6 +23,7 @@ class Notification extends Model
         'send_hour',
         'status'
     ];
+
 
     /*  public function sender()
       {
