@@ -58,6 +58,7 @@ class SendNotification extends Command
             foreach ($notifications as $notification) {
                 $tenant = Tenant::find($notification->tenant_id);
 
+                Log::debug('Entrou');
                 if (!$tenant) {
                     Log::warning('SMS ignorado: tenant inexistente', ['notification' => $notification->id]);
                     NotificationService::markAsFailed($notification->id, 'Tenant inexistente');
@@ -65,10 +66,11 @@ class SendNotification extends Command
                 }
 
                 $cost = SmsService::messageCost($notification->text);
-
+                Log::debug('Cost' . $cost);
                 // Sem saldo suficiente: marca falhado e segue
                 if ($tenant->sms_credits < $cost) {
                     NotificationService::markAsFailed($notification->id, 'Saldo insuficiente');
+                    Log::debug('Falhou' . $cost);
                     continue;
                 }
 
@@ -77,7 +79,7 @@ class SendNotification extends Command
                     $notification->text,
                     $notification->sender,
                 );
-
+                Log::debug('Sent' . $sent);
                 if ($sent) {
                     $tenant->decrement('sms_credits', $cost);
 
