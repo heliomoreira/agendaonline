@@ -135,7 +135,7 @@ Route::middleware([
                 Route::put('/update/{id}', [AgendaController::class, 'update'])->name('agenda.update');
                 Route::get('/get-events', [AgendaController::class, 'getEvents'])->name('agenda.get-events');
 
-                Route::delete('/cancel-event/{id}', [AgendaController::class, 'cancelEvent'])->name('agenda.cancel-event');
+                Route::post('/cancel-event/{id}', [AgendaController::class, 'cancelEvent'])->name('agenda.cancel-event');
 
                 Route::get('/{agenda}', [AgendaController::class, 'show'])->name('agenda.show');
                 Route::put('/{agenda}/update', [AgendaController::class, 'update'])->name('agenda.update');
