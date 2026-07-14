@@ -26,6 +26,9 @@ class SmsService
                 ],
             ]);
 
+
+            $encoding = self::detectEncoding($message);
+
             $response = $client->post('/api/rest/sms', [
                 'json' => [
                     'to' => [$receiver],
@@ -33,6 +36,7 @@ class SmsService
                     'message' => $message,
                     'campaignName' => $sender,
                     'parts' => 10,
+                    'encoding' => $encoding,
                 ],
             ]);
 
@@ -71,5 +75,33 @@ class SmsService
             Log::error('SMS delivery details failed', ['smsId' => $smsId, 'error' => $e->getMessage()]);
             return response()->json('error', 500);
         }
+    }
+
+    private static function detectEncoding(string $message): string
+    {
+        // Caracteres do GSM7 base (tabela padrão + extensão com escape)
+        $gsm7 = ' @£$¥èéùìòÇØøÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ!"#¤%&\'()*+,-./0123456789:;<=>?'
+            . '¡ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà'
+            . '^{}\\[~]|€'
+            . chr(10) . chr(13) . chr(12);
+
+        // Extra cobertos pela variante gsm-pt (ex.: minúsculas acentuadas PT)
+        $gsmPtExtra = "áíóúâêôãõàçÁÍÓÚÂÊÔÃÕÀ";
+
+        $isGsm = true;
+        $isGsmPt = true;
+
+        foreach (preg_split('//u', $message, -1, PREG_SPLIT_NO_EMPTY) as $char) {
+            if (mb_strpos($gsm7, $char) === false) {
+                $isGsm = false;
+                if (mb_strpos($gsmPtExtra, $char) === false) {
+                    $isGsmPt = false;
+                }
+            }
+        }
+
+        if ($isGsm)   return 'gsm';
+        if ($isGsmPt) return 'gsm-pt';
+        return 'utf-16';
     }
 }
