@@ -126,6 +126,6 @@ class SmsService
 
     public static function messageCost(string $message): float
     {
-        return self::countParts($message) * (float) config('sms.sms_value', env('SMS_VALUE'));
+        return self::countParts($message) * (float) config('sms.sms_value', config('sms.sms_value'));
     }
 }
