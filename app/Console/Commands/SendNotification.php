@@ -31,6 +31,7 @@ class SendNotification extends Command
      */
     public function handle()
     {
+        Log::debug('Sending notifications scheduled for next day');
         try {
             $now = Carbon::now();
             $today = $now->format('Y-m-d');
