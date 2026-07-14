@@ -270,7 +270,7 @@
 
             try {
                 const res = await fetch(btn.dataset.url, {
-                    method: 'DELETE', // ajustar ao verbo real da rota (ver php artisan route:list)
+                    method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': token,
                         'Accept': 'application/json',
