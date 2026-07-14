@@ -18,6 +18,8 @@ class SmsService
     public static function send(string $receiver, string $message, string $sender): \Illuminate\Http\JsonResponse
     {
         try {
+            Log::debug('Sending SMS to ' . $receiver);
+
             $client = new Client([
                 'base_uri' => rtrim(config('sms.sms_url'), '/'),
                 'headers' => [
@@ -39,6 +41,8 @@ class SmsService
                     'encoding' => $encoding,
                 ],
             ]);
+
+            Log::debug('SMS Response ' . $response->getBody()->getContents());
 
             $res = json_decode($response->getBody()->getContents(), true);
 
