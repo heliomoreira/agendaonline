@@ -95,6 +95,7 @@ class SendNotification extends Command
             return self::SUCCESS;
 
         } catch (\Exception $e) {
+            Log::debug($e->getMessage());
             Log::error('Error sending notifications: ' . $e->getMessage());
             return self::FAILURE;
         }
