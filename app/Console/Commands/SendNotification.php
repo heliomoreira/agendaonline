@@ -31,7 +31,6 @@ class SendNotification extends Command
      */
     public function handle()
     {
-        Log::debug('Sending notifications scheduled for next day');
         try {
             $now = Carbon::now();
             $today = $now->format('Y-m-d');
@@ -56,12 +55,10 @@ class SendNotification extends Command
                 })
                 ->get();
 
-            Log::debug('Notifications scheduled for next day' . $notifications->count());
 
             foreach ($notifications as $notification) {
                 $tenant = Tenant::find($notification->tenant_id);
 
-                Log::debug('Entrou');
                 if (!$tenant) {
                     Log::warning('SMS ignorado: tenant inexistente', ['notification' => $notification->id]);
                     NotificationService::markAsFailed($notification->id, 'Tenant inexistente');
@@ -69,11 +66,9 @@ class SendNotification extends Command
                 }
 
                 $cost = SmsService::messageCost($notification->text);
-                Log::debug('Cost' . $cost);
                 // Sem saldo suficiente: marca falhado e segue
                 if ($tenant->sms_credits < $cost) {
                     NotificationService::markAsFailed($notification->id, 'Saldo insuficiente');
-                    Log::debug('Falhou' . $cost);
                     continue;
                 }
 
@@ -82,7 +77,6 @@ class SendNotification extends Command
                     $notification->text,
                     $notification->sender,
                 );
-                Log::debug('Sent' . $sent);
                 if ($sent) {
                     $tenant->decrement('sms_credits', $cost);
 
@@ -95,7 +89,6 @@ class SendNotification extends Command
             return self::SUCCESS;
 
         } catch (\Exception $e) {
-            Log::debug($e->getMessage());
             Log::error('Error sending notifications: ' . $e->getMessage());
             return self::FAILURE;
         }
