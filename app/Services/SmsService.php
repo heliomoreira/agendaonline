@@ -17,6 +17,7 @@ class SmsService
 
     public static function send(string $receiver, string $message, string $sender): \Illuminate\Http\JsonResponse
     {
+        Log::info("Entrou no SMS.");
         try {
             Log::debug('Sending SMS to ' . $receiver);
 
