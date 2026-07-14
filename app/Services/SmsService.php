@@ -24,14 +24,7 @@ class SmsService
 
     public static function send(string $receiver, string $message, string $sender): JsonResponse
     {
-        Log::info('Entrou no SMS.');
-
         try {
-            Log::debug('Sending SMS', [
-                'receiver' => $receiver,
-                'sender' => $sender,
-            ]);
-
             $client = new Client([
                 'base_uri' => rtrim(config('sms.sms_url'), '/'),
                 'headers' => [
@@ -53,12 +46,7 @@ class SmsService
                 ],
             ]);
 
-            // Ler o body apenas uma vez
             $body = (string)$response->getBody();
-
-            Log::debug('SMS Response', [
-                'body' => $body,
-            ]);
 
             $res = json_decode($body, true);
 
@@ -96,10 +84,6 @@ class SmsService
             $response = $this->client->get("/api/rest/sms/{$smsId}");
 
             $body = (string)$response->getBody();
-
-            Log::debug('SMS Delivery Response', [
-                'body' => $body,
-            ]);
 
             $res = json_decode($body, true);
 
