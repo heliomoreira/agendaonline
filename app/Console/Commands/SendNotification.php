@@ -56,6 +56,8 @@ class SendNotification extends Command
                 })
                 ->get();
 
+            Log::debug('Notifications scheduled for next day' . $notifications->count());
+
             foreach ($notifications as $notification) {
                 $tenant = Tenant::find($notification->tenant_id);
 
