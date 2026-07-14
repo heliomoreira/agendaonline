@@ -1,13 +1,25 @@
 @extends('layouts.app')
 @section('title', 'SMS | Template')
 @section('content')
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('sms.index') }}">SMS</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Templates</li>
-        </ol>
-    </nav>
+    @include('admin._partials.alerts')
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <h5 class="d-flex align-items-center gap-2 m-0">
+                    <i class="icon-base ti tabler-settings"></i>
+                    Templates SMS
+                </h5>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('sms.index') }}">SMS</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Templates</li>
+                    </ol>
+                </nav>
+            </div>
+            <hr class="my-2"/>
+        </div>
+    </div>
 
     <div class="row g-6">
         <div class="col-md-8">
@@ -20,8 +32,12 @@
                 {{ html()->token() }}
 
                 <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">Templates SMS</h5>
-                </div>
+                    <h5 class="mb-0 me-2">
+                        Detalhe
+                        @if($template->title)
+                            | <span style="color:#2A7AD4">{{ $template->title }}</span>
+                        @endif
+                    </h5></div>
 
                 <div class="card-body">
                     <div class="row g-4">
@@ -38,7 +54,7 @@
                         </div>
                         <div class="col-md-5">
                             <label class="form-label">{{ __('forms.info') }}</label>
-                            <ul id="sms-counter" class="list-unstyled alert alert-warning mb-0">
+                            <ul id="sms-counter" class="list-unstyled alert alert-warning mb-0 p-5">
                                 <li>Codificação: <span class="encoding"></span></li>
                                 <li>Tamanho: <span class="length"></span></li>
                                 <li>Mensagens: <span class="messages"></span></li>
@@ -73,7 +89,7 @@
                         <button type="submit" class="btn btn-primary waves-effect waves-light">
                             <i class="icon-base ti tabler-device-floppy"></i> Guardar
                         </button>
-                        <a href="{{ route('sms.index') }}" class="btn btn-secondary waves-effect waves-light">
+                        <a href="{{ route('sms.templates.list') }}" class="btn btn-secondary waves-effect waves-light">
                             <i class="icon-base ti tabler-arrow-left"></i> Cancelar / Voltar
                         </a>
                     </div>
@@ -173,7 +189,9 @@
                 const icon = btn.querySelector('i');
                 const original = icon.className;
                 icon.className = 'icon-base ti tabler-check text-success';
-                setTimeout(() => { icon.className = original; }, 1500);
+                setTimeout(() => {
+                    icon.className = original;
+                }, 1500);
             });
         });
     </script>

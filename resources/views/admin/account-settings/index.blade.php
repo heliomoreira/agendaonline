@@ -1,36 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @if (session('success'))
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-solid-success alert-dismissible fade show d-flex align-items-center"
-                     role="alert">
-                    <span class="alert-icon rounded me-2">
-                        <i class="icon-base ti tabler-check icon-md"></i>
-                    </span>
-                    <div class="flex-grow-1">{{ session('success') }}</div>
-                    <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                </div>
-            </div>
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-solid-danger d-flex align-items-center" role="alert">
-                    <span class="alert-icon rounded"><i class="icon-base ti tabler-x"></i></span>
-                    <div>
-                        <strong>Existem alguns erros:</strong>
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
+    @include('admin._partials.alerts')
 
     <div class="row mb-2">
         <div class="col-md-12">
@@ -71,15 +41,18 @@
                     <div class="row g-4">
                         <div class="col-md-5">
                             <label for="address" class="form-label">Morada</label>
-                            <input type="text" class="form-control" name="address" id="address" value="{{ $tenant->address }}">
+                            <input type="text" class="form-control" name="address" id="address"
+                                   value="{{ $tenant->address }}">
                         </div>
                         <div class="col-md-2">
                             <label for="number_port" class="form-label">Nº / Porta / Andar</label>
-                            <input type="text" class="form-control" name="number_port" id="number_port" value="{{ $tenant->number_port }}">
+                            <input type="text" class="form-control" name="number_port" id="number_port"
+                                   value="{{ $tenant->number_port }}">
                         </div>
                         <div class="col-md-2">
                             <label for="zip_code" class="form-label">Cód. Postal</label>
-                            <input type="text" class="form-control" name="zip_code" id="zip_code" value="{{ $tenant->zip_code }}">
+                            <input type="text" class="form-control" name="zip_code" id="zip_code"
+                                   value="{{ $tenant->zip_code }}">
                         </div>
                         <div class="col-md-3">
                             <label for="city" class="form-label">Localidade</label>
@@ -92,15 +65,18 @@
                     <div class="row g-4">
                         <div class="col-md-3">
                             <label for="phone_1" class="form-label">Contacto</label>
-                            <input type="text" class="form-control" name="phone_1" id="phone_1" value="{{ $tenant->phone_1 }}">
+                            <input type="text" class="form-control" name="phone_1" id="phone_1"
+                                   value="{{ $tenant->phone_1 }}">
                         </div>
                         <div class="col-md-3">
                             <label for="phone_2" class="form-label">Contacto Alt.</label>
-                            <input type="text" class="form-control" name="phone_2" id="phone_2" value="{{ $tenant->phone_2 }}">
+                            <input type="text" class="form-control" name="phone_2" id="phone_2"
+                                   value="{{ $tenant->phone_2 }}">
                         </div>
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" value="{{ $tenant->email }}">
+                            <input type="email" class="form-control" name="email" id="email"
+                                   value="{{ $tenant->email }}">
                         </div>
                     </div>
 
@@ -131,12 +107,14 @@
                         </div>
                         <div class="col-md-2">
                             <label for="main_color" class="form-label">Cor Principal</label>
-                            <input type="color" class="form-control form-control-color w-100" name="main_color" id="main_color"
+                            <input type="color" class="form-control form-control-color w-100" name="main_color"
+                                   id="main_color"
                                    value="{{ $tenant->main_color }}">
                         </div>
                         <div class="col-md-2">
                             <label for="secondary_color" class="form-label">Cor Secundária</label>
-                            <input type="color" class="form-control form-control-color w-100" name="secondary_color" id="secondary_color"
+                            <input type="color" class="form-control form-control-color w-100" name="secondary_color"
+                                   id="secondary_color"
                                    value="{{ $tenant->secondary_color }}">
                         </div>
                         <div class="col-md-3">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SmsTemplateRequest;
 use App\Models\Notification;
 use App\Models\SmsTemplate;
 use Carbon\Carbon;
@@ -42,7 +43,7 @@ class SmsController extends Controller
         return view('admin.sms.templates_form', compact('template'));
     }
 
-    public function templatesStore(Request $request)
+    public function templatesStore(SmsTemplateRequest $request)
     {
         $template = new SmsTemplate();
         $template->fill($request->all());
@@ -50,12 +51,12 @@ class SmsController extends Controller
         return redirect()->route('sms.templates.list')->with('success', 'Template de SMS criado com sucesso.');
     }
 
-    public function templatesUpdate(Request $request, $id)
+    public function templatesUpdate(SmsTemplateRequest $request, $id)
     {
         $template = SmsTemplate::findOrFail($id);
         $template->fill($request->all());
         $template->save();
-        return redirect()->route('sms.templates.list')->with('success', 'Template de SMS atualizado com sucesso.');
+        return redirect()->route('sms.templates.edit', ['id' => $template->id])->with('success', 'Template de SMS atualizado com sucesso.');
     }
 
     public function templatesEdit($id)
