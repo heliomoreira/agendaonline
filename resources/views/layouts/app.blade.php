@@ -102,18 +102,18 @@
                         <div data-i18n="Clientes">Clientes</div>
                     </a>
                 </li>
-                  <li class="menu-item {{ request()->routeIs('agenda*') ? 'active open' : '' }}">
+                <li class="menu-item {{ request()->routeIs('agenda*') ? 'active open' : '' }}">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon icon-base ti tabler-calendar"></i>
                         <div data-i18n="Marcações">Marcações</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item {{ request()->routeIs('agenda.index') ? 'active' : '' }}" >
+                        <li class="menu-item {{ request()->routeIs('agenda.index') ? 'active' : '' }}">
                             <a href="{{route('agenda.index')}}" class="menu-link">
                                 <div data-i18n="Agenda">Agenda</div>
                             </a>
                         </li>
-                        <li class="menu-item {{ request()->routeIs('agenda.list') ? 'active' : '' }}" >
+                        <li class="menu-item {{ request()->routeIs('agenda.list') ? 'active' : '' }}">
                             <a href="{{route('agenda.list')}}" class="menu-link">
                                 <div data-i18n="Listagem">Listagem</div>
                             </a>
@@ -151,6 +151,14 @@
                             <div data-i18n="Notificações">Notificações</div>
                         </a>
                     </li>
+                    @if(config('app.env') == 'local')
+                        <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
+                            <a href="/admin/reports" class="menu-link">
+                                <i class="menu-icon icon-base ti tabler-report-analytics"></i>
+                                <div data-i18n="Relatórios (DEV)">Relatórios (DEV)</div>
+                            </a>
+                        </li>
+                    @endif
                     {{--<li class="menu-item">
                         <a href="#" class="menu-link">
                             <i class="menu-icon icon-base ti tabler-settings"></i>
@@ -176,12 +184,12 @@
                             <div data-i18n="SMS">SMS</div>
                         </a>
                         <ul class="menu-sub">
-                            <li class="menu-item {{ request()->routeIs('sms.index') ? 'active' : '' }}" >
+                            <li class="menu-item {{ request()->routeIs('sms.index') ? 'active' : '' }}">
                                 <a href="{{route('sms.index')}}" class="menu-link">
                                     <div data-i18n="Gestão">Gestão</div>
                                 </a>
                             </li>
-                            <li class="menu-item {{ request()->routeIs('sms.templates.list') ? 'active' : '' }}" >
+                            <li class="menu-item {{ request()->routeIs('sms.templates.list') ? 'active' : '' }}">
                                 <a href="{{route('sms.templates.list')}}" class="menu-link">
                                     <div data-i18n="Templates">Templates</div>
                                 </a>
@@ -632,7 +640,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <h6 class="mb-0">{{Auth()->user()->name}}</h6>
-                                               {{-- <small class="text-body-secondary">Admin</small>--}}
+                                                {{-- <small class="text-body-secondary">Admin</small>--}}
                                             </div>
                                         </div>
                                     </a>
@@ -640,38 +648,38 @@
                                 <li>
                                     <div class="dropdown-divider my-1 mx-n2"></div>
                                 </li>
-                              {{--  <li>
-                                    <a class="dropdown-item" href="pages-profile-user.html"> <i
-                                            class="icon-base ti tabler-user me-3 icon-md"></i><span
-                                            class="align-middle">My Profile</span> </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-account.html"> <i
-                                            class="icon-base ti tabler-settings me-3 icon-md"></i><span
-                                            class="align-middle">Settings</span> </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-account-settings-billing.html">
-              <span class="d-flex align-items-center align-middle">
-                <i class="flex-shrink-0 icon-base ti tabler-file-dollar me-3 icon-md"></i><span
-                      class="flex-grow-1 align-middle">Billing</span>
-                <span class="flex-shrink-0 badge bg-danger d-flex align-items-center justify-content-center">4</span>
-              </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider my-1 mx-n2"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-pricing.html"> <i
-                                            class="icon-base ti tabler-currency-dollar me-3 icon-md"></i><span
-                                            class="align-middle">Pricing</span> </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="pages-faq.html"> <i
-                                            class="icon-base ti tabler-question-mark me-3 icon-md"></i><span
-                                            class="align-middle">FAQ</span> </a>
-                                </li>--}}
+                                {{--  <li>
+                                      <a class="dropdown-item" href="pages-profile-user.html"> <i
+                                              class="icon-base ti tabler-user me-3 icon-md"></i><span
+                                              class="align-middle">My Profile</span> </a>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" href="pages-account-settings-account.html"> <i
+                                              class="icon-base ti tabler-settings me-3 icon-md"></i><span
+                                              class="align-middle">Settings</span> </a>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" href="pages-account-settings-billing.html">
+                <span class="d-flex align-items-center align-middle">
+                  <i class="flex-shrink-0 icon-base ti tabler-file-dollar me-3 icon-md"></i><span
+                        class="flex-grow-1 align-middle">Billing</span>
+                  <span class="flex-shrink-0 badge bg-danger d-flex align-items-center justify-content-center">4</span>
+                </span>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <div class="dropdown-divider my-1 mx-n2"></div>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" href="pages-pricing.html"> <i
+                                              class="icon-base ti tabler-currency-dollar me-3 icon-md"></i><span
+                                              class="align-middle">Pricing</span> </a>
+                                  </li>
+                                  <li>
+                                      <a class="dropdown-item" href="pages-faq.html"> <i
+                                              class="icon-base ti tabler-question-mark me-3 icon-md"></i><span
+                                              class="align-middle">FAQ</span> </a>
+                                  </li>--}}
                                 <li>
                                     <div class="d-grid px-2 pt-2 pb-1">
                                         <a class="btn btn-sm btn-danger d-flex" href="{{ route('logout') }}"
