@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Notification;
 use App\Models\Setting;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class NotificationService
 {
@@ -40,6 +41,23 @@ class NotificationService
 
         if ($notification) {
             $notification->status = 'sent';
+            $notification->save();
+            return true;
+        }
+        return false;
+    }
+
+    public static function markAsFailed($notificationId, ?string $reason = null): bool
+    {
+        $notification = Notification::find($notificationId);
+
+        if ($notification) {
+            $notification->status = 'failed';
+
+            if ($reason) {
+                Log::warning('SMS falhado', ['notification' => $notificationId, 'reason' => $reason]);
+            }
+
             $notification->save();
             return true;
         }

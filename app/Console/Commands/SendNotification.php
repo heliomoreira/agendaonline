@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Notification;
+use App\Models\Tenant;
 use App\Services\NotificationService;
 use App\Services\SmsService;
 use Carbon\Carbon;
@@ -31,7 +32,6 @@ class SendNotification extends Command
     public function handle()
     {
         try {
-
             $now = Carbon::now();
             $today = $now->format('Y-m-d');
             $timeFormatted = $now->format('H:i:00');
@@ -56,16 +56,38 @@ class SendNotification extends Command
                 ->get();
 
             foreach ($notifications as $notification) {
-                SmsService::send(
+                $tenant = Tenant::find($notification->tenant_id);
+
+                if (!$tenant) {
+                    Log::warning('SMS ignorado: tenant inexistente', ['notification' => $notification->id]);
+                    NotificationService::markAsFailed($notification->id, 'Tenant inexistente');
+                    continue;
+                }
+
+                $cost = SmsService::messageCost($notification->text);
+
+                // Sem saldo suficiente: marca falhado e segue
+                if ($tenant->sms_credits < $cost) {
+                    NotificationService::markAsFailed($notification->id, 'Saldo insuficiente');
+                    continue;
+                }
+
+                $sent = SmsService::send(
                     $notification->destinatary,
                     $notification->text,
                     $notification->sender,
                 );
 
-                NotificationService::markAsSent($notification->id);
+                if ($sent) {
+                    $tenant->decrement('sms_credits', $cost);
+
+                    NotificationService::markAsSent($notification->id);
+                } else {
+                    NotificationService::markAsFailed($notification->id, 'Falha no envio');
+                }
             }
 
-           return self::SUCCESS;
+            return self::SUCCESS;
 
         } catch (\Exception $e) {
             Log::error('Error sending notifications: ' . $e->getMessage());

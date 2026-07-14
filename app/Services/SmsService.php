@@ -104,4 +104,28 @@ class SmsService
         if ($isGsmPt) return 'gsm-pt';
         return 'utf-16';
     }
+
+    public static function countParts(string $message): int
+    {
+        $len = mb_strlen($message);
+        $encoding = self::detectEncoding($message);
+
+        // chars por parte conforme encoding
+        [$single, $multi] = match ($encoding) {
+            'utf-16' => [70, 67],
+            'gsm-pt' => [155, 149],
+            default  => [160, 153], // gsm
+        };
+
+        if ($len <= $single) {
+            return 1;
+        }
+
+        return (int) ceil($len / $multi);
+    }
+
+    public static function messageCost(string $message): float
+    {
+        return self::countParts($message) * (float) config('sms.sms_value', env('SMS_VALUE'));
+    }
 }
