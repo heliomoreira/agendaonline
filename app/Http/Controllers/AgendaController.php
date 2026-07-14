@@ -138,13 +138,17 @@ class AgendaController extends Controller
         return response()->json($events->values());
     }
 
-    public function cancelEvent($eventId)
+   public function cancelEvent($eventId)
     {
         $cancel = Agenda::find($eventId);
+    
+        if (!$cancel) {
+            return response()->json(['success' => false, 'message' => 'Evento não encontrado'], 404);
+        }
+    
         $cancel->delete();
-
-        $deleteNotification = $this->notificationService->deleteNotification(tenant('id'), $eventId);
-
+        $this->notificationService->deleteNotification(tenant('id'), $eventId);
+    
         return response()->json(['success' => true], 200);
     }
 
