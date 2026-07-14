@@ -170,7 +170,7 @@
             }
 
             fetch(`/admin/agenda/cancel-event/${eventId}`, {
-                method: 'DELETE',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
