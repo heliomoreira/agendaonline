@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Agenda;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $nextEvents = Agenda::with(['service', 'professional'])
-            ->visibleTo(auth()->user())
-            ->upcoming()
-            ->get();
+        ->visibleTo(auth()->user())
+        ->upcoming()
+        ->whereBetween('day', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek(),
+        ])
+        ->get();
 
 
         return view('admin.dashboard.index', [
