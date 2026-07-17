@@ -151,14 +151,12 @@
                             <div data-i18n="Notificações">Notificações</div>
                         </a>
                     </li>
-                    @if(config('app.env') == 'local')
-                        <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
-                            <a href="/admin/reports" class="menu-link">
-                                <i class="menu-icon icon-base ti tabler-report-analytics"></i>
-                                <div data-i18n="Relatórios">Relatórios</div>
-                            </a>
-                        </li>
-                    @endif
+                    <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
+                        <a href="/admin/reports" class="menu-link">
+                            <i class="menu-icon icon-base ti tabler-report-analytics"></i>
+                            <div data-i18n="Relatórios">Relatórios</div>
+                        </a>
+                    </li>
                     {{--<li class="menu-item">
                         <a href="#" class="menu-link">
                             <i class="menu-icon icon-base ti tabler-settings"></i>
