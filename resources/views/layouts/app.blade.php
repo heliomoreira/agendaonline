@@ -155,7 +155,7 @@
                         <li class="menu-item {{ request()->routeIs('portal*') ? 'active' : '' }}">
                             <a href="/admin/reports" class="menu-link">
                                 <i class="menu-icon icon-base ti tabler-report-analytics"></i>
-                                <div data-i18n="Relatórios (DEV)">Relatórios (DEV)</div>
+                                <div data-i18n="Relatórios">Relatórios</div>
                             </a>
                         </li>
                     @endif

@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfessionalsController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SmsController;
@@ -192,6 +193,10 @@ Route::middleware([
                 Route::post('/store', [UsersController::class, 'store'])->name('users.store');
                 Route::put('/update/{id}', [UsersController::class, 'update'])->name('users.update');
                 Route::delete('/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+            });
+
+            Route::prefix('reports')->group(function () {
+                Route::get('/', [ReportsController::class, 'index'])->name('reports.index');
             });
         });
     });

@@ -148,26 +148,26 @@
                                             <div class="d-flex flex-column">
                                                 <span class="text-heading">{{ $dateLabel }}</span>
                                                 @if($isToday)
-                                                    <span class="badge bg-label-success rounded-pill mt-1 align-self-start">Hoje</span>
+                                                    <span class="badge bg-label-success mt-1 align-self-start">Hoje</span>
                                                 @elseif($isTomorrow)
-                                                    <span class="badge bg-label-warning rounded-pill mt-1 align-self-start">Amanhã</span>
+                                                    <span class="badge bg-label-warning mt-1 align-self-start">Amanhã</span>
                                                 @elseif($weekday)
                                                     <small class="text-body-secondary">{{ $weekday }}</small>
                                                 @endif
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-label-info rounded-pill">
+                                            <span class="badge bg-label-info">
                                                 <i class="ti tabler-clock me-1"></i>{{ $event->start_hour }}h – {{ $event->end_hour }}h
                                             </span>
                                         </td>
                                         <td>
                                             @if($event->paymentStatus)
-                                                <span class="badge bg-label-{{ $event->paymentStatus->color }} rounded-pill">
+                                                <span class="badge bg-label-{{ $event->paymentStatus->color }}">
                                                     {{ $event->paymentStatus->name }}
                                                 </span>
                                             @else
-                                                <span class="badge bg-label-secondary rounded-pill">Sem estado</span>
+                                                <span class="badge bg-label-secondary">Sem estado</span>
                                             @endif
                                         </td>
                                         <td>
