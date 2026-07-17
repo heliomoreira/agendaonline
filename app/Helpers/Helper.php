@@ -19,11 +19,12 @@ class Helper
     public static function smsStatus($status)
     {
         $map = [
-            'scheduled' => 'Agendado',
-            'sent'      => '<span style="color:green">Enviado</span>',
+            'scheduled' => '<span class="badge bg-label-secondary">Agendado</span>',
+            'sent'      => '<span class="badge bg-label-success">Enviado</span>',
+            'cancelled' => '<span class="badge bg-label-danger">Cancelado</span>',
         ];
 
-        return $map[$status] ?? 'Desconhecido';
+        return $map[$status] ?? '<span class="badge bg-label-dark">Desconhecido</span>';
     }
 
 }
