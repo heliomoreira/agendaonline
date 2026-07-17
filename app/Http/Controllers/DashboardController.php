@@ -14,8 +14,8 @@ class DashboardController extends Controller
             ->visibleTo(auth()->user())
             ->upcoming()
             ->whereBetween('day', [
-                Carbon::now()->startOfWeek(),
-                Carbon::now()->endOfWeek(),
+                Carbon::today(),
+                Carbon::today()->copy()->addDays(7),
             ])
             ->get();
 
