@@ -52,4 +52,10 @@ class Service extends Model
         return $this->belongsTo(SmsTemplate::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Agenda::class);
+    }
+
+
 }

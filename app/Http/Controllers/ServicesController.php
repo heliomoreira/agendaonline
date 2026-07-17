@@ -111,6 +111,11 @@ class ServicesController extends Controller
     {
         try {
             $service = Service::findOrFail($id);
+
+            if ($service->appointments()->exists()) {
+                return redirect()->back()->withErrors(__('Não é possível remover este serviço porque tem agendamentos associados. Desactive-o em vez de o remover.'));
+            }
+
             $service->delete();
 
             Log::info("service removido com ID {$id}");
