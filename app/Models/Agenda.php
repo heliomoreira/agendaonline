@@ -403,4 +403,10 @@ class Agenda extends Model
             }
         });
     }
+
+    public function reminderNotification()
+    {
+        return $this->hasOne(\App\Models\Notification::class, 'appointment_id')
+            ->where('recipient_type', 'client');
+    }
 }

@@ -61,6 +61,11 @@ class BookingController extends Controller
             'client_name' => 'required|string|max:255',
             'client_phone_1' => 'required|integer',
             'client_id' => 'nullable|exists:clients,id',
+
+            // Campos do lembrete SMS (só o formulário do admin os envia)
+            'sms_text' => 'nullable|string|max:640',
+            'sms_send_date' => 'nullable|date',
+            'sms_send_hour' => 'nullable|date_format:H:i',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -78,8 +83,6 @@ class BookingController extends Controller
         $tenant = Tenant::find(tenant('id'));
         $portal = Portal::all()->first();
 
-        // Cliente escolhido na pesquisa (back-office) ou, caso contrário,
-        // procura por telemóvel e cria um novo se não existir.
         $client = $request->filled('client_id')
             ? Client::find($request->client_id)
             : null;
@@ -154,17 +157,25 @@ class BookingController extends Controller
             $service->load('smsTemplate');
             $template = $service->smsTemplate;
 
-            $text = ($template && $template->status && filled($template->body))
-                ? $this->renderTemplate($template->body, $booking)
-                : "Olá, lembramos que tem o serviço {$serviceName} agendado para o dia "
-                . Carbon::parse($request->day)->format('d/m/Y') . " às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+            if ($request->filled('sms_text')) {
+                // Texto editado pelo admin no formulário (ainda passa pelo render para resolver placeholders)
+                $text = $this->renderTemplate($request->input('sms_text'), $booking);
+            } elseif ($template && $template->status && filled($template->body)) {
+                $text = $this->renderTemplate($template->body, $booking);
+            } else {
+                $text = "Olá, lembramos que tem o serviço {$serviceName} agendado para o dia "
+                    . Carbon::parse($request->day)->format('d/m/Y') . " às {$request->start_hour}. Em caso de dúvida ou alteração, contacte-nos. Obrigado.";
+            }
 
             $clientPhone = $client->phone_1_country_code . $client->phone_1;
 
             NotificationService::saveNotification(
                 $tenant->id, $booking->id, $tenant->sms_sender,
                 $clientPhone, 'sms', $text,
-                $request->day, $start->format('H:i'), $end->format('H:i')
+                $request->day, $start->format('H:i'), $end->format('H:i'),
+                'client',
+                $request->input('sms_send_date'),   // overrides do admin (null no wizard do cliente)
+                $request->input('sms_send_hour')
             );
         }
 

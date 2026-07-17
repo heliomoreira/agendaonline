@@ -190,9 +190,42 @@
                     <div class="row g-6">
                         <div class="col-md-8">
                             <textarea class="form-control" id="notes" name="notes" rows="4"
-                                      placeholder="Notas internas sobre a marcação..."></textarea>
+                                      placeholder="Notas internas sobre a marcação...">{{ old('notes', $agenda->notes) }}</textarea>
                         </div>
                     </div>
+
+                    <hr class="my-5">
+
+                    {{-- ===== Passo 4 — Lembrete SMS ===== --}}
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                        <span class="step-badge bg-primary text-white">4</span>
+                        <h6 class="mb-0 fw-semibold">Lembrete SMS <span class="text-muted fw-normal">(opcional)</span></h6>
+                    </div>
+
+                    @php $reminder = $agenda->reminderNotification; @endphp {{-- ajusta ao nome real da relação --}}
+
+                    <div class="row g-6">
+                        <div class="col-md-8">
+                            <label for="sms_text" class="form-label">Mensagem</label>
+                            <textarea class="form-control" id="sms_text" name="sms_text" rows="4"
+                                      placeholder="Texto do lembrete...">{{ old('sms_text', $reminder?->text) }}</textarea>
+                            <div class="d-flex justify-content-between mt-1">
+                                <small class="text-muted">Campos como <code>[NOME_CLIENTE]</code>, <code>[DATA]</code> e <code>[HORA]</code> são preenchidos ao enviar.</small>
+                                <small class="text-muted"><span id="sms_chars">0</span> car. · <span id="sms_segs">1</span> SMS</small>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="sms_send_date" class="form-label">Data de envio</label>
+                            <input type="date" id="sms_send_date" name="sms_send_date" class="form-control"
+                                   value="{{ old('sms_send_date', $reminder?->send_day ? \Carbon\Carbon::parse($reminder->send_day)->format('Y-m-d') : '') }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="sms_send_hour" class="form-label">Hora de envio</label>
+                            <input type="time" id="sms_send_hour" name="sms_send_hour" class="form-control"
+                                   value="{{ old('sms_send_hour', $reminder?->send_hour ? \Carbon\Carbon::parse($reminder->send_hour)->format('H:i') : '') }}">
+                        </div>
+                    </div>
+                    <small class="text-muted d-block mt-2" id="sms_hint"></small>
                 </div>
 
                 <div class="card-footer">
@@ -215,6 +248,16 @@
     </div>
 @endsection
 @push('scripts')
+    @php $settings = \App\Models\Setting::current(); @endphp
+    <script>
+        window.SMS_CFG = {
+            advanceDays: {{ (int) ($settings->sms_advance_days ?? 1) }},
+            sendHour: "{{ $settings->sms_send_hour ? \Carbon\Carbon::parse($settings->sms_send_hour)->format('H:i') : '09:00' }}",
+            defaultText: "Olá [NOME_CLIENTE], lembramos a sua marcação de [SERVICO] em [DATA] às [HORA].",
+        };
+        // Mapa service_id -> texto do template, vindo do controller (sem endpoint)
+        window.SMS_TEMPLATES = @json($smsTemplates ?? []);
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const serviceSelect = document.getElementById('service_id');
@@ -476,6 +519,68 @@
             document.addEventListener('click', (e) => {
                 if (!clientResults.contains(e.target) && e.target !== clientSearch) hideResults();
             });
+
+            // ===== Passo 4 — Lembrete SMS =====
+            const smsText = document.getElementById('sms_text');
+            const smsDate = document.getElementById('sms_send_date');
+            const smsHour = document.getElementById('sms_send_hour');
+            const smsChars = document.getElementById('sms_chars');
+            const smsSegs = document.getElementById('sms_segs');
+            const smsHint = document.getElementById('sms_hint');
+
+            // Se já houver valores (edição), consideram-se definidos manualmente e não são sobrepostos
+            let smsManualText = smsText.value.trim() !== '';
+            let smsManualDate = smsDate.value !== '';
+
+            function smsCount() {
+                const len = (smsText.value || '').length;
+                smsChars.textContent = len;
+                smsSegs.textContent = Math.max(1, Math.ceil(len / 160));
+            }
+
+            function smsUpdateHint() {
+                if (smsDate.value && smsHour.value) {
+                    smsHint.textContent = `O lembrete será enviado a ${smsDate.value} às ${smsHour.value}.`;
+                } else {
+                    smsHint.textContent = 'A data de envio é calculada a partir do dia da marcação.';
+                }
+            }
+
+            // Preenche o texto do template ao escolher o serviço
+            serviceSelect.addEventListener('change', () => {
+                const serviceId = serviceSelect.value;
+                if (!serviceId || smsManualText) return;
+                const tpl = (window.SMS_TEMPLATES[serviceId] || '').trim();
+                smsText.value = tpl || window.SMS_CFG.defaultText;
+                smsCount();
+            });
+
+            // Data local em 'YYYY-MM-DD' sem passar por UTC (PT está em UTC+1 no verão -> toISOString saltava 1 dia)
+            function fmtLocalDate(d) {
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            }
+
+            // Recalcula a data de envio por defeito: dia da marcação − dias de antecedência (configurações)
+            function smsRecalcDate() {
+                if (smsManualDate || !dayInput.value) return;
+                const d = new Date(dayInput.value + 'T00:00:00');
+                d.setDate(d.getDate() - window.SMS_CFG.advanceDays);
+                smsDate.value = fmtLocalDate(d);
+                if (!smsHour.value) smsHour.value = window.SMS_CFG.sendHour;
+                smsUpdateHint();
+            }
+
+            dayInput.addEventListener('change', smsRecalcDate);
+
+            smsText.addEventListener('input', () => { smsManualText = true; smsCount(); });
+            smsDate.addEventListener('change', () => { smsManualDate = true; smsUpdateHint(); });
+            smsHour.addEventListener('change', () => { smsManualDate = true; smsUpdateHint(); });
+
+            smsCount();
+            smsUpdateHint();
         });
     </script>
 @endpush

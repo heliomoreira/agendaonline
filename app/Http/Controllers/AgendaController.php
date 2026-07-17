@@ -47,11 +47,19 @@ class AgendaController extends Controller
         $agenda = new Agenda();
         $services = $this->servicesService->getServicesForSelect();
         $professionals = Professional::all();
+        $smsTemplates = \App\Models\Service::with('smsTemplate')->get()
+            ->mapWithKeys(fn ($s) => [
+                $s->id => ($s->smsTemplate && $s->smsTemplate->status && filled($s->smsTemplate->body))
+                    ? $s->smsTemplate->body : null
+            ])
+            ->filter()
+            ->toArray();
 
         return view('admin.agenda.form', [
             'agenda' => $agenda,
             'services' => $services,
             'professionals' => $professionals,
+            'smsTemplates' => $smsTemplates,
         ]);
     }
 
