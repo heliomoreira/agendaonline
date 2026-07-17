@@ -95,9 +95,11 @@ class ProfessionalsController extends Controller
     public function update(ProfessionalRequest $request, $id)
     {
         try {
-            $professional = Professional::findOrFail($id);
+             $professional = Professional::findOrFail($id);
             $professional->fill($request->all());
             $professional->save();
+
+
 
             Log::info("Professional atualizado com ID {$professional->id}");
 

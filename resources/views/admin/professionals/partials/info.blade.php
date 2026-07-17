@@ -22,10 +22,16 @@
     </div>
 </div>
 <div class="row mt-3">
-    <div class="col-md-1">
+    <div class="col-md-2">
         <label class="form-label" for="agenda_color">Cor na Agenda</label>
         <input type="color" id="agenda_color" name="agenda_color"
                value="{{old('agenda_color', $professional->agenda_color)}}"
+               class="form-control" style="height: 39px"/>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label" for="agenda_text_color">Cor do Texto na Agenda</label>
+        <input type="color" id="agenda_text_color" name="agenda_text_color"
+               value="{{old('agenda_text_color', $professional->agenda_text_color)}}"
                class="form-control" style="height: 39px"/>
     </div>
     <div class="col-md-1">

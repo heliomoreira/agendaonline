@@ -65,6 +65,8 @@ class AgendaService
 
         return [
             optional($item->professional)->agenda_color ?: $fallback,
+            optional($item->professional)->agenda_text_color ?: null,
+
             null,
         ];
     }

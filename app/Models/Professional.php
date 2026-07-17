@@ -11,7 +11,7 @@ class Professional extends Model
 {
     use HasFactory, Notifiable, softDeletes;
 
-    protected $fillable = ['name', 'phone_1', 'phone_2', 'email','agenda_color', 'notes', 'order', 'status'];
+    protected $fillable = ['name', 'phone_1', 'phone_2', 'email','agenda_color','agenda_text_color', 'notes', 'order', 'status'];
 
     public function services()
     {
