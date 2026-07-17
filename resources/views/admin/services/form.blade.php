@@ -83,6 +83,18 @@
                                 ->placeholder('— Sem template (usa texto padrão) —')
                                 ->class('form-select') }}
                         </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="bg_color">Cor Serviço (fundo)</label>
+                            <input type="color" id="bg_color" name="bg_color"
+                                   value="{{old('bg_color', $service->bg_color)}}"
+                                   class="form-control" style="height: 39px"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label" for="text_color">Cor Serviço (texto)</label>
+                            <input type="color" id="text_color" name="text_color"
+                                   value="{{old('text_color', $service->text_color)}}"
+                                   class="form-control" style="height: 39px"/>
+                        </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-2">

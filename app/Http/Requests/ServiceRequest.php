@@ -26,6 +26,8 @@ class ServiceRequest extends FormRequest
             'duration' => ['required', 'integer', 'min:1'],
             'price' => ['required', 'numeric', 'min:0'],
             'order' => ['nullable', 'integer', 'min:0'],
+            'bg_color' => ['nullable', 'string'],
+            'text_color' => ['nullable', 'string'],
             'status' => ['required', 'boolean'],
             'notes' => ['nullable', 'string'],
             'sms_template_id' => ['nullable', 'exists:sms_templates,id'],

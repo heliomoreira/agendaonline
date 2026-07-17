@@ -13,7 +13,18 @@ class Service extends Model
 {
     use HasFactory, Notifiable, softDeletes;
 
-    protected $fillable = ['name', 'duration', 'price', 'image', 'order', 'status', 'notes','sms_template_id'];
+    protected $fillable = [
+        'name',
+        'duration',
+        'price',
+        'image',
+        'order',
+        'status',
+        'notes',
+        'sms_template_id',
+        'bg_color',
+        'text_color'
+    ];
 
     public function professionals()
     {
