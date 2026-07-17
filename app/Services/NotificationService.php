@@ -34,17 +34,24 @@ class NotificationService
             $query->whereDate('service_day', '<=', $filters['date_to']);
         }
 
+        $showAll = filter_var($filters['show_all'] ?? false, FILTER_VALIDATE_BOOLEAN);
+
+        if (!$showAll) {
+            $query->where('service_day', '>=', Carbon::today());
+        }
         return $query->orderBy('send_day')->paginate($perPage)->withQueryString();
     }
+
     public static function saveNotification(
         $tenant_id, $appointment_id, $sender, $destinatary, $type, $text,
         $service_day, $service_start_hour, $service_end_hour,
         $recipient_type = 'client', $sendDay = null, $sendHour = null
-    ) {
+    )
+    {
         if ($sendDay) {
             $sendDate = Carbon::parse($sendDay);
         } else {
-            $advanceDays = (int) (Setting::current()->sms_advance_days ?? 1);
+            $advanceDays = (int)(Setting::current()->sms_advance_days ?? 1);
             $sendDate = Carbon::parse($service_day)->subDays($advanceDays);
         }
 
@@ -53,19 +60,19 @@ class NotificationService
         }
 
         return Notification::create([
-            'tenant_id'          => $tenant_id,
-            'appointment_id'     => $appointment_id,
-            'sender'             => $sender,
-            'destinatary'        => $destinatary,
-            'recipient_type'     => $recipient_type,
-            'type'               => $type,
-            'text'               => $text,
-            'service_day'        => $service_day,
+            'tenant_id' => $tenant_id,
+            'appointment_id' => $appointment_id,
+            'sender' => $sender,
+            'destinatary' => $destinatary,
+            'recipient_type' => $recipient_type,
+            'type' => $type,
+            'text' => $text,
+            'service_day' => $service_day,
             'service_start_hour' => $service_start_hour,
-            'service_end_hour'   => $service_end_hour,
-            'send_day'           => $sendDate->toDateString(),
-            'send_hour'          => $sendHour ?: (Setting::current()->sms_send_hour ?? '18:00:00'),
-            'status'             => 'scheduled',
+            'service_end_hour' => $service_end_hour,
+            'send_day' => $sendDate->toDateString(),
+            'send_hour' => $sendHour ?: (Setting::current()->sms_send_hour ?? '18:00:00'),
+            'status' => 'scheduled',
         ]);
     }
 

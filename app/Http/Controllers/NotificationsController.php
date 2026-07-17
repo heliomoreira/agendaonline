@@ -16,7 +16,7 @@ class NotificationsController extends Controller
     public function index(Request $request)
     {
         $notifications = $this->notificationService->getFiltered(
-            $request->only(['search', 'recipient_type', 'status', 'date_from', 'date_to'])
+            $request->only(['search', 'recipient_type', 'status', 'date_from', 'date_to', 'show_all'])
         );
 
         return view('admin.notifications.index', compact('notifications'));

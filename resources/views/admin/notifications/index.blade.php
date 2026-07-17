@@ -58,15 +58,21 @@
                                        value="{{ request('date_to') }}">
                             </div>
 
-                            <div class="col-12 d-flex gap-2">
+                            <div class="col-12 d-flex gap-2 align-items-center">
                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
                                     <i class="icon-base ti tabler-filter me-1"></i> Filtrar
                                 </button>
-                                @if(request()->hasAny(['search', 'recipient_type', 'status', 'date_from', 'date_to']))
+                                @if(request()->hasAny(['search', 'recipient_type', 'status', 'date_from', 'date_to', 'show_all']))
                                     <a href="{{ url()->current() }}" class="btn btn-outline-secondary waves-effect">
                                         <i class="icon-base ti tabler-x me-1"></i> Limpar
                                     </a>
                                 @endif
+
+                                <div class="form-check form-switch ms-auto mb-0">
+                                    <input class="form-check-input" type="checkbox" id="show_all" name="show_all" value="1"
+                                        @checked(request('show_all'))>
+                                    <label class="form-check-label" for="show_all">Incluir notificações passadas</label>
+                                </div>
                             </div>
                         </div>
                     </form>
