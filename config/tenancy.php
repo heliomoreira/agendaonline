@@ -23,6 +23,7 @@ return [
         '*.agendaonline.local',
         'agendaonline.pt',
         '*.agendaonline.pt',
+        'www.agendaonline.pt',
     ],
 
     /**
