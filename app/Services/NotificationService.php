@@ -6,9 +6,36 @@ use App\Models\Notification;
 use App\Models\Setting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class NotificationService
 {
+    public function getFiltered(array $filters, int $perPage = 20): LengthAwarePaginator
+    {
+        $query = Notification::query();
+
+        if (isset($filters['tenant_id'])) {
+            $query->where('tenant_id', $filters['tenant_id']);
+        }
+
+        if (isset($filters['recipient_type'])) {
+            $query->where('recipient_type', $filters['recipient_type']);
+        }
+
+        if (isset($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (isset($filters['date_from'])) {
+            $query->whereDate('service_day', '>=', $filters['date_from']);
+        }
+
+        if (isset($filters['date_to'])) {
+            $query->whereDate('service_day', '<=', $filters['date_to']);
+        }
+
+        return $query->orderBy('send_day')->paginate($perPage)->withQueryString();
+    }
     public static function saveNotification($tenant_id, $appointment_id, $sender, $destinatary, $type, $text, $service_day, $service_start_hour, $service_end_hour, $recipient_type = 'client')
     {
         $advanceDays = (int) (Setting::current()->sms_advance_days ?? 1);

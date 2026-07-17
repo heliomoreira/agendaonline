@@ -80,7 +80,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header header-elements">
-                    <h5 class="mb-0 me-2">Listagem de Notificações</h5>
+                    <h5 class="mb-0 me-2"><i class="ti tabler-bell-ringing"></i> Listagem de Notificações</h5>
                     <div class="card-header-elements ms-auto">
                         <span class="text-muted small">{{ $notifications->total() }} registo(s)</span>
                     </div>

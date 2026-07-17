@@ -3,45 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
+use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
 {
+    public function __construct(private NotificationService $notificationService)
+    {
+    }
+
     public function index(Request $request)
     {
-        $query = Notification::query();
-
-        $query->where('tenant_id', tenant('id'));
-
-        // Pesquisa por destinatário / texto
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('destinatary', 'like', "%{$search}%")
-                    ->orWhere('text', 'like', "%{$search}%");
-            });
-        }
-
-        // Tipo de destinatário
-        if ($request->filled('recipient_type')) {
-            $query->where('recipient_type', $request->recipient_type);
-        }
-
-        // Estado
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        // Intervalo de datas do serviço
-        if ($request->filled('date_from')) {
-            $query->whereDate('service_day', '>=', $request->date_from);
-        }
-        if ($request->filled('date_to')) {
-            $query->whereDate('service_day', '<=', $request->date_to);
-        }
-
-        $notifications = $query->orderByDesc('id')->paginate(20)->withQueryString();
+        $notifications = $this->notificationService->getFiltered(
+            $request->only(['search', 'recipient_type', 'status', 'date_from', 'date_to'])
+        );
 
         return view('admin.notifications.index', compact('notifications'));
     }
