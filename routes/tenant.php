@@ -54,7 +54,7 @@ Route::middleware([
         Route::post('/booking/stripe/webhook', [BookingPaymentController::class, 'handleWebhook'])
             ->withoutMiddleware(['web']);
         Route::get('/booking/success', [BookingController::class, 'success'])->name('booking.success');
-    
+
     Route::get('/admin', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
     Route::prefix('admin')->group(function () {
@@ -97,6 +97,7 @@ Route::middleware([
 
                 Route::post('/store', [ServicesController::class, 'store'])->name('services.store');
                 Route::put('/update/{id}', [ServicesController::class, 'update'])->name('services.update');
+                Route::post('/remove/{id}', [ServicesController::class, 'destroy'])->name('services.remove');
 
                 //Route::get('/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
             });

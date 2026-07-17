@@ -6,7 +6,7 @@
                 <div class="alert alert-solid-success alert-dismissible fade show d-flex align-items-center"
                      role="alert">
             <span class="alert-icon rounded me-2">
-                <i class="icon-base ti tabler-check icon-md"></i>
+                <i class="icon-base ti tabler-check icon-md" aria-hidden="true"></i>
             </span>
                     <div class="flex-grow-1">
                         {{ session('success') }}
@@ -21,7 +21,7 @@
             <div class="col-md-12">
                 <div class="alert alert-solid-danger d-flex align-items-center" role="alert">
             <span class="alert-icon rounded">
-              <i class="icon-base ti tabler-x"></i>
+              <i class="icon-base ti tabler-x" aria-hidden="true"></i>
             </span>
                     <div>
                         <strong>Existem alguns erros:</strong>
@@ -38,7 +38,7 @@
     <div class="row mb-2">
         <div class="col-md-12">
             <h5 class="d-flex align-items-center gap-2 m-0">
-                <i class="icon-base ti tabler-layout-list"></i>
+                <i class="icon-base ti tabler-layout-list" aria-hidden="true"></i>
                 {{ $service->id ? 'Editar Serviço' : 'Novo Serviço' }}
             </h5>
             <hr class="my-2"/>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-2">
-                            <label class="form-label" for="status">Ordem</label>
+                            <label class="form-label" for="order">Ordem</label>
                             {{html()->text('order')->id('order')->class('form-control')}}
                         </div>
                         <div class="col-md-2">
@@ -107,18 +107,64 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer d-flex flex-wrap justify-content-between gap-2">
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary waves-effect waves-light">
-                            <i class="icon-base ti tabler-device-floppy"></i> Gravar
+                            <i class="icon-base ti tabler-device-floppy" aria-hidden="true"></i> Gravar
                         </button>
                         <a href="{{ route('services.index') }}" class="btn btn-secondary waves-effect waves-light">
-                            <i class="icon-base ti tabler-arrow-left"></i> Voltar
+                            <i class="icon-base ti tabler-arrow-left" aria-hidden="true"></i> Voltar
                         </a>
                     </div>
+                    @if($service->id)
+                        <button type="button" id="removeServiceBtn" class="btn btn-outline-danger waves-effect"
+                                data-bs-toggle="modal" data-bs-target="#removeServiceModal">
+                            <i class="icon-base ti tabler-trash" aria-hidden="true"></i> Remover Serviço
+                        </button>
+                    @endif
                 </div>
             </div>
             {{html()->closeModelForm()}}
+
+            @if($service->id)
+                {{-- Form separado para a remoção (fora do modelForm para evitar forms aninhados) --}}
+                {{-- NOTA: confirma o verbo HTTP da rota services.remove. Se for POST ou GET, ajusta o @method() abaixo. --}}
+                <form id="removeServiceForm"
+                      action="{{ route('services.remove', $service->id) }}"
+                      method="POST" class="d-none">
+                    @csrf
+                    @method('POST')
+                </form>
+
+                {{-- Modal de confirmação --}}
+                <div class="modal fade" id="removeServiceModal" tabindex="-1"
+                     aria-labelledby="removeServiceModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="removeServiceModalLabel">Confirmar remoção</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body">
+                                Tem a certeza que pretende remover o serviço
+                                <strong>{{ $service->name }}</strong>?
+                                <br>
+                                Esta acção não pode ser desfeita.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button type="submit" form="removeServiceForm"
+                                        class="btn btn-danger waves-effect waves-light">
+                                    <i class="icon-base ti tabler-trash" aria-hidden="true"></i> Remover
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
