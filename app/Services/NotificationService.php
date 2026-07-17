@@ -15,7 +15,7 @@ class NotificationService
         $query = Notification::query();
 
         if (isset($filters['tenant_id'])) {
-            $query->where('tenant_id', $filters['tenant_id']);
+            $query->where('tenant_id', tenant()->id);
         }
 
         if (isset($filters['recipient_type'])) {
