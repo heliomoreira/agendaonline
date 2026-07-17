@@ -13,7 +13,8 @@ class Setting extends Model
         'client_validation',
         'booking_allow_overlap',
         'sms_send_hour',
-        'sms_advance_days'
+        'sms_advance_days',
+        'color_in_agenda'
     ];
 
     protected $casts = [

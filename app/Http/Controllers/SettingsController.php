@@ -19,9 +19,10 @@ class SettingsController extends Controller
             'booking_allow_overlap' => 'required|boolean',
             'sms_send_hour' => 'required|date_format:H:i',
             'sms_advance_days' => 'required|integer|min:1|max:7',
+            'color_in_agenda' => 'nullable|string'
         ]);
         $settings = Setting::current();
-        $settings->update($request->only(['client_validation', 'booking_allow_overlap','sms_send_hour','sms_advance_days']));
+        $settings->update($request->only(['client_validation', 'booking_allow_overlap','sms_send_hour','sms_advance_days','color_in_agenda']));
 
         return redirect()->back()->with('success', 'Configurações atualizadas com sucesso.');
 
