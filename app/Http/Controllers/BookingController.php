@@ -15,6 +15,7 @@ use App\Models\Tenant;
 use App\Notifications\BookingConfirmation;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
+use App\Services\ServicesService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -27,9 +28,13 @@ use App\Models\Setting;
 
 class BookingController extends Controller
 {
-    private const SLOT_INTERVAL = 30;
-    private const SUNDAY = 0;
-    private const SATURDAY = 6;
+    private const int SLOT_INTERVAL = 30;
+    private const int SUNDAY = 0;
+    private const int SATURDAY = 6;
+
+    public function __construct(private ServicesService $servicesService)
+    {
+    }
 
     public function index()
     {

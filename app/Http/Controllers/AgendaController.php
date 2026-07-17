@@ -10,6 +10,7 @@ use App\Models\Professional;
 use App\Models\Service;
 use App\Services\BookingService;
 use App\Services\NotificationService;
+use App\Services\ServicesService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class AgendaController extends Controller
 {
     public function __construct(
         private NotificationService $notificationService,
+        private ServicesService $servicesService,
     )
     {
     }
@@ -41,7 +43,7 @@ class AgendaController extends Controller
     public function form()
     {
         $agenda = new Agenda();
-        $services = Service::pluck('name', 'id');;
+        $services = $this->servicesService->getServicesForSelect();
         $professionals = Professional::all();
 
         return view('admin.agenda.form', [
@@ -141,14 +143,14 @@ class AgendaController extends Controller
    public function cancelEvent($eventId)
     {
         $cancel = Agenda::find($eventId);
-    
+
         if (!$cancel) {
             return response()->json(['success' => false, 'message' => 'Evento não encontrado'], 404);
         }
-    
+
         $cancel->delete();
         $this->notificationService->deleteNotification(tenant('id'), $eventId);
-    
+
         return response()->json(['success' => true], 200);
     }
 
