@@ -16,6 +16,7 @@ use App\Notifications\BookingConfirmation;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\ServicesService;
+use App\Services\StripeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -32,7 +33,10 @@ class BookingController extends Controller
     private const int SUNDAY = 0;
     private const int SATURDAY = 6;
 
-    public function __construct(private ServicesService $servicesService)
+    public function __construct(
+        private ServicesService $servicesService,
+        private StripeService $stripeService
+    )
     {
     }
 
@@ -48,6 +52,7 @@ class BookingController extends Controller
             'portal' => $portal,
             'requiresPayment' => $portal->requires_payment ?? false,
             'paymentPercentage' => $portal->payment_percentage ?? 0,
+            'stripeKey' => $this->stripeService->getFrontendKey(),
         ]);
     }
 
