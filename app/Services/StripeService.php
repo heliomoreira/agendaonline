@@ -178,7 +178,7 @@ class StripeService
      * Get webhook secret for tenant
      * Falls back to global config if not set
      */
-    private function getWebhookSecret(Portal $portal = null): string
+    protected function getWebhookSecret(Portal $portal = null): string
     {
         $portal = $portal ?? $this->getPortal();
 
@@ -194,7 +194,7 @@ class StripeService
     /**
      * Get current tenant's Portal model
      */
-    private function getPortal(): ?Portal
+    protected function getPortal(): ?Portal
     {
         try {
             return Portal::first();
