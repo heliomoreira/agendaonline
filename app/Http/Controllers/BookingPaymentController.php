@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\BookingService;
 use App\Models\Service;
+use App\Services\BookingService;
 use App\Services\StripeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Stripe\Exception\SignatureVerificationException;
 
 class BookingPaymentController extends Controller
 {
@@ -17,7 +18,8 @@ class BookingPaymentController extends Controller
     }
 
     /**
-     * Criar Payment Intent com suporte para MB WAY e Multibanco
+     * Create Payment Intent with support for MB WAY and Multibanco
+     * Uses tenant-specific Stripe credentials from Portal model
      */
     public function createPaymentIntent(Request $request)
     {
@@ -32,6 +34,7 @@ class BookingPaymentController extends Controller
         ]);
 
         try {
+            // Check if Stripe is configured for this tenant
             if (!$this->stripeService->isConfigured()) {
                 return response()->json([
                     'success' => false,
@@ -40,10 +43,13 @@ class BookingPaymentController extends Controller
             }
 
             $service = Service::findOrFail($request->service_id);
+
+            // Get payment percentage from tenant Portal configuration
             $paymentPercentage = $this->stripeService->getPaymentPercentage();
             $fullAmount = (float) $service->price;
             $amountToPay = ($fullAmount * $paymentPercentage) / 100;
 
+            // Create payment intent using StripeService
             $paymentData = $this->stripeService->createPaymentIntent(
                 $amountToPay,
                 'eur',
@@ -73,8 +79,9 @@ class BookingPaymentController extends Controller
                 'payment_methods' => $paymentData['payment_methods'] ?? [],
             ]);
         } catch (\Exception $e) {
-            Log::error('Erro ao processar pagamento', [
+            Log::error('Payment Intent creation failed', [
                 'tenant_id' => tenant()?->id,
+                'service_id' => $request->service_id,
                 'error' => $e->getMessage(),
             ]);
 
@@ -86,8 +93,8 @@ class BookingPaymentController extends Controller
     }
 
     /**
-     * Webhook handler para receber notificações da Stripe
-     * IMPORTANTE: Multibanco é assíncrono - pagamento confirma depois
+     * Webhook handler to receive Stripe notifications
+     * IMPORTANT: Multibanco is asynchronous - payment confirms later
      */
     public function handleWebhook(Request $request)
     {
@@ -95,40 +102,50 @@ class BookingPaymentController extends Controller
         $sigHeader = $request->header('Stripe-Signature', '');
 
         try {
+            // Verify webhook with tenant-specific or global secret
             $event = $this->stripeService->verifyWebhook($payload, $sigHeader);
 
-            switch ($event->type) {
-                case 'payment_intent.succeeded':
-                    $this->bookingService->handlePaymentSuccess($event->data->object->id);
-                    break;
+            $object = $event->data->object;
 
-                case 'payment_intent.payment_failed':
-                    $failureMessage = $event->data->object->last_payment_error->message ?? '';
-                    $this->bookingService->handlePaymentFailed($event->data->object->id, $failureMessage);
-                    break;
+            Log::info('Stripe webhook received', [
+                'event_type' => $event->type,
+                'tenant_id' => $object->metadata->tenant_id ?? tenant()?->id,
+                'tenant_domain' => $object->metadata->tenant_domain ?? null,
+            ]);
 
-                case 'payment_intent.canceled':
-                    $this->bookingService->handlePaymentCanceled($event->data->object->id);
-                    break;
-
-                default:
-                    Log::info('Unhandled Stripe webhook event', ['event_type' => $event->type]);
-            }
+            match ($event->type) {
+                'payment_intent.succeeded' => $this->bookingService->handlePaymentSuccess(
+                    $object->id
+                ),
+                'payment_intent.payment_failed' => $this->bookingService->handlePaymentFailed(
+                    $object->id,
+                    $object->last_payment_error->message ?? 'Unknown reason'
+                ),
+                'payment_intent.canceled' => $this->bookingService->handlePaymentCanceled(
+                    $object->id
+                ),
+                default => Log::info('Unhandled Stripe webhook event', [
+                    'event_type' => $event->type,
+                ]),
+            };
 
             return response()->json(['status' => 'success']);
-        } catch (\Exception $e) {
-            Log::error('Erro ao processar webhook Stripe', [
+        } catch (SignatureVerificationException | \UnexpectedValueException $e) {
+            // Invalid signature or malformed payload: do NOT ask Stripe to retry
+            Log::error('Stripe webhook validation failed', [
                 'tenant_id' => tenant()?->id,
                 'error' => $e->getMessage(),
             ]);
 
-            if (str_contains(strtolower($e->getMessage()), 'signature') || str_contains(strtolower($e->getMessage()), 'payload')) {
-                return response()->json(['error' => $e->getMessage()], 400);
-            }
+            return response()->json(['error' => $e->getMessage()], 400);
+        } catch (\Exception $e) {
+            // Transient/internal failure: return 5xx so Stripe retries
+            Log::error('Stripe webhook processing failed', [
+                'tenant_id' => tenant()?->id,
+                'error' => $e->getMessage(),
+            ]);
 
-            return response()->json([
-                'error' => 'Webhook processing failed',
-            ], 500);
+            return response()->json(['error' => 'Webhook processing failed'], 500);
         }
     }
 }
