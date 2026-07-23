@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 
 class PortalController extends Controller
 {
@@ -34,7 +35,7 @@ class PortalController extends Controller
         if ($updatePortal == null) {
             return redirect()->route('dashboard');
         }
-        $updatePortal->fill($request->except('logo'));
+        $updatePortal->fill($request->except(['logo', 'payment_stripe_secret']));
 
         if ($request->hasFile('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos', 150, 150);
@@ -46,9 +47,9 @@ class PortalController extends Controller
             $updatePortal->background_image = $path;
         }
 
-
-        $updatePortal->payment_stripe_secret = bcrypt($request->payment_stripe_secret);
-
+        if ($request->filled('payment_stripe_secret')) {
+            $updatePortal->payment_stripe_secret = Crypt::encryptString($request->payment_stripe_secret);
+        }
 
         $updatePortal->save();
         return redirect()->back()->with('success', 'Portal atualizado com sucesso.');
