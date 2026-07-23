@@ -541,7 +541,7 @@ class BookingController extends Controller
     public function createPaymentIntent(Request $request)
     {
         $service = Service::findOrFail($request->service_id);
-        $amount = $service->price; // em euros
+        $amount = $service->price; // em euros; StripeService converte para cêntimos internamente
 
         $stripeService = app(StripeService::class);
 

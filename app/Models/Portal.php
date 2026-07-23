@@ -35,6 +35,7 @@ class Portal extends Model
         'sunday_hours',
         'payment_stripe_key',
         'payment_stripe_secret',
+        'payment_stripe_webhook_secret',
         'payment_stripe_allow_card',
         'payment_stripe_allow_multibanco',
         'enable_portal',

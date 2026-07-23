@@ -204,6 +204,10 @@
                                         <label class="form-label" for="payment_stripe_secret">Stripe Secret</label>
                                         {{html()->password('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('')}}
                                     </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label" for="payment_stripe_webhook_secret">Stripe Webhook Secret</label>
+                                        {{html()->password('payment_stripe_webhook_secret')->id('payment_stripe_webhook_secret')->class('form-control')->placeholder('')}}
+                                    </div>
                                     <div class="col-md-2">
                                         <label class="form-label" for="payment_stripe_allow_card">Cartão de Crédito</label>
                                         {{html()->select('payment_stripe_allow_card')->id('payment_stripe_allow_card')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}

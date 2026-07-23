@@ -17,6 +17,9 @@ class StripeService
 
     public function __construct()
     {
+        // In the tenant-per-database setup (Stancl/Tenancy), Portal::first()
+        // runs against the current tenant's database, so it correctly returns
+        // this tenant's record.
         $this->portal = Portal::first();
     }
 
@@ -93,16 +96,31 @@ class StripeService
     }
 
     /**
-     * Verify a Stripe webhook signature using tenant-only credentials.
+     * Verify a Stripe webhook signature using the tenant webhook signing secret.
      *
-     * @throws RuntimeException when tenant is not properly configured
+     * @throws RuntimeException when tenant webhook secret is missing or invalid
      * @throws \Stripe\Exception\SignatureVerificationException
      */
     public function verifyWebhook(string $payload, string $sigHeader): \Stripe\Event
     {
-        $this->configure();
+        if (empty($this->portal?->payment_stripe_webhook_secret)) {
+            throw new RuntimeException(
+                'Stripe webhook secret não configurado para este tenant.'
+            );
+        }
 
-        $webhookSecret = $this->resolveSecret();
+        try {
+            $webhookSecret = decrypt($this->portal->payment_stripe_webhook_secret);
+        } catch (DecryptException) {
+            Log::error('Stripe webhook secret inválido para este tenant – não é possível desencriptar.', [
+                'tenant_id' => tenant()?->id,
+            ]);
+
+            throw new RuntimeException(
+                'Credenciais Stripe inválidas: o webhook secret do tenant não pode ser desencriptado. ' .
+                'Por favor, insira novamente o Stripe Webhook Secret no painel de configuração.'
+            );
+        }
 
         return Webhook::constructEvent($payload, $sigHeader, $webhookSecret);
     }

@@ -35,7 +35,7 @@ class PortalController extends Controller
         if ($updatePortal == null) {
             return redirect()->route('dashboard');
         }
-        $updatePortal->fill($request->except(['logo', 'payment_stripe_secret']));
+        $updatePortal->fill($request->except(['logo', 'payment_stripe_secret', 'payment_stripe_webhook_secret']));
 
         if ($request->hasFile('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos', 150, 150);
@@ -49,6 +49,10 @@ class PortalController extends Controller
 
         if ($request->filled('payment_stripe_secret')) {
             $updatePortal->payment_stripe_secret = Crypt::encryptString($request->payment_stripe_secret);
+        }
+
+        if ($request->filled('payment_stripe_webhook_secret')) {
+            $updatePortal->payment_stripe_webhook_secret = Crypt::encryptString($request->payment_stripe_webhook_secret);
         }
 
         $updatePortal->save();
