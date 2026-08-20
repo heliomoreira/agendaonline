@@ -16,6 +16,7 @@ use App\Notifications\BookingConfirmation;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\ServicesService;
+use App\Services\StripeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -32,7 +33,10 @@ class BookingController extends Controller
     private const int SUNDAY = 0;
     private const int SATURDAY = 6;
 
-    public function __construct(private ServicesService $servicesService)
+    public function __construct(
+        private ServicesService $servicesService,
+        private StripeService $stripeService,
+    )
     {
     }
 
@@ -41,13 +45,15 @@ class BookingController extends Controller
         $services = Service::all();
         $professionals = Professional::all();
         $portal = Portal::all()->first();
+        $requiresPayment = $portal->requires_payment ?? false;
 
         return view('front.portal.booking', [
             'services' => $services,
             'professionals' => $professionals,
             'portal' => $portal,
-            'requiresPayment' => $portal->requires_payment ?? false,
+            'requiresPayment' => $requiresPayment,
             'paymentPercentage' => $portal->payment_percentage ?? 0,
+            'stripeKey' => $requiresPayment ? $this->stripeService->getPublishableKey() : null,
         ]);
     }
 
@@ -536,43 +542,13 @@ class BookingController extends Controller
         return $start1->lt($end2) && $end1->gt($start2);
     }
 
-    public function createPaymentIntent(Request $request)
-    {
-        $service = Service::findOrFail($request->service_id);
-        $amount = $service->price * 100; // em cêntimos
-
-        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-
-        $paymentIntent = \Stripe\PaymentIntent::create([
-            'amount' => $amount,
-            'currency' => 'eur',
-            'payment_method_types' => [
-                'card',
-                'multibanco',
-                'ideal',  // opcional
-            ],
-            'metadata' => [
-                'service_id' => $request->service_id,
-                'professional_id' => $request->professional_id,
-                'day' => $request->day,
-                'start_hour' => $request->start_hour,
-            ],
-        ]);
-
-        return response()->json([
-            'clientSecret' => $paymentIntent->client_secret,
-            'paymentIntentId' => $paymentIntent->id,
-        ]);
-    }
-
     public function success(Request $request)
     {
         $paymentIntentId = $request->query('payment_intent');
 
         if ($paymentIntentId) {
-            // Buscar na Stripe o status
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-            $pi = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+            // Buscar na Stripe o status, com as credenciais do tenant
+            $pi = $this->stripeService->retrievePaymentIntent($paymentIntentId);
 
             // Se Multibanco e ainda não pago
             if ($pi->status === 'requires_action') {
