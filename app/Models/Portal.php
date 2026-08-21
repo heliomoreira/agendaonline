@@ -35,8 +35,10 @@ class Portal extends Model
         'sunday_hours',
         'payment_stripe_key',
         'payment_stripe_secret',
+        'payment_stripe_webhook_secret',
         'payment_stripe_allow_card',
         'payment_stripe_allow_multibanco',
+        'payment_currency',
         'enable_portal',
         'enable_booking',
     ];
@@ -46,6 +48,8 @@ class Portal extends Model
         return [
             'enable_portal' => 'boolean',
             'enable_booking' => 'boolean',
+            'payment_stripe_secret' => 'encrypted',
+            'payment_stripe_webhook_secret' => 'encrypted',
         ];
     }
 }

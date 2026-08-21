@@ -55,7 +55,7 @@ class BookingPaymentController extends Controller
             // Create payment intent using StripeService
             $paymentData = $this->stripeService->createPaymentIntent(
                 $amountToPay,
-                'eur',
+                null,
                 [
                     'service_id' => $request->service_id,
                     'professional_id' => $request->professional_id,

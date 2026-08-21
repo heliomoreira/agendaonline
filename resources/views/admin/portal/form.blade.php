@@ -196,19 +196,32 @@
                                 </div>
 
                                 <div class="row g-4 mt-1">
-                                    <div class="col-md-4">
-                                        <label class="form-label" for="payment_stripe_key">Stripe Key</label>
-                                        {{html()->text('payment_stripe_key')->id('payment_stripe_key')->class('form-control')->placeholder('')}}
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="payment_stripe_key">Stripe Publishable Key</label>
+                                        {{html()->text('payment_stripe_key')->id('payment_stripe_key')->class('form-control')->placeholder('pk_live_...')}}
                                     </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label" for="payment_stripe_secret">Stripe Secret</label>
-                                        {{html()->password('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('')}}
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="payment_stripe_secret">Stripe Secret Key</label>
+                                        {{html()->password('payment_stripe_secret')->id('payment_stripe_secret')->class('form-control')->placeholder('sk_live_...')}}
+                                        <small class="text-muted">Deixe em branco para manter a chave atual.</small>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="payment_stripe_webhook_secret">Stripe Webhook Secret</label>
+                                        {{html()->password('payment_stripe_webhook_secret')->id('payment_stripe_webhook_secret')->class('form-control')->placeholder('whsec_...')}}
+                                        <small class="text-muted">Deixe em branco para manter o segredo atual.</small>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="payment_currency">Moeda</label>
+                                        {{html()->text('payment_currency')->id('payment_currency')->class('form-control')->placeholder('eur')}}
+                                    </div>
+                                </div>
+
+                                <div class="row g-4 mt-1">
+                                    <div class="col-md-3">
                                         <label class="form-label" for="payment_stripe_allow_card">Cartão de Crédito</label>
                                         {{html()->select('payment_stripe_allow_card')->id('payment_stripe_allow_card')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <label class="form-label" for="payment_stripe_allow_multibanco">Multibanco / MBWay</label>
                                         {{html()->select('payment_stripe_allow_multibanco')->id('payment_stripe_allow_multibanco')->class('form-select')->options([0=>'Não', 1=>'Sim'])->placeholder('--Selecionar--')}}
                                     </div>
