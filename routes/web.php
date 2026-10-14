@@ -19,9 +19,19 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/', function () {
             return view('front.website.index');
         });
+
+        Route::get('/termos-e-condicoes', function () {
+            return view('front.website.terms-and-conditions');
+        });
+        Route::get('/politica-de-privacidade', function () {
+            return view('front.website.privacy-policy');
+        });
+
         Route::get('/signup', [TenantController::class, 'signup']);
         Route::post('/signup/create-tenant', [TenantController::class, 'createTenant']);
         Route::get('/signup/account-created', [TenantController::class, 'createTenant']);
+
+
 
         //Route::get('/signup', [TenantController::class, 'showRegistrationForm'])->name('register');
 
@@ -53,9 +63,9 @@ Route::prefix('client')->name('client.')->group(function () {
         Route::get('/bookings/{booking}', [ClientDashboardController::class, 'show'])->name('bookings.show');
         Route::post('/bookings/{booking}/cancel', [ClientDashboardController::class, 'cancel'])->name('bookings.cancel');
 
-     //   Route::get('/profile', [ClientProfileController::class, 'edit'])->name('profile.edit');
-      //  Route::put('/profile', [ClientProfileController::class, 'update'])->name('profile.update');
-      //  Route::put('/profile/password', [ClientProfileController::class, 'updatePassword'])->name('profile.password');
+        //   Route::get('/profile', [ClientProfileController::class, 'edit'])->name('profile.edit');
+        //  Route::put('/profile', [ClientProfileController::class, 'update'])->name('profile.update');
+        //  Route::put('/profile/password', [ClientProfileController::class, 'updatePassword'])->name('profile.password');
 
         Route::post('/logout', [ClientAuthController::class, 'logout'])->name('logout');
     });
