@@ -19,9 +19,19 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/', function () {
             return view('front.website.index');
         });
+
+        Route::get('/termos-e-condicoes', function () {
+            return view('front.website.terms-and-conditions');
+        });
+        Route::get('/politica-de-privacidade', function () {
+            return view('front.website.privacy-policy');
+        });
+
         Route::get('/signup', [TenantController::class, 'signup']);
         Route::post('/signup/create-tenant', [TenantController::class, 'createTenant']);
         Route::get('/signup/account-created', [TenantController::class, 'createTenant']);
+
+
 
         //Route::get('/signup', [TenantController::class, 'showRegistrationForm'])->name('register');
 

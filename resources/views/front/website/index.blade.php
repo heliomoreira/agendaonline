@@ -1,462 +1,620 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-PT" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="{{global_asset('website/theme/assets/bootstrap/css/bootstrap.min.css')}}">
-    <title>Agenda Online - Brevemente</title>
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-        }
-
-        html {
-            display: table;
-            font-family: Lato, "Segoe UI", Avenir, Ubuntu, Tahoma, Verdana, Helvetica, sans-serif;
-        }
-
-        body {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        h3 {
-            font-size: 1.5em;
-            font-family: Roboto, sans-serif;
-            font-weight: normal;
-        }
-    </style>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MQJ9MVM4');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agenda Online - Software de marcações online para negócios | Versão Beta</title>
+    <meta name="description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Conheça a versão beta da Agenda Online." />
+    <link rel="canonical" href="https://agendaonline.pt/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0060F7" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_PT" />
+    <meta property="og:site_name" content="Agenda Online" />
+    <meta property="og:url" content="https://agendaonline.pt/" />
+    <meta property="og:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
+    <meta property="og:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Conheça a versão beta da Agenda Online." />
+    <meta property="og:image" content="{{ asset('website/og-image.png') }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logótipo da Agenda Online" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
+    <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Conheça a versão beta da Agenda Online." />
+    <meta name="twitter:image" content="{{ asset('website/og-image.png') }}" />
+    <link rel="icon" href="{{ asset('website/favicon.ico') }}" sizes="32x32" />
+    <link rel="icon" href="{{ asset('website/favicon.png') }}" type="image/png" />
+    <link rel="apple-touch-icon" href="{{ asset('website/apple-touch-icon.png') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('website/beta/style.css') }}" />
+    @verbatim
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "Organization",
+						"@id": "https://agendaonline.pt/#org",
+						"name": "Agenda Online",
+						"url": "https://agendaonline.pt/",
+						"logo": "https://agendaonline.pt/website/beta/logo-light.png",
+						"email": "agendaonline@bitsis.pt",
+						"contactPoint": {
+							"@type": "ContactPoint",
+							"contactType": "customer support",
+							"email": "agendaonline@bitsis.pt",
+							"availableLanguage": ["Portuguese"]
+						}
+					},
+					{
+						"@type": "WebSite",
+						"@id": "https://agendaonline.pt/#website",
+						"url": "https://agendaonline.pt/",
+						"name": "Agenda Online",
+						"inLanguage": "pt-PT",
+						"publisher": {
+							"@id": "https://agendaonline.pt/#org"
+						}
+					},
+					{
+						"@type": "SoftwareApplication",
+						"name": "Agenda Online",
+						"applicationCategory": "BusinessApplication",
+						"operatingSystem": "Web",
+						"url": "https://agendaonline.pt/",
+						"description": "Software de marcações online para salões, clínicas, cabeleireiros, estética e prestadores de serviços: página de marcações, lembretes automáticos por SMS e email e gestão de clientes.",
+						"publisher": {
+							"@id": "https://agendaonline.pt/#org"
+						}
+					},
+					{
+						"@type": "FAQPage",
+						"mainEntity": [
+							{
+								"@type": "Question",
+								"name": "O que é a Agenda Online?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "É um software de marcações online. Os seus clientes marcam sozinhos através de um link, recebem confirmação e lembrete automáticos, e você vê tudo numa só agenda."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Os meus clientes precisam de instalar alguma aplicação?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Não. Marcam diretamente no browser do telemóvel ou do computador, a partir do seu link, sem criar conta nem instalar nada."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Funciona para uma equipa com vários profissionais?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Sim. Cada profissional tem a sua agenda, os seus serviços e os seus horários, e o cliente escolhe com quem quer marcar."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Posso continuar a registar as marcações feitas por telefone?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Sim. As marcações feitas ao balcão ou por telefone entram na mesma agenda, e o cliente recebe a confirmação e o lembrete na mesma."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Onde ficam guardados os dados?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "Em servidores na Europa, tratados de acordo com o RGPD. Os dados dos seus clientes são seus e nunca são partilhados com terceiros."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "Quando posso criar a minha conta?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "As inscrições abrem em breve. Se quiser ser dos primeiros, envie-nos uma mensagem pelo formulário de contacto e avisamos assim que puder criar a sua conta."
+								}
+							},
+							{
+								"@type": "Question",
+								"name": "O que significa estar em beta?",
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": "O essencial já funciona e está a ser usado no dia a dia. Ainda estamos a acrescentar funcionalidades e a afinar detalhes, e o feedback de quem usa decide o que fazemos a seguir."
+								}
+							}
+						]
+					}
+				]
+			}
+        </script>
+    @endverbatim
 </head>
 <body>
-<img src="{{global_asset('agenda_online.png')}}" alt="Agenda Online" title="Agenda Online" width="300" height="124">
-<h3 class="mt-3">Brevemente</h3>
-</body>
-</html>
-{{--
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description"
-          content="O Assistgest é um software especializado na área de gestão de assistências técnicas. Com diversos módulos permite ter uma gestão simples mas organizada.">
-    <meta name="keywords"
-          content="software assistências, software de gestão de assistências técnicas, software gestão de reparações gratuito, software assistencia tecnica, software gestão assistencia tecnica">
-    <meta name="author" content="">
-    <title>Assistgest - Software de Gestão de Assistências Técnicas</title>
-    <link rel="shortcut icon" type="image/x-icon"
-          href="{{global_asset('website/media/img/favicon.png')}}">
-
-    <link rel="stylesheet" href="{{global_asset('website/theme/assets/bootstrap/css/bootstrap.min.css')}}">
-    <!-- Select2 -->
-    <link href="{{global_asset('website/theme/assets/select2/css/select2.min.css')}}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{global_asset('website/theme/assets/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- Iconmoon -->
-    <link href="{{global_asset('website/theme/assets/iconmoon/css/iconmoon.css')}}" rel="stylesheet">
-    <!-- Owl Carousel -->
-    <link href="{{global_asset('website/theme/assets/owl-carousel/css/owl.carousel.min.css')}}" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="{{global_asset('website/theme/css/custom.css')}}" rel="stylesheet">
-</head>
-<body>
-<!-- ==============================================
-**Header**
-=================================================== -->
-<header class="opt5">
-    <!-- Start Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container"><a class="navbar-brand" href="/"><img
-                        src="{{global_asset('website/media/img/assistgest_black.png')}}" class="img-fluid logo1"
-                        alt="Assistgest"><img src="{{global_asset('website/media/img/assistgest_light.png')}}"
-                                              class="img-fluid logo2" alt="Assistgest"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"><span
-                        class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" id="home" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="funcionalidades" href="/funcionalidades">Funcionalidades</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="precoseplanos" href="/planos-e-precos">Planos e Preços</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="suporte" href="https://suporte.assistgest.com"
-                           target="_blank">Suporte</a>
-                    </li>
-                </ul>
-                <ul class="navbar-right d-flex">
-                    <li><a href="/signup" target="_blank">Registar</a></li>
-                    <li><a href="#" target="_blank">Login</a></li>
-                </ul>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MQJ9MVM4"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<a class="skip" href="#conteudo">Saltar para o conteúdo</a>
+<nav class="nav" id="nav" aria-label="Navegação principal">
+    <div class="wrap nav-in">
+        <a class="logo" href="/" aria-label="Agenda Online, página inicial"
+        ><picture
+            ><source srcset="{{ asset('website/beta/logo-light.webp') }}" type="image/webp" />
+                <img src="{{ asset('website/beta/logo-light.png') }}" alt="Agenda Online" width="161" height="40" /></picture
+            ><span class="beta">Beta</span></a
+        >
+        <div class="nav-menu" id="nav-menu">
+            <ul class="nav-links">
+                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                <li><a href="#como-funciona">Como funciona</a></li>
+                <li><a href="#perguntas">Perguntas</a></li>
+                <li><a href="#contactos">Contactos</a></li>
+            </ul>
+            <div class="nav-end">
+                <span class="btn btn-soon" aria-disabled="true">Em breve</span>
             </div>
         </div>
-    </nav>
-    <!-- End Navigation -->
-</header>
+        <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
+    </div>
+</nav>
 
-<!-- ==============================================
-**Banner opt5**
-=================================================== -->
-<div class="banner slide3 banner5">
-    <div class="container">
-        <div class="row cnt-block">
-            <div class="col-md-12">
-                <div class="left">
-                    <h1>A sua agenda digital</h1>
-                    <p>Organize marcações, reduza faltas e aumente a produtividade — tudo num só lugar.</p>
-                    <a href="/signup" class="get-started" style="max-width:275px !important" target="_blank">Crie a sua
-                        conta grátis</a></div>
+<main id="conteudo">
+    <header class="hero">
+        <div class="wrap hero-grid">
+            <div>
+                <span class="eyebrow">Software de marcações online</span>
+                <h1>Marcações online para o seu negócio, 24 horas por dia.</h1>
+                <p class="lead">Os seus clientes escolhem o serviço e o horário a partir de um link. A Agenda Online confirma, envia o lembrete e põe tudo na sua agenda, sem chamadas.</p>
+                <div class="hero-actions">
+                    <span class="btn btn-soon btn-lg" aria-disabled="true">Em breve</span>
+                    <a class="btn btn-outline btn-lg" href="#como-funciona">Ver como funciona</a>
+                </div>
+                <span class="btn-note">Configuração em minutos · Dados na Europa · Suporte em português</span>
+            </div>
+
+            <div class="ticket" role="group" aria-label="Exemplo de marcação online">
+                <div class="ticket-head">
+                    <div class="avatar" aria-hidden="true">SA</div>
+                    <div><b>Salão Aurora</b><span>Terça-feira, escolha um horário</span></div>
+                </div>
+                <p class="ticket-label">Serviço</p>
+                <div class="ticket-row"><span>Corte e brushing</span><b>45 min</b></div>
+                <p class="ticket-label">Horários livres</p>
+                <div class="slots" id="slots">
+                    <button class="slot" type="button" disabled aria-label="09:00, ocupado">09:00</button>
+                    <button class="slot" type="button" aria-pressed="false">10:00</button>
+                    <button class="slot" type="button" aria-pressed="false">11:30</button>
+                    <button class="slot" type="button" disabled aria-label="14:00, ocupado">14:00</button>
+                    <button class="slot" type="button" aria-pressed="false">15:30</button>
+                    <button class="slot" type="button" aria-pressed="false">17:00</button>
+                </div>
+                <button class="btn btn-primary" id="confirmar" type="button" disabled>Escolha um horário</button>
+                <div class="ticket-sms" id="sms" role="status" aria-live="polite"><span aria-hidden="true">💬</span><span id="sms-text"></span></div>
+                <button class="ticket-reset" id="reset" type="button">Experimentar outra vez</button>
+                <p class="ticket-cap">Experimente: é isto que os seus clientes veem.</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <figure><img src="{{global_asset('website/media/img/assistgest_multidevice.png')}}" class="img-fluid"
-                             alt="Assistgest" title="Assistgest"></figure>
-            </div>
+    </header>
+
+    <div class="trust">
+        <div class="wrap">
+            <span><b>Marcações 24h</b> por dia, 7 dias por semana</span>
+            <span><b>Lembretes</b> por SMS e email</span>
+            <span>Dados alojados <b>na UE</b></span>
+            <span>Suporte <b>em português</b></span>
         </div>
     </div>
-</div>
 
-<!-- ==============================================
-**How it Works**
-=================================================== -->
-<section class="how-it-works-sec">
-    <div class="sided-item-wrapper padding-lg">
-        <div class="container">
-            <h2>Quais são as vantagens ?</h2>
-            <div class="row">
-                <div class="col-md-9 content-area">
-                    <ul class="row marketing-list3">
-                        <li class="col-md-6 equal-hight">
-                            <div class="ico-block"><img src="{{global_asset('website/media/img/multidevice.png')}}"
-                                                        class="rounded-circle img-fluid" alt=""></div>
-                            <div class="cnt-block">
-                                <h3>Multi-dispositivo</h3>
-                                <p>No computador, portátil, tablet ou smartphone, aceda ao software com facilidade onde
-                                    quer que esteja.</p>
-                            </div>
-                        </li>
-                        <li class="col-md-6 equal-hight">
-                            <div class="ico-block"><img src="{{global_asset('website/media/img/simples.png')}}"
-                                                        class="rounded-circle img-fluid" alt=""></div>
-                            <div class="cnt-block">
-                                <h3>Agenda inteligente</h3>
-                                <p>Visualização diária/semanal/mensal com gestão de sobreposições</p>
-                            </div>
-                        </li>
-                        <li class="col-md-6 equal-hight">
-                            <div class="ico-block"><img src="{{global_asset('website/media/img/multiuser.png')}}"
-                                                        class="rounded-circle img-fluid" alt=""></div>
-                            <div class="cnt-block">
-                                <h3>Gestão de funcionários</h3>
-                                <p>Atribua horários, turnos e serviços por colaborador.</p>
-                            </div>
-                        </li>
-                        <li class="col-md-6 equal-hight">
-                            <div class="ico-block"><img src="{{global_asset('website/media/img/improve.png')}}"
-                                                        class="rounded-circle img-fluid" alt=""></div>
-                            <div class="cnt-block">
-                                <h3>Marcações online</h3>
-                                <p>Os seus clientes podem marcar diretamente através do telemóvel</p>
-                            </div>
-                        </li>
-                    </ul>
+    <section class="sec">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">O problema</span>
+                <h2>Reconhece estes problemas?</h2>
+            </div>
+            <ul class="painlist reveal">
+                <li>O telefone toca a meio de um serviço e tem de parar para marcar.</li>
+                <li>Clientes que se esquecem da marcação e deixam a hora vazia.</li>
+                <li>Marcações num caderno que só está disponível quando está no balcão.</li>
+                <li>Mensagens de WhatsApp a combinar horários à noite e ao fim de semana.</li>
+                <li>Dois clientes marcados à mesma hora porque ninguém viu a agenda do colega.</li>
+            </ul>
+            <p style="margin-top: 1.6rem; font-size: 1.1rem"><b style="color: var(--ink)">A Agenda Online resolve tudo isto.</b></p>
+            <p style="margin-top: 1rem"><span class="btn btn-soon" aria-disabled="true">Em breve</span></p>
+        </div>
+    </section>
+
+    <section class="sec alt" id="para-quem">
+        <div class="wrap">
+            <div class="sec-head center">
+                <span class="eyebrow">Para quem</span>
+                <h2>Feito para quem trabalha com marcações</h2>
+                <p>Se o seu dia se organiza por horários, a Agenda Online adapta-se ao seu negócio.</p>
+            </div>
+            <div class="grid-4">
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">💇</span>
+                    <h3>Cabeleireiros e barbearias</h3>
+                    <p>Cortes, colorações e barbas com a agenda de cada profissional sempre atualizada.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">💅</span>
+                    <h3>Estética e bem-estar</h3>
+                    <p>Unhas, depilação, massagens e spa, com lembretes que reduzem as faltas.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">🩺</span>
+                    <h3>Clínicas e consultórios</h3>
+                    <p>Fisioterapia, nutrição, psicologia e medicina dentária, com marcações por profissional.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">🧑‍💼</span>
+                    <h3>Serviços e independentes</h3>
+                    <p>Consultores, explicadores, formadores, oficinas e ateliers.</p>
                 </div>
             </div>
         </div>
-        <div class="right-sided-full-image">
-            <figure><img src="{{global_asset('website/media/img/vantagens_assistgest.png')}}"
-                         alt="Assistgest - Vantagens"
-                         title="Assistgest - Vantagens"></figure>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- ==============================================
-**Create SEO Reports**
-=================================================== -->
-<section class="seo-reports">
-    <div class="sided-item-wrapper">
-        <div class="container">
-            <div class="row justify-content-end">
-                <div class="col-md-7">
-                    <div class="content-area padding-lg">
-                        <h2>Com as funcionalidades que realmente precisa!</h2>
-                        <p>Sabia que num software cerca de 65% das funcionalidades <u>nunca</u> são utilizadas? Por esse
-                            motivo, consideramos ter as <i>funcionalidades que realmente precisa!</i> Sem inúmeras
-                            opções e configurações que não vai precisar. No entanto, ouvimos sempre os nossos clientes e
-                            todas as funcionalidades que possam fazer sentido, nós implementámos.</p>
-                        <ul class="icon-tik-list row">
-                            <li class="col-md-6">
-                                <p>Gestão de Clientes</p>
-                            </li>
-                            <li class="col-md-6">
-                                <p>Gestão de Serviços</p>
-                            </li>
-                            <li class="col-md-6">
-                                <p>Gestão de Orçamentos</p>
-                            </li>
-                            <li class="col-md-6">
-                                <p>Módulo de Relatórios.</p>
-                            </li>
-                        </ul>
-                    </div>
+    <section class="sec" id="como-funciona">
+        <div class="wrap">
+            <div class="sec-head center">
+                <span class="eyebrow">Como funciona</span>
+                <h2>A funcionar em 3 passos</h2>
+            </div>
+            <div class="steps">
+                <div class="step reveal">
+                    <h3>Crie a sua conta</h3>
+                    <p>Indique os seus serviços, a duração de cada um e o seu horário de trabalho.</p>
+                </div>
+                <div class="step reveal">
+                    <h3>Partilhe o seu link</h3>
+                    <p>Coloque-o nas redes sociais, no perfil do Google ou envie-o aos clientes por mensagem.</p>
+                </div>
+                <div class="step reveal">
+                    <h3>Receba marcações</h3>
+                    <p>Os clientes marcam sozinhos e recebem os lembretes. Você só tem de aparecer.</p>
                 </div>
             </div>
         </div>
-        <div class="left-sided-full-image">
-            <figure><img src="{{global_asset('website/media/img/funcionalidades.png')}}" alt=""></figure>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- ==============================================
-**Generate Forms**
-=================================================== -->
-<section class="generate-forms padding-lg">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <h2>Múltiplos módulos</h2>
-                <p>Com os módulos para gestão de clientes, assistências, orçamentos, fornecedores externos entre outros,
-                    o Assistgest permite-lhe ter uma gestão mais completa e organizada do seu negócio.</p>
+    <section class="sec alt" id="funcionalidades">
+        <div class="wrap">
+            <div class="sec-head center">
+                <span class="eyebrow">Funcionalidades</span>
+                <h2>Tudo o que precisa para gerir marcações</h2>
+                <p>Menos tempo ao telefone, menos faltas e uma agenda que se organiza sozinha.</p>
             </div>
-        </div>
-    </div>
-    <div class="custom-opacity">
-        <div id="owl-career" class="owl-carousel">
-            <div class="item">
-                <figure><img src="{{global_asset('website/media/img/modulo_assistencias.jpg')}}" alt=""></figure>
-            </div>
-            <div class="item">
-                <figure><img src="{{global_asset('website/media/img/modulo_estatisticas.jpg')}}" alt=""></figure>
-            </div>
-            <div class="item">
-                <figure><img src="{{global_asset('website/media/img/modulo_calendario.jpg')}}" alt=""></figure>
-            </div>
-        </div>
-        <div class="keyboard">
-            <figure><img src="{{global_asset('website/media/img/key-board-mouse.png')}}" class="img-fluid"
-                         alt="Assistgest"
-                         title="Assistgest"></figure>
-        </div>
-        <div class="frame">
-            <figure><img src="{{global_asset('website/theme/images/slider-frame.png')}}" class="img-fluid" alt="">
-            </figure>
-        </div>
-    </div>
-</section>
-
-<!-- ==============================================
-**Provide Features**
-=================================================== -->
-<section class="provide-features">
-    <div class="sided-item-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="content-area padding-lg">
-                        <h2>Algumas das nossas funcionalidades!</h2>
-                        <ul class="row features-listing">
-                            <li class="col-md-6"><span class="icon"><img
-                                            src="{{global_asset('website/media/img/assistgest-historico.png')}}"
-                                            alt="Assistgest Histórico" title="Assistgest Histórico"></span>
-                                <h3>Histórico</h3>
-                                <p>Conseguirá rapidamente ter acesso ao histórico do cliente e do equipamento e, dessa
-                                    forma, prestar um atendimento ao cliente de excelência!</p>
-                            </li>
-                            <li class="col-md-6"><span class="icon"><img
-                                            src="{{global_asset('website/media/img/assistgest-clientes.png')}}"
-                                            alt="Assistgest Clientes" title="Assistgest Clientes"></span>
-                                <h3>Gestão de Clientes</h3>
-                                <p>Efectue a gestão dos seus clientes de forma informada. Obtenha de forma rápida e
-                                    simples todas as assistências que determinado cliente teve como também as
-                                    informações relevantes sobre o mesmo.</p>
-                            </li>
-                            <li class="col-md-6"><span class="icon"><img
-                                            src="{{global_asset('website/media/img/assistgest-estatisticas.png')}}"
-                                            alt="Assistgest Estatísticas" title="Assistgest Estatísticas"></span>
-                                <h3>Estatísticas</h3>
-                                <p>Verifique em tempo real a progressão que tem nas assistências, melhores clientes e
-                                    produtos / serviços mais vendidos. Tome decisões baseadas em números e não em
-                                    percepções.</p>
-                            </li>
-                            <li class="col-md-6"><span class="icon"><img
-                                            src="{{global_asset('website/media/img/assistgest-calendario.png')}}"
-                                            alt="Assisgest Calendário" title="Assisgest Calendário"></span>
-                                <h3>Calendário</h3>
-                                <p>Com o módulo calendário será possível agendar eventos ou assistências que podem (ou
-                                    não) estar associadas a um técnico.</p>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="grid-3">
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">🕐</span>
+                    <h3>Marcações online 24 horas</h3>
+                    <p>Os clientes marcam sozinhos, a qualquer hora, mesmo com a porta fechada. Só aparecem os horários realmente livres.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">🔔</span>
+                    <h3>Lembretes automáticos</h3>
+                    <p>Confirmação no momento da marcação e lembrete antes da hora, por SMS e email. Menos esquecimentos, menos horas vazias.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">🔗</span>
+                    <h3>A sua página de marcações</h3>
+                    <p>Um link com o nome do seu negócio e os seus serviços, para pôr no Instagram, no Facebook, no Google ou no seu site.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">📅</span>
+                    <h3>Agenda clara</h3>
+                    <p>Vista do dia, da semana ou do mês. Bloqueie horários, mude marcações e veja tudo de relance, no computador ou no telemóvel.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">👥</span>
+                    <h3>Vários profissionais</h3>
+                    <p>Cada pessoa da equipa com a sua agenda, serviços e horários. O cliente escolhe com quem quer marcar, sem sobreposições.</p>
+                </div>
+                <div class="card reveal">
+                    <span class="ico" aria-hidden="true">🗂️</span>
+                    <h3>Ficha de cada cliente</h3>
+                    <p>Contactos, histórico de marcações e notas num só sítio. Encontre qualquer cliente em segundos.</p>
                 </div>
             </div>
         </div>
-        <div class="right-sided-full-image">
-            <figure><img src="{{global_asset('website/media/img/calendario_assistgest.png')}}"
-                         alt="Assistgest - Calendário"
-                         title="Assistgest - Calendário"></figure>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- ==============================================
-**Latest Stories**
-=================================================== -->
-<section class="latest-stories faq-sec padding-lg white-bg">
-    <div class="container">
-        <div class="row justify-content-center head-block">
-            <div class="col-md-10"><span>FAQ</span>
+    <section class="sec" id="beta">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Versão beta</span>
+                <h2>Porque aderir à beta</h2>
+                <p>Estamos a abrir a plataforma aos primeiros negócios. O essencial já funciona e está a ser usado no dia a dia; ainda estamos a afinar detalhes.</p>
+            </div>
+            <div class="grid-2">
+                <div class="card reveal">
+                    <h3>Contacto direto com a equipa</h3>
+                    <p>Fala com quem desenvolve a plataforma, não com um robô. Se algo não correr bem, respondemos depressa.</p>
+                </div>
+                <div class="card reveal">
+                    <h3>A sua opinião conta</h3>
+                    <p>As sugestões de quem usa decidem as próximas funcionalidades. Entrar agora é ajudar a construir a ferramenta à medida do seu negócio.</p>
+                </div>
+                <div class="card reveal">
+                    <h3>Pronto em minutos</h3>
+                    <p>Sem instalações nem conhecimentos técnicos. Configure os serviços e o horário e comece a partilhar o seu link no mesmo dia.</p>
+                </div>
+                <div class="card reveal">
+                    <h3>Os dados são seus</h3>
+                    <p>Alojados na Europa, conforme o RGPD, e nunca partilhados com terceiros.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec" style="padding: 40px 0; border-top: 1px solid var(--line)">
+        <div class="wrap">
+            <div class="assure">
+                <span>Conformidade RGPD</span>
+                <span class="s2">Dados alojados na UE</span>
+                <span class="s3">Feito em Portugal</span>
+                <span class="s4">Exporte os seus dados quando quiser</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec alt" id="perguntas">
+        <div class="wrap">
+            <div class="sec-head center">
+                <span class="eyebrow">Perguntas</span>
                 <h2>Perguntas frequentes</h2>
             </div>
-        </div>
-        <ul class="row">
-            <li class="col-md-6">
-                <h3>Têm algum plano gratuito?</h3>
-                <p>Sim. Temos um plano gratuito que permite a utilização do software na sua plenitude, no entanto este
-                    plano apenas permite criar 10 assistências por mês.</p>
-            </li>
-            <li class="col-md-6">
-                <h3>Qual é a fidelização obrigatória?</h3>
-                <p>Não temos fidelização obrigatória, pode alterar ou cancelar a sua subscrição a qualquer momento.</p>
-            </li>
-            <li class="col-md-6">
-                <h3>Tenho que instalar no meu computador?</h3>
-                <p>O Assistgest é um software SaaS, isto é, é um software que está alojado em servidores web e que não
-                    necessita de instalação num computador. </p>
-            </li>
-            <li class="col-md-6">
-                <h3>Posso utilizar no meu telemóvel?</h3>
-                <p>Sim, como o software é executado num servidor web, desde que tenha ligação à Internet conseguirá
-                    aceder ao software e efectuar a gestão de todos os módulos.</p>
-            </li>
-        </ul>
-    </div>
-</section>
---}}
-{{--
-<!-- ==============================================
-**Customers reviews**
-=================================================== -->
-<section class="client-speak carousel3 padding-lg">
-    <div class="container">
-        <div class="row justify-content-center head-block">
-            <div class="col-md-10"><span>Testemunhos</span>
-                <h2>Melhor do que as nossas palavras,<br>
-                    mostramos as opiniões dos nossos clientes</h2>
-                <p class="hidden-xs">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since beenLorem Ipsum is simply dummy</p>
+            <div class="faq">
+                <details>
+                    <summary>O que é a Agenda Online?</summary>
+                    <p>É um software de marcações online. Os seus clientes marcam sozinhos através de um link, recebem confirmação e lembrete automáticos, e você vê tudo numa só agenda.</p>
+                </details>
+                <details>
+                    <summary>Os meus clientes precisam de instalar alguma aplicação?</summary>
+                    <p>Não. Marcam diretamente no browser do telemóvel ou do computador, a partir do seu link, sem criar conta nem instalar nada.</p>
+                </details>
+                <details>
+                    <summary>Funciona para uma equipa com vários profissionais?</summary>
+                    <p>Sim. Cada profissional tem a sua agenda, os seus serviços e os seus horários, e o cliente escolhe com quem quer marcar.</p>
+                </details>
+                <details>
+                    <summary>Posso continuar a registar as marcações feitas por telefone?</summary>
+                    <p>Sim. As marcações feitas ao balcão ou por telefone entram na mesma agenda, e o cliente recebe a confirmação e o lembrete na mesma.</p>
+                </details>
+                <details>
+                    <summary>Onde ficam guardados os dados?</summary>
+                    <p>Em servidores na Europa, tratados de acordo com o RGPD. Os dados dos seus clientes são seus e nunca são partilhados com terceiros.</p>
+                </details>
+                <details>
+                    <summary>Quando posso criar a minha conta?</summary>
+                    <p>As inscrições abrem em breve. Se quiser ser dos primeiros, envie-nos uma mensagem pelo formulário de contacto e avisamos assim que puder criar a sua conta.</p>
+                </details>
+                <details>
+                    <summary>O que significa estar em beta?</summary>
+                    <p>O essencial já funciona e está a ser usado no dia a dia. Ainda estamos a acrescentar funcionalidades e a afinar detalhes, e o feedback de quem usa decide o que fazemos a seguir.</p>
+                </details>
             </div>
         </div>
-        <ul class="speak-listing opt3 owl-carousel">
-            <li>
-                <div class="inner">
-                    <figure><img src="{{global_asset('website/theme/images/testimonial-thumb1.jpg')}}"
-                                 class="img-fluid rounded-circle" alt=""> <span
-                            class="icon-quote"></span></figure>
-                    <div class="cnt-right">
-                        <div class="client-detail">
-                            <h4>Marco</h4>
-                            <span class="designation">iMuda</span></div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and simply dummy text of the typesetting
-                            industry. simply dummy text of theLorem Ipsum hasdummy text of the typesetting.</p>
+    </section>
+
+    <section class="sec" id="contactos">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Contactos</span>
+                <h2>Fale connosco</h2>
+                <p>Dúvidas sobre a plataforma, ajuda para começar ou uma sugestão para a beta. Respondemos por email.</p>
+            </div>
+            <div class="contact-grid">
+                <div>
+                    <div class="card" style="margin-bottom: 18px">
+                        <h3>✉️ Email</h3>
+                        <p>
+                            <a href="mailto:agendaonline@bitsis.pt"><b>agendaonline@bitsis.pt</b></a>
+                        </p>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-            </li>
-            <li>
-                <div class="inner">
-                    <figure><img src="{{global_asset('website/theme/images/testimonial-thumb2.jpg')}}"
-                                 class="img-fluid rounded-circle" alt=""> <span
-                            class="icon-quote"></span></figure>
-                    <div class="cnt-right">
-                        <div class="client-detail">
-                            <h4>Aleksandar</h4>
-                            <span class="designation">Art Director</span></div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and simply dummy text of the typesetting
-                            industry. simply dummy text of theLorem Ipsum hasdummy text of the typesetting.</p>
+                    <div class="card">
+                        <h3>🚀 Inscrições em breve</h3>
+                        <p>Quer ser dos primeiros a usar a Agenda Online? Envie-nos uma mensagem e avisamos assim que puder criar a sua conta.</p>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
-            </li>
-            <li>
-                <div class="inner">
-                    <figure><img src="{{global_asset('website/theme/images/testimonial-thumb3.jpg')}}"
-                                 class="img-fluid rounded-circle" alt=""> <span
-                            class="icon-quote"></span></figure>
-                    <div class="cnt-right">
-                        <div class="client-detail">
-                            <h4>John Nikcevic</h4>
-                            <span class="designation">Creative Director</span></div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and simply dummy text of the typesetting
-                            industry. simply dummy text of theLorem Ipsum hasdummy text of the typesetting.</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </li>
-            <li>
-                <div class="inner">
-                    <figure><img src="{{global_asset('website/theme/images/testimonial-thumb1.jpg')}}"
-                                 class="img-fluid rounded-circle" alt=""> <span
-                            class="icon-quote"></span></figure>
-                    <div class="cnt-right">
-                        <div class="client-detail">
-                            <h4>Julia Renvoye</h4>
-                            <span class="designation">Softwear Engineer</span></div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and simply dummy text of the typesetting
-                            industry. simply dummy text of theLorem Ipsum hasdummy text of the typesetting.</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </li>
-            <li>
-                <div class="inner">
-                    <figure><img src="{{global_asset('website/theme/images/testimonial-thumb2.jpg')}}"
-                                 class="img-fluid rounded-circle" alt=""> <span
-                            class="icon-quote"></span></figure>
-                    <div class="cnt-right">
-                        <div class="client-detail">
-                            <h4>Aleksandar</h4>
-                            <span class="designation">Art Director</span></div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and simply dummy text of the typesetting
-                            industry. simply dummy text of theLorem Ipsum hasdummy text of the typesetting.</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </li>
-            <li>
-                <div class="inner">
-                    <figure><img src="{{global_asset('website/theme/images/testimonial-thumb3.jpg')}}"
-                                 class="img-fluid rounded-circle" alt=""> <span
-                            class="icon-quote"></span></figure>
-                    <div class="cnt-right">
-                        <div class="client-detail">
-                            <h4>John Nikcevic</h4>
-                            <span class="designation">Creative Director</span></div>
-                        <p>Lorem Ipsum is simply dummy text of the printing and simply dummy text of the typesetting
-                            industry. simply dummy text of theLorem Ipsum hasdummy text of the typesetting.</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </li>
-        </ul>
+                <form class="card form" id="contact-form" action="https://agendaonline.pt/contacto" method="post">
+                    <h3>Envie-nos uma mensagem</h3>
+                    <label>Nome<input type="text" name="nome" autocomplete="name" required /></label>
+                    <label>Email<input type="email" name="email" autocomplete="email" required /></label>
+                    <label>Mensagem<textarea name="mensagem" rows="5" required></textarea></label>
+                    <label class="hp" aria-hidden="true">Não preencher<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+                    <label class="consent"
+                    ><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para responder a este pedido, nos termos da <a href="privacidade/">Política de Privacidade</a>.</span></label
+                    >
+                    <button class="btn btn-primary" type="submit">Enviar mensagem</button>
+                    <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="wrap">
+            <h2>Deixe os clientes marcarem sozinhos.</h2>
+            <p>As inscrições abrem em breve. Quer ser avisado? <a href="#contactos" style="color: #fff; text-decoration: underline">Deixe-nos uma mensagem</a>.</p>
+            <span class="btn btn-soon btn-lg" aria-disabled="true">Em breve</span>
+            <span class="btn-note">Configuração em minutos · Suporte em português</span>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="wrap">
+        <div class="foot-grid">
+            <div class="foot-brand">
+                <picture
+                ><source srcset="{{ asset('website/img/logo-dark.webp') }}" type="image/webp" />
+                    <img src="{{ asset('website/img/logo-dark.png') }}" alt="Agenda Online" width="153" height="38" loading="lazy"
+                    /></picture>
+                <p>Software de marcações online para salões, clínicas e negócios que trabalham por horário.</p>
+            </div>
+            <div>
+                <h4>Produto</h4>
+                <ul>
+                    <li><a href="#funcionalidades">Funcionalidades</a></li>
+                    <li><a href="#para-quem">Para quem</a></li>
+                    <li><a href="#como-funciona">Como funciona</a></li>
+                    <li><a href="#perguntas">Perguntas frequentes</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Sobre Nós</h4>
+                <ul>
+                    <li><a href="#contactos">Contactos</a></li>
+                    <li><a href="termos-e-condicoes">Termos e Condições</a></li>
+                    <li><a href="politica-de-privacidade">Política de Privacidade</a></li>
+                    <li><a href="https://www.livroreclamacoes.pt" rel="noopener">Livro de Reclamações</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Conta</h4>
+                <ul>
+                    <li>Criar conta <span class="soon-tag">em breve</span></li>
+                    <li><a href="mailto:agendaonline@bitsis.pt">agendaonline@bitsis.pt</a></li>
+                </ul>
+                <ul class="versions" style="margin-top: 1rem">
+                    <li><b>Versão Beta disponível</b><span>Outubro 2026</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="foot-bottom">
+            <span>© 2026 Agenda Online · Feito em Portugal</span>
+            <span>Dados alojados na UE · Conformidade RGPD</span>
+        </div>
     </div>
-</section>
---}}{{--
+</footer>
 
+<script>
+    (function () {
+        document.documentElement.classList.remove("no-js");
+        var nav = document.getElementById("nav"),
+            t = nav.querySelector(".nav-toggle");
+        t.addEventListener("click", function () {
+            var o = nav.classList.toggle("open");
+            t.setAttribute("aria-expanded", o);
+            t.setAttribute("aria-label", o ? "Fechar menu" : "Abrir menu");
+            t.textContent = o ? "✕" : "☰";
+        });
+        nav.querySelectorAll(".nav-links a").forEach(function (a) {
+            a.addEventListener("click", function () {
+                nav.classList.remove("open");
+                t.setAttribute("aria-expanded", "false");
+                t.textContent = "☰";
+            });
+        });
+        var els = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+            var io = new IntersectionObserver(
+                function (es) {
+                    es.forEach(function (e) {
+                        if (e.isIntersecting) {
+                            e.target.classList.add("in");
+                            io.unobserve(e.target);
+                        }
+                    });
+                },
+                { threshold: 0.12 },
+            );
+            els.forEach(function (el) {
+                io.observe(el);
+            });
+        } else {
+            els.forEach(function (el) {
+                el.classList.add("in");
+            });
+        }
+    })();
+</script>
+<script>
+    (function () {
+        // Demo de marcação
+        var slots = document.querySelectorAll("#slots .slot:not(:disabled)"),
+            btn = document.getElementById("confirmar"),
+            sms = document.getElementById("sms"),
+            txt = document.getElementById("sms-text"),
+            reset = document.getElementById("reset"),
+            h = null;
+        slots.forEach(function (s) {
+            s.addEventListener("click", function () {
+                slots.forEach(function (o) {
+                    o.setAttribute("aria-pressed", "false");
+                });
+                s.setAttribute("aria-pressed", "true");
+                h = s.textContent.trim();
+                btn.disabled = false;
+                btn.textContent = "Marcar às " + h;
+            });
+        });
+        btn.addEventListener("click", function () {
+            if (!h) return;
+            txt.textContent = "Marcação confirmada no Salão Aurora: terça-feira às " + h + ". Enviamos-lhe um lembrete na véspera.";
+            sms.classList.add("show");
+            reset.classList.add("show");
+            btn.disabled = true;
+            btn.textContent = "Marcado às " + h;
+            slots.forEach(function (o) {
+                o.disabled = true;
+            });
+        });
+        reset.addEventListener("click", function () {
+            h = null;
+            sms.classList.remove("show");
+            reset.classList.remove("show");
+            slots.forEach(function (o) {
+                o.disabled = false;
+                o.setAttribute("aria-pressed", "false");
+            });
+            btn.disabled = true;
+            btn.textContent = "Escolha um horário";
+        });
 
-@include('front.website.includes.footer')
+        // Formulário de contacto (envio sem recarregar a página; sem JS, faz um POST normal)
+        var f = document.getElementById("contact-form"),
+            m = document.getElementById("form-msg");
+        if (window.fetch && window.FormData) {
+            f.addEventListener("submit", function (e) {
+                e.preventDefault();
+                var b = f.querySelector("button[type=submit]");
+                b.disabled = true;
+                b.textContent = "A enviar…";
+                m.className = "form-msg";
+                fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } })
+                    .then(function (r) {
+                        if (!r.ok) throw r;
+                        f.reset();
+                        m.textContent = "Obrigado! Recebemos a sua mensagem e respondemos em breve.";
+                        m.className = "form-msg ok";
+                    })
+                    .catch(function () {
+                        m.innerHTML = 'Não foi possível enviar. Escreva-nos para <a href="mailto:agendaonline@bitsis.pt">agendaonline@bitsis.pt</a>.';
+                        m.className = "form-msg err";
+                    })
+                    .then(function () {
+                        b.disabled = false;
+                        b.textContent = "Enviar mensagem";
+                    });
+            });
+        }
+    })();
+</script>
 </body>
 </html>
---}}
