@@ -26,7 +26,6 @@
             @endforeach
         </select>
     </label>
-
     <label class="hp" aria-hidden="true">Não preencher<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
     <label class="consent"><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para me contactarem sobre a beta, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label>
 
