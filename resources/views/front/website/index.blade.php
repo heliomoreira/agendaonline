@@ -37,6 +37,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('website/beta/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('website/beta/forms.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website/beta/hero.css') }}" />
 
     @verbatim
         <script type="application/ld+json">
@@ -166,7 +167,7 @@
                 <li><a href="#contactos">Contactos</a></li>
             </ul>
             <div class="nav-end">
-                <a class="btn btn-primary" href="#inscricao-beta">Pedir acesso antecipado</a>
+                <a class="btn btn-primary" href="#inscricao-beta">Inscrever na beta</a>
             </div>
         </div>
         <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
@@ -174,40 +175,112 @@
 </nav>
 
 <main id="conteudo">
-    <header class="hero">
-        <div class="wrap hero-grid">
-            <div>
+    <header class="hero hx-hero">
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+            <defs>
+                <symbol id="hx-i-dash" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+                <symbol id="hx-i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+                <symbol id="hx-i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+                <symbol id="hx-i-layers" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+                <symbol id="hx-i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+                <symbol id="hx-i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+                <symbol id="hx-i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+                <symbol id="hx-i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+                <symbol id="hx-i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></symbol>
+                <symbol id="hx-i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+                <symbol id="hx-i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+            </defs>
+        </svg>
+
+        <div class="wrap">
+            <div class="hx-intro">
                 <span class="eyebrow">Software de marcações online</span>
                 <h1>Marcações online para o seu negócio, 24 horas por dia.</h1>
                 <p class="lead">Os seus clientes escolhem o serviço e o horário a partir de um link. A Agenda Online confirma, envia o lembrete e põe tudo na sua agenda, sem chamadas.</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary btn-lg" href="#inscricao-beta">Pedir acesso antecipado</a>
+                    <a class="btn btn-primary btn-lg" href="#inscricao-beta">Inscrever na beta</a>
                     <a class="btn btn-outline btn-lg" href="#como-funciona">Ver como funciona</a>
                 </div>
                 <span class="btn-note">Configuração em minutos · Dados na Europa · Suporte em português</span>
             </div>
 
-            <div class="ticket" role="group" aria-label="Exemplo de marcação online">
-                <div class="ticket-head">
-                    <div class="avatar" aria-hidden="true">SA</div>
-                    <div><b>Salão Aurora</b><span>Terça-feira, escolha um horário</span></div>
+            <div class="hx-stage">
+                <div class="hx-browser" aria-hidden="true">
+                    <div class="hx-chrome"><i></i><i></i><i></i><span>agendaonline.pt</span></div>
+                    <div class="hx-app">
+                        <aside class="hx-side">
+                            <img src="{{ asset('website/beta/logo-dark.png') }}" alt="" width="153" height="38" loading="lazy" />
+                            <span class="hx-badge">Versão Beta</span>
+                            <ul>
+                                <li class="on"><svg><use href="#hx-i-dash"/></svg>Dashboard</li>
+                                <li class="hx-sec">MÓDULOS</li>
+                                <li><svg><use href="#hx-i-users"/></svg>Clientes</li>
+                                <li><svg><use href="#hx-i-cal"/></svg>Marcações</li>
+                                <li><svg><use href="#hx-i-layers"/></svg>Serviços</li>
+                                <li><svg><use href="#hx-i-user"/></svg>Profissionais</li>
+                                <li class="hx-sec">ADMIN</li>
+                                <li><svg><use href="#hx-i-bell"/></svg>Notificações</li>
+                                <li><svg><use href="#hx-i-chart"/></svg>Relatórios</li>
+                                <li><svg><use href="#hx-i-msg"/></svg>SMS</li>
+                                <li><svg><use href="#hx-i-cog"/></svg>Configurações</li>
+                            </ul>
+                        </aside>
+                        <div class="hx-main">
+                            <div class="hx-top"><span class="hx-av">MS</span></div>
+                            <div class="hx-head">
+                                <div><b>Dashboard</b><small>Segunda, 19 de outubro de 2026</small></div>
+                                <div class="hx-btns"><span class="hx-b1"><svg><use href="#hx-i-plus"/></svg>Nova marcação</span><span class="hx-b2"><svg><use href="#hx-i-cal"/></svg>Ver agenda</span></div>
+                            </div>
+                            <div class="hx-stats">
+                                <div class="hx-stat"><span class="hx-ico hx-c1"><svg><use href="#hx-i-cal"/></svg></span><em class="hx-c1">Hoje</em><small>Serviços de hoje</small><b id="hx-hoje">9</b></div>
+                                <div class="hx-stat"><span class="hx-ico hx-c2"><svg><use href="#hx-i-cal"/></svg></span><em class="hx-c2">Semana</em><small>Serviços esta semana</small><b id="hx-semana">47</b></div>
+                                <div class="hx-stat"><span class="hx-ico hx-c3"><svg><use href="#hx-i-cal"/></svg></span><em class="hx-c3">Mês</em><small>Serviços este mês</small><b id="hx-mes">186</b></div>
+                            </div>
+                            <div class="hx-card">
+                                <div class="hx-card-h"><b><svg><use href="#hx-i-cal"/></svg>Próximos serviços</b><span id="hx-count">4 agendados</span></div>
+                                <div class="hx-row hx-thead"><span>SERVIÇO</span><span>DATA</span><span>HORÁRIO</span><span>PROFISSIONAL</span></div>
+                                <div id="hx-rows">
+                                    <div class="hx-row"><span>Barba e contorno</span><span>Hoje</span><span>14:00</span><span class="hx-pro"><i style="--c:#0ea5e9"></i>Rui P.</span></div>
+                                    <div class="hx-row"><span>Manicure gel</span><span>Hoje</span><span>15:00</span><span class="hx-pro"><i style="--c:#f59e0b"></i>Inês C.</span></div>
+                                    <div class="hx-row"><span>Coloração</span><span>Hoje</span><span>16:30</span><span class="hx-pro"><i style="--c:#7c3aed"></i>Marta S.</span></div>
+                                    <div class="hx-row"><span>Corte de homem</span><span>Amanhã</span><span>09:30</span><span class="hx-pro"><i style="--c:#0ea5e9"></i>Rui P.</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="ticket-label">Serviço</p>
-                <div class="ticket-row"><span>Corte e brushing</span><b>45 min</b></div>
-                <p class="ticket-label">Horários livres</p>
-                <div class="slots" id="slots">
-                    <button class="slot" type="button" disabled aria-label="09:00, ocupado">09:00</button>
-                    <button class="slot" type="button" aria-pressed="false">10:00</button>
-                    <button class="slot" type="button" aria-pressed="false">11:30</button>
-                    <button class="slot" type="button" disabled aria-label="14:00, ocupado">14:00</button>
-                    <button class="slot" type="button" aria-pressed="false">15:30</button>
-                    <button class="slot" type="button" aria-pressed="false">17:00</button>
+
+                <div class="hx-toast" aria-hidden="true">
+                    <span class="hx-toast-ico"><svg><use href="#hx-i-check"/></svg></span>
+                    <div><b>Lembrete enviado por SMS</b><small>Ana Costa, amanhã às 09:30</small></div>
                 </div>
-                <button class="btn btn-primary" id="confirmar" type="button" disabled>Escolha um horário</button>
-                <div class="ticket-sms" id="sms" role="status" aria-live="polite"><span aria-hidden="true">💬</span><span id="sms-text"></span></div>
-                <button class="ticket-reset" id="reset" type="button">Experimentar outra vez</button>
-                <p class="ticket-cap">Experimente: é isto que os seus clientes veem.</p>
+
+                <div class="hx-phone">
+                    <div class="hx-phone-screen">
+                        <div class="ticket" role="group" aria-label="Exemplo de marcação online">
+                            <div class="ticket-head">
+                                <div class="avatar" aria-hidden="true">SA</div>
+                                <div><b>Salão Aurora</b><span>Terça-feira, escolha um horário</span></div>
+                            </div>
+                            <p class="ticket-label">Serviço</p>
+                            <div class="ticket-row"><span>Corte e brushing</span><b>45 min</b></div>
+                            <p class="ticket-label">Horários livres</p>
+                            <div class="slots" id="slots">
+                                <button class="slot" type="button" disabled aria-label="09:00, ocupado">09:00</button>
+                                <button class="slot" type="button" aria-pressed="false">10:00</button>
+                                <button class="slot" type="button" aria-pressed="false">11:30</button>
+                                <button class="slot" type="button" disabled aria-label="14:00, ocupado">14:00</button>
+                                <button class="slot" type="button" aria-pressed="false">15:30</button>
+                                <button class="slot" type="button" aria-pressed="false">17:00</button>
+                            </div>
+                            <button class="btn btn-primary" id="confirmar" type="button" disabled>Escolha um horário</button>
+                            <div class="ticket-sms" id="sms" role="status" aria-live="polite"><span aria-hidden="true">💬</span><span id="sms-text"></span></div>
+                            <button class="ticket-reset" id="reset" type="button">Experimentar outra vez</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <p class="hx-cap">Experimente: escolha um horário no telemóvel e veja a marcação entrar na agenda.</p>
         </div>
     </header>
 
@@ -216,6 +289,7 @@
             <span><b>Marcações 24h</b> por dia, 7 dias por semana</span>
             <span><b>Lembretes</b> por SMS e email</span>
             <span>Dados alojados <b>na UE</b></span>
+            <span>Suporte <b>em português</b></span>
         </div>
     </div>
 
@@ -233,7 +307,7 @@
                 <li>Dois clientes marcados à mesma hora porque ninguém viu a agenda do colega.</li>
             </ul>
             <p style="margin-top: 1.6rem; font-size: 1.1rem"><b style="color: var(--ink)">A Agenda Online resolve tudo isto.</b></p>
-            <p style="margin-top: 1rem"><a class="btn btn-primary" href="#inscricao-beta">Pedir acesso antecipado</a></p>
+            <p style="margin-top: 1rem"><a class="btn btn-primary" href="#inscricao-beta">Inscrever na beta</a></p>
         </div>
     </section>
 
@@ -462,7 +536,7 @@
         <div class="wrap">
             <h2>Deixe os clientes marcarem sozinhos.</h2>
             <p>As inscrições na beta estão abertas. Inscreva-se e avisamos assim que puder criar a sua conta.</p>
-            <a class="btn btn-primary btn-lg" href="#inscricao-beta">Pedir acesso antecipado</a>
+            <a class="btn btn-primary btn-lg" href="#inscricao-beta">Inscrever na beta</a>
             <span class="btn-note">Configuração em minutos · Suporte em português</span>
         </div>
     </section>
@@ -499,7 +573,7 @@
             <div>
                 <h4>Conta</h4>
                 <ul>
-                    <li><a href="#inscricao-beta">Pedir acesso antecipado</a></li>
+                    <li><a href="#inscricao-beta">Inscrever na beta</a></li>
                     <li><a href="mailto:agendaonline@bitsis.pt">agendaonline@bitsis.pt</a></li>
                 </ul>
                 <ul class="versions" style="margin-top: 1rem">
@@ -588,6 +662,7 @@
             slots.forEach(function (o) {
                 o.disabled = true;
             });
+            entrarNaAgenda(h);
         });
         reset.addEventListener("click", function () {
             h = null;
@@ -599,7 +674,50 @@
             });
             btn.disabled = true;
             btn.textContent = "Escolha um horário";
+            sairDaAgenda();
         });
+
+        // A marcação feita no telemóvel aparece no dashboard
+        var rows = document.getElementById("hx-rows"),
+            contadores = { semana: document.getElementById("hx-semana"), mes: document.getElementById("hx-mes") },
+            base = { semana: 47, mes: 186 },
+            total = document.getElementById("hx-count"),
+            nova = null;
+
+        function contar(extra) {
+            ["semana", "mes"].forEach(function (k) {
+                contadores[k].textContent = base[k] + extra;
+                contadores[k].classList.toggle("bump", extra > 0);
+            });
+            total.textContent = 4 + extra + " agendados";
+        }
+
+        function entrarNaAgenda(hora) {
+            if (!rows) return;
+            sairDaAgenda();
+            nova = document.createElement("div");
+            nova.className = "hx-row is-new";
+            [["Corte e brushing"], ["Amanhã"], [hora]].forEach(function (c) {
+                var s = document.createElement("span");
+                s.textContent = c[0];
+                nova.appendChild(s);
+            });
+            var pro = document.createElement("span"),
+                dot = document.createElement("i");
+            pro.className = "hx-pro";
+            dot.style.setProperty("--c", "#7c3aed");
+            pro.appendChild(dot);
+            pro.appendChild(document.createTextNode("Marta S."));
+            nova.appendChild(pro);
+            rows.appendChild(nova);
+            contar(1);
+        }
+
+        function sairDaAgenda() {
+            if (nova && nova.parentNode) nova.parentNode.removeChild(nova);
+            nova = null;
+            if (rows) contar(0);
+        }
     })();
 </script>
 </body>

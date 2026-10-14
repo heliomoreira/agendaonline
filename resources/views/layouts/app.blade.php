@@ -616,14 +616,18 @@
                             </ul>
                         </li>--}}
                         <!--/ Notification -->
-
-                        <!-- User -->
+                        @php
+                            $names = explode(' ', trim(auth()->user()->name));
+                            $initials = mb_substr($names[0], 0, 1) . (count($names) > 1 ? mb_substr(end($names), 0, 1) : '');
+                        @endphp
+                            <!-- User -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);"
                                data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt
-                                         class="rounded-circle"/>
+                                <span class="avatar-initial rounded-circle bg-label-primary">
+                                    {{ mb_strtoupper($initials) }}
+                                </span>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -632,8 +636,9 @@
                                         <div class="d-flex align-items-center">
                                             <div class="flex-shrink-0 me-2">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{global_asset('theme/assets/img/avatars/1.png')}}" alt
-                                                         class="rounded-circle"/>
+                                                    <span class="avatar-initial rounded-circle bg-label-primary">
+                                                        {{ mb_strtoupper($initials) }}
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
