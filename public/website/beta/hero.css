@@ -37,9 +37,11 @@
     position: relative;
     max-width: 1080px;
     margin: 56px auto 0;
+    min-height: 538px;
 }
 
 .hx-browser {
+    margin-top: 40px;
     margin-right: 230px;
     border-radius: 14px;
     background: #fff;
@@ -380,44 +382,259 @@
     color: var(--hx-muted);
 }
 
-/* Telemóvel com a demo de marcação */
+/* Telemóvel com a demo de marcação (independente do style.css) */
 .hx-phone {
     position: absolute;
     right: 0;
-    top: 28px;
-    width: 292px;
-    padding: 10px;
-    border-radius: 40px;
+    top: 0;
+    width: 286px;
+    padding: 9px;
+    border-radius: 44px;
     background: var(--hx-navy);
     box-shadow:
         0 40px 80px -24px rgba(11, 18, 32, 0.5),
-        inset 0 0 0 2px var(--hx-navy-2);
+        inset 0 0 0 2px #2a3550;
 }
 .hx-phone::before {
     content: "";
     position: absolute;
-    top: 18px;
+    top: 19px;
     left: 50%;
-    width: 74px;
-    height: 18px;
-    margin-left: -37px;
+    width: 78px;
+    height: 22px;
+    margin-left: -39px;
     border-radius: 999px;
     background: var(--hx-navy);
-    z-index: 2;
+    z-index: 3;
 }
-.hx-phone-screen {
-    padding: 38px 4px 10px;
-    border-radius: 31px;
+.hx-screen {
+    position: relative;
+    height: 520px;
+    border-radius: 36px;
     background: #fff;
     overflow: hidden;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #2b3140;
+    text-align: left;
 }
-.hx-phone .ticket {
-    width: auto;
-    max-width: none;
-    margin: 0;
+.hx-screen svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.hx-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 26px 0;
+    height: 34px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.hx-status i {
+    width: 22px;
+    height: 10px;
+    border-radius: 3px;
+    border: 1.5px solid #2b3140;
+    box-shadow: inset 12px 0 0 #2b3140;
+}
+.hx-biz {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 14px 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--hx-line);
+}
+.hx-biz-av {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #7c3aed, #c026d3);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+}
+.hx-biz b {
+    display: block;
+    font-size: 14px;
+}
+.hx-biz small {
+    color: var(--hx-muted);
+    font-size: 11px;
+}
+.hx-book {
+    padding: 0 14px;
+}
+.hx-lbl {
+    margin: 12px 0 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+}
+.hx-svc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 11px;
+    border: 1.5px solid var(--hx-blue);
+    border-radius: 10px;
+    background: #f2f7ff;
+}
+.hx-svc b {
+    display: block;
+    font-size: 12.5px;
+}
+.hx-svc small {
+    color: var(--hx-muted);
+    font-size: 11px;
+}
+.hx-svc span {
+    font-weight: 700;
+}
+.hx-days {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+.hx-days span {
+    padding: 6px 0;
+    border-radius: 9px;
+    border: 1px solid var(--hx-line);
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+}
+.hx-days small {
+    display: block;
+    font-weight: 500;
+    font-size: 10px;
+    color: var(--hx-muted);
+}
+.hx-days .on {
+    border-color: var(--hx-blue);
+    background: var(--hx-blue);
+    color: #fff;
+}
+.hx-days .on small {
+    color: rgba(255, 255, 255, 0.8);
+}
+.hx-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+.hx-slot {
+    padding: 8px 0;
+    border: 1px solid #d5d9e1;
+    border-radius: 9px;
+    background: #fff;
+    font: inherit;
+    font-weight: 600;
+    color: #2b3140;
+    cursor: pointer;
+}
+.hx-slot:hover:not(:disabled) {
+    border-color: var(--hx-blue);
+    color: var(--hx-blue);
+}
+.hx-slot:disabled {
+    cursor: default;
+    color: #c3c8d2;
+    background: #f6f7f9;
+    text-decoration: line-through;
+}
+.hx-slot[aria-pressed="true"],
+.hx-slot[aria-pressed="true"]:disabled {
+    border-color: var(--hx-blue);
+    background: var(--hx-blue);
+    color: #fff;
+    text-decoration: none;
+}
+.hx-slot:focus-visible,
+.hx-cta:focus-visible,
+.hx-reset:focus-visible {
+    outline: 2px solid var(--hx-blue);
+    outline-offset: 2px;
+}
+.hx-cta {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 11px;
     border: 0;
-    box-shadow: none;
+    border-radius: 11px;
+    background: var(--hx-blue);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.hx-cta:disabled {
+    cursor: default;
+    background: #b8cff7;
+}
+.hx-reset {
+    display: none;
+    margin: 10px auto 0;
+    padding: 4px 8px;
+    border: 0;
+    background: none;
+    color: var(--hx-blue);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+.hx-reset.show {
+    display: block;
+}
+
+/* SMS de confirmação a descer do topo, como uma notificação do telemóvel */
+.hx-sms {
+    position: absolute;
+    top: 42px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+    display: flex;
+    gap: 9px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    background: rgba(245, 246, 248, 0.97);
+    box-shadow: 0 12px 30px -10px rgba(11, 18, 32, 0.35);
+    font-size: 11.5px;
+    opacity: 0;
+    transform: translateY(-140%);
+    transition:
+        transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+        opacity 0.3s;
+    pointer-events: none;
+}
+.hx-sms.show {
+    opacity: 1;
     transform: none;
+}
+.hx-sms-ico {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #22c55e;
+    color: #fff;
+}
+.hx-sms b {
+    display: block;
+    font-size: 12px;
 }
 
 .hx-cap {
@@ -449,7 +666,11 @@
     .hx-stage {
         margin-top: 40px;
     }
+    .hx-stage {
+        min-height: 0;
+    }
     .hx-browser {
+        margin-top: 0;
         margin-right: 0;
     }
     .hx-app {
@@ -498,6 +719,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .hx-sms {
+        transition: none;
+    }
     .hx-row.is-new {
         animation: none;
         background: #e6f0ff;

@@ -256,26 +256,38 @@
                 </div>
 
                 <div class="hx-phone">
-                    <div class="hx-phone-screen">
-                        <div class="ticket" role="group" aria-label="Exemplo de marcação online">
-                            <div class="ticket-head">
-                                <div class="avatar" aria-hidden="true">SA</div>
-                                <div><b>Salão Aurora</b><span>Terça-feira, escolha um horário</span></div>
+                    <div class="hx-screen">
+                        <div class="hx-status" aria-hidden="true"><span>9:41</span><i></i></div>
+                        <div class="hx-biz">
+                            <span class="hx-biz-av" aria-hidden="true">SA</span>
+                            <div><b>Salão Aurora</b><small>Cabeleireiro · Porto</small></div>
+                        </div>
+                        <div class="hx-book" role="group" aria-label="Exemplo de marcação online">
+                            <p class="hx-lbl">Serviço</p>
+                            <div class="hx-svc"><div><b>Corte e brushing</b><small>45 min com Marta S.</small></div><span>25 €</span></div>
+                            <p class="hx-lbl">Dia</p>
+                            <div class="hx-days" aria-hidden="true">
+                                <span><small>Seg</small>19</span>
+                                <span class="on"><small>Ter</small>20</span>
+                                <span><small>Qua</small>21</span>
+                                <span><small>Qui</small>22</span>
+                                <span><small>Sex</small>23</span>
                             </div>
-                            <p class="ticket-label">Serviço</p>
-                            <div class="ticket-row"><span>Corte e brushing</span><b>45 min</b></div>
-                            <p class="ticket-label">Horários livres</p>
-                            <div class="slots" id="slots">
-                                <button class="slot" type="button" disabled aria-label="09:00, ocupado">09:00</button>
-                                <button class="slot" type="button" aria-pressed="false">10:00</button>
-                                <button class="slot" type="button" aria-pressed="false">11:30</button>
-                                <button class="slot" type="button" disabled aria-label="14:00, ocupado">14:00</button>
-                                <button class="slot" type="button" aria-pressed="false">15:30</button>
-                                <button class="slot" type="button" aria-pressed="false">17:00</button>
+                            <p class="hx-lbl">Horários livres na terça-feira</p>
+                            <div class="hx-slots" id="slots">
+                                <button class="hx-slot" type="button" disabled aria-label="09:00, ocupado">09:00</button>
+                                <button class="hx-slot" type="button" aria-pressed="false">10:00</button>
+                                <button class="hx-slot" type="button" aria-pressed="false">11:30</button>
+                                <button class="hx-slot" type="button" disabled aria-label="14:00, ocupado">14:00</button>
+                                <button class="hx-slot" type="button" aria-pressed="false">15:30</button>
+                                <button class="hx-slot" type="button" aria-pressed="false">17:00</button>
                             </div>
-                            <button class="btn btn-primary" id="confirmar" type="button" disabled>Escolha um horário</button>
-                            <div class="ticket-sms" id="sms" role="status" aria-live="polite"><span aria-hidden="true">💬</span><span id="sms-text"></span></div>
-                            <button class="ticket-reset" id="reset" type="button">Experimentar outra vez</button>
+                            <button class="hx-cta" id="confirmar" type="button" disabled>Escolha um horário</button>
+                            <button class="hx-reset" id="reset" type="button">Experimentar outra vez</button>
+                        </div>
+                        <div class="hx-sms" id="sms" role="status" aria-live="polite">
+                            <span class="hx-sms-ico" aria-hidden="true"><svg><use href="#hx-i-msg"/></svg></span>
+                            <div><b>Salão Aurora</b><span id="sms-text"></span></div>
                         </div>
                     </div>
                 </div>
@@ -635,7 +647,7 @@
 <script>
     (function () {
         // Demo de marcação
-        var slots = document.querySelectorAll("#slots .slot:not(:disabled)"),
+        var slots = document.querySelectorAll("#slots .hx-slot:not(:disabled)"),
             btn = document.getElementById("confirmar"),
             sms = document.getElementById("sms"),
             txt = document.getElementById("sms-text"),
@@ -654,7 +666,7 @@
         });
         btn.addEventListener("click", function () {
             if (!h) return;
-            txt.textContent = "Marcação confirmada no Salão Aurora: terça-feira às " + h + ". Enviamos-lhe um lembrete na véspera.";
+            txt.textContent = "Marcação confirmada para terça-feira às " + h + ". Enviamos-lhe um lembrete na véspera.";
             sms.classList.add("show");
             reset.classList.add("show");
             btn.disabled = true;
