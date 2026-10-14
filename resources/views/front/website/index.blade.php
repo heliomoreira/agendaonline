@@ -29,9 +29,9 @@
     <meta name="twitter:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
     <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Peça acesso antecipado à versão beta da Agenda Online." />
     <meta name="twitter:image" content="{{ asset('website/og-image.png') }}" />
-    <link rel="icon" href="{{ asset('website/beta/favicon.ico') }}" sizes="32x32" />
-    <link rel="icon" href="{{ asset('website/beta/favicon.png') }}" type="image/png" />
-    <link rel="apple-touch-icon" href="{{ asset('website/beta/apple-touch-icon.png') }}" />
+    <link rel="icon" href="{{ asset('website/favicon.ico') }}" sizes="32x32" />
+    <link rel="icon" href="{{ asset('website/favicon.png') }}" type="image/png" />
+    <link rel="apple-touch-icon" href="{{ asset('website/apple-touch-icon.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -521,21 +521,21 @@
                         <p>Quer ser dos primeiros a usar a Agenda Online? <a href="#acesso-antecipado">Peça acesso antecipado</a> e avisamos por email assim que puder criar a sua conta.</p>
                     </div>
                 </div>
-                <form class="card form" id="contact-form" action="{{ route('website.contacto') }}" method="post" data-ajax data-error="Não foi possível enviar. Escreva-nos para agendaonline@bitsis.pt.">
+                <form class="card form" id="contact-form" action="{{ route('website.contact', [], false) }}" method="post" data-ajax data-error="Não foi possível enviar. Escreva-nos para agendaonline@bitsis.pt.">
                     @csrf
                     <h3>Envie-nos uma mensagem</h3>
-                    <label>Nome<input type="text" name="nome" value="{{ old('nome') }}" autocomplete="name" maxlength="120" required /></label>
+                    <label>Nome<input type="text" name="name" value="{{ old('name') }}" autocomplete="name" maxlength="120" required /></label>
                     <label>Email<input type="email" name="email" value="{{ old('email') }}" autocomplete="email" maxlength="190" required /></label>
-                    <label>Mensagem<textarea name="mensagem" rows="5" maxlength="5000" required>{{ old('mensagem') }}</textarea></label>
+                    <label>Mensagem<textarea name="message" rows="5" maxlength="5000" required>{{ old('message') }}</textarea></label>
                     <label class="hp" aria-hidden="true">Não preencher<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
                     <label class="consent"
-                    ><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para responder a este pedido, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label
+                    ><input type="checkbox" name="consent" required /><span>Aceito que os meus dados sejam usados para responder a este pedido, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label
                     >
                     <button class="btn btn-primary" type="submit">Enviar mensagem</button>
-                    @if (session('contacto_status'))
-                        <p class="form-msg ok" role="status" aria-live="polite">{{ session('contacto_status') }}</p>
-                    @elseif ($errors->contacto->any())
-                        <p class="form-msg err" role="status" aria-live="polite">{{ $errors->contacto->first() }}</p>
+                    @if (session('contact_status'))
+                        <p class="form-msg ok" role="status" aria-live="polite">{{ session('contact_status') }}</p>
+                    @elseif ($errors->contact->any())
+                        <p class="form-msg err" role="status" aria-live="polite">{{ $errors->contact->first() }}</p>
                     @else
                         <p class="form-msg" role="status" aria-live="polite"></p>
                     @endif
