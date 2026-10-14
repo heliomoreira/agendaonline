@@ -1,0 +1,27 @@
+/* Complemento ao style.css para os formulários de contacto e inscrição na beta. Ajuste às variáveis do seu tema. */
+.form select {
+	display: block;
+	width: 100%;
+	margin-top: 0.35rem;
+	padding: 0.7rem 0.8rem;
+	font: inherit;
+	color: var(--ink);
+	background: #fff;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+}
+.form .opt {
+	font-weight: 400;
+	opacity: 0.65;
+}
+.form [aria-invalid="true"] {
+	border-color: #d93025;
+	outline-color: #d93025;
+}
+.beta-signup {
+	max-width: 640px;
+	margin: 2.5rem auto 0;
+}
+#inscricao-beta {
+	scroll-margin-top: 90px;
+}

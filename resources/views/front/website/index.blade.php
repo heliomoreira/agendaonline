@@ -11,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Agenda Online - Software de marcações online para negócios | Versão Beta</title>
-    <meta name="description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Conheça a versão beta da Agenda Online." />
+    <meta name="description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Inscreva-se na versão beta da Agenda Online." />
     <link rel="canonical" href="https://agendaonline.pt/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#0060F7" />
@@ -20,14 +20,14 @@
     <meta property="og:site_name" content="Agenda Online" />
     <meta property="og:url" content="https://agendaonline.pt/" />
     <meta property="og:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
-    <meta property="og:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Conheça a versão beta da Agenda Online." />
+    <meta property="og:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Inscreva-se na versão beta da Agenda Online." />
     <meta property="og:image" content="{{ asset('website/og-image.png') }}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Logótipo da Agenda Online" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
-    <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Conheça a versão beta da Agenda Online." />
+    <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Inscreva-se na versão beta da Agenda Online." />
     <meta name="twitter:image" content="{{ asset('website/og-image.png') }}" />
     <link rel="icon" href="{{ asset('website/favicon.ico') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('website/favicon.png') }}" type="image/png" />
@@ -36,6 +36,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('website/beta/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('website/beta/forms.css') }}" />
+
     @verbatim
         <script type="application/ld+json">
             {
@@ -124,7 +126,7 @@
 								"name": "Quando posso criar a minha conta?",
 								"acceptedAnswer": {
 									"@type": "Answer",
-									"text": "As inscrições abrem em breve. Se quiser ser dos primeiros, envie-nos uma mensagem pelo formulário de contacto e avisamos assim que puder criar a sua conta."
+									"text": "As inscrições na beta já estão abertas. Preencha o formulário de inscrição e enviamos-lhe um email assim que puder criar a sua conta."
 								}
 							},
 							{
@@ -164,7 +166,7 @@
                 <li><a href="#contactos">Contactos</a></li>
             </ul>
             <div class="nav-end">
-                <span class="btn btn-soon" aria-disabled="true">Em breve</span>
+                <a class="btn btn-primary" href="#inscricao-beta">Pedir acesso antecipado</a>
             </div>
         </div>
         <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
@@ -179,7 +181,7 @@
                 <h1>Marcações online para o seu negócio, 24 horas por dia.</h1>
                 <p class="lead">Os seus clientes escolhem o serviço e o horário a partir de um link. A Agenda Online confirma, envia o lembrete e põe tudo na sua agenda, sem chamadas.</p>
                 <div class="hero-actions">
-                    <span class="btn btn-soon btn-lg" aria-disabled="true">Em breve</span>
+                    <a class="btn btn-primary btn-lg" href="#inscricao-beta">Pedir acesso antecipado</a>
                     <a class="btn btn-outline btn-lg" href="#como-funciona">Ver como funciona</a>
                 </div>
                 <span class="btn-note">Configuração em minutos · Dados na Europa · Suporte em português</span>
@@ -214,7 +216,6 @@
             <span><b>Marcações 24h</b> por dia, 7 dias por semana</span>
             <span><b>Lembretes</b> por SMS e email</span>
             <span>Dados alojados <b>na UE</b></span>
-            <span>Suporte <b>em português</b></span>
         </div>
     </div>
 
@@ -232,7 +233,7 @@
                 <li>Dois clientes marcados à mesma hora porque ninguém viu a agenda do colega.</li>
             </ul>
             <p style="margin-top: 1.6rem; font-size: 1.1rem"><b style="color: var(--ink)">A Agenda Online resolve tudo isto.</b></p>
-            <p style="margin-top: 1rem"><span class="btn btn-soon" aria-disabled="true">Em breve</span></p>
+            <p style="margin-top: 1rem"><a class="btn btn-primary" href="#inscricao-beta">Pedir acesso antecipado</a></p>
         </div>
     </section>
 
@@ -358,6 +359,9 @@
                     <p>Alojados na Europa, conforme o RGPD, e nunca partilhados com terceiros.</p>
                 </div>
             </div>
+            <div class="beta-signup">
+                @include('front.website.partials.beta-form')
+            </div>
         </div>
     </section>
 
@@ -401,7 +405,7 @@
                 </details>
                 <details>
                     <summary>Quando posso criar a minha conta?</summary>
-                    <p>As inscrições abrem em breve. Se quiser ser dos primeiros, envie-nos uma mensagem pelo formulário de contacto e avisamos assim que puder criar a sua conta.</p>
+                    <p>As inscrições na beta já estão abertas. Preencha o <a href="#inscricao-beta">formulário de inscrição</a> e enviamos-lhe um email assim que puder criar a sua conta.</p>
                 </details>
                 <details>
                     <summary>O que significa estar em beta?</summary>
@@ -427,21 +431,28 @@
                         </p>
                     </div>
                     <div class="card">
-                        <h3>🚀 Inscrições em breve</h3>
-                        <p>Quer ser dos primeiros a usar a Agenda Online? Envie-nos uma mensagem e avisamos assim que puder criar a sua conta.</p>
+                        <h3>🚀 Inscrições na beta abertas</h3>
+                        <p>Quer ser dos primeiros a usar a Agenda Online? <a href="#inscricao-beta">Inscreva-se na beta</a> e avisamos por email assim que puder criar a sua conta.</p>
                     </div>
                 </div>
-                <form class="card form" id="contact-form" action="https://agendaonline.pt/contacto" method="post">
+                <form class="card form" id="contact-form" action="{{ route('website.contacto') }}" method="post" data-ajax data-error="Não foi possível enviar. Escreva-nos para agendaonline@bitsis.pt.">
+                    @csrf
                     <h3>Envie-nos uma mensagem</h3>
-                    <label>Nome<input type="text" name="nome" autocomplete="name" required /></label>
-                    <label>Email<input type="email" name="email" autocomplete="email" required /></label>
-                    <label>Mensagem<textarea name="mensagem" rows="5" required></textarea></label>
+                    <label>Nome<input type="text" name="nome" value="{{ old('nome') }}" autocomplete="name" maxlength="120" required /></label>
+                    <label>Email<input type="email" name="email" value="{{ old('email') }}" autocomplete="email" maxlength="190" required /></label>
+                    <label>Mensagem<textarea name="mensagem" rows="5" maxlength="5000" required>{{ old('mensagem') }}</textarea></label>
                     <label class="hp" aria-hidden="true">Não preencher<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
                     <label class="consent"
-                    ><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para responder a este pedido, nos termos da <a href="privacidade/">Política de Privacidade</a>.</span></label
+                    ><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para responder a este pedido, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label
                     >
                     <button class="btn btn-primary" type="submit">Enviar mensagem</button>
-                    <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+                    @if (session('contacto_status'))
+                        <p class="form-msg ok" role="status" aria-live="polite">{{ session('contacto_status') }}</p>
+                    @elseif ($errors->contacto->any())
+                        <p class="form-msg err" role="status" aria-live="polite">{{ $errors->contacto->first() }}</p>
+                    @else
+                        <p class="form-msg" role="status" aria-live="polite"></p>
+                    @endif
                 </form>
             </div>
         </div>
@@ -450,8 +461,8 @@
     <section class="cta">
         <div class="wrap">
             <h2>Deixe os clientes marcarem sozinhos.</h2>
-            <p>As inscrições abrem em breve. Quer ser avisado? <a href="#contactos" style="color: #fff; text-decoration: underline">Deixe-nos uma mensagem</a>.</p>
-            <span class="btn btn-soon btn-lg" aria-disabled="true">Em breve</span>
+            <p>As inscrições na beta estão abertas. Inscreva-se e avisamos assim que puder criar a sua conta.</p>
+            <a class="btn btn-primary btn-lg" href="#inscricao-beta">Pedir acesso antecipado</a>
             <span class="btn-note">Configuração em minutos · Suporte em português</span>
         </div>
     </section>
@@ -462,8 +473,8 @@
         <div class="foot-grid">
             <div class="foot-brand">
                 <picture
-                ><source srcset="{{ asset('website/img/logo-dark.webp') }}" type="image/webp" />
-                    <img src="{{ asset('website/img/logo-dark.png') }}" alt="Agenda Online" width="153" height="38" loading="lazy"
+                ><source srcset="{{ asset('website/beta/logo-dark.webp') }}" type="image/webp" />
+                    <img src="{{ asset('website/beta/logo-dark.png') }}" alt="Agenda Online" width="153" height="38" loading="lazy"
                     /></picture>
                 <p>Software de marcações online para salões, clínicas e negócios que trabalham por horário.</p>
             </div>
@@ -480,15 +491,15 @@
                 <h4>Sobre Nós</h4>
                 <ul>
                     <li><a href="#contactos">Contactos</a></li>
-                    <li><a href="termos-e-condicoes">Termos e Condições</a></li>
-                    <li><a href="politica-de-privacidade">Política de Privacidade</a></li>
+                    <li><a href="/termos-e-condicoes">Termos e Condições</a></li>
+                    <li><a href="/politica-de-privacidade">Política de Privacidade</a></li>
                     <li><a href="https://www.livroreclamacoes.pt" rel="noopener">Livro de Reclamações</a></li>
                 </ul>
             </div>
             <div>
                 <h4>Conta</h4>
                 <ul>
-                    <li>Criar conta <span class="soon-tag">em breve</span></li>
+                    <li><a href="#inscricao-beta">Pedir acesso antecipado</a></li>
                     <li><a href="mailto:agendaonline@bitsis.pt">agendaonline@bitsis.pt</a></li>
                 </ul>
                 <ul class="versions" style="margin-top: 1rem">
@@ -503,6 +514,8 @@
     </div>
 </footer>
 
+<script src="{{ asset('website/beta/forms.js') }}" defer></script>
+
 <script>
     (function () {
         document.documentElement.classList.remove("no-js");
@@ -514,10 +527,11 @@
             t.setAttribute("aria-label", o ? "Fechar menu" : "Abrir menu");
             t.textContent = o ? "✕" : "☰";
         });
-        nav.querySelectorAll(".nav-links a").forEach(function (a) {
+        nav.querySelectorAll(".nav-links a, .nav-end a").forEach(function (a) {
             a.addEventListener("click", function () {
                 nav.classList.remove("open");
                 t.setAttribute("aria-expanded", "false");
+                t.setAttribute("aria-label", "Abrir menu");
                 t.textContent = "☰";
             });
         });
@@ -586,34 +600,6 @@
             btn.disabled = true;
             btn.textContent = "Escolha um horário";
         });
-
-        // Formulário de contacto (envio sem recarregar a página; sem JS, faz um POST normal)
-        var f = document.getElementById("contact-form"),
-            m = document.getElementById("form-msg");
-        if (window.fetch && window.FormData) {
-            f.addEventListener("submit", function (e) {
-                e.preventDefault();
-                var b = f.querySelector("button[type=submit]");
-                b.disabled = true;
-                b.textContent = "A enviar…";
-                m.className = "form-msg";
-                fetch(f.action, { method: "POST", body: new FormData(f), headers: { Accept: "application/json" } })
-                    .then(function (r) {
-                        if (!r.ok) throw r;
-                        f.reset();
-                        m.textContent = "Obrigado! Recebemos a sua mensagem e respondemos em breve.";
-                        m.className = "form-msg ok";
-                    })
-                    .catch(function () {
-                        m.innerHTML = 'Não foi possível enviar. Escreva-nos para <a href="mailto:agendaonline@bitsis.pt">agendaonline@bitsis.pt</a>.';
-                        m.className = "form-msg err";
-                    })
-                    .then(function () {
-                        b.disabled = false;
-                        b.textContent = "Enviar mensagem";
-                    });
-            });
-        }
     })();
 </script>
 </body>

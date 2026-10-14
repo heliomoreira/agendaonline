@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfessionalsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,8 +34,13 @@ foreach (config('tenancy.central_domains') as $domain) {
 
 
 
-        //Route::get('/signup', [TenantController::class, 'showRegistrationForm'])->name('register');
+        Route::post('/contacto', [WebsiteController::class, 'contacto'])
+            ->middleware('throttle:5,1')
+            ->name('website.contacto');
 
+        Route::post('/beta', [WebsiteController::class, 'beta'])
+            ->middleware('throttle:5,1')
+            ->name('website.beta');
 // Processar registo
         Route::post('/signup/create-tenant', [TenantController::class, 'createTenant'])->name('register.create');
     });
