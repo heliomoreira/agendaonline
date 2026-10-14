@@ -1,6 +1,6 @@
 @php($tipos = \App\Models\BetaSignup::TIPOS)
 @php($profissionais = \App\Models\BetaSignup::PROFISSIONAIS)
-<form class="card form beta-form" id="acesso-antecipado" action="{{ route('website.beta') }}" method="post" data-ajax data-error="Não foi possível enviar o pedido. Escreva-nos para agendaonline@bitsis.pt.">
+<form class="card form beta-form" id="acesso-antecipado" action="https://agendaonline.pt/beta" method="post" data-ajax data-error="Não foi possível enviar o pedido. Escreva-nos para agendaonline@bitsis.pt.">
     @csrf
     <h3>Peça acesso antecipado</h3>
     <p>Deixe os seus dados e enviamos-lhe um email assim que puder criar a sua conta.</p>
