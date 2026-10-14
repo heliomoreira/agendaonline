@@ -1,8 +1,8 @@
 @php($tipos = \App\Models\BetaSignup::TIPOS)
 @php($profissionais = \App\Models\BetaSignup::PROFISSIONAIS)
-<form class="card form beta-form" id="inscricao-beta" action="{{ route('website.beta') }}" method="post" data-ajax data-error="Não foi possível concluir a inscrição. Escreva-nos para agendaonline@bitsis.pt.">
+<form class="card form beta-form" id="acesso-antecipado" action="{{ route('website.beta') }}" method="post" data-ajax data-error="Não foi possível enviar o pedido. Escreva-nos para agendaonline@bitsis.pt.">
     @csrf
-    <h3>Inscreva-se na versão beta</h3>
+    <h3>Peça acesso antecipado</h3>
     <p>Deixe os seus dados e enviamos-lhe um email assim que puder criar a sua conta.</p>
 
     <label>Nome<input type="text" name="nome" value="{{ old('nome') }}" autocomplete="name" maxlength="120" required /></label>
@@ -26,10 +26,11 @@
             @endforeach
         </select>
     </label>
+
     <label class="hp" aria-hidden="true">Não preencher<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
     <label class="consent"><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para me contactarem sobre a beta, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label>
 
-    <button class="btn btn-primary" type="submit">Inscrever na beta</button>
+    <button class="btn btn-primary" type="submit">Pedir acesso</button>
 
     @if (session('beta_status'))
         <p class="form-msg ok" role="status" aria-live="polite">{{ session('beta_status') }}</p>

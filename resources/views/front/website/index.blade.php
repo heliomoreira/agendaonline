@@ -11,7 +11,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Agenda Online - Software de marcações online para negócios | Versão Beta</title>
-    <meta name="description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Inscreva-se na versão beta da Agenda Online." />
+    <meta name="description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Peça acesso antecipado à versão beta da Agenda Online." />
     <link rel="canonical" href="https://agendaonline.pt/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#0060F7" />
@@ -20,14 +20,14 @@
     <meta property="og:site_name" content="Agenda Online" />
     <meta property="og:url" content="https://agendaonline.pt/" />
     <meta property="og:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
-    <meta property="og:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Inscreva-se na versão beta da Agenda Online." />
+    <meta property="og:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Peça acesso antecipado à versão beta da Agenda Online." />
     <meta property="og:image" content="{{ asset('website/og-image.png') }}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Logótipo da Agenda Online" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
-    <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Inscreva-se na versão beta da Agenda Online." />
+    <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Peça acesso antecipado à versão beta da Agenda Online." />
     <meta name="twitter:image" content="{{ asset('website/og-image.png') }}" />
     <link rel="icon" href="{{ asset('website/favicon.ico') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('website/favicon.png') }}" type="image/png" />
@@ -127,7 +127,7 @@
 								"name": "Quando posso criar a minha conta?",
 								"acceptedAnswer": {
 									"@type": "Answer",
-									"text": "As inscrições na beta já estão abertas. Preencha o formulário de inscrição e enviamos-lhe um email assim que puder criar a sua conta."
+									"text": "Já pode pedir acesso antecipado. Preencha o formulário de pedido de acesso e enviamos-lhe um email assim que puder criar a sua conta."
 								}
 							},
 							{
@@ -167,7 +167,7 @@
                 <li><a href="#contactos">Contactos</a></li>
             </ul>
             <div class="nav-end">
-                <a class="btn btn-primary" href="#inscricao-beta">Inscrever na beta</a>
+                <a class="btn btn-primary" href="#acesso-antecipado">Pedir acesso</a>
             </div>
         </div>
         <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">☰</button>
@@ -198,7 +198,7 @@
                 <h1>Marcações online para o seu negócio, 24 horas por dia.</h1>
                 <p class="lead">Os seus clientes escolhem o serviço e o horário a partir de um link. A Agenda Online confirma, envia o lembrete e põe tudo na sua agenda, sem chamadas.</p>
                 <div class="hero-actions">
-                    <a class="btn btn-primary btn-lg" href="#inscricao-beta">Inscrever na beta</a>
+                    <a class="btn btn-primary btn-lg" href="#acesso-antecipado">Pedir acesso antecipado</a>
                     <a class="btn btn-outline btn-lg" href="#como-funciona">Ver como funciona</a>
                 </div>
                 <span class="btn-note">Configuração em minutos · Dados na Europa · Suporte em português</span>
@@ -319,7 +319,7 @@
                 <li>Dois clientes marcados à mesma hora porque ninguém viu a agenda do colega.</li>
             </ul>
             <p style="margin-top: 1.6rem; font-size: 1.1rem"><b style="color: var(--ink)">A Agenda Online resolve tudo isto.</b></p>
-            <p style="margin-top: 1rem"><a class="btn btn-primary" href="#inscricao-beta">Inscrever na beta</a></p>
+            <p style="margin-top: 1rem"><a class="btn btn-primary" href="#acesso-antecipado">Pedir acesso antecipado</a></p>
         </div>
     </section>
 
@@ -491,7 +491,7 @@
                 </details>
                 <details>
                     <summary>Quando posso criar a minha conta?</summary>
-                    <p>As inscrições na beta já estão abertas. Preencha o <a href="#inscricao-beta">formulário de inscrição</a> e enviamos-lhe um email assim que puder criar a sua conta.</p>
+                    <p>Já pode pedir acesso antecipado. Preencha o <a href="#acesso-antecipado">formulário de pedido de acesso</a> e enviamos-lhe um email assim que puder criar a sua conta.</p>
                 </details>
                 <details>
                     <summary>O que significa estar em beta?</summary>
@@ -517,8 +517,8 @@
                         </p>
                     </div>
                     <div class="card">
-                        <h3>🚀 Inscrições na beta abertas</h3>
-                        <p>Quer ser dos primeiros a usar a Agenda Online? <a href="#inscricao-beta">Inscreva-se na beta</a> e avisamos por email assim que puder criar a sua conta.</p>
+                        <h3>🚀 Acesso antecipado</h3>
+                        <p>Quer ser dos primeiros a usar a Agenda Online? <a href="#acesso-antecipado">Peça acesso antecipado</a> e avisamos por email assim que puder criar a sua conta.</p>
                     </div>
                 </div>
                 <form class="card form" id="contact-form" action="{{ route('website.contacto') }}" method="post" data-ajax data-error="Não foi possível enviar. Escreva-nos para agendaonline@bitsis.pt.">
@@ -547,8 +547,8 @@
     <section class="cta">
         <div class="wrap">
             <h2>Deixe os clientes marcarem sozinhos.</h2>
-            <p>As inscrições na beta estão abertas. Inscreva-se e avisamos assim que puder criar a sua conta.</p>
-            <a class="btn btn-primary btn-lg" href="#inscricao-beta">Inscrever na beta</a>
+            <p>Estamos a abrir a plataforma aos primeiros negócios. Peça acesso e avisamos assim que puder criar a sua conta.</p>
+            <a class="btn btn-primary btn-lg" href="#acesso-antecipado">Pedir acesso antecipado</a>
             <span class="btn-note">Configuração em minutos · Suporte em português</span>
         </div>
     </section>
@@ -585,7 +585,7 @@
             <div>
                 <h4>Conta</h4>
                 <ul>
-                    <li><a href="#inscricao-beta">Inscrever na beta</a></li>
+                    <li><a href="#acesso-antecipado">Pedir acesso</a></li>
                     <li><a href="mailto:agendaonline@bitsis.pt">agendaonline@bitsis.pt</a></li>
                 </ul>
                 <ul class="versions" style="margin-top: 1rem">
