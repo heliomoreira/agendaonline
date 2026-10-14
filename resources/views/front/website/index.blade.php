@@ -29,9 +29,9 @@
     <meta name="twitter:title" content="Agenda Online - Software de marcações online para negócios | Versão Beta" />
     <meta name="twitter:description" content="Receba marcações online 24h por dia, reduza faltas com lembretes automáticos por SMS e email e organize os seus clientes. Peça acesso antecipado à versão beta da Agenda Online." />
     <meta name="twitter:image" content="{{ asset('website/og-image.png') }}" />
-    <link rel="icon" href="{{ asset('website/favicon.ico') }}" sizes="32x32" />
-    <link rel="icon" href="{{ asset('website/favicon.png') }}" type="image/png" />
-    <link rel="apple-touch-icon" href="{{ asset('website/apple-touch-icon.png') }}" />
+    <link rel="icon" href="{{ asset('website/beta/favicon.ico') }}" sizes="32x32" />
+    <link rel="icon" href="{{ asset('website/beta/favicon.png') }}" type="image/png" />
+    <link rel="apple-touch-icon" href="{{ asset('website/beta/apple-touch-icon.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
