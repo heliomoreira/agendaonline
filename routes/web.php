@@ -37,11 +37,9 @@ foreach (config('tenancy.central_domains') as $domain) {
             ->middleware('throttle:5,1')
             ->name('website.contact');
 
-        Route::post('/beta', [WebsiteController::class, 'betaSignup'])
-            ->middleware('throttle:5,1')
-            ->name('website.beta');
 
         Route::post('/signup/create-tenant', [TenantController::class, 'createTenant'])->name('register.create');
+
     });
 }
 

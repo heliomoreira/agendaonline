@@ -21,6 +21,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -47,16 +48,17 @@ Route::middleware([
         Route::get('/', [TenantController::class, 'index'])->name('tenant.index');
     });
 
-     Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
-        Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
-        Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
-        Route::post('/book-slot/{admin?}', [BookingController::class, 'bookSlot'])->name('book.slot');
-        Route::post('/booking/payment-intent', [BookingPaymentController::class, 'createPaymentIntent'])->name('book.payment.intent');
-        Route::post('/booking/stripe/webhook', [BookingPaymentController::class, 'handleWebhook'])
-            ->withoutMiddleware(['web']);
-        Route::get('/booking/success', [BookingController::class, 'success'])->name('booking.success');
+    Route::get('/services/{id}/professionals', [ProfessionalsController::class, 'getProfessionalsByService']);
+    Route::get('/available-slots', [BookingController::class, 'getAvailableSlots']);
+    Route::get('/booking', [BookingController::class, 'index'])->name('book.index');
+    Route::post('/book-slot/{admin?}', [BookingController::class, 'bookSlot'])->name('book.slot');
+    Route::post('/booking/payment-intent', [BookingPaymentController::class, 'createPaymentIntent'])->name('book.payment.intent');
+    Route::post('/booking/stripe/webhook', [BookingPaymentController::class, 'handleWebhook'])
+        ->withoutMiddleware(['web']);
+    Route::get('/booking/success', [BookingController::class, 'success'])->name('booking.success');
 
     Route::get('/admin', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
 
     Route::prefix('admin')->group(function () {
         /*
@@ -197,6 +199,8 @@ Route::middleware([
 
             Route::prefix('reports')->group(function () {
                 Route::get('/', [ReportsController::class, 'index'])->name('reports.index');
+                Route::get('/betas', [ReportsController::class, 'getBetas'])
+                    ->name('website.betas');
             });
         });
     });
