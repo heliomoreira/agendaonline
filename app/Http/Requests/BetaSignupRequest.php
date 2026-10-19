@@ -24,12 +24,12 @@ class BetaSignupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required', 'string', 'max:120'],
+            'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email:rfc', 'max:190'],
-            'negocio' => ['nullable', 'string', 'max:150'],
-            'tipo_negocio' => ['required', Rule::in(array_keys(BetaSignup::TIPOS))],
-            'profissionais' => ['nullable', Rule::in(array_keys(BetaSignup::PROFISSIONAIS))],
-            'consentimento' => ['accepted'],
+            'business' => ['nullable', 'string', 'max:150'],
+            'business_type' => ['required', Rule::in(array_keys(BetaSignup::BUSINESS_TYPES))],
+            'professionals' => ['nullable', Rule::in(array_keys(BetaSignup::TEAM_SIZES))],
+            'consent' => ['accepted'],
             'website' => ['nullable', 'string'], // honeypot
         ];
     }
@@ -37,13 +37,13 @@ class BetaSignupRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nome.required' => 'Indique o seu nome.',
+            'name.required' => 'Indique o seu nome.',
             'email.required' => 'Indique o seu email.',
             'email.email' => 'Indique um email válido.',
-            'tipo_negocio.required' => 'Escolha o tipo de negócio.',
-            'tipo_negocio.in' => 'Escolha o tipo de negócio.',
-            'profissionais.in' => 'Escolha o número de profissionais.',
-            'consentimento.accepted' => 'Tem de aceitar a Política de Privacidade para se inscrever.',
+            'business_type.required' => 'Escolha o tipo de negócio.',
+            'business_type.in' => 'Escolha o tipo de negócio.',
+            'professionals.in' => 'Escolha o número de profissionais.',
+            'consent.accepted' => 'Tem de aceitar a Política de Privacidade para se inscrever.',
             'max' => 'Este campo é demasiado longo.',
         ];
     }

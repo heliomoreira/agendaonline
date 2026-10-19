@@ -6,47 +6,47 @@ use Illuminate\Database\Eloquent\Model;
 
 class BetaSignup extends Model
 {
-    public const TIPOS = [
-        'cabeleireiro_barbearia' => 'Cabeleireiro ou barbearia',
-        'estetica_bem_estar' => 'Estética e bem-estar',
-        'clinica_consultorio' => 'Clínica ou consultório',
-        'servicos_independente' => 'Serviços ou profissional independente',
-        'outro' => 'Outro',
+    public const BUSINESS_TYPES = [
+        'hair_barber' => 'Cabeleireiro ou barbearia',
+        'beauty_wellness' => 'Estética e bem-estar',
+        'clinic_practice' => 'Clínica ou consultório',
+        'services_freelance' => 'Serviços ou profissional independente',
+        'other' => 'Outro',
     ];
 
-    public const PROFISSIONAIS = [
+    public const TEAM_SIZES = [
         '1' => 'Só eu',
         '2-5' => '2 a 5',
         '6+' => '6 ou mais',
     ];
 
     protected $fillable = [
-        'nome',
+        'name',
         'email',
-        'negocio',
-        'tipo_negocio',
-        'profissionais',
-        'consentimento_em',
+        'business',
+        'business_type',
+        'professionals',
+        'consented_at',
         'ip',
         'user_agent',
-        'convidado_em',
+        'invited_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'consentimento_em' => 'datetime',
-            'convidado_em' => 'datetime',
+            'consented_at' => 'datetime',
+            'invited_at' => 'datetime',
         ];
     }
 
-    public function tipoLabel(): string
+    public function businessTypeLabel(): string
     {
-        return self::TIPOS[$this->tipo_negocio] ?? $this->tipo_negocio;
+        return self::BUSINESS_TYPES[$this->business_type] ?? $this->business_type;
     }
 
-    public function profissionaisLabel(): ?string
+    public function teamSizeLabel(): ?string
     {
-        return $this->profissionais ? (self::PROFISSIONAIS[$this->profissionais] ?? $this->profissionais) : null;
+        return $this->professionals ? (self::TEAM_SIZES[$this->professionals] ?? $this->professionals) : null;
     }
 }

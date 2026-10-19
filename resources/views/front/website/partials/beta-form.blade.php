@@ -1,34 +1,34 @@
-@php($tipos = \App\Models\BetaSignup::TIPOS)
-@php($profissionais = \App\Models\BetaSignup::PROFISSIONAIS)
-<form class="card form beta-form" id="acesso-antecipado" action="https://agendaonline.pt/beta" method="post" data-ajax data-error="Não foi possível enviar o pedido. Escreva-nos para agendaonline@bitsis.pt.">
+@php($businessTypes = \App\Models\BetaSignup::BUSINESS_TYPES)
+@php($teamSizes = \App\Models\BetaSignup::TEAM_SIZES)
+<form class="card form beta-form" id="acesso-antecipado" action="{{ route('website.beta', [], false) }}" method="post" data-ajax data-error="Não foi possível enviar o pedido. Escreva-nos para agendaonline@bitsis.pt.">
     @csrf
     <h3>Peça acesso antecipado</h3>
     <p>Deixe os seus dados e enviamos-lhe um email assim que puder criar a sua conta.</p>
 
-    <label>Nome<input type="text" name="nome" value="{{ old('nome') }}" autocomplete="name" maxlength="120" required /></label>
+    <label>Nome<input type="text" name="name" value="{{ old('name') }}" autocomplete="name" maxlength="120" required /></label>
     <label>Email<input type="email" name="email" value="{{ old('email') }}" autocomplete="email" maxlength="190" required /></label>
-    <label>Nome do negócio <span class="opt">(opcional)</span><input type="text" name="negocio" value="{{ old('negocio') }}" autocomplete="organization" maxlength="150" /></label>
+    <label>Nome do negócio <span class="opt">(opcional)</span><input type="text" name="business" value="{{ old('business') }}" autocomplete="organization" maxlength="150" /></label>
 
     <label>Tipo de negócio
-        <select name="tipo_negocio" required>
-            <option value="" disabled @selected(! old('tipo_negocio'))>Escolha uma opção</option>
-            @foreach ($tipos as $valor => $rotulo)
-                <option value="{{ $valor }}" @selected(old('tipo_negocio') === $valor)>{{ $rotulo }}</option>
+        <select name="business_type" required>
+            <option value="" disabled @selected(! old('business_type'))>Escolha uma opção</option>
+            @foreach ($businessTypes as $value => $label)
+                <option value="{{ $value }}" @selected(old('business_type') === $value)>{{ $label }}</option>
             @endforeach
         </select>
     </label>
 
     <label>Quantos profissionais marcam serviços? <span class="opt">(opcional)</span>
-        <select name="profissionais">
+        <select name="professionals">
             <option value="">Escolha uma opção</option>
-            @foreach ($profissionais as $valor => $rotulo)
-                <option value="{{ $valor }}" @selected(old('profissionais') === $valor)>{{ $rotulo }}</option>
+            @foreach ($teamSizes as $value => $label)
+                <option value="{{ $value }}" @selected(old('professionals') === (string) $value)>{{ $label }}</option>
             @endforeach
         </select>
     </label>
 
     <label class="hp" aria-hidden="true">Não preencher<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
-    <label class="consent"><input type="checkbox" name="consentimento" required /><span>Aceito que os meus dados sejam usados para me contactarem sobre a beta, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label>
+    <label class="consent"><input type="checkbox" name="consent" required /><span>Aceito que os meus dados sejam usados para me contactarem sobre a beta, nos termos da <a href="/politica-de-privacidade">Política de Privacidade</a>.</span></label>
 
     <button class="btn btn-primary" type="submit">Pedir acesso</button>
 

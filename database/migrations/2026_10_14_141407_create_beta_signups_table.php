@@ -10,15 +10,15 @@ return new class extends Migration
     {
         Schema::create('beta_signups', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 120);
+            $table->string('name', 120);
             $table->string('email', 190)->unique();
-            $table->string('negocio', 150)->nullable();
-            $table->string('tipo_negocio', 40);
-            $table->string('profissionais', 20)->nullable();
-            $table->timestamp('consentimento_em');
+            $table->string('business', 150)->nullable();
+            $table->string('business_type', 40);
+            $table->string('professionals', 20)->nullable();
+            $table->timestamp('consented_at')->nullable();
             $table->string('ip', 45)->nullable();
             $table->string('user_agent', 255)->nullable();
-            $table->timestamp('convidado_em')->nullable();
+            $table->timestamp('invited_at')->nullable();
             $table->timestamps();
         });
     }
