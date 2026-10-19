@@ -17,59 +17,59 @@ use Throwable;
 
 class WebsiteController extends Controller
 {
-    public function contacto(ContactRequest $request): JsonResponse|RedirectResponse
+    public function contact(ContactRequest $request): JsonResponse|RedirectResponse
     {
-        $ok = 'Obrigado! Recebemos a sua mensagem e respondemos em breve.';
+        $successMessage = 'Obrigado! Recebemos a sua mensagem e respondemos em breve.';
 
-        // Honeypot preenchido: é um bot. Fingimos sucesso e não enviamos nada.
+        // Honeypot filled in: it's a bot. Pretend it worked and send nothing.
         if ($request->filled('website')) {
-            return $this->sucesso($request, $ok, 'contactos', 'contacto_status');
+            return $this->success($request, $successMessage, 'contactos', 'contact_status');
         }
 
-        $dados = $request->validated();
+        $data = $request->validated();
 
         try {
             Mail::to(config('agendaonline.notify_to'))
-                ->send(new ContactMessage($dados['nome'], $dados['email'], $dados['mensagem']));
+                ->send(new ContactMessage($data['name'], $data['email'], $data['message']));
         } catch (Throwable $e) {
             report($e);
 
-            return $this->erro(
+            return $this->error(
                 $request,
                 'Não foi possível enviar a mensagem. Escreva-nos para agendaonline@bitsis.pt.',
-                'contacto'
+                'contact'
             );
         }
 
-        return $this->sucesso($request, $ok, 'contactos', 'contacto_status');
+        return $this->success($request, $successMessage, 'contactos', 'contact_status');
     }
 
-    public function beta(BetaSignupRequest $request): JsonResponse|RedirectResponse
+    public function betaSignup(BetaSignupRequest $request): JsonResponse|RedirectResponse
     {
-        // A mesma resposta para inscrições novas e repetidas, para não revelar que emails já estão inscritos.
-        $ok = 'Inscrição feita! Enviámos-lhe um email de confirmação e avisamos assim que puder criar a sua conta.';
+        // Same response for new and repeat signups, so we don't reveal which emails are already registered.
+        $successMessage = 'Inscrição feita! Enviámos-lhe um email de confirmação e avisamos assim que puder criar a sua conta.';
 
         if ($request->filled('website')) {
-            return $this->sucesso($request, $ok, 'inscricao-beta', 'beta_status');
+            return $this->success($request, $successMessage, 'inscricao-beta', 'beta_status');
         }
 
-        $dados = $request->validated();
+        $data = $request->validated();
 
         $signup = BetaSignup::firstOrCreate(
-            ['email' => $dados['email']],
+            ['email' => $data['email']],
             [
-                'nome' => $dados['nome'],
-                'negocio' => $dados['negocio'] ?? null,
-                'tipo_negocio' => $dados['tipo_negocio'],
-                'profissionais' => $dados['profissionais'] ?? null,
-                'consentimento_em' => now(),
+                'name' => $data['name'],
+                'business' => $data['business'] ?? null,
+                'business_type' => $data['business_type'],
+                'professionals' => $data['professionals'] ?? null,
+                'consented_at' => now(),
                 'ip' => $request->ip(),
                 'user_agent' => Str::limit((string) $request->userAgent(), 250, ''),
             ]
         );
 
         if ($signup->wasRecentlyCreated) {
-            // A inscrição já está guardada; uma falha de email não deve dar erro ao visitante.
+            // The signup is already saved; an email failure shouldn't show an error to the visitor.
             try {
                 Mail::to($signup->email)->send(new BetaSignupConfirmation($signup));
             } catch (Throwable $e) {
@@ -83,24 +83,24 @@ class WebsiteController extends Controller
             }
         }
 
-        return $this->sucesso($request, $ok, 'inscricao-beta', 'beta_status');
+        return $this->success($request, $successMessage, 'inscricao-beta', 'beta_status');
     }
 
-    private function sucesso(Request $request, string $mensagem, string $ancora, string $flash): JsonResponse|RedirectResponse
+    private function success(Request $request, string $message, string $anchor, string $flashKey): JsonResponse|RedirectResponse
     {
         if ($request->expectsJson()) {
-            return response()->json(['message' => $mensagem]);
+            return response()->json(['message' => $message]);
         }
 
-        return redirect()->to(url('/').'#'.$ancora)->with($flash, $mensagem);
+        return redirect()->to(url('/').'#'.$anchor)->with($flashKey, $message);
     }
 
-    private function erro(Request $request, string $mensagem, string $bag): JsonResponse|RedirectResponse
+    private function error(Request $request, string $message, string $errorBag): JsonResponse|RedirectResponse
     {
         if ($request->expectsJson()) {
-            return response()->json(['message' => $mensagem], 503);
+            return response()->json(['message' => $message], 503);
         }
 
-        return back()->withInput()->withErrors(['geral' => $mensagem], $bag);
+        return back()->withInput()->withErrors(['general' => $message], $errorBag);
     }
 }

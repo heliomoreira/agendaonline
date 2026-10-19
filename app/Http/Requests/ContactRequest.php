@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class ContactRequest extends FormRequest
 {
-    protected $errorBag = 'contacto';
+    protected $errorBag = 'contact';
 
     public function authorize(): bool
     {
@@ -22,10 +22,10 @@ class ContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required', 'string', 'max:120'],
+            'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email:rfc', 'max:190'],
-            'mensagem' => ['required', 'string', 'max:5000'],
-            'consentimento' => ['accepted'],
+            'message' => ['required', 'string', 'max:5000'],
+            'consent' => ['accepted'],
             'website' => ['nullable', 'string'], // honeypot
         ];
     }
@@ -33,12 +33,12 @@ class ContactRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nome.required' => 'Indique o seu nome.',
+            'name.required' => 'Indique o seu nome.',
             'email.required' => 'Indique o seu email.',
             'email.email' => 'Indique um email válido.',
-            'mensagem.required' => 'Escreva a sua mensagem.',
-            'mensagem.max' => 'A mensagem é demasiado longa (máximo de 5000 caracteres).',
-            'consentimento.accepted' => 'Tem de aceitar a Política de Privacidade para enviar a mensagem.',
+            'message.required' => 'Escreva a sua mensagem.',
+            'message.max' => 'A mensagem é demasiado longa (máximo de 5000 caracteres).',
+            'consent.accepted' => 'Tem de aceitar a Política de Privacidade para enviar a mensagem.',
             'max' => 'Este campo é demasiado longo.',
         ];
     }

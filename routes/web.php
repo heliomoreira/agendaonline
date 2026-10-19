@@ -33,13 +33,14 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::get('/signup/account-created', [TenantController::class, 'createTenant']);
 
 
-        Route::post('/contacto', [WebsiteController::class, 'contacto'])
+        Route::post('/contact', [WebsiteController::class, 'contact'])
             ->middleware('throttle:5,1')
             ->name('website.contact');
 
-        Route::post('/beta', [WebsiteController::class, 'beta'])
+        Route::post('/beta', [WebsiteController::class, 'betaSignup'])
             ->middleware('throttle:5,1')
             ->name('website.beta');
+
         Route::post('/signup/create-tenant', [TenantController::class, 'createTenant'])->name('register.create');
     });
 }
