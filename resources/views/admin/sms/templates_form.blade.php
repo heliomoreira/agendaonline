@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <h5 class="d-flex align-items-center gap-2 m-0">
-                    <i class="icon-base ti tabler-settings"></i>
+                    <i class="icon-base ti tabler-device-mobile-message"></i>
                     Templates SMS
                 </h5>
                 <nav aria-label="breadcrumb">
