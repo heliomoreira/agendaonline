@@ -510,7 +510,7 @@
         corPrimaria:       '{{ $portal?->cor_primaria ?? '#2563eb' }}',
         requiresPayment:   {{ ($requiresPayment ?? false) ? 'true' : 'false' }},
         paymentPercentage: {{ $paymentPercentage ?? 100 }},
-        stripeKey:         '{{ $stripeKey ?? config('services.stripe.key', '') }}',
+        stripeKey:         '{{ $stripeKey ?? '' }}',
         csrfToken:         '{{ csrf_token() }}',
         routes: {
             professionals:  '/services/{id}/professionals',

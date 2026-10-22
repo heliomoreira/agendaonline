@@ -16,6 +16,7 @@ use App\Notifications\BookingConfirmation;
 use App\Services\CustomerService;
 use App\Services\NotificationService;
 use App\Services\ServicesService;
+use App\Services\StripeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -48,6 +49,7 @@ class BookingController extends Controller
             'portal' => $portal,
             'requiresPayment' => $portal->requires_payment ?? false,
             'paymentPercentage' => $portal->payment_percentage ?? 0,
+            'stripeKey' => $portal->payment_stripe_key ?? null,
         ]);
     }
 
@@ -539,29 +541,31 @@ class BookingController extends Controller
     public function createPaymentIntent(Request $request)
     {
         $service = Service::findOrFail($request->service_id);
-        $amount = $service->price * 100; // em cêntimos
+        $amount = $service->price; // em euros; StripeService converte para cêntimos internamente
 
-        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        $stripeService = app(StripeService::class);
 
-        $paymentIntent = \Stripe\PaymentIntent::create([
-            'amount' => $amount,
-            'currency' => 'eur',
-            'payment_method_types' => [
-                'card',
-                'multibanco',
-                'ideal',  // opcional
-            ],
-            'metadata' => [
-                'service_id' => $request->service_id,
+        if (!$stripeService->isConfigured()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pagamento não configurado para este tenant.',
+            ], 503);
+        }
+
+        $paymentData = $stripeService->createPaymentIntent(
+            $amount,
+            'eur',
+            [
+                'service_id'      => $request->service_id,
                 'professional_id' => $request->professional_id,
-                'day' => $request->day,
-                'start_hour' => $request->start_hour,
-            ],
-        ]);
+                'day'             => $request->day,
+                'start_hour'      => $request->start_hour,
+            ]
+        );
 
         return response()->json([
-            'clientSecret' => $paymentIntent->client_secret,
-            'paymentIntentId' => $paymentIntent->id,
+            'clientSecret'    => $paymentData['client_secret'],
+            'paymentIntentId' => $paymentData['payment_intent_id'],
         ]);
     }
 
@@ -570,16 +574,20 @@ class BookingController extends Controller
         $paymentIntentId = $request->query('payment_intent');
 
         if ($paymentIntentId) {
-            // Buscar na Stripe o status
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-            $pi = \Stripe\PaymentIntent::retrieve($paymentIntentId);
+            $stripeService = app(StripeService::class);
+
+            if (!$stripeService->isConfigured()) {
+                return redirect('/');
+            }
+
+            $pi = $stripeService->retrievePaymentIntent($paymentIntentId);
 
             // Se Multibanco e ainda não pago
             if ($pi->status === 'requires_action') {
                 return view('booking.pending-payment', [
-                    'entity' => $pi->next_action->multibanco_display_details->entity ?? null,
+                    'entity'    => $pi->next_action->multibanco_display_details->entity ?? null,
                     'reference' => $pi->next_action->multibanco_display_details->reference ?? null,
-                    'amount' => $pi->amount / 100,
+                    'amount'    => $pi->amount / 100,
                 ]);
             }
 
