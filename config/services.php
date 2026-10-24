@@ -34,9 +34,13 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    // Estes valores globais são apenas um fallback: cada tenant configura as
+    // suas próprias credenciais Stripe em Definições > Portal.
     'stripe' => [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'currency' => env('STRIPE_CURRENCY', 'eur'),
         'allow_card' => env('STRIPE_ALLOW_CARD', true),
         'allow_multibanco' => env('STRIPE_ALLOW_MULTIBANCO', true),
     ],

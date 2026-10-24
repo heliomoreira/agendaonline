@@ -34,7 +34,7 @@ class PortalController extends Controller
         if ($updatePortal == null) {
             return redirect()->route('dashboard');
         }
-        $updatePortal->fill($request->except('logo'));
+        $updatePortal->fill($request->except(['logo', 'payment_stripe_secret', 'payment_stripe_webhook_secret']));
 
         if ($request->hasFile('logo')) {
             $path = $imageService->uploadImage($request->file('logo'), 'tenants/logos', 150, 150);
@@ -46,9 +46,15 @@ class PortalController extends Controller
             $updatePortal->background_image = $path;
         }
 
+        // Os campos de secret só são atualizados quando preenchidos, para não
+        // apagar a chave já guardada quando o admin deixa o campo em branco.
+        if ($request->filled('payment_stripe_secret')) {
+            $updatePortal->payment_stripe_secret = $request->payment_stripe_secret;
+        }
 
-        $updatePortal->payment_stripe_secret = bcrypt($request->payment_stripe_secret);
-
+        if ($request->filled('payment_stripe_webhook_secret')) {
+            $updatePortal->payment_stripe_webhook_secret = $request->payment_stripe_webhook_secret;
+        }
 
         $updatePortal->save();
         return redirect()->back()->with('success', 'Portal atualizado com sucesso.');

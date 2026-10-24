@@ -41,6 +41,12 @@ class PortalRequest extends FormRequest
             // Pagamento
             'requires_payment' => ['boolean'],
             'payment_percentage' => ['nullable', 'integer', 'min:1', 'max:100', 'required_if:requires_payment,true'],
+            'payment_currency' => ['nullable', 'string', 'size:3'],
+            'payment_stripe_key' => ['nullable', 'string', 'max:255', 'required_if:requires_payment,true'],
+            'payment_stripe_secret' => ['nullable', 'string', 'max:255'],
+            'payment_stripe_webhook_secret' => ['nullable', 'string', 'max:255'],
+            'payment_stripe_allow_card' => ['nullable', 'boolean'],
+            'payment_stripe_allow_multibanco' => ['nullable', 'boolean'],
 
             // Horários
             'monday_hours' => ['nullable', 'string', 'max:50'],
@@ -114,6 +120,10 @@ class PortalRequest extends FormRequest
 
         if (!$this->boolean('requires_payment')) {
             $this->merge(['payment_percentage' => null]);
+        }
+
+        if ($this->filled('payment_currency')) {
+            $this->merge(['payment_currency' => strtolower($this->string('payment_currency'))]);
         }
     }
 }
